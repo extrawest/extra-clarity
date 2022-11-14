@@ -1,0 +1,25 @@
+<form [formGroup]="form">
+  <input
+    type="text"
+    autocomplete="off"
+    placeholder="{{ placeholder }}"
+    clrInput
+    formControlName="input"
+    #input
+  />
+  <clr-control-helper *ngIf="isToShort">
+    Please provide at least {{ characterLimit }} characters
+  </clr-control-helper>
+  <clr-control-helper *ngIf="!isToShort">
+    Searching '{{ propertyDisplayName }}' by partial match
+  </clr-control-helper>
+  <button
+    type="button"
+    class="btn btn-icon btn-block btn-sm"
+    (click)="reset()"
+    [disabled]="!isDirty"
+  >
+    <clr-icon shape="refresh"></clr-icon>
+    RESET
+  </button>
+</form>
