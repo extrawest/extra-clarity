@@ -1,0 +1,1633 @@
+{
+    "pipes": [],
+    "interfaces": [
+        {
+            "name": "ConfirmationDialogConfig",
+            "id": "interface-ConfirmationDialogConfig-6bdd48a07c13dfd09c9e746046809d684a3c018e397a1fd968da9bf8ad69f91aea29e2d5a190c96483dd3e451b87b47ab1f58799b1da8a158be21f2381e3b9a1",
+            "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/models/confirmation-dialog-config.model.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export interface ConfirmationDialogConfig {\n  title: string;\n  message: string;\n  closable?: boolean;\n}\n",
+            "properties": [
+                {
+                    "name": "closable",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": true,
+                    "description": "",
+                    "line": 4
+                },
+                {
+                    "name": "message",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                },
+                {
+                    "name": "title",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 2
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 165,
+            "methods": []
+        }
+    ],
+    "injectables": [
+        {
+            "name": "ConfirmationDialogService",
+            "id": "injectable-ConfirmationDialogService-896e590e8225dc3aedb553a7b319860fe706521404f3a4999ea431903da004f00be94bda5d6375524932948eec63153074912fe21d33abcd497aff8d26392b39",
+            "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/services/confirmation-dialog.service.ts",
+            "properties": [
+                {
+                    "name": "componentRef",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ComponentRef<ConfirmationDialogComponent>",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "confirmationSubject$",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Subject<ConfirmationType>",
+                    "optional": false,
+                    "description": "",
+                    "line": 9,
+                    "modifierKind": [
+                        121
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onClose",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "ConfirmationType",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 36,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        121
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "ConfirmationType",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "open",
+                    "args": [
+                        {
+                            "name": "config",
+                            "type": "ConfirmationDialogConfig",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<ConfirmationType>",
+                    "typeParameters": [],
+                    "line": 18,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "config",
+                            "type": "ConfirmationDialogConfig",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import {ApplicationRef, ComponentRef, createComponent, EnvironmentInjector, Injectable} from '@angular/core';\nimport {ConfirmationDialogComponent} from \"../confirmation-dialog.component\";\nimport {ConfirmationDialogConfig} from \"../models\";\nimport {Observable, Subject, take} from \"rxjs\";\nimport {ConfirmationType} from \"../enums\";\n\n@Injectable()\nexport class ConfirmationDialogService {\n  private confirmationSubject$: Subject<ConfirmationType>;\n  private componentRef: ComponentRef<ConfirmationDialogComponent>;\n\n  constructor(\n    private readonly applicationRef: ApplicationRef,\n    private readonly injector: EnvironmentInjector,\n  ) {\n  }\n\n  public open(config: ConfirmationDialogConfig): Observable<ConfirmationType> {\n    this.componentRef = createComponent(ConfirmationDialogComponent, {\n      environmentInjector: this.injector,\n    });\n\n    this.componentRef.setInput('config', config);\n\n    document.body.appendChild(this.componentRef.location.nativeElement);\n\n    this.applicationRef.attachView(this.componentRef.hostView);\n\n    this.confirmationSubject$ = new Subject<ConfirmationType>();\n\n    this.componentRef.instance.close.subscribe((type) => this.onClose(type));\n\n    return this.confirmationSubject$.asObservable();\n  }\n\n  private onClose(value: ConfirmationType): void {\n    this.componentRef.destroy();\n    this.confirmationSubject$.next(value);\n    this.confirmationSubject$.complete();\n  }\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "applicationRef",
+                        "type": "ApplicationRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "injector",
+                        "type": "EnvironmentInjector",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 10,
+                "jsdoctags": [
+                    {
+                        "name": "applicationRef",
+                        "type": "ApplicationRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "injector",
+                        "type": "EnvironmentInjector",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        }
+    ],
+    "guards": [],
+    "interceptors": [],
+    "classes": [],
+    "directives": [],
+    "components": [
+        {
+            "name": "ConfirmationDialogComponent",
+            "id": "component-ConfirmationDialogComponent-3fa940668627f370074cee1a0bdb77a29d3e7c03df564bff6ae2732d917972d210de0c989421077d68b44bda6fd753abcc6f36ff513ba1271a50f120c121f967",
+            "file": "stories/confirmation-dialog/confirmation-dialog.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [
+                {
+                    "name": "ConfirmationDialogService"
+                }
+            ],
+            "selector": "storybook-button",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<button\n  (click)=\"onOpen()\"\n  class=\"btn btn-primary\"\n  type=\"button\"\n>\n  Open confirmation dialog\n</button>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "config",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 23,
+                    "type": "ConfirmationDialogConfig",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "getConfirmationMessage",
+                    "args": [
+                        {
+                            "name": "type",
+                            "type": "ConfirmationType",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 37,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        121
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "type",
+                            "type": "ConfirmationType",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onOpen",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 30,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {\n  ConfirmationDialogConfig,\n  ConfirmationDialogService,\n  ConfirmationType\n} from \"../../projects/extra-clarity-lib/src\";\n\n@Component({\n  selector: 'storybook-button',\n  template: `\n    <button\n      (click)=\"onOpen()\"\n      class=\"btn btn-primary\"\n      type=\"button\"\n    >\n      Open confirmation dialog\n    </button>\n  `,\n  providers: [ConfirmationDialogService],\n})\nexport class ConfirmationDialogComponent {\n\n  @Input() public config: ConfirmationDialogConfig;\n\n  constructor(\n    private readonly confirmationDialogService: ConfirmationDialogService,\n  ) {\n  }\n\n  onOpen(): void {\n    this.confirmationDialogService.open({\n      title: 'Test',\n      message: 'Test message',\n    }).subscribe((value) => alert(this.getConfirmationMessage(value)));\n  }\n\n  private getConfirmationMessage(type: ConfirmationType): string {\n    switch (type) {\n      case ConfirmationType.Accept: return 'Accepted';\n      case ConfirmationType.Reject: return 'Rejected';\n      case ConfirmationType.Cancel: return 'Canceled';\n    }\n  }\n\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "confirmationDialogService",
+                        "type": "ConfirmationDialogService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 23,
+                "jsdoctags": [
+                    {
+                        "name": "confirmationDialogService",
+                        "type": "ConfirmationDialogService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "ConfirmationDialogComponent",
+            "id": "component-ConfirmationDialogComponent-283169e26c12440e9befb8846377fb7f45bf65164bb939263fd609d5868905308c2cbdf07f6f8c9164020fc54c4477a1f7ee5ebf9241838b951867edf886c6f9-1",
+            "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/confirmation-dialog.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "lib-confirmation-dialog",
+            "styleUrls": [
+                "./confirmation-dialog.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./confirmation-dialog.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "config",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 11,
+                    "type": "ConfirmationDialogConfig",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "close",
+                    "defaultValue": "new EventEmitter<ConfirmationType>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 13,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "ConfirmationType",
+                    "defaultValue": "ConfirmationType",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "onClose",
+                    "args": [
+                        {
+                            "name": "type",
+                            "type": "ConfirmationType",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 17,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "type",
+                            "type": "ConfirmationType",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {Component, EventEmitter, Input, Output} from '@angular/core';\nimport {ConfirmationDialogConfig} from \"./models\";\nimport {ConfirmationType} from \"./enums\";\n\n@Component({\n  selector: 'lib-confirmation-dialog',\n  templateUrl: './confirmation-dialog.component.html',\n  styleUrls: ['./confirmation-dialog.component.css']\n})\nexport class ConfirmationDialogComponent {\n  @Input() public config: ConfirmationDialogConfig;\n\n  @Output() public close = new EventEmitter<ConfirmationType>();\n\n  public ConfirmationType = ConfirmationType;\n\n  public onClose(type: ConfirmationType): void {\n    this.close.emit(type);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./confirmation-dialog.component.css"
+                }
+            ],
+            "stylesData": "",
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "ConfirmationDialogComponent-1",
+            "templateData": "<clr-modal [clrModalOpen]=\"true\" [clrModalClosable]=\"config.closable\" (close)=\"onClose(ConfirmationType.Cancel)\">\n  <h3 class=\"modal-title\">{{ config.title }}</h3>\n\n  <div class=\"modal-body\">\n    <p>{{ config.message }}</p>\n  </div>\n\n  <div class=\"modal-footer\">\n    <button type=\"button\" class=\"btn btn-outline\" (click)=\"onClose(ConfirmationType.Reject)\">\n      No\n    </button>\n\n    <button type=\"button\" class=\"btn btn-primary\" (click)=\"onClose(ConfirmationType.Accept)\">\n      Ok\n    </button>\n  </div>\n</clr-modal>\n"
+        },
+        {
+            "name": "EnumeratedValueFilterComponent",
+            "id": "component-EnumeratedValueFilterComponent-bfc8edc5344470a08aade4e4fc2ab448046dc7aafcd4d868feaae92a6ff76317989460d4eceaccc56c8943be03818c5e1de1eec8ab90a11e2d4353eaa011c371",
+            "file": "projects/datagrid-filters/src/lib/modules/enumerated-value/components/enumerated-value-filter/enumerated-value-filter.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-enumerated-value-filter",
+            "styleUrls": [],
+            "styles": [
+                ":host ::ng-deep .p2.filter-title {\n      margin-top: 0;\n    }"
+            ],
+            "templateUrl": [
+                "./enumerated-value-filter.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "debounceValue",
+                    "defaultValue": "300",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 17,
+                    "type": "number",
+                    "decorators": []
+                },
+                {
+                    "name": "exclusive",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 24,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "propertyDisplayName",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 20,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "propertyKey",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 19,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "values",
+                    "defaultValue": "[]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 18,
+                    "type": "",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "#changes",
+                    "defaultValue": "new Subject()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Subject<>",
+                    "optional": false,
+                    "description": "",
+                    "line": 32,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "#deleted",
+                    "defaultValue": "new EventEmitter()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 33,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "#exclusive",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 22,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "#form",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "UntypedFormGroup",
+                    "optional": false,
+                    "description": "",
+                    "line": 34,
+                    "modifierKind": [
+                        121
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "accepts",
+                    "args": [
+                        {
+                            "name": "item",
+                            "type": "T",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 85,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "item",
+                            "type": "T",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "equals",
+                    "args": [
+                        {
+                            "name": "other",
+                            "type": "ClrDatagridFilterInterface<T | >",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 100,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "other",
+                            "type": "ClrDatagridFilterInterface<T | >",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "isActive",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 81,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "reset",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 54,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input, EventEmitter, OnDestroy } from '@angular/core';\nimport { UntypedFormControl, UntypedFormGroup } from '@angular/forms';\nimport { ClrDatagridFilterInterface } from '@clr/angular';\nimport { debounceTime, Subject, takeUntil } from 'rxjs';\n\n@Component({\n  selector: 'app-enumerated-value-filter',\n  templateUrl: './enumerated-value-filter.component.html',\n  styles: [\n    `:host ::ng-deep .p2.filter-title {\n      margin-top: 0;\n    }`\n  ]\n})\nexport class EnumeratedValueFilterComponent<T> implements ClrDatagridFilterInterface<T>, OnDestroy {\n\n  @Input() debounceValue = 300;\n  @Input() values: readonly (string | number | symbol)[] = [];\n  @Input() propertyKey?: string;\n  @Input() propertyDisplayName?: string;\n\n  #exclusive = false;\n  @Input()\n  set exclusive(value: boolean) {\n    this.#exclusive = value;\n  }\n\n  get exclusive() {\n    return this.#exclusive;\n  }\n\n  #changes: Subject<(typeof this.values)[number]> = new Subject();\n  #deleted = new EventEmitter();\n  #form: UntypedFormGroup;\n\n  constructor() {\n    this.#form = new UntypedFormGroup({\n      'input': new UntypedFormControl('')\n    });\n\n    this.#form.get('input')?.valueChanges\n      .pipe(\n        takeUntil(this.#deleted),\n        debounceTime(this.debounceValue)\n      )\n      .subscribe(value => this.#changes.next(value));\n\n  }\n\n  ngOnDestroy(): void {\n    this.#deleted.emit();\n  }\n\n  reset() {\n    this.#form.reset();\n  }\n\n  get changes() {\n    return this.#changes.asObservable();\n  }\n\n  get form() {\n    return this.#form;\n  }\n\n  get state() {\n    return {\n      property: this.propertyKey,\n      value: this.value,\n    };\n  }\n\n  get isDirty() {\n    return this.#form.dirty;\n  }\n\n  get value() {\n    return this.#form.get('input')?.value;\n  }\n\n  isActive(): boolean {\n    return !!this.propertyKey && !!this.value;\n  }\n\n  accepts(item: T): boolean {\n\n    if (!Object(item).hasOwnProperty(this.propertyKey)) {\n      return false;\n    }\n\n    const propertyValue = item[this.propertyKey as keyof typeof item];\n    if (typeof this.value !== typeof propertyValue) {\n      return false;\n    }\n\n    return propertyValue === this.value;\n\n  }\n\n  equals(other: ClrDatagridFilterInterface<T, EnumeratedValueFilterComponent<T>['state']>): boolean {\n    if (!other) {\n      return false;\n    }\n\n    return this.state?.property === other.state?.property\n      && this.state.value === other.state?.value;\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": ":host ::ng-deep .p2.filter-title {\n      margin-top: 0;\n    }\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 34
+            },
+            "implements": [
+                "ClrDatagridFilterInterface",
+                "OnDestroy"
+            ],
+            "accessors": {
+                "exclusive": {
+                    "name": "exclusive",
+                    "setSignature": {
+                        "name": "exclusive",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "value",
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 24,
+                        "jsdoctags": [
+                            {
+                                "name": "value",
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    },
+                    "getSignature": {
+                        "name": "exclusive",
+                        "type": "",
+                        "returnType": "",
+                        "line": 28
+                    }
+                },
+                "changes": {
+                    "name": "changes",
+                    "getSignature": {
+                        "name": "changes",
+                        "type": "",
+                        "returnType": "",
+                        "line": 58
+                    }
+                },
+                "form": {
+                    "name": "form",
+                    "getSignature": {
+                        "name": "form",
+                        "type": "",
+                        "returnType": "",
+                        "line": 62
+                    }
+                },
+                "state": {
+                    "name": "state",
+                    "getSignature": {
+                        "name": "state",
+                        "type": "",
+                        "returnType": "",
+                        "line": 66
+                    }
+                },
+                "isDirty": {
+                    "name": "isDirty",
+                    "getSignature": {
+                        "name": "isDirty",
+                        "type": "",
+                        "returnType": "",
+                        "line": 73
+                    }
+                },
+                "value": {
+                    "name": "value",
+                    "getSignature": {
+                        "name": "value",
+                        "type": "",
+                        "returnType": "",
+                        "line": 77
+                    }
+                }
+            },
+            "templateData": "<h3 class=\"p2 filter-title\">Filter by {{ propertyDisplayName }}</h3>\n<form [formGroup]=\"form\">\n  <clr-radio-wrapper *ngFor=\"let value of values\">\n    <input type=\"radio\" clrRadio [value]=\"value\" formControlName=\"input\" />\n    <label>{{ value.toString() | titlecase }}</label>\n  </clr-radio-wrapper>\n  <button\n    type=\"button\"\n    class=\"btn btn-icon btn-block btn-sm\"\n    (click)=\"reset()\"\n    [disabled]=\"!isDirty\"\n  >\n    <clr-icon shape=\"refresh\"></clr-icon>\n    RESET\n  </button>\n</form>\n"
+        },
+        {
+            "name": "PartialStringFilterComponent",
+            "id": "component-PartialStringFilterComponent-72d868c6476624b8ac037651b16d8c39dbb53f9627b38b0b2d65b7071b75bb14b0148c919e28b434ac5c825a481f49f37a499ba39177449a6b31502f8c70101d",
+            "file": "projects/datagrid-filters/src/lib/modules/partial-string/components/partial-string-filter/partial-string-filter.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-partial-string-filter",
+            "styleUrls": [],
+            "styles": [
+                ":host ::ng-deep .clr-form-control:first-child {\n      margin-top: 0;\n    }",
+                ":host ::ng-deep .clr-control-container {\n      width: 100%;\n    }",
+                ":host ::ng-deep .btn-block {\n      margin-top: 1rem;\n    }",
+                ":host ::ng-deep input {\n      width: 100%;\n    }"
+            ],
+            "templateUrl": [
+                "./partial-string-filter.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "characterLimit",
+                    "defaultValue": "2",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 48,
+                    "type": "number",
+                    "decorators": []
+                },
+                {
+                    "name": "debounceValue",
+                    "defaultValue": "300",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 49,
+                    "type": "number",
+                    "decorators": []
+                },
+                {
+                    "name": "placeholder",
+                    "defaultValue": "'Filter by string'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 50,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "propertyDisplayName",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 52,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "propertyKey",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 51,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "#changes",
+                    "defaultValue": "new Subject<string>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 56,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "#deleted",
+                    "defaultValue": "new EventEmitter()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 57,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "#form",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "UntypedFormGroup",
+                    "optional": false,
+                    "description": "",
+                    "line": 58,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "input",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ElementRef<HTMLInputElement>",
+                    "optional": true,
+                    "description": "",
+                    "line": 54,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'input'"
+                        }
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "accepts",
+                    "args": [
+                        {
+                            "name": "item",
+                            "type": "T",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 110,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "item",
+                            "type": "T",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "equals",
+                    "args": [
+                        {
+                            "name": "other",
+                            "type": "ClrDatagridFilterInterface<T | >",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 136,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "other",
+                            "type": "ClrDatagridFilterInterface<T | >",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "isActive",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 106,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 90,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 102,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 84,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "reset",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 145,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {\n  AfterViewInit,\n  Component,\n  ElementRef,\n  EventEmitter,\n  Input,\n  OnInit,\n  OnDestroy,\n  ViewChild,\n} from '@angular/core';\nimport {\n  UntypedFormControl,\n  UntypedFormGroup\n} from '@angular/forms';\nimport {\n  ClrDatagridFilter,\n  ClrDatagridFilterInterface,\n  ClrPopoverToggleService\n} from '@clr/angular';\nimport {\n  debounceTime,\n  Subject,\n  takeUntil\n} from 'rxjs';\n\n/* TODO: Autoreset if input length less then required */\n\n@Component({\n  selector: 'app-partial-string-filter',\n  templateUrl: './partial-string-filter.component.html',\n  styles: [\n    `:host ::ng-deep .clr-form-control:first-child {\n      margin-top: 0;\n    }`,\n    `:host ::ng-deep .clr-control-container {\n      width: 100%;\n    }`,\n    `:host ::ng-deep .btn-block {\n      margin-top: 1rem;\n    }`,\n    `:host ::ng-deep input {\n      width: 100%;\n    }`\n  ]\n})\nexport class PartialStringFilterComponent<T> implements ClrDatagridFilterInterface<T>, OnInit, OnDestroy, AfterViewInit {\n\n  @Input() characterLimit = 2;\n  @Input() debounceValue = 300;\n  @Input() placeholder = 'Filter by string';\n  @Input() propertyKey?: string;\n  @Input() propertyDisplayName?: string;\n\n  @ViewChild('input') input?: ElementRef<HTMLInputElement>;\n\n  #changes = new Subject<string>();\n  #deleted = new EventEmitter();\n  #form: UntypedFormGroup;\n\n  constructor(\n    private filterContainer: ClrDatagridFilter,\n    private smartToggleService: ClrPopoverToggleService\n  ) {\n\n    this.#form = new UntypedFormGroup({\n      'input': new UntypedFormControl('')\n    });\n\n    this.#form.get('input')?.valueChanges\n      .pipe(\n        takeUntil(this.#deleted),\n        debounceTime(this.debounceValue)\n      )\n      .subscribe(value => {\n        const isValidValue = 'string' === typeof value && value.length >= this.characterLimit;\n        if (isValidValue) {\n          this.#changes.next(value);\n        }\n      });\n\n    this.filterContainer.setFilter(this);\n  }\n\n  ngOnInit(): void {\n    if ('undefined' === typeof this.propertyDisplayName) {\n      this.propertyDisplayName = this.propertyKey;\n    }\n  }\n\n  ngAfterViewInit(): void {\n    this.smartToggleService.openChange\n      .pipe(takeUntil(this.#deleted))\n      .subscribe(() => {\n        if (this.input) {\n          setTimeout(() => {\n            this.input?.nativeElement.focus();\n          });\n        }\n      });\n  }\n\n  ngOnDestroy(): void {\n    this.#deleted.emit();\n  }\n\n  isActive(): boolean {\n    return !!this.value && !!this.propertyKey;\n  }\n\n  accepts(item: T): boolean {\n\n    if (!Object(item).hasOwnProperty(this.propertyKey)) {\n      return false;\n    }\n\n    const propertyValue = item[this.propertyKey as keyof typeof item];\n    if ('string' !== typeof propertyValue) {\n      return false;\n    }\n\n    const escape = (string: string) => string.replace(\n      /[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'\n    );\n\n    const test = new RegExp(\n      escape(this.value),\n      'i'\n    );\n\n    const match = propertyValue.match(test);\n\n    return Array.isArray(match);\n\n  }\n\n  equals(other: ClrDatagridFilterInterface<T, PartialStringFilterComponent<T>['state']>): boolean {\n    if (!other) {\n      return false;\n    }\n\n    return this.state?.property === other.state?.property\n      && this.state.value === other.state?.value;\n  }\n\n  reset() {\n    this.#form.reset();\n    this.#changes.next('');\n  }\n\n  get form() {\n    return this.#form;\n  }\n\n  get changes() {\n    return this.#changes.asObservable();\n  }\n\n  get state() {\n    return {\n      property: this.propertyKey,\n      value: this.value,\n    };\n  }\n\n  get value() {\n    return this.#form.get('input')?.value as string ?? '';\n  }\n\n  get isDirty() {\n    return this.#form.dirty;\n  }\n\n  get isToShort() {\n    return this.value.length < this.characterLimit;\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": ":host ::ng-deep .clr-form-control:first-child {\n      margin-top: 0;\n    }\n:host ::ng-deep .clr-control-container {\n      width: 100%;\n    }\n:host ::ng-deep .btn-block {\n      margin-top: 1rem;\n    }\n:host ::ng-deep input {\n      width: 100%;\n    }\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "filterContainer",
+                        "type": "ClrDatagridFilter",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "smartToggleService",
+                        "type": "ClrPopoverToggleService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 58,
+                "jsdoctags": [
+                    {
+                        "name": "filterContainer",
+                        "type": "ClrDatagridFilter",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "smartToggleService",
+                        "type": "ClrPopoverToggleService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "ClrDatagridFilterInterface",
+                "OnInit",
+                "OnDestroy",
+                "AfterViewInit"
+            ],
+            "accessors": {
+                "form": {
+                    "name": "form",
+                    "getSignature": {
+                        "name": "form",
+                        "type": "",
+                        "returnType": "",
+                        "line": 150
+                    }
+                },
+                "changes": {
+                    "name": "changes",
+                    "getSignature": {
+                        "name": "changes",
+                        "type": "",
+                        "returnType": "",
+                        "line": 154
+                    }
+                },
+                "state": {
+                    "name": "state",
+                    "getSignature": {
+                        "name": "state",
+                        "type": "",
+                        "returnType": "",
+                        "line": 158
+                    }
+                },
+                "value": {
+                    "name": "value",
+                    "getSignature": {
+                        "name": "value",
+                        "type": "",
+                        "returnType": "",
+                        "line": 165
+                    }
+                },
+                "isDirty": {
+                    "name": "isDirty",
+                    "getSignature": {
+                        "name": "isDirty",
+                        "type": "",
+                        "returnType": "",
+                        "line": 169
+                    }
+                },
+                "isToShort": {
+                    "name": "isToShort",
+                    "getSignature": {
+                        "name": "isToShort",
+                        "type": "",
+                        "returnType": "",
+                        "line": 173
+                    }
+                }
+            },
+            "templateData": "<form [formGroup]=\"form\">\n  <input\n    type=\"text\"\n    autocomplete=\"off\"\n    placeholder=\"{{ placeholder }}\"\n    clrInput\n    formControlName=\"input\"\n    #input\n  />\n  <clr-control-helper *ngIf=\"isToShort\">\n    Please provide at least {{ characterLimit }} characters\n  </clr-control-helper>\n  <clr-control-helper *ngIf=\"!isToShort\">\n    Searching '{{ propertyDisplayName }}' by partial match\n  </clr-control-helper>\n  <button\n    type=\"button\"\n    class=\"btn btn-icon btn-block btn-sm\"\n    (click)=\"reset()\"\n    [disabled]=\"!isDirty\"\n  >\n    <clr-icon shape=\"refresh\"></clr-icon>\n    RESET\n  </button>\n</form>\n"
+        }
+    ],
+    "modules": [
+        {
+            "name": "ConfirmationDialogModule",
+            "id": "module-ConfirmationDialogModule-fdfb7dc2fb22071d9d13fe57c4eee3c11a762125a079043f4d8f067f50e7128af599cdaadc01b115c2d18b4c1c464a8ab0b5796184c75c7d24dc61d61c6e2fe8",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/confirmation-dialog.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ConfirmationDialogComponent } from './confirmation-dialog.component';\nimport {ClrModalModule} from \"@clr/angular\";\nimport {BrowserAnimationsModule} from \"@angular/platform-browser/animations\";\n\n@NgModule({\n  declarations: [ConfirmationDialogComponent],\n  imports: [\n    CommonModule,\n    BrowserAnimationsModule,\n    ClrModalModule,\n  ],\n  exports: [ConfirmationDialogComponent],\n})\nexport class ConfirmationDialogModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "ConfirmationDialogComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "DatagridFiltersModule",
+            "id": "module-DatagridFiltersModule-d0f4cbfb6e3e78ddcf3b54586e3881bc3a2a6b968d920e312af60983b32677b6a024b6a492e66abc8992d77964e080b8cf0a33677354bf3be88fdf509a93694a",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/datagrid-filters/src/lib/datagrid-filters.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport {\n  EnumeratedValueFilterModule,\n  PartialStringFilterModule,\n} from './modules';\n\n@NgModule({\n  exports: [\n    EnumeratedValueFilterModule,\n    PartialStringFilterModule,\n  ]\n})\nexport class DatagridFiltersModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "EnumeratedValueFilterModule"
+                        },
+                        {
+                            "name": "PartialStringFilterModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "EnumeratedValueFilterModule",
+            "id": "module-EnumeratedValueFilterModule-94685e4e48398b745c39ce0adb0decff900483b0350ad3266b02ffb81cd515372a215123147e4b1a4e0a2a569fccfcfce656f57c2d7192eabddebcd00f057cc3",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/datagrid-filters/src/lib/modules/enumerated-value/enumerated-value-filter.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { ClarityModule } from '@clr/angular';\nimport { EnumeratedValueFilterComponent } from './components/enumerated-value-filter/enumerated-value-filter.component';\n\n@NgModule({\n  declarations: [\n    EnumeratedValueFilterComponent\n  ],\n  imports: [\n    CommonModule,\n    ReactiveFormsModule,\n    ClarityModule\n  ],\n  exports: [\n    EnumeratedValueFilterComponent\n  ]\n})\nexport class EnumeratedValueFilterModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "EnumeratedValueFilterComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "EnumeratedValueFilterComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "ExtraClarityLibModule",
+            "id": "module-ExtraClarityLibModule-7b3f79905ff4fd0013c63a6067bc2c4085564c04c1ee9c28d4b86641938a6f0f046933d6dee51b99d99fb829372ada3581c6fa83c366349bdcadff51fdcb316c",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport {ConfirmationDialogModule} from \"./modules/confirmation-dialog\";\n\nconst MODULES = [\n  ConfirmationDialogModule,\n]\n\n@NgModule({\n  imports: [\n    ...MODULES,\n  ],\n  exports: [\n    ...MODULES,\n  ],\n})\nexport class ExtraClarityLibModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "ConfirmationDialogModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "ConfirmationDialogModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "PartialStringFilterModule",
+            "id": "module-PartialStringFilterModule-96cd00c78499fc6e17fe80ec6fa2075a01846488f8aadd93e587b156f0aa0aef73aa0c4baabc81df8d47780ee4000737e15078c52f6eee11a4a26b5c4bbc6897",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/datagrid-filters/src/lib/modules/partial-string/partial-string-filter.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { ClarityModule } from '@clr/angular';\nimport { PartialStringFilterComponent } from './components/partial-string-filter/partial-string-filter.component';\n\n@NgModule({\n  declarations: [\n    PartialStringFilterComponent\n  ],\n  imports: [\n    CommonModule,\n    ReactiveFormsModule,\n    ClarityModule\n  ],\n  exports: [\n    PartialStringFilterComponent\n  ]\n})\nexport class PartialStringFilterModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "PartialStringFilterComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "PartialStringFilterComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        }
+    ],
+    "miscellaneous": {
+        "variables": [
+            {
+                "name": "context",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/datagrid-filters/src/test.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+            },
+            {
+                "name": "context",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/extra-clarity-lib/src/test.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+            },
+            {
+                "name": "MODULES",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "[]",
+                "defaultValue": "[\n  ConfirmationDialogModule,\n]"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "require",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/datagrid-filters/src/test.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "literal type"
+            },
+            {
+                "name": "require",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/extra-clarity-lib/src/test.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "literal type"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<ConfirmationDialogComponent>",
+                "defaultValue": "(args: ConfirmationDialogComponent) => ({\n  props: args,\n})"
+            }
+        ],
+        "functions": [],
+        "typealiases": [],
+        "enumerations": [
+            {
+                "name": "ConfirmationType",
+                "childs": [
+                    {
+                        "name": "Cancel",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "Reject",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "Accept",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "ctype": "miscellaneous",
+                "subtype": "enum",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/enums/confirmation-type.enum.ts"
+            }
+        ],
+        "groupedVariables": {
+            "projects/datagrid-filters/src/test.ts": [
+                {
+                    "name": "context",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/datagrid-filters/src/test.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+                },
+                {
+                    "name": "require",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/datagrid-filters/src/test.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "literal type"
+                }
+            ],
+            "projects/extra-clarity-lib/src/test.ts": [
+                {
+                    "name": "context",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/extra-clarity-lib/src/test.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+                },
+                {
+                    "name": "require",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/extra-clarity-lib/src/test.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "literal type"
+                }
+            ],
+            "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts": [
+                {
+                    "name": "MODULES",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "[]",
+                    "defaultValue": "[\n  ConfirmationDialogModule,\n]"
+                }
+            ],
+            "stories/confirmation-dialog/confirmation-dialog.stories.ts": [
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ConfirmationDialogComponent>",
+                    "defaultValue": "(args: ConfirmationDialogComponent) => ({\n  props: args,\n})"
+                }
+            ]
+        },
+        "groupedFunctions": {},
+        "groupedEnumerations": {
+            "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/enums/confirmation-type.enum.ts": [
+                {
+                    "name": "ConfirmationType",
+                    "childs": [
+                        {
+                            "name": "Cancel",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "Reject",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "Accept",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "ctype": "miscellaneous",
+                    "subtype": "enum",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/enums/confirmation-type.enum.ts"
+                }
+            ]
+        },
+        "groupedTypeAliases": {}
+    },
+    "routes": [],
+    "coverage": {
+        "count": 0,
+        "status": "low",
+        "files": [
+            {
+                "filePath": "projects/datagrid-filters/src/lib/modules/enumerated-value/components/enumerated-value-filter/enumerated-value-filter.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "EnumeratedValueFilterComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/16",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/datagrid-filters/src/lib/modules/partial-string/components/partial-string-filter/partial-string-filter.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "PartialStringFilterComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/18",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/datagrid-filters/src/test.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "context",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/datagrid-filters/src/test.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "require",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "MODULES",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/confirmation-dialog.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ConfirmationDialogComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/models/confirmation-dialog-config.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ConfirmationDialogConfig",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/services/confirmation-dialog.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "ConfirmationDialogService",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity-lib/src/test.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "context",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity-lib/src/test.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "require",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "stories/confirmation-dialog/confirmation-dialog.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ConfirmationDialogComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            }
+        ]
+    }
+}

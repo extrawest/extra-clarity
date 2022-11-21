@@ -4,8 +4,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "datagrid-filters": [
-        "dist/datagrid-filters"
+      "extra-clarity-lib": [
+        "dist/extra-clarity-lib"
       ]
     },
     "outDir": "./dist/out-tsc",
@@ -19,6 +19,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2020",

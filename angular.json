@@ -33,6 +33,37 @@
           }
         }
       }
+    },
+    "extra-clarity-lib": {
+      "projectType": "library",
+      "root": "projects/extra-clarity-lib",
+      "sourceRoot": "projects/extra-clarity-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/extra-clarity-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/extra-clarity-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/extra-clarity-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/extra-clarity-lib/src/test.ts",
+            "tsConfig": "projects/extra-clarity-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/extra-clarity-lib/karma.conf.js"
+          }
+        }
+      }
     }
   }
 }
