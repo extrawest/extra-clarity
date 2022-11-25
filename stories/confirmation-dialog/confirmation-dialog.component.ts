@@ -1,9 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {
   ConfirmationDialogConfig,
-  ConfirmationDialogService,
-  ConfirmationType
-} from "../../projects/extra-clarity-lib/src";
+  ConfirmationType, DialogService
+} from "../../projects/extra-clarity/src";
 
 @Component({
   selector: 'storybook-button',
@@ -16,19 +15,19 @@ import {
       Open confirmation dialog
     </button>
   `,
-  providers: [ConfirmationDialogService],
+  providers: [DialogService],
 })
 export class ConfirmationDialogComponent {
 
   @Input() public config: ConfirmationDialogConfig;
 
   constructor(
-    private readonly confirmationDialogService: ConfirmationDialogService,
+    private readonly dialogService: DialogService,
   ) {
   }
 
   onOpen(): void {
-    this.confirmationDialogService.open({
+    this.dialogService.confirm({
       title: 'Test',
       message: 'Test message',
     }).subscribe((value) => alert(this.getConfirmationMessage(value)));
@@ -41,6 +40,4 @@ export class ConfirmationDialogComponent {
       case ConfirmationType.Cancel: return 'Canceled';
     }
   }
-
-
 }

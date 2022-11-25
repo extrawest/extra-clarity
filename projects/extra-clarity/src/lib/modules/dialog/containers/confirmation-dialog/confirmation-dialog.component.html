@@ -1,0 +1,25 @@
+<clr-modal [clrModalOpen]="true" [clrModalClosable]="config.showCloseButton" (close)="onCancel()">
+  <h3 class="modal-title">{{ config.title }}</h3>
+
+  <div class="modal-body">
+    <p>{{ config.message }}</p>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline"
+      (click)="onReject()"
+    >
+      {{ config.rejectBtn?.label || 'Cancel' }}
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="onAccept()"
+    >
+      {{ config.acceptBtn?.label || 'Ok' }}
+    </button>
+  </div>
+</clr-modal>

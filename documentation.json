@@ -3,21 +3,21 @@
     "interfaces": [
         {
             "name": "ConfirmationDialogConfig",
-            "id": "interface-ConfirmationDialogConfig-6bdd48a07c13dfd09c9e746046809d684a3c018e397a1fd968da9bf8ad69f91aea29e2d5a190c96483dd3e451b87b47ab1f58799b1da8a158be21f2381e3b9a1",
-            "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/models/confirmation-dialog-config.model.ts",
+            "id": "interface-ConfirmationDialogConfig-4dcb5e9fc809ecd06dfe9e06f0c8cd99603f79ed99b4606116d06a3fc1d5f7733a3acd80c98823ce9bcd178cf42e7630886212174f02f6c65b5d1e67e04b52af",
+            "file": "projects/extra-clarity/src/lib/modules/dialog/models/confirmation-dialog-config.model.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "export interface ConfirmationDialogConfig {\n  title: string;\n  message: string;\n  closable?: boolean;\n}\n",
+            "sourceCode": "import {DialogButton} from \"./dialog-button.model\";\nimport {Size} from \"../../../types/size.type\";\n\nexport interface ConfirmationDialogConfig {\n  title: string;\n  message: string;\n  acceptBtn?: DialogButton;\n  rejectBtn?: DialogButton;\n  rejectBtnHidden?: boolean;\n  showCloseButton?: boolean;\n  size?: Size;\n}\n",
             "properties": [
                 {
-                    "name": "closable",
+                    "name": "acceptBtn",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "boolean",
+                    "type": "DialogButton",
                     "optional": true,
                     "description": "",
-                    "line": 4
+                    "line": 7
                 },
                 {
                     "name": "message",
@@ -26,10 +26,87 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 3
+                    "line": 6
+                },
+                {
+                    "name": "rejectBtn",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "DialogButton",
+                    "optional": true,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "rejectBtnHidden",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": true,
+                    "description": "",
+                    "line": 9
+                },
+                {
+                    "name": "showCloseButton",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": true,
+                    "description": "",
+                    "line": 10
+                },
+                {
+                    "name": "size",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Size",
+                    "optional": true,
+                    "description": "",
+                    "line": 11
                 },
                 {
                     "name": "title",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 5
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 165,
+            "methods": []
+        },
+        {
+            "name": "DialogButton",
+            "id": "interface-DialogButton-31a4018efc2df1685af1ef29afcb51e367a6b0db80b50b3e02b04b54eee89aaecee1506c0aa3f7995f6a9c0a24b0d9fbc7c201a34e84a3ff940aec02d1654178",
+            "file": "projects/extra-clarity/src/lib/modules/dialog/models/dialog-button.model.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export interface DialogButton {\n  label: string;\n  icon?: string;\n  classes?: string;\n}\n",
+            "properties": [
+                {
+                    "name": "classes",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 4
+                },
+                {
+                    "name": "icon",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 3
+                },
+                {
+                    "name": "label",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
@@ -45,22 +122,10 @@
     ],
     "injectables": [
         {
-            "name": "ConfirmationDialogService",
-            "id": "injectable-ConfirmationDialogService-896e590e8225dc3aedb553a7b319860fe706521404f3a4999ea431903da004f00be94bda5d6375524932948eec63153074912fe21d33abcd497aff8d26392b39",
-            "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/services/confirmation-dialog.service.ts",
+            "name": "DialogService",
+            "id": "injectable-DialogService-b1f3ad93035100d56a209742826be054602c57ac54d73862276c472dfb020bbf32dba7e55043cf296530435f359570829c64d3fea22836432c3d81bf5d06b51a",
+            "file": "projects/extra-clarity/src/lib/modules/dialog/services/dialog.service.ts",
             "properties": [
-                {
-                    "name": "componentRef",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "ComponentRef<ConfirmationDialogComponent>",
-                    "optional": false,
-                    "description": "",
-                    "line": 10,
-                    "modifierKind": [
-                        121
-                    ]
-                },
                 {
                     "name": "confirmationSubject$",
                     "deprecated": false,
@@ -68,13 +133,143 @@
                     "type": "Subject<ConfirmationType>",
                     "optional": false,
                     "description": "",
-                    "line": 9,
+                    "line": 10,
                     "modifierKind": [
                         121
                     ]
                 }
             ],
             "methods": [
+                {
+                    "name": "attachView",
+                    "args": [
+                        {
+                            "name": "componentRef",
+                            "type": "ComponentRef<T>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "line": 47,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        121
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "componentRef",
+                            "type": "ComponentRef<T>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "confirm",
+                    "args": [
+                        {
+                            "name": "config",
+                            "type": "ConfirmationDialogConfig",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<ConfirmationType>",
+                    "typeParameters": [],
+                    "line": 17,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "config",
+                            "type": "ConfirmationDialogConfig",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "createChildComponent",
+                    "args": [
+                        {
+                            "name": "component",
+                            "type": "Type<T>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "ComponentRef<T>",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "line": 43,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        121
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "component",
+                            "type": "Type<T>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "createComponent",
+                    "args": [
+                        {
+                            "name": "child",
+                            "type": "ComponentRef<T>",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "ComponentRef<ClrModal>",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "line": 36,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        121
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "child",
+                            "type": "ComponentRef<T>",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "onClose",
                     "args": [
@@ -88,7 +283,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 36,
+                    "line": 52,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -110,16 +305,18 @@
                     "name": "open",
                     "args": [
                         {
-                            "name": "config",
-                            "type": "ConfirmationDialogConfig",
+                            "name": "component",
+                            "type": "Type<T>",
                             "deprecated": false,
                             "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
-                    "returnType": "Observable<ConfirmationType>",
-                    "typeParameters": [],
-                    "line": 18,
+                    "returnType": "void",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "line": 32,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -127,8 +324,8 @@
                     ],
                     "jsdoctags": [
                         {
-                            "name": "config",
-                            "type": "ConfirmationDialogConfig",
+                            "name": "component",
+                            "type": "Type<T>",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -142,7 +339,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import {ApplicationRef, ComponentRef, createComponent, EnvironmentInjector, Injectable} from '@angular/core';\nimport {ConfirmationDialogComponent} from \"../confirmation-dialog.component\";\nimport {ConfirmationDialogConfig} from \"../models\";\nimport {Observable, Subject, take} from \"rxjs\";\nimport {ConfirmationType} from \"../enums\";\n\n@Injectable()\nexport class ConfirmationDialogService {\n  private confirmationSubject$: Subject<ConfirmationType>;\n  private componentRef: ComponentRef<ConfirmationDialogComponent>;\n\n  constructor(\n    private readonly applicationRef: ApplicationRef,\n    private readonly injector: EnvironmentInjector,\n  ) {\n  }\n\n  public open(config: ConfirmationDialogConfig): Observable<ConfirmationType> {\n    this.componentRef = createComponent(ConfirmationDialogComponent, {\n      environmentInjector: this.injector,\n    });\n\n    this.componentRef.setInput('config', config);\n\n    document.body.appendChild(this.componentRef.location.nativeElement);\n\n    this.applicationRef.attachView(this.componentRef.hostView);\n\n    this.confirmationSubject$ = new Subject<ConfirmationType>();\n\n    this.componentRef.instance.close.subscribe((type) => this.onClose(type));\n\n    return this.confirmationSubject$.asObservable();\n  }\n\n  private onClose(value: ConfirmationType): void {\n    this.componentRef.destroy();\n    this.confirmationSubject$.next(value);\n    this.confirmationSubject$.complete();\n  }\n}\n",
+            "sourceCode": "import {ApplicationRef, ComponentRef, createComponent, EnvironmentInjector, Injectable, Type} from '@angular/core';\nimport {ConfirmationDialogComponent} from \"../containers/confirmation-dialog/confirmation-dialog.component\";\nimport {ConfirmationDialogConfig} from \"../models\";\nimport {Observable, Subject, take} from \"rxjs\";\nimport {ConfirmationType} from \"../enums\";\nimport {ClrModal} from \"@clr/angular\";\n\n@Injectable()\nexport class DialogService {\n  private confirmationSubject$: Subject<ConfirmationType>;\n\n  constructor(\n    private readonly applicationRef: ApplicationRef,\n    private readonly injector: EnvironmentInjector,\n  ) {}\n\n  public confirm(config: ConfirmationDialogConfig): Observable<ConfirmationType> {\n    const childComponentRef = this.createChildComponent(ConfirmationDialogComponent);\n    const componentRef = this.createComponent(childComponentRef);\n\n    componentRef.setInput('config', config);\n\n    this.attachView(componentRef);\n\n    // this.confirmationSubject$ = new Subject<ConfirmationType>();\n\n    // componentRef.instance.close.subscribe((type) => this.onClose(type));\n\n    return this.confirmationSubject$.asObservable();\n  }\n\n  public open<T>(component: Type<T>): void {\n    // const componentRef = this.createComponent(component);\n  }\n\n  private createComponent<T>(child: ComponentRef<T>): ComponentRef<ClrModal> {\n    return createComponent(ClrModal, {\n      environmentInjector: this.injector,\n      projectableNodes: [child.location.nativeElement],\n    });\n  }\n\n  private createChildComponent<T>(component: Type<T>): ComponentRef<T> {\n    return createComponent(component, { environmentInjector: this.injector });\n  }\n\n  private attachView<T>(componentRef: ComponentRef<T>): void {\n    document.body.appendChild(componentRef.location.nativeElement);\n    this.applicationRef.attachView(componentRef.hostView);\n  }\n\n  private onClose(value: ConfirmationType): void {\n    this.confirmationSubject$.next(value);\n    this.confirmationSubject$.complete();\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -193,8 +390,136 @@
     "directives": [],
     "components": [
         {
+            "name": "AutoRefreshComponent",
+            "id": "component-AutoRefreshComponent-c500412ee86e34b9f419c70d4db5d450c044bbd589bfdd10473f0f084dd35e4a6e620c05e69baa34e66a98c55dac88b721897b3520faee77585458e801e60e06",
+            "file": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "lib-auto-refresh",
+            "styleUrls": [
+                "./auto-refresh.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./auto-refresh.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "disabled",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 16,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "period",
+                    "defaultValue": "DEFAULT_PERIOD_SEC",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 14,
+                    "type": "number",
+                    "decorators": []
+                },
+                {
+                    "name": "refreshing",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 15,
+                    "type": "boolean",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "refresh",
+                    "defaultValue": "new EventEmitter<void>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 18,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "toggle",
+                    "defaultValue": "new EventEmitter<boolean>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 19,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [
+                {
+                    "name": "timer$",
+                    "defaultValue": "timer(0, 1000)\n    .pipe(\n      map((seconds) => this.period - seconds),\n      take(this.period),\n      finalize(() => this.refresh.emit()),\n    )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23,
+                    "modifierKind": [
+                        123,
+                        144
+                    ]
+                },
+                {
+                    "name": "toggleControl",
+                    "defaultValue": "new FormControl<boolean>(!this.disabled, { nonNullable: true })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21,
+                    "modifierKind": [
+                        123,
+                        144
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "onToggle",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 30,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';\nimport {finalize, map, take, timer} from \"rxjs\";\nimport {FormControl} from \"@angular/forms\";\n\nconst DEFAULT_PERIOD_SEC = 60;\n\n@Component({\n  selector: 'lib-auto-refresh',\n  templateUrl: './auto-refresh.component.html',\n  styleUrls: ['./auto-refresh.component.css'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class AutoRefreshComponent {\n  @Input() public period: number = DEFAULT_PERIOD_SEC;\n  @Input() public refreshing: boolean;\n  @Input() public disabled: boolean = false;\n\n  @Output() refresh = new EventEmitter<void>();\n  @Output() toggle = new EventEmitter<boolean>();\n\n  public readonly toggleControl = new FormControl<boolean>(!this.disabled, { nonNullable: true });\n\n  public readonly timer$ = timer(0, 1000)\n    .pipe(\n      map((seconds) => this.period - seconds),\n      take(this.period),\n      finalize(() => this.refresh.emit()),\n    );\n\n  public onToggle(): void {\n    this.toggle.emit(this.toggleControl.value);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./auto-refresh.component.css"
+                }
+            ],
+            "stylesData": "",
+            "templateData": "<clr-toggle-container>\n  <clr-toggle-wrapper>\n    <input\n      type=\"checkbox\"\n      clrToggle\n      [formControl]=\"toggleControl\"\n      (change)=\"onToggle()\"\n    >\n    <label class=\"p5 text-label\">\n      <ng-container *ngIf=\"!toggleControl.value; else timer\">\n        Auto refresh disabled\n      </ng-container>\n\n      <ng-template #timer>\n        <ng-container *ngIf=\"!refreshing && timer$ | async as timer; else refresh\">\n          Auto refresh in {{ timer }} sec\n        </ng-container>\n\n        <ng-template #refresh>\n          Refreshing...\n        </ng-template>\n      </ng-template>\n    </label>\n  </clr-toggle-wrapper>\n</clr-toggle-container>\n"
+        },
+        {
             "name": "ConfirmationDialogComponent",
-            "id": "component-ConfirmationDialogComponent-3fa940668627f370074cee1a0bdb77a29d3e7c03df564bff6ae2732d917972d210de0c989421077d68b44bda6fd753abcc6f36ff513ba1271a50f120c121f967",
+            "id": "component-ConfirmationDialogComponent-b4b24a38e2680853683ff4c9b89f0af0939a839a0aadeeb5352e6954d34aba9955a32231265ae4a0d5ca28eb8e9fd62989c9d283b674463cae3860907f057e48",
             "file": "stories/confirmation-dialog/confirmation-dialog.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -202,7 +527,7 @@
             "outputs": [],
             "providers": [
                 {
-                    "name": "ConfirmationDialogService"
+                    "name": "DialogService"
                 }
             ],
             "selector": "storybook-button",
@@ -216,7 +541,7 @@
                     "name": "config",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 23,
+                    "line": 22,
                     "type": "ConfirmationDialogConfig",
                     "decorators": []
                 }
@@ -237,7 +562,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 37,
+                    "line": 36,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -261,7 +586,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 30,
+                    "line": 29,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -273,7 +598,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {\n  ConfirmationDialogConfig,\n  ConfirmationDialogService,\n  ConfirmationType\n} from \"../../projects/extra-clarity-lib/src\";\n\n@Component({\n  selector: 'storybook-button',\n  template: `\n    <button\n      (click)=\"onOpen()\"\n      class=\"btn btn-primary\"\n      type=\"button\"\n    >\n      Open confirmation dialog\n    </button>\n  `,\n  providers: [ConfirmationDialogService],\n})\nexport class ConfirmationDialogComponent {\n\n  @Input() public config: ConfirmationDialogConfig;\n\n  constructor(\n    private readonly confirmationDialogService: ConfirmationDialogService,\n  ) {\n  }\n\n  onOpen(): void {\n    this.confirmationDialogService.open({\n      title: 'Test',\n      message: 'Test message',\n    }).subscribe((value) => alert(this.getConfirmationMessage(value)));\n  }\n\n  private getConfirmationMessage(type: ConfirmationType): string {\n    switch (type) {\n      case ConfirmationType.Accept: return 'Accepted';\n      case ConfirmationType.Reject: return 'Rejected';\n      case ConfirmationType.Cancel: return 'Canceled';\n    }\n  }\n\n\n}\n",
+            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {\n  ConfirmationDialogConfig,\n  ConfirmationType, DialogService\n} from \"../../projects/extra-clarity/src\";\n\n@Component({\n  selector: 'storybook-button',\n  template: `\n    <button\n      (click)=\"onOpen()\"\n      class=\"btn btn-primary\"\n      type=\"button\"\n    >\n      Open confirmation dialog\n    </button>\n  `,\n  providers: [DialogService],\n})\nexport class ConfirmationDialogComponent {\n\n  @Input() public config: ConfirmationDialogConfig;\n\n  constructor(\n    private readonly dialogService: DialogService,\n  ) {\n  }\n\n  onOpen(): void {\n    this.dialogService.confirm({\n      title: 'Test',\n      message: 'Test message',\n    }).subscribe((value) => alert(this.getConfirmationMessage(value)));\n  }\n\n  private getConfirmationMessage(type: ConfirmationType): string {\n    switch (type) {\n      case ConfirmationType.Accept: return 'Accepted';\n      case ConfirmationType.Reject: return 'Rejected';\n      case ConfirmationType.Cancel: return 'Canceled';\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -284,17 +609,17 @@
                 "deprecationMessage": "",
                 "args": [
                     {
-                        "name": "confirmationDialogService",
-                        "type": "ConfirmationDialogService",
+                        "name": "dialogService",
+                        "type": "DialogService",
                         "deprecated": false,
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 23,
+                "line": 22,
                 "jsdoctags": [
                     {
-                        "name": "confirmationDialogService",
-                        "type": "ConfirmationDialogService",
+                        "name": "dialogService",
+                        "type": "DialogService",
                         "deprecated": false,
                         "deprecationMessage": "",
                         "tagName": {
@@ -306,17 +631,16 @@
         },
         {
             "name": "ConfirmationDialogComponent",
-            "id": "component-ConfirmationDialogComponent-283169e26c12440e9befb8846377fb7f45bf65164bb939263fd609d5868905308c2cbdf07f6f8c9164020fc54c4477a1f7ee5ebf9241838b951867edf886c6f9-1",
-            "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/confirmation-dialog.component.ts",
+            "id": "component-ConfirmationDialogComponent-fbfebec8f378e0bc12a738130872c935b21029cff57235b03283baf00f605fee68ea02b5644261745614aeb659e9045d49381bf11f851358b925383fc1740a6f-1",
+            "file": "projects/extra-clarity/src/lib/modules/dialog/containers/confirmation-dialog/confirmation-dialog.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "lib-confirmation-dialog",
-            "styleUrls": [
-                "./confirmation-dialog.component.css"
-            ],
+            "selector": "lib-dialog",
+            "styleUrls": [],
             "styles": [],
             "templateUrl": [
                 "./confirmation-dialog.component.html"
@@ -342,22 +666,34 @@
                     "type": "EventEmitter"
                 }
             ],
-            "propertiesClass": [
+            "propertiesClass": [],
+            "methodsClass": [
                 {
-                    "name": "ConfirmationType",
-                    "defaultValue": "ConfirmationType",
+                    "name": "onAccept",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 23,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 15,
                     "modifierKind": [
                         123
                     ]
-                }
-            ],
-            "methodsClass": [
+                },
+                {
+                    "name": "onCancel",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 15,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
                 {
                     "name": "onClose",
                     "args": [
@@ -371,11 +707,11 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 17,
+                    "line": 27,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
-                        123
+                        121
                     ],
                     "jsdoctags": [
                         {
@@ -388,6 +724,19 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "onReject",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 19,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
                 }
             ],
             "deprecated": false,
@@ -397,19 +746,147 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {Component, EventEmitter, Input, Output} from '@angular/core';\nimport {ConfirmationDialogConfig} from \"./models\";\nimport {ConfirmationType} from \"./enums\";\n\n@Component({\n  selector: 'lib-confirmation-dialog',\n  templateUrl: './confirmation-dialog.component.html',\n  styleUrls: ['./confirmation-dialog.component.css']\n})\nexport class ConfirmationDialogComponent {\n  @Input() public config: ConfirmationDialogConfig;\n\n  @Output() public close = new EventEmitter<ConfirmationType>();\n\n  public ConfirmationType = ConfirmationType;\n\n  public onClose(type: ConfirmationType): void {\n    this.close.emit(type);\n  }\n}\n",
+            "sourceCode": "import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';\nimport {ConfirmationDialogConfig} from \"../../models\";\nimport {ConfirmationType} from \"../../enums\";\n\n@Component({\n  selector: 'lib-dialog',\n  templateUrl: './confirmation-dialog.component.html',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class ConfirmationDialogComponent {\n  @Input() public config: ConfirmationDialogConfig;\n\n  @Output() public close = new EventEmitter<ConfirmationType>();\n\n  public onCancel(): void {\n    this.onClose(ConfirmationType.Cancel);\n  }\n\n  public onReject(): void {\n    this.onClose(ConfirmationType.Reject);\n  }\n\n  public onAccept(): void {\n    this.onClose(ConfirmationType.Accept);\n  }\n\n  private onClose(type: ConfirmationType): void {\n    this.close.emit(type);\n  }\n}\n",
             "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "",
-                    "styleUrl": "./confirmation-dialog.component.css"
-                }
-            ],
+            "styleUrlsData": "",
             "stylesData": "",
             "isDuplicate": true,
             "duplicateId": 1,
             "duplicateName": "ConfirmationDialogComponent-1",
-            "templateData": "<clr-modal [clrModalOpen]=\"true\" [clrModalClosable]=\"config.closable\" (close)=\"onClose(ConfirmationType.Cancel)\">\n  <h3 class=\"modal-title\">{{ config.title }}</h3>\n\n  <div class=\"modal-body\">\n    <p>{{ config.message }}</p>\n  </div>\n\n  <div class=\"modal-footer\">\n    <button type=\"button\" class=\"btn btn-outline\" (click)=\"onClose(ConfirmationType.Reject)\">\n      No\n    </button>\n\n    <button type=\"button\" class=\"btn btn-primary\" (click)=\"onClose(ConfirmationType.Accept)\">\n      Ok\n    </button>\n  </div>\n</clr-modal>\n"
+            "templateData": "<clr-modal [clrModalOpen]=\"true\" [clrModalClosable]=\"config.closable\" (close)=\"onCancel()\">\n  <h3 class=\"modal-title\">{{ config.title }}</h3>\n\n  <div class=\"modal-body\">\n    <p>{{ config.message }}</p>\n  </div>\n\n  <div class=\"modal-footer\">\n    <button\n      type=\"button\"\n      class=\"btn btn-outline\"\n      (click)=\"onReject()\"\n    >\n      {{ config.rejectBtn?.label || 'Cancel' }}\n    </button>\n\n    <button\n      type=\"button\"\n      class=\"btn btn-primary\"\n      (click)=\"onAccept()\"\n    >\n      {{ config.acceptBtn?.label || 'Ok' }}\n    </button>\n  </div>\n</clr-modal>\n"
+        },
+        {
+            "name": "ConfirmationDialogStory",
+            "id": "component-ConfirmationDialogStory-25617eba79d56c8cb4576ae063082da9a5d64f27cf13946bf64e1a86bacac10c4742acfeacfbe5b16e9a272586114b36ae096ca192f63f122c11f075bae37ed5",
+            "file": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-dialog-story",
+            "styleUrls": [],
+            "styles": [],
+            "template": "  123\n<button class=\"btn btn-primary\" (click)=\"openDialog()\">Open Modal</button>\n\t",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "acceptBtn",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 25,
+                    "type": "DialogButton",
+                    "decorators": []
+                },
+                {
+                    "name": "closable",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 28,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "message",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 24,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "rejectBtn",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 26,
+                    "type": "DialogButton",
+                    "decorators": []
+                },
+                {
+                    "name": "rejectBtnHidden",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 27,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "showCloseButton",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 30,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "size",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 29,
+                    "type": "Size",
+                    "decorators": []
+                },
+                {
+                    "name": "title",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 23,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "openDialog",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 34,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Meta } from '@storybook/angular/types-6-0';\nimport {moduleMetadata} from \"@storybook/angular\";\nimport {\n  ConfirmationDialogModule,\n  ConfirmationDialogComponent,\n  DialogService\n} from \"../../projects/extra-clarity/src\";\nimport {Component, Input} from \"@angular/core\";\nimport {\n  DialogButton\n} from \"../../projects/extra-clarity/src/lib/modules/dialog/models/dialog-button.model\";\nimport {Size} from \"../../projects/extra-clarity/src/lib/types/size.type\";\n\n@Component({\n  selector: \"app-dialog-story\",\n  template: `\n    123\n\t\t<button class=\"btn btn-primary\" (click)=\"openDialog()\">Open Modal</button>\n\t`\n})\nclass ConfirmationDialogStory {\n  @Input() title: string;\n  @Input() message: string;\n  @Input() acceptBtn: DialogButton;\n  @Input() rejectBtn: DialogButton;\n  @Input() rejectBtnHidden: boolean;\n  @Input() closable: boolean;\n  @Input() size: Size;\n  @Input() showCloseButton: boolean;\n\n  constructor(private readonly dialogService: DialogService) {}\n\n  openDialog() {\n    this.dialogService.confirm({\n      title: this.title,\n      message: this.message,\n      acceptBtn: this.acceptBtn,\n      rejectBtn: this.rejectBtn,\n      rejectBtnHidden: this.rejectBtnHidden,\n      size: this.size,\n      showCloseButton: this.showCloseButton\n    });\n  }\n}\n\n// More on default export: https://storybook.js.org/docs/angular/writing-stories/introduction#default-export\nexport default {\n  title: 'Confirmation dialog',\n  component: ConfirmationDialogStory,\n  decorators: [\n    moduleMetadata({\n      imports: [ConfirmationDialogModule],\n    }),\n  ],\n} as Meta;\n\n// More on component templates: https://storybook.js.org/docs/angular/writing-stories/introduction#using-args\nconst Template = ({  }) => ({\n  props: {\n\n  },\n  component: ConfirmationDialogComponent\n});\n\nexport const Primary = Template.bind({});\n// More on args: https://storybook.js.org/docs/angular/writing-stories/args\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "dialogService",
+                        "type": "DialogService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 30,
+                "jsdoctags": [
+                    {
+                        "name": "dialogService",
+                        "type": "DialogService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
         },
         {
             "name": "EnumeratedValueFilterComponent",
@@ -1068,22 +1545,155 @@
                 }
             },
             "templateData": "<form [formGroup]=\"form\">\n  <input\n    type=\"text\"\n    autocomplete=\"off\"\n    placeholder=\"{{ placeholder }}\"\n    clrInput\n    formControlName=\"input\"\n    #input\n  />\n  <clr-control-helper *ngIf=\"isToShort\">\n    Please provide at least {{ characterLimit }} characters\n  </clr-control-helper>\n  <clr-control-helper *ngIf=\"!isToShort\">\n    Searching '{{ propertyDisplayName }}' by partial match\n  </clr-control-helper>\n  <button\n    type=\"button\"\n    class=\"btn btn-icon btn-block btn-sm\"\n    (click)=\"reset()\"\n    [disabled]=\"!isDirty\"\n  >\n    <clr-icon shape=\"refresh\"></clr-icon>\n    RESET\n  </button>\n</form>\n"
+        },
+        {
+            "name": "ProcessingButtonComponent",
+            "id": "component-ProcessingButtonComponent-233bf9821972cd902d9d703c4b5d2ebdfaf5446e41cc618f214b5656d5992618fd73212db3a3c74a13286af518856bb74768d25ed7342776cda13e1ff4080be6",
+            "file": "projects/extra-clarity/src/lib/modules/processing-button/processing-button.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "lib-processing-button",
+            "styleUrls": [
+                "./processing-button.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./processing-button.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "classes",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 10,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "disabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 11,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "processing",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 12,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
+                    "name": "title",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 13,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "loading",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {ChangeDetectionStrategy, Component, Input} from '@angular/core';\n\n@Component({\n  selector: 'lib-processing-button',\n  templateUrl: './processing-button.component.html',\n  styleUrls: ['./processing-button.component.css'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class ProcessingButtonComponent {\n  @Input() public classes: string;\n  @Input() public disabled: boolean;\n  @Input() public processing: boolean;\n  @Input() public title: string;\n\n  loading = false;\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./processing-button.component.css"
+                }
+            ],
+            "stylesData": "",
+            "templateData": "<!--<button-->\n<!--  class=\"lodx-button {{ classes }}\"-->\n<!--  [class.btn-processing]=\"processing\"-->\n<!--  [disabled]=\"disabled || processing\"-->\n<!--  type=\"submit\"-->\n<!--&gt;-->\n<!--  <span>{{ title }}</span>-->\n<!--  <clr-spinner-->\n<!--    [clrInverse]=\"clrInverse\"-->\n<!--    [clrSmall]=\"clrSmall\"-->\n<!--    [clrMedium]=\"clrMedium\"-->\n<!--    [clrInline]=\"clrInline\"-->\n<!--  >-->\n<!--    {{text}}-->\n<!--  </clr-spinner>-->\n<!--</button>-->\n\n<button [clrLoading]=\"loading\" class=\"btn btn-primary\" (click)=\"loading = !loading\">test</button>\n"
         }
     ],
     "modules": [
         {
-            "name": "ConfirmationDialogModule",
-            "id": "module-ConfirmationDialogModule-fdfb7dc2fb22071d9d13fe57c4eee3c11a762125a079043f4d8f067f50e7128af599cdaadc01b115c2d18b4c1c464a8ab0b5796184c75c7d24dc61d61c6e2fe8",
+            "name": "AutoRefreshModule",
+            "id": "module-AutoRefreshModule-2b493562b623108f7e310e52d05aca500c29d43f971491163540c3c043e6df763b10118d0fa575d3be3488dfa5aa725319193e385e23592ba8e7519b43918ae1",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/confirmation-dialog.module.ts",
+            "file": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ConfirmationDialogComponent } from './confirmation-dialog.component';\nimport {ClrModalModule} from \"@clr/angular\";\nimport {BrowserAnimationsModule} from \"@angular/platform-browser/animations\";\n\n@NgModule({\n  declarations: [ConfirmationDialogComponent],\n  imports: [\n    CommonModule,\n    BrowserAnimationsModule,\n    ClrModalModule,\n  ],\n  exports: [ConfirmationDialogComponent],\n})\nexport class ConfirmationDialogModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { AutoRefreshComponent } from './auto-refresh.component';\nimport {ClrCheckboxModule} from \"@clr/angular\";\nimport {ReactiveFormsModule} from \"@angular/forms\";\n\n@NgModule({\n  declarations: [AutoRefreshComponent],\n  imports: [\n    CommonModule,\n    ReactiveFormsModule,\n    ClrCheckboxModule,\n  ],\n  exports: [AutoRefreshComponent],\n})\nexport class AutoRefreshModule { }\n",
             "children": [
                 {
                     "type": "providers",
                     "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "AutoRefreshComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "AutoRefreshComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "ConfirmationDialogModule",
+            "id": "module-ConfirmationDialogModule-aad5f2ef2f39e72884c1d81919e6da08a3afb7c17c5f9d82414bcc89b3de3fc3934efd0862c6353b84951a3a1794ad36acac9def6c055dc7b6d8e4bcd5447b62",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/extra-clarity/src/lib/modules/dialog/confirmation-dialog.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ConfirmationDialogComponent } from './containers';\nimport {ClrModalModule} from \"@clr/angular\";\nimport {BrowserAnimationsModule} from \"@angular/platform-browser/animations\";\nimport {DialogService} from \"./services\";\n\n@NgModule({\n  declarations: [ConfirmationDialogComponent],\n  imports: [\n    CommonModule,\n    BrowserAnimationsModule,\n    ClrModalModule,\n  ],\n  providers: [DialogService],\n})\nexport class ConfirmationDialogModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": [
+                        {
+                            "name": "DialogService"
+                        }
+                    ]
                 },
                 {
                     "type": "declarations",
@@ -1200,13 +1810,13 @@
         },
         {
             "name": "ExtraClarityLibModule",
-            "id": "module-ExtraClarityLibModule-7b3f79905ff4fd0013c63a6067bc2c4085564c04c1ee9c28d4b86641938a6f0f046933d6dee51b99d99fb829372ada3581c6fa83c366349bdcadff51fdcb316c",
+            "id": "module-ExtraClarityLibModule-04aea02fca5f8b015a27e63665b528dbe9d4f198fd3b7c7c6eeda464f5af7c2a5c1e30da5c7f49f68ffe57a93001ec2af96af807aa36331fc34ff3efb7e0b072",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts",
+            "file": "projects/extra-clarity/src/lib/extra-clarity.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport {ConfirmationDialogModule} from \"./modules/confirmation-dialog\";\n\nconst MODULES = [\n  ConfirmationDialogModule,\n]\n\n@NgModule({\n  imports: [\n    ...MODULES,\n  ],\n  exports: [\n    ...MODULES,\n  ],\n})\nexport class ExtraClarityLibModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport {ConfirmationDialogModule} from \"./modules/dialog\";\n\nconst MODULES = [\n  ConfirmationDialogModule,\n]\n\n@NgModule({\n  imports: [\n    ...MODULES,\n  ],\n  exports: [\n    ...MODULES,\n  ],\n})\nexport class ExtraClarityLibModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -1285,6 +1895,50 @@
                     "elements": []
                 }
             ]
+        },
+        {
+            "name": "ProcessingButtonModule",
+            "id": "module-ProcessingButtonModule-9e8aa74d56d8498242549dc596e63f86a58d9a9c9727c26f81505c6048144cd8bb1314a7861f5e95e63a05bffd4109a9f86f3b1aacb362727141f09698b5018c",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/extra-clarity/src/lib/modules/processing-button/processing-button.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ProcessingButtonComponent } from './processing-button.component';\nimport {ClrLoadingButtonModule, ClrLoadingModule} from \"@clr/angular\";\nimport {BrowserAnimationsModule} from \"@angular/platform-browser/animations\";\n\n\n\n@NgModule({\n  declarations: [ProcessingButtonComponent],\n  imports: [\n    CommonModule,\n    BrowserAnimationsModule,\n    ClrLoadingButtonModule,\n    ClrLoadingModule,\n  ],\n  exports: [ProcessingButtonComponent],\n})\nexport class ProcessingButtonModule { }\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "ProcessingButtonComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "ProcessingButtonComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
         }
     ],
     "miscellaneous": {
@@ -1303,17 +1957,27 @@
                 "name": "context",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/extra-clarity-lib/src/test.ts",
+                "file": "projects/extra-clarity/src/test.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
             },
             {
+                "name": "DEFAULT_PERIOD_SEC",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "number",
+                "defaultValue": "60"
+            },
+            {
                 "name": "MODULES",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts",
+                "file": "projects/extra-clarity/src/lib/extra-clarity.module.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "[]",
@@ -1324,6 +1988,26 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "stories/auto-refresh/auto-refresh.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "stories/processing-button/processing-button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -1342,7 +2026,7 @@
                 "name": "require",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/extra-clarity-lib/src/test.ts",
+                "file": "projects/extra-clarity/src/test.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "literal type"
@@ -1354,12 +2038,44 @@
                 "file": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<ConfirmationDialogComponent>",
-                "defaultValue": "(args: ConfirmationDialogComponent) => ({\n  props: args,\n})"
+                "type": "",
+                "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: ConfirmationDialogComponent\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "stories/auto-refresh/auto-refresh.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: AutoRefreshComponent\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "stories/processing-button/processing-button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: ProcessingButtonComponent,\n})"
             }
         ],
         "functions": [],
-        "typealiases": [],
+        "typealiases": [
+            {
+                "name": "Size",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+                "file": "projects/extra-clarity/src/lib/types/size.type.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 186
+            }
+        ],
         "enumerations": [
             {
                 "name": "ConfirmationType",
@@ -1385,7 +2101,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
-                "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/enums/confirmation-type.enum.ts"
+                "file": "projects/extra-clarity/src/lib/modules/dialog/enums/confirmation-type.enum.ts"
             }
         ],
         "groupedVariables": {
@@ -1410,12 +2126,12 @@
                     "type": "literal type"
                 }
             ],
-            "projects/extra-clarity-lib/src/test.ts": [
+            "projects/extra-clarity/src/test.ts": [
                 {
                     "name": "context",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/extra-clarity-lib/src/test.ts",
+                    "file": "projects/extra-clarity/src/test.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -1425,18 +2141,30 @@
                     "name": "require",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/extra-clarity-lib/src/test.ts",
+                    "file": "projects/extra-clarity/src/test.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "literal type"
                 }
             ],
-            "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts": [
+            "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts": [
+                {
+                    "name": "DEFAULT_PERIOD_SEC",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "defaultValue": "60"
+                }
+            ],
+            "projects/extra-clarity/src/lib/extra-clarity.module.ts": [
                 {
                     "name": "MODULES",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts",
+                    "file": "projects/extra-clarity/src/lib/extra-clarity.module.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "[]",
@@ -1461,14 +2189,58 @@
                     "file": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Story<ConfirmationDialogComponent>",
-                    "defaultValue": "(args: ConfirmationDialogComponent) => ({\n  props: args,\n})"
+                    "type": "",
+                    "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: ConfirmationDialogComponent\n})"
+                }
+            ],
+            "stories/auto-refresh/auto-refresh.stories.ts": [
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "stories/auto-refresh/auto-refresh.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "stories/auto-refresh/auto-refresh.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: AutoRefreshComponent\n})"
+                }
+            ],
+            "stories/processing-button/processing-button.stories.ts": [
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "stories/processing-button/processing-button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "stories/processing-button/processing-button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: ProcessingButtonComponent,\n})"
                 }
             ]
         },
         "groupedFunctions": {},
         "groupedEnumerations": {
-            "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/enums/confirmation-type.enum.ts": [
+            "projects/extra-clarity/src/lib/modules/dialog/enums/confirmation-type.enum.ts": [
                 {
                     "name": "ConfirmationType",
                     "childs": [
@@ -1493,11 +2265,25 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
-                    "file": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/enums/confirmation-type.enum.ts"
+                    "file": "projects/extra-clarity/src/lib/modules/dialog/enums/confirmation-type.enum.ts"
                 }
             ]
         },
-        "groupedTypeAliases": {}
+        "groupedTypeAliases": {
+            "projects/extra-clarity/src/lib/types/size.type.ts": [
+                {
+                    "name": "Size",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+                    "file": "projects/extra-clarity/src/lib/types/size.type.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 186
+                }
+            ]
+        }
     },
     "routes": [],
     "coverage": {
@@ -1543,7 +2329,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity-lib/src/lib/extra-clarity-lib.module.ts",
+                "filePath": "projects/extra-clarity/src/lib/extra-clarity.module.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1553,34 +2339,71 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/confirmation-dialog.component.ts",
+                "filePath": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AutoRefreshComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DEFAULT_PERIOD_SEC",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity/src/lib/modules/dialog/containers/confirmation-dialog/confirmation-dialog.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "ConfirmationDialogComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/5",
+                "coverageCount": "0/7",
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/models/confirmation-dialog-config.model.ts",
+                "filePath": "projects/extra-clarity/src/lib/modules/dialog/models/confirmation-dialog-config.model.ts",
                 "type": "interface",
                 "linktype": "interface",
                 "name": "ConfirmationDialogConfig",
+                "coveragePercent": 0,
+                "coverageCount": "0/8",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity/src/lib/modules/dialog/models/dialog-button.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "DialogButton",
                 "coveragePercent": 0,
                 "coverageCount": "0/4",
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity-lib/src/lib/modules/confirmation-dialog/services/confirmation-dialog.service.ts",
+                "filePath": "projects/extra-clarity/src/lib/modules/dialog/services/dialog.service.ts",
                 "type": "injectable",
                 "linktype": "injectable",
-                "name": "ConfirmationDialogService",
+                "name": "DialogService",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/extra-clarity/src/lib/modules/processing-button/processing-button.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ProcessingButtonComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/6",
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity-lib/src/test.ts",
+                "filePath": "projects/extra-clarity/src/test.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1590,11 +2413,31 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity-lib/src/test.ts",
+                "filePath": "projects/extra-clarity/src/test.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "require",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "stories/auto-refresh/auto-refresh.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "stories/auto-refresh/auto-refresh.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -1610,6 +2453,15 @@
             },
             {
                 "filePath": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ConfirmationDialogStory",
+                "coveragePercent": 0,
+                "coverageCount": "0/11",
+                "status": "low"
+            },
+            {
+                "filePath": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1620,6 +2472,26 @@
             },
             {
                 "filePath": "stories/confirmation-dialog/confirmation-dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "stories/processing-button/processing-button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "stories/processing-button/processing-button.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
