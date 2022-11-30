@@ -1,8 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {
-  ConfirmationDialogConfig,
-  ConfirmationType, DialogService
-} from "../../projects/extra-clarity/src";
+import {DialogService} from "../../projects/extra-clarity/src";
 
 @Component({
   selector: 'storybook-button',
