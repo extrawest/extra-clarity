@@ -15,8 +15,8 @@ export class AutoRefreshComponent {
   @Input() public refreshing: boolean;
   @Input() public disabled: boolean = false;
 
-  @Output() refresh = new EventEmitter<void>();
-  @Output() toggle = new EventEmitter<boolean>();
+  @Output() public refresh = new EventEmitter<void>();
+  @Output() public toggle = new EventEmitter<boolean>();
 
   public readonly toggleControl = new FormControl<boolean>(!this.disabled, { nonNullable: true });
 
