@@ -1,25 +1,22 @@
-<clr-modal [clrModalOpen]="true" [clrModalClosable]="config.showCloseButton" (close)="onCancel()">
-  <h3 class="modal-title">{{ config.title }}</h3>
+<p>{{ config.message }}</p>
 
-  <div class="modal-body">
-    <p>{{ config.message }}</p>
-  </div>
+<div class="modal-footer">
+  <button
+    *ngIf="!config.rejectBtnHidden"
+    type="button"
+    class="btn btn-outline"
+    [ngClass]="config.rejectBtn?.classes"
+    (click)="onReject()"
+  >
+    {{ config.rejectBtn?.label || 'Cancel' }}
+  </button>
 
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline"
-      (click)="onReject()"
-    >
-      {{ config.rejectBtn?.label || 'Cancel' }}
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="onAccept()"
-    >
-      {{ config.acceptBtn?.label || 'Ok' }}
-    </button>
-  </div>
-</clr-modal>
+  <button
+    type="button"
+    class="btn btn-primary"
+    [ngClass]="config.acceptBtn?.classes"
+    (click)="onAccept()"
+  >
+    {{ config.acceptBtn?.label || 'Ok' }}
+  </button>
+</div>

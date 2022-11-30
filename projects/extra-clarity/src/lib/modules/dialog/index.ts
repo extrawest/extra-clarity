@@ -1,5 +1,2 @@
-export * from './enums';
-export * from './models';
-export * from './services';
-export * from './containers/confirmation-dialog/confirmation-dialog.component';
-export * from './confirmation-dialog.module';
+export * from './services/dialog.service';
+export * from './dialog.module';

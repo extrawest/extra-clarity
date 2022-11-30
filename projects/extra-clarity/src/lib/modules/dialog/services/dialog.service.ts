@@ -6,39 +6,34 @@ import {
   Injectable,
   Type
 } from '@angular/core';
-import {ConfirmationDialogComponent} from "../containers";
-import {ConfirmationDialogConfig} from "../models";
-import {Observable, Subject} from "rxjs";
-import {ConfirmationType} from "../enums";
+import {ConfirmDialogConfig, DialogConfig} from "../dialog-config";
+import {BaseDialogContainerComponent, ConfirmationDialogComponent} from "../containers";
+import {DialogRef} from "../dialog-ref";
 
 @Injectable()
 export class DialogService {
-  private confirmationSubject$: Subject<ConfirmationType>;
-
   constructor(
     private readonly applicationRef: ApplicationRef,
     private readonly injector: EnvironmentInjector,
   ) {}
 
-  public confirm(config: ConfirmationDialogConfig): Observable<ConfirmationType> {
-    const componentRef = this.createComponent(ConfirmationDialogComponent);
-
-    componentRef.setInput('config', config);
-
-    this.attachView(componentRef);
-
-    this.confirmationSubject$ = new Subject<ConfirmationType>();
-
-    componentRef.instance.close.subscribe((type) => {
-      this.destroyComponent(componentRef);
-      this.emitConfirmValue(type);
-    });
-
-    return this.confirmationSubject$.asObservable();
+  public confirm(config: ConfirmDialogConfig): DialogRef {
+    return this.open(ConfirmationDialogComponent, config);
   }
 
-  public open<T>(component: Type<T>): void {
-    // const componentRef = this.createComponent(component);
+  public open<T>(component: Type<T>, config?: DialogConfig): DialogRef {
+    const mergedConfig = { ...(new DialogConfig()), ...config };
+    const containerRef = this.createComponent(BaseDialogContainerComponent);
+    const containerInstance = containerRef.instance;
+    const dialogRef = new DialogRef(mergedConfig, containerRef);
+
+    containerInstance.component = component;
+    containerInstance.config = mergedConfig;
+    containerInstance.dialogRef = dialogRef;
+
+    this.attachView(containerRef);
+
+    return dialogRef;
   }
 
   private createComponent<T>(component: Type<T>): ComponentRef<T> {
@@ -50,14 +45,5 @@ export class DialogService {
   private attachView<T>(componentRef: ComponentRef<T>): void {
     document.body.appendChild(componentRef.location.nativeElement);
     this.applicationRef.attachView(componentRef.hostView);
-  }
-
-  private destroyComponent<T>(componentRef: ComponentRef<T>): void {
-    componentRef.destroy();
-  }
-
-  private emitConfirmValue(value: ConfirmationType): void {
-    this.confirmationSubject$.next(value);
-    this.confirmationSubject$.complete();
   }
 }

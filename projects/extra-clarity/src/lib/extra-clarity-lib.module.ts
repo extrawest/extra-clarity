@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
-import {ConfirmationDialogModule} from "./modules/dialog";
+import { AutoRefreshModule } from './modules';
+import {DialogModule} from "./modules/dialog";
 
 const MODULES = [
-  ConfirmationDialogModule,
+  AutoRefreshModule,
+  DialogModule,
 ]
 
 @NgModule({

@@ -1,6 +1,9 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {ConfirmationDialogConfig} from "../../models";
-import {ConfirmationType} from "../../enums";
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
+import {ConfirmationType} from "../../enums/confirmation-type.enum";
+import {ConfirmDialogConfig} from "../../dialog-config";
+import {DialogRef} from "../../dialog-ref";
+import {DIALOG_CONFIG} from "../../../tokens/dialog-config.token";
+import {isPromise} from "rxjs/internal/util/isPromise";
 
 @Component({
   selector: 'lib-confirmation-dialog',
@@ -8,23 +11,37 @@ import {ConfirmationType} from "../../enums";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationDialogComponent {
-  @Input() public config: ConfirmationDialogConfig;
-
-  @Output() public close = new EventEmitter<ConfirmationType>();
-
-  public onCancel(): void {
-    this.onClose(ConfirmationType.Cancel);
-  }
+  constructor(
+    @Inject(DIALOG_CONFIG) public readonly config: ConfirmDialogConfig,
+    private readonly dialogRef: DialogRef,
+  ) {}
 
   public onReject(): void {
-    this.onClose(ConfirmationType.Reject);
+    this.trigger(ConfirmationType.Reject);
   }
 
   public onAccept(): void {
-    this.onClose(ConfirmationType.Accept);
+    this.trigger(ConfirmationType.Accept);
   }
 
-  private onClose(type: ConfirmationType): void {
-    this.close.emit(type);
+  private async trigger(action: ConfirmationType): Promise<void> {
+    const trigger = {
+      [ConfirmationType.Accept]: this.config.onAccept,
+      [ConfirmationType.Reject]: this.config.onReject,
+    }[action];
+
+    if (typeof trigger === 'function') {
+      const result = trigger();
+
+      if (isPromise(result)) {
+        await result;
+      }
+    }
+
+    this.close(action);
+  }
+
+  private close(result: ConfirmationType): void {
+    this.dialogRef.close(result);
   }
 }
