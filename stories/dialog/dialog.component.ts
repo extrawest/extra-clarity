@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {DialogService
 } from "../../projects/extra-clarity/src";
-import {ConfirmDialogConfig} from "../../projects/extra-clarity/src/lib/modules/dialog/dialog-config";
+import {DialogConfig} from "../../projects/extra-clarity/src/lib/modules/dialog/dialog-config";
+import {FormDialogComponent} from "./form-dialog/form-dialog.component";
 
 @Component({
   selector: 'storybook-dialog',
@@ -11,22 +12,21 @@ import {ConfirmDialogConfig} from "../../projects/extra-clarity/src/lib/modules/
       class="btn btn-primary"
       type="button"
     >
-      Open generic dialog
+      Open dialog
     </button>
   `,
   providers: [DialogService],
 })
 export class DialogComponent {
-  @Input() config: ConfirmDialogConfig;
+  @Input() config: DialogConfig;
 
-  constructor(private readonly dialogService: DialogService) {
-  }
+  constructor(private readonly dialogService: DialogService) {}
 
-  onOpen(): void {
-    this.dialogService.confirm({
+  public onOpen(): void {
+    this.dialogService.open(FormDialogComponent, {
       ...this.config,
     })
       .afterClosed()
-      .subscribe();
+      .subscribe((v) => console.log(v));
   }
 }

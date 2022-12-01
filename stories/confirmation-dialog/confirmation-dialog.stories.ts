@@ -19,23 +19,24 @@ const defaultStory: Story = args => ({
 const defaultParameters: Parameters = {
   title: 'Dialog/Confirmation Dialog',
   argTypes: {
-    // inputs
-    clrModalLabelledById: { defaultValue: '' },
-    closable: { defaultValue: true, control: { type: 'checkbox', value: true } },
     size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },
-
-    // // outputs
-    // clrModalAlternateClose: { control: { disable: true } },
-    // clrModalOpenChange: { control: { disable: true } },
   },
   args: {
-    // story helpers
-    title: 'Modal Title',
-    message: 'Test confirmation confirmation-dialog message...',
-
-    // outputs
-    clrModalAlternateClose: action('clrModalAlternateClose'),
-    clrModalOpenChange: action('clrModalOpenChange'),
+    title: 'Title',
+    message: 'Test confirmation dialog message...',
+    closable: true,
+    closableBackdrop: true,
+    rejectBtnHidden: false,
+    rejectBtn: {
+      label: 'Reject',
+      icon: '',
+      classes: 'btn-secondary',
+    },
+    acceptBtn: {
+      label: 'Accept',
+      icon: '',
+      classes: 'btn-primary',
+    },
   },
 };
 

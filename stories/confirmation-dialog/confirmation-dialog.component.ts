@@ -28,7 +28,13 @@ export class ConfirmationDialogComponent {
       ...this.config,
     })
       .afterClosed()
-      .subscribe((v) => {
+      .subscribe((v: ConfirmationType) => {
+        const message = {
+          [ConfirmationType.Accept]: 'accepted',
+          [ConfirmationType.Reject]: 'rejected',
+        }[v];
+
+        alert(message);
       });
   }
 }
