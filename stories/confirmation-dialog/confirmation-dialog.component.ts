@@ -1,11 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {
-  ConfirmationDialogConfig,
-  ConfirmationType, DialogService
+import {DialogService
 } from "../../projects/extra-clarity/src";
+import {ConfirmDialogConfig} from "../../projects/extra-clarity/src/lib/modules/dialog/dialog-config";
+import {ConfirmationType} from "../../projects/extra-clarity/src/lib/modules/dialog/enums/confirmation-type.enum";
 
 @Component({
-  selector: 'storybook-button',
+  selector: 'storybook-confirmation-dialog',
   template: `
     <button
       (click)="onOpen()"
@@ -18,26 +18,23 @@ import {
   providers: [DialogService],
 })
 export class ConfirmationDialogComponent {
+  @Input() config: ConfirmDialogConfig;
 
-  @Input() public config: ConfirmationDialogConfig;
-
-  constructor(
-    private readonly dialogService: DialogService,
-  ) {
+  constructor(private readonly dialogService: DialogService) {
   }
 
   onOpen(): void {
     this.dialogService.confirm({
-      title: 'Test',
-      message: 'Test message',
-    }).subscribe((value) => alert(this.getConfirmationMessage(value)));
-  }
+      ...this.config,
+    })
+      .afterClosed()
+      .subscribe((v: ConfirmationType) => {
+        const message = {
+          [ConfirmationType.Accept]: 'accepted',
+          [ConfirmationType.Reject]: 'rejected',
+        }[v];
 
-  private getConfirmationMessage(type: ConfirmationType): string {
-    switch (type) {
-      case ConfirmationType.Accept: return 'Accepted';
-      case ConfirmationType.Reject: return 'Rejected';
-      case ConfirmationType.Cancel: return 'Canceled';
-    }
+        alert(message);
+      });
   }
 }

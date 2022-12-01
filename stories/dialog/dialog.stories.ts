@@ -2,12 +2,14 @@ import {Story, Parameters} from "@storybook/angular";
 import {action} from "@storybook/addon-actions";
 import {setupStory} from "../../.storybook/helpers/setup-story.helper";
 import {DialogModule} from "../../projects/extra-clarity/src";
-import {ConfirmationDialogComponent} from "./confirmation-dialog.component";
+import {DialogComponent} from "./dialog.component";
+import {FormDialogModule} from "./form-dialog/form-dialog.module";
 
 const defaultStory: Story = args => ({
-  template: `<storybook-confirmation-dialog [config]="config"></storybook-confirmation-dialog>`,
+  template: `<storybook-dialog [config]="config"></storybook-dialog>`,
   moduleMetadata: {
-    declarations: [ConfirmationDialogComponent],
+    declarations: [DialogComponent],
+    imports: [FormDialogModule],
   },
   props: {
     config: {
@@ -17,26 +19,14 @@ const defaultStory: Story = args => ({
 });
 
 const defaultParameters: Parameters = {
-  title: 'Dialog/Confirmation Dialog',
+  title: 'Dialog/Dialog',
   argTypes: {
     size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },
   },
   args: {
     title: 'Title',
-    message: 'Test confirmation dialog message...',
     closable: true,
     closableBackdrop: true,
-    rejectBtnHidden: false,
-    rejectBtn: {
-      label: 'Reject',
-      icon: '',
-      classes: 'btn-secondary',
-    },
-    acceptBtn: {
-      label: 'Accept',
-      icon: '',
-      classes: 'btn-primary',
-    },
   },
 };
 

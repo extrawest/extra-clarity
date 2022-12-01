@@ -1,2 +1,2 @@
 export * from './modules';
-export * from './extra-clarity.module';
+export * from './extra-clarity-lib.module';

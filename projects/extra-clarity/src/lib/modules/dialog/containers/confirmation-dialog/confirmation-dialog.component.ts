@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {ConfirmationType} from "../../enums/confirmation-type.enum";
 import {ConfirmDialogConfig} from "../../dialog-config";
 import {DialogRef} from "../../dialog-ref";
-import {DIALOG_CONFIG} from "../../../tokens/dialog-config.token";
+import {DIALOG_CONFIG} from "../../tokens/dialog-config.token";
 import {isPromise} from "rxjs/internal/util/isPromise";
 
 @Component({
