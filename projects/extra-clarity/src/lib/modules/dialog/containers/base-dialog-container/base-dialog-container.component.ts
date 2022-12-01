@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, Injector, OnInit, Type} from '@angular/core';
-import {DIALOG_DATA} from "../../../tokens/dialog-data.token";
+import {DIALOG_DATA} from "../../tokens/dialog-data.token";
 import {DialogConfig} from "../../dialog-config";
 import {DialogRef} from "../../dialog-ref";
-import {DIALOG_CONFIG} from "../../../tokens/dialog-config.token";
+import {DIALOG_CONFIG} from "../../tokens/dialog-config.token";
 
 @Component({
   template: `

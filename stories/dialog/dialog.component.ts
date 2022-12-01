@@ -2,22 +2,21 @@ import {Component, Input} from '@angular/core';
 import {DialogService
 } from "../../projects/extra-clarity/src";
 import {ConfirmDialogConfig} from "../../projects/extra-clarity/src/lib/modules/dialog/dialog-config";
-import {ConfirmationType} from "../../projects/extra-clarity/src/lib/modules/dialog/enums/confirmation-type.enum";
 
 @Component({
-  selector: 'storybook-confirmation-dialog',
+  selector: 'storybook-dialog',
   template: `
     <button
       (click)="onOpen()"
       class="btn btn-primary"
       type="button"
     >
-      Open confirmation dialog
+      Open generic dialog
     </button>
   `,
   providers: [DialogService],
 })
-export class ConfirmationDialogComponent {
+export class DialogComponent {
   @Input() config: ConfirmDialogConfig;
 
   constructor(private readonly dialogService: DialogService) {
@@ -28,7 +27,6 @@ export class ConfirmationDialogComponent {
       ...this.config,
     })
       .afterClosed()
-      .subscribe((v) => {
-      });
+      .subscribe();
   }
 }

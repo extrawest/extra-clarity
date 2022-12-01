@@ -2,12 +2,15 @@ import {Story, Parameters} from "@storybook/angular";
 import {action} from "@storybook/addon-actions";
 import {setupStory} from "../../.storybook/helpers/setup-story.helper";
 import {DialogModule} from "../../projects/extra-clarity/src";
-import {ConfirmationDialogComponent} from "./confirmation-dialog.component";
+import {DialogComponent} from "./dialog.component";
 
 const defaultStory: Story = args => ({
-  template: `<storybook-confirmation-dialog [config]="config"></storybook-confirmation-dialog>`,
+  // template: `
+  //   <button type="button" class="btn btn-primary" (click)="clrModalOpen = true">Open Dialog</button>
+  // `,
+  template: `<storybook-dialog [config]="config"></storybook-dialog>`,
   moduleMetadata: {
-    declarations: [ConfirmationDialogComponent],
+    declarations: [DialogComponent],
   },
   props: {
     config: {
@@ -17,16 +20,20 @@ const defaultStory: Story = args => ({
 });
 
 const defaultParameters: Parameters = {
-  title: 'Dialog/Confirmation Dialog',
+  title: 'Dialog/Dialog',
   argTypes: {
-    // inputs
-    clrModalLabelledById: { defaultValue: '' },
-    closable: { defaultValue: true, control: { type: 'checkbox', value: true } },
     size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },
 
     // // outputs
     // clrModalAlternateClose: { control: { disable: true } },
     // clrModalOpenChange: { control: { disable: true } },
+
+    // // methods
+    // fadeDone: { control: { disable: true }, table: { disable: true } },
+    // open: { control: { disable: true }, table: { disable: true } },
+    // close: { control: { disable: true }, table: { disable: true } },
+    // // story helpers
+    // createArray: { control: { disable: true }, table: { disable: true } },
   },
   args: {
     // story helpers
