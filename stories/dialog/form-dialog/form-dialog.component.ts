@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {DialogRef} from "../../../projects/extra-clarity/src/lib/modules/dialog/dialog-ref";
 import {ClarityModule, ClrInputModule} from "@clr/angular";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {DialogRef} from "@extrawest/extra-clarity/dialog";
 
 @Component({
   template: `

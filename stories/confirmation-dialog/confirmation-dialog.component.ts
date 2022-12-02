@@ -1,8 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {DialogService
-} from "../../projects/extra-clarity/src";
-import {ConfirmDialogConfig} from "../../projects/extra-clarity/src/lib/modules/dialog/dialog-config";
-import {ConfirmationType} from "../../projects/extra-clarity/src/lib/modules/dialog/enums/confirmation-type.enum";
+import {ConfirmationType, ConfirmDialogConfig, DialogService} from "@extrawest/extra-clarity/dialog";
+import {filter} from "rxjs";
 
 @Component({
   selector: 'storybook-confirmation-dialog',
@@ -28,6 +26,7 @@ export class ConfirmationDialogComponent {
       ...this.config,
     })
       .afterClosed()
+      .pipe(filter((v) => !!v))
       .subscribe((v: ConfirmationType) => {
         const message = {
           [ConfirmationType.Accept]: 'accepted',

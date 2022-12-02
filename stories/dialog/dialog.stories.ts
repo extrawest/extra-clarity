@@ -1,9 +1,8 @@
 import {Story, Parameters} from "@storybook/angular";
-import {action} from "@storybook/addon-actions";
 import {setupStory} from "../../.storybook/helpers/setup-story.helper";
-import {DialogModule} from "../../projects/extra-clarity/src";
 import {DialogComponent} from "./dialog.component";
 import {FormDialogModule} from "./form-dialog/form-dialog.module";
+import {DialogModule} from "@extrawest/extra-clarity/dialog";
 
 const defaultStory: Story = args => ({
   template: `<storybook-dialog [config]="config"></storybook-dialog>`,

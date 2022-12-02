@@ -4,7 +4,7 @@
         {
             "name": "DialogButtonConfig",
             "id": "interface-DialogButtonConfig-29663b7aefadc48e57002b62330ccc739437d524d34bcd4eec4ae02d03c791162f92177463df7f2fb88a93d593805c68f71e698202e109b5f3c1f02340c4bcd0",
-            "file": "projects/extra-clarity/src/lib/modules/dialog/models/dialog-button-config.model.ts",
+            "file": "projects/extra-clarity/dialog/src/models/dialog-button-config.model.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
@@ -47,7 +47,7 @@
         {
             "name": "DialogService",
             "id": "injectable-DialogService-8b5aa51a9ae7773660889d7c05bf176e483546c1a79cacc2afe3b196a80fe3a9e1cbde23e356af17ffeb2eae27e79381c713219cfb0d5773a03a64ad1e86ac9c",
-            "file": "projects/extra-clarity/src/lib/modules/dialog/services/dialog.service.ts",
+            "file": "projects/extra-clarity/dialog/src/services/dialog.service.ts",
             "properties": [],
             "methods": [
                 {
@@ -252,12 +252,12 @@
     "classes": [
         {
             "name": "BaseDialogConfig",
-            "id": "class-BaseDialogConfig-3aa5c426801e7e029231fc35654793ed3b32c142d7d8e04300c627eb7e0ef11c6095980d44b7c8351a402030b018e13ab8f6509aa73cf41690fd85302fac95b3",
-            "file": "projects/extra-clarity/src/lib/modules/dialog/dialog-config.ts",
+            "id": "class-BaseDialogConfig-e05481cf948050c1d831a25e6999b6b2b4a2453b320444e1a30cbffb0965737dd045713f89b7292e05ab9f7583701dd5bb391248614943b561a5b991ef85f92a",
+            "file": "projects/extra-clarity/dialog/src/dialog-config.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "import {Size} from \"../../types/size.type\";\nimport {DialogButtonConfig} from \"./models/dialog-button-config.model\";\n\ntype OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;\n\nexport class BaseDialogConfig {\n  title: string;\n  size?: Size;\n  closable?: boolean = true;\n  closableBackdrop?: boolean = true;\n}\n\nexport class DialogConfig<T = any> extends BaseDialogConfig {\n  data?: T;\n}\n\nexport class ConfirmDialogConfig extends BaseDialogConfig {\n  message: string;\n  acceptBtn?: DialogButtonConfig;\n  rejectBtn?: DialogButtonConfig;\n  rejectBtnHidden?: boolean;\n  onAccept?: OnClickCallback;\n  onReject?: OnClickCallback;\n}\n",
+            "sourceCode": "import {DialogButtonConfig} from \"./models/dialog-button-config.model\";\n\ntype OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;\n\nexport class BaseDialogConfig {\n  title: string;\n  size?: 'sm' | 'md' | 'lg' | 'xl';\n  closable?: boolean = true;\n  closableBackdrop?: boolean = true;\n}\n\nexport class DialogConfig<T = any> extends BaseDialogConfig {\n  data?: T;\n}\n\nexport class ConfirmDialogConfig extends BaseDialogConfig {\n  message: string;\n  acceptBtn?: DialogButtonConfig;\n  rejectBtn?: DialogButtonConfig;\n  rejectBtnHidden?: boolean;\n  onAccept?: OnClickCallback;\n  onReject?: OnClickCallback;\n}\n",
             "properties": [
                 {
                     "name": "closable",
@@ -267,7 +267,7 @@
                     "type": "boolean",
                     "optional": true,
                     "description": "",
-                    "line": 9
+                    "line": 8
                 },
                 {
                     "name": "closableBackdrop",
@@ -277,16 +277,16 @@
                     "type": "boolean",
                     "optional": true,
                     "description": "",
-                    "line": 10
+                    "line": 9
                 },
                 {
                     "name": "size",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Size",
+                    "type": "\"sm\" | \"md\" | \"lg\" | \"xl\"",
                     "optional": true,
                     "description": "",
-                    "line": 8
+                    "line": 7
                 },
                 {
                     "name": "title",
@@ -295,7 +295,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 7
+                    "line": 6
                 }
             ],
             "methods": [],
@@ -307,12 +307,12 @@
         },
         {
             "name": "ConfirmDialogConfig",
-            "id": "class-ConfirmDialogConfig-3aa5c426801e7e029231fc35654793ed3b32c142d7d8e04300c627eb7e0ef11c6095980d44b7c8351a402030b018e13ab8f6509aa73cf41690fd85302fac95b3",
-            "file": "projects/extra-clarity/src/lib/modules/dialog/dialog-config.ts",
+            "id": "class-ConfirmDialogConfig-e05481cf948050c1d831a25e6999b6b2b4a2453b320444e1a30cbffb0965737dd045713f89b7292e05ab9f7583701dd5bb391248614943b561a5b991ef85f92a",
+            "file": "projects/extra-clarity/dialog/src/dialog-config.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "import {Size} from \"../../types/size.type\";\nimport {DialogButtonConfig} from \"./models/dialog-button-config.model\";\n\ntype OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;\n\nexport class BaseDialogConfig {\n  title: string;\n  size?: Size;\n  closable?: boolean = true;\n  closableBackdrop?: boolean = true;\n}\n\nexport class DialogConfig<T = any> extends BaseDialogConfig {\n  data?: T;\n}\n\nexport class ConfirmDialogConfig extends BaseDialogConfig {\n  message: string;\n  acceptBtn?: DialogButtonConfig;\n  rejectBtn?: DialogButtonConfig;\n  rejectBtnHidden?: boolean;\n  onAccept?: OnClickCallback;\n  onReject?: OnClickCallback;\n}\n",
+            "sourceCode": "import {DialogButtonConfig} from \"./models/dialog-button-config.model\";\n\ntype OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;\n\nexport class BaseDialogConfig {\n  title: string;\n  size?: 'sm' | 'md' | 'lg' | 'xl';\n  closable?: boolean = true;\n  closableBackdrop?: boolean = true;\n}\n\nexport class DialogConfig<T = any> extends BaseDialogConfig {\n  data?: T;\n}\n\nexport class ConfirmDialogConfig extends BaseDialogConfig {\n  message: string;\n  acceptBtn?: DialogButtonConfig;\n  rejectBtn?: DialogButtonConfig;\n  rejectBtnHidden?: boolean;\n  onAccept?: OnClickCallback;\n  onReject?: OnClickCallback;\n}\n",
             "properties": [
                 {
                     "name": "acceptBtn",
@@ -321,7 +321,7 @@
                     "type": "DialogButtonConfig",
                     "optional": true,
                     "description": "",
-                    "line": 19
+                    "line": 18
                 },
                 {
                     "name": "message",
@@ -330,7 +330,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 17
                 },
                 {
                     "name": "onAccept",
@@ -339,7 +339,7 @@
                     "type": "OnClickCallback",
                     "optional": true,
                     "description": "",
-                    "line": 22
+                    "line": 21
                 },
                 {
                     "name": "onReject",
@@ -348,7 +348,7 @@
                     "type": "OnClickCallback",
                     "optional": true,
                     "description": "",
-                    "line": 23
+                    "line": 22
                 },
                 {
                     "name": "rejectBtn",
@@ -357,7 +357,7 @@
                     "type": "DialogButtonConfig",
                     "optional": true,
                     "description": "",
-                    "line": 20
+                    "line": 19
                 },
                 {
                     "name": "rejectBtnHidden",
@@ -366,10 +366,23 @@
                     "type": "boolean",
                     "optional": true,
                     "description": "",
-                    "line": 21
+                    "line": 20
                 },
                 {
                     "name": "closable",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": true,
+                    "description": "",
+                    "line": 8,
+                    "inheritance": {
+                        "file": "BaseDialogConfig"
+                    }
+                },
+                {
+                    "name": "closableBackdrop",
                     "defaultValue": "true",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -382,26 +395,13 @@
                     }
                 },
                 {
-                    "name": "closableBackdrop",
-                    "defaultValue": "true",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "boolean",
-                    "optional": true,
-                    "description": "",
-                    "line": 10,
-                    "inheritance": {
-                        "file": "BaseDialogConfig"
-                    }
-                },
-                {
                     "name": "size",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Size",
+                    "type": "\"sm\" | \"md\" | \"lg\" | \"xl\"",
                     "optional": true,
                     "description": "",
-                    "line": 8,
+                    "line": 7,
                     "inheritance": {
                         "file": "BaseDialogConfig"
                     }
@@ -413,7 +413,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 7,
+                    "line": 6,
                     "inheritance": {
                         "file": "BaseDialogConfig"
                     }
@@ -429,12 +429,12 @@
         },
         {
             "name": "DialogConfig",
-            "id": "class-DialogConfig-3aa5c426801e7e029231fc35654793ed3b32c142d7d8e04300c627eb7e0ef11c6095980d44b7c8351a402030b018e13ab8f6509aa73cf41690fd85302fac95b3",
-            "file": "projects/extra-clarity/src/lib/modules/dialog/dialog-config.ts",
+            "id": "class-DialogConfig-e05481cf948050c1d831a25e6999b6b2b4a2453b320444e1a30cbffb0965737dd045713f89b7292e05ab9f7583701dd5bb391248614943b561a5b991ef85f92a",
+            "file": "projects/extra-clarity/dialog/src/dialog-config.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "import {Size} from \"../../types/size.type\";\nimport {DialogButtonConfig} from \"./models/dialog-button-config.model\";\n\ntype OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;\n\nexport class BaseDialogConfig {\n  title: string;\n  size?: Size;\n  closable?: boolean = true;\n  closableBackdrop?: boolean = true;\n}\n\nexport class DialogConfig<T = any> extends BaseDialogConfig {\n  data?: T;\n}\n\nexport class ConfirmDialogConfig extends BaseDialogConfig {\n  message: string;\n  acceptBtn?: DialogButtonConfig;\n  rejectBtn?: DialogButtonConfig;\n  rejectBtnHidden?: boolean;\n  onAccept?: OnClickCallback;\n  onReject?: OnClickCallback;\n}\n",
+            "sourceCode": "import {DialogButtonConfig} from \"./models/dialog-button-config.model\";\n\ntype OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;\n\nexport class BaseDialogConfig {\n  title: string;\n  size?: 'sm' | 'md' | 'lg' | 'xl';\n  closable?: boolean = true;\n  closableBackdrop?: boolean = true;\n}\n\nexport class DialogConfig<T = any> extends BaseDialogConfig {\n  data?: T;\n}\n\nexport class ConfirmDialogConfig extends BaseDialogConfig {\n  message: string;\n  acceptBtn?: DialogButtonConfig;\n  rejectBtn?: DialogButtonConfig;\n  rejectBtnHidden?: boolean;\n  onAccept?: OnClickCallback;\n  onReject?: OnClickCallback;\n}\n",
             "properties": [
                 {
                     "name": "data",
@@ -443,7 +443,7 @@
                     "type": "T",
                     "optional": true,
                     "description": "",
-                    "line": 14
+                    "line": 13
                 },
                 {
                     "name": "closable",
@@ -453,7 +453,7 @@
                     "type": "boolean",
                     "optional": true,
                     "description": "",
-                    "line": 9,
+                    "line": 8,
                     "inheritance": {
                         "file": "BaseDialogConfig"
                     }
@@ -466,7 +466,7 @@
                     "type": "boolean",
                     "optional": true,
                     "description": "",
-                    "line": 10,
+                    "line": 9,
                     "inheritance": {
                         "file": "BaseDialogConfig"
                     }
@@ -475,10 +475,10 @@
                     "name": "size",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Size",
+                    "type": "\"sm\" | \"md\" | \"lg\" | \"xl\"",
                     "optional": true,
                     "description": "",
-                    "line": 8,
+                    "line": 7,
                     "inheritance": {
                         "file": "BaseDialogConfig"
                     }
@@ -490,7 +490,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 7,
+                    "line": 6,
                     "inheritance": {
                         "file": "BaseDialogConfig"
                     }
@@ -507,7 +507,7 @@
         {
             "name": "DialogRef",
             "id": "class-DialogRef-2f847159959b23e8983dc67043494e7a413a8a5356ada25a2cb16ba9b474fad58b4fa1f41b31be024c1fe4330f8ddfba138831806809f1a76686e0ae64a08a13",
-            "file": "projects/extra-clarity/src/lib/modules/dialog/dialog-ref.ts",
+            "file": "projects/extra-clarity/dialog/src/dialog-ref.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
@@ -637,18 +637,16 @@
     "components": [
         {
             "name": "AutoRefreshComponent",
-            "id": "component-AutoRefreshComponent-78eca1f4729423e445828cc3e0b5372b23c41d4751b8a8a31752a573a5eccb35a1260b847a7499bc12cd9fc9a3916f05a4ac24de867f0f42d3866eec304b56a8",
-            "file": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+            "id": "component-AutoRefreshComponent-45d9f2c152786f4436a56ad2b5c93a1e12c30636f6917019ea47781c235d7719a1244481c20f3993f100807fde410b64ffd74162a4bab2f38b41f4a82536a430",
+            "file": "projects/extra-clarity/auto-refresh/src/auto-refresh.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "lib-auto-refresh",
-            "styleUrls": [
-                "./auto-refresh.component.css"
-            ],
+            "selector": "ew-auto-refresh",
+            "styleUrls": [],
             "styles": [],
             "templateUrl": [
                 "./auto-refresh.component.html"
@@ -657,19 +655,17 @@
             "inputsClass": [
                 {
                     "name": "disabled",
-                    "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 16,
+                    "line": 28,
                     "type": "boolean",
                     "decorators": []
                 },
                 {
                     "name": "period",
-                    "defaultValue": "DEFAULT_PERIOD_SEC",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 14,
+                    "line": 23,
                     "type": "number",
                     "decorators": []
                 },
@@ -677,7 +673,7 @@
                     "name": "refreshing",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 15,
+                    "line": 22,
                     "type": "boolean",
                     "decorators": []
                 }
@@ -688,7 +684,7 @@
                     "defaultValue": "new EventEmitter<void>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 18,
+                    "line": 32,
                     "type": "EventEmitter"
                 },
                 {
@@ -696,34 +692,76 @@
                     "defaultValue": "new EventEmitter<boolean>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 19,
+                    "line": 33,
                     "type": "EventEmitter"
                 }
             ],
             "propertiesClass": [
                 {
-                    "name": "timer$",
-                    "defaultValue": "timer(0, 1000)\n    .pipe(\n      map((seconds) => this.period - seconds - 1),\n      take(this.period),\n      delayWhen(() => of(this.refreshing)),\n      finalize(() => this.refresh.emit()),\n      repeat(),\n    )",
+                    "name": "destroy$",
+                    "defaultValue": "new Subject()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "",
+                    "type": "Subject<void>",
                     "optional": false,
                     "description": "",
-                    "line": 23,
+                    "line": 39,
+                    "modifierKind": [
+                        121,
+                        144
+                    ]
+                },
+                {
+                    "name": "period$",
+                    "defaultValue": "new BehaviorSubject(DEFAULT_PERIOD_SEC)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "BehaviorSubject<number>",
+                    "optional": false,
+                    "description": "",
+                    "line": 38,
+                    "modifierKind": [
+                        121,
+                        144
+                    ]
+                },
+                {
+                    "name": "time$",
+                    "defaultValue": "this.timer$\n    .pipe(\n      withLatestFrom(this.period$),\n      takeUntil(this.destroy$),\n      map(([seconds, period]) => period - seconds),\n      takeWhile((seconds) => seconds > 0 && !this.refreshing),\n      finalize(() => this.refresh.emit()),\n      repeat(),\n    )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<number>",
+                    "optional": false,
+                    "description": "",
+                    "line": 41,
                     "modifierKind": [
                         123,
                         144
                     ]
                 },
                 {
+                    "name": "timer$",
+                    "defaultValue": "timer(0, 1000)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<number>",
+                    "optional": false,
+                    "description": "",
+                    "line": 37,
+                    "modifierKind": [
+                        121,
+                        144
+                    ]
+                },
+                {
                     "name": "toggleControl",
-                    "defaultValue": "new FormControl<boolean>(!this.disabled, { nonNullable: true })",
+                    "defaultValue": "new FormControl<boolean>(false, { nonNullable: true })",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 21,
+                    "line": 35,
                     "modifierKind": [
                         123,
                         144
@@ -732,12 +770,25 @@
             ],
             "methodsClass": [
                 {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 51,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
                     "name": "onToggle",
                     "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 32,
+                    "line": 56,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -752,21 +803,81 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';\nimport {delayWhen, finalize, map, of, repeat, take, timer} from \"rxjs\";\nimport {FormControl} from \"@angular/forms\";\n\nconst DEFAULT_PERIOD_SEC = 10;\n\n@Component({\n  selector: 'lib-auto-refresh',\n  templateUrl: './auto-refresh.component.html',\n  styleUrls: ['./auto-refresh.component.css'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class AutoRefreshComponent {\n  @Input() public period: number = DEFAULT_PERIOD_SEC;\n  @Input() public refreshing: boolean;\n  @Input() public disabled: boolean = false;\n\n  @Output() public refresh = new EventEmitter<void>();\n  @Output() public toggle = new EventEmitter<boolean>();\n\n  public readonly toggleControl = new FormControl<boolean>(!this.disabled, { nonNullable: true });\n\n  public readonly timer$ = timer(0, 1000)\n    .pipe(\n      map((seconds) => this.period - seconds - 1),\n      take(this.period),\n      delayWhen(() => of(this.refreshing)),\n      finalize(() => this.refresh.emit()),\n      repeat(),\n    );\n\n  public onToggle(): void {\n    this.toggle.emit(this.toggleControl.value);\n  }\n}\n",
+            "sourceCode": "import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';\nimport {\n  BehaviorSubject,\n  finalize,\n  map,\n  Observable,\n  repeat,\n  Subject,\n  takeUntil, takeWhile,\n  timer, withLatestFrom\n} from \"rxjs\";\nimport {FormControl} from \"@angular/forms\";\n\nconst DEFAULT_PERIOD_SEC = 60;\n\n@Component({\n  selector: 'ew-auto-refresh',\n  templateUrl: './auto-refresh.component.html',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class AutoRefreshComponent implements OnDestroy {\n  @Input() public refreshing: boolean;\n  @Input() public set period(v: number) {\n    if (v > 0) {\n      this.period$.next(v);\n    }\n  }\n  @Input() public set disabled(v: boolean) {\n    this.toggleControl.patchValue(!v);\n  }\n\n  @Output() public refresh = new EventEmitter<void>();\n  @Output() public toggle = new EventEmitter<boolean>();\n\n  public readonly toggleControl = new FormControl<boolean>(false, { nonNullable: true });\n\n  private readonly timer$: Observable<number> = timer(0, 1000);\n  private readonly period$: BehaviorSubject<number> = new BehaviorSubject(DEFAULT_PERIOD_SEC);\n  private readonly destroy$: Subject<void> = new Subject();\n\n  public readonly time$: Observable<number> = this.timer$\n    .pipe(\n      withLatestFrom(this.period$),\n      takeUntil(this.destroy$),\n      map(([seconds, period]) => period - seconds),\n      takeWhile((seconds) => seconds > 0 && !this.refreshing),\n      finalize(() => this.refresh.emit()),\n      repeat(),\n    )\n\n  public ngOnDestroy(): void {\n    this.destroy$.next();\n    this.destroy$.complete();\n  }\n\n  public onToggle(): void {\n    this.toggle.emit(this.toggleControl.value);\n  }\n}\n",
             "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "",
-                    "styleUrl": "./auto-refresh.component.css"
-                }
-            ],
+            "styleUrlsData": "",
             "stylesData": "",
-            "templateData": "<clr-toggle-container>\n  <clr-toggle-wrapper>\n    <input\n      type=\"checkbox\"\n      clrToggle\n      [formControl]=\"toggleControl\"\n      (change)=\"onToggle()\"\n    >\n    <label class=\"p5 text-label\">\n      <ng-container *ngIf=\"!toggleControl.value; else timer\">\n        Auto refresh disabled\n      </ng-container>\n\n      <ng-template #timer>\n        <ng-container *ngIf=\"!refreshing && timer$ | async as timer; else refresh\">\n          Auto refresh in {{ timer }} sec\n        </ng-container>\n\n        <ng-template #refresh>\n          Refreshing...\n        </ng-template>\n      </ng-template>\n    </label>\n  </clr-toggle-wrapper>\n</clr-toggle-container>\n"
+            "implements": [
+                "OnDestroy"
+            ],
+            "accessors": {
+                "period": {
+                    "name": "period",
+                    "setSignature": {
+                        "name": "period",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "v",
+                                "type": "number",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 23,
+                        "jsdoctags": [
+                            {
+                                "name": "v",
+                                "type": "number",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "disabled": {
+                    "name": "disabled",
+                    "setSignature": {
+                        "name": "disabled",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "v",
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 28,
+                        "jsdoctags": [
+                            {
+                                "name": "v",
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "templateData": "<clr-toggle-container>\n  <clr-toggle-wrapper>\n    <input\n      type=\"checkbox\"\n      clrToggle\n      [formControl]=\"toggleControl\"\n      (change)=\"onToggle()\"\n    >\n    <label class=\"p5 text-label\">\n      <ng-container *ngIf=\"!toggleControl.value; else timer\">\n        Auto refresh disabled\n      </ng-container>\n\n      <ng-template #timer>\n        <ng-container *ngIf=\"!refreshing && (time$ | async) as time; else refresh\">\n          Auto refresh in {{ time }} sec\n        </ng-container>\n\n        <ng-template #refresh>\n          Refreshing...\n        </ng-template>\n      </ng-template>\n    </label>\n  </clr-toggle-wrapper>\n</clr-toggle-container>\n"
         },
         {
             "name": "BaseDialogContainerComponent",
             "id": "component-BaseDialogContainerComponent-00196736f0a96578c10516e4ed970608a93c23153d1db2a509be794fe9823265d732e2fd77d7bae71f096e2e33371aec4eaca20d77aaf0adfb801c00bcfcee74",
-            "file": "projects/extra-clarity/src/lib/modules/dialog/containers/base-dialog-container/base-dialog-container.component.ts",
+            "file": "projects/extra-clarity/dialog/src/containers/base-dialog-container/base-dialog-container.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
             "entryComponents": [],
@@ -914,7 +1025,7 @@
         },
         {
             "name": "ConfirmationDialogComponent",
-            "id": "component-ConfirmationDialogComponent-891f01a12e9458413b055d063de8433773db46b9e31c020d5cc349ab078a4c17bc198adf1b860e1a6aa0d5127c92871e36b42add6b3cf233f9689f572a9c4ab5",
+            "id": "component-ConfirmationDialogComponent-5f3d6746674ce0e3f7f5fb0944e6e6116c78071f7a49046989c7da9e1be7874f552d92117b791992397a189ec769d23960018d2ec36f97ad3420956795a52d2e",
             "file": "stories/confirmation-dialog/confirmation-dialog.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -936,7 +1047,7 @@
                     "name": "config",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 20,
+                    "line": 19,
                     "type": "ConfirmDialogConfig",
                     "decorators": []
                 }
@@ -950,7 +1061,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 25,
+                    "line": 24,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -962,7 +1073,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {DialogService\n} from \"../../projects/extra-clarity/src\";\nimport {ConfirmDialogConfig} from \"../../projects/extra-clarity/src/lib/modules/dialog/dialog-config\";\n\n@Component({\n  selector: 'storybook-confirmation-dialog',\n  template: `\n    <button\n      (click)=\"onOpen()\"\n      class=\"btn btn-primary\"\n      type=\"button\"\n    >\n      Open confirmation dialog\n    </button>\n  `,\n  providers: [DialogService],\n})\nexport class ConfirmationDialogComponent {\n  @Input() config: ConfirmDialogConfig;\n\n  constructor(private readonly dialogService: DialogService) {\n  }\n\n  onOpen(): void {\n    this.dialogService.confirm({\n      ...this.config,\n    })\n      .afterClosed()\n      .subscribe();\n  }\n}\n",
+            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {ConfirmationType, ConfirmDialogConfig, DialogService} from \"@extrawest/extra-clarity/dialog\";\nimport {filter} from \"rxjs\";\n\n@Component({\n  selector: 'storybook-confirmation-dialog',\n  template: `\n    <button\n      (click)=\"onOpen()\"\n      class=\"btn btn-primary\"\n      type=\"button\"\n    >\n      Open confirmation dialog\n    </button>\n  `,\n  providers: [DialogService],\n})\nexport class ConfirmationDialogComponent {\n  @Input() config: ConfirmDialogConfig;\n\n  constructor(private readonly dialogService: DialogService) {\n  }\n\n  onOpen(): void {\n    this.dialogService.confirm({\n      ...this.config,\n    })\n      .afterClosed()\n      .pipe(filter((v) => !!v))\n      .subscribe((v: ConfirmationType) => {\n        const message = {\n          [ConfirmationType.Accept]: 'accepted',\n          [ConfirmationType.Reject]: 'rejected',\n        }[v];\n\n        alert(message);\n      });\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -979,7 +1090,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 20,
+                "line": 19,
                 "jsdoctags": [
                     {
                         "name": "dialogService",
@@ -995,15 +1106,14 @@
         },
         {
             "name": "ConfirmationDialogComponent",
-            "id": "component-ConfirmationDialogComponent-1f7cf18c6af976378d0a48a592156228d3b89c8db37c07be5331b96800900502e2c76dc9cf9ddee07e254695d2c958cce88aa98155e3c003f8c9b52bbf2e6ec2-1",
-            "file": "projects/extra-clarity/src/lib/modules/dialog/containers/confirmation-dialog/confirmation-dialog.component.ts",
+            "id": "component-ConfirmationDialogComponent-276bc24361c3e6ca6bb666c8cc785d7468921956e216e226ac068ac032a81c961048c1edbc012dceceadf18c6866175cb2b6f4e9bab8c46616cf49d2953bf264-1",
+            "file": "projects/extra-clarity/dialog/src/containers/confirmation-dialog/confirmation-dialog.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "lib-confirmation-dialog",
             "styleUrls": [],
             "styles": [],
             "templateUrl": [
@@ -1020,7 +1130,7 @@
                     "type": "ConfirmDialogConfig",
                     "optional": false,
                     "description": "",
-                    "line": 15,
+                    "line": 14,
                     "decorators": [
                         {
                             "name": "Inject",
@@ -1047,7 +1157,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 44,
+                    "line": 43,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1071,7 +1181,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 23,
+                    "line": 22,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1084,7 +1194,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 19,
+                    "line": 18,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1104,7 +1214,7 @@
                     "optional": false,
                     "returnType": "Promise<void>",
                     "typeParameters": [],
-                    "line": 27,
+                    "line": 26,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -1131,7 +1241,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';\nimport {ConfirmationType} from \"../../enums/confirmation-type.enum\";\nimport {ConfirmDialogConfig} from \"../../dialog-config\";\nimport {DialogRef} from \"../../dialog-ref\";\nimport {DIALOG_CONFIG} from \"../../tokens/dialog-config.token\";\nimport {isPromise} from \"rxjs/internal/util/isPromise\";\n\n@Component({\n  selector: 'lib-confirmation-dialog',\n  templateUrl: './confirmation-dialog.component.html',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class ConfirmationDialogComponent {\n  constructor(\n    @Inject(DIALOG_CONFIG) public readonly config: ConfirmDialogConfig,\n    private readonly dialogRef: DialogRef,\n  ) {}\n\n  public onReject(): void {\n    this.trigger(ConfirmationType.Reject);\n  }\n\n  public onAccept(): void {\n    this.trigger(ConfirmationType.Accept);\n  }\n\n  private async trigger(action: ConfirmationType): Promise<void> {\n    const trigger = {\n      [ConfirmationType.Accept]: this.config.onAccept,\n      [ConfirmationType.Reject]: this.config.onReject,\n    }[action];\n\n    if (typeof trigger === 'function') {\n      const result = trigger();\n\n      if (isPromise(result)) {\n        await result;\n      }\n    }\n\n    this.close(action);\n  }\n\n  private close(result: ConfirmationType): void {\n    this.dialogRef.close(result);\n  }\n}\n",
+            "sourceCode": "import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';\nimport {ConfirmationType} from \"../../enums/confirmation-type.enum\";\nimport {ConfirmDialogConfig} from \"../../dialog-config\";\nimport {DialogRef} from \"../../dialog-ref\";\nimport {DIALOG_CONFIG} from \"../../tokens/dialog-config.token\";\nimport {isPromise} from \"rxjs/internal/util/isPromise\";\n\n@Component({\n  templateUrl: './confirmation-dialog.component.html',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class ConfirmationDialogComponent {\n  constructor(\n    @Inject(DIALOG_CONFIG) public readonly config: ConfirmDialogConfig,\n    private readonly dialogRef: DialogRef,\n  ) {}\n\n  public onReject(): void {\n    this.trigger(ConfirmationType.Reject);\n  }\n\n  public onAccept(): void {\n    this.trigger(ConfirmationType.Accept);\n  }\n\n  private async trigger(action: ConfirmationType): Promise<void> {\n    const trigger = {\n      [ConfirmationType.Accept]: this.config.onAccept,\n      [ConfirmationType.Reject]: this.config.onReject,\n    }[action];\n\n    if (typeof trigger === 'function') {\n      const result = trigger();\n\n      if (isPromise(result)) {\n        await result;\n      }\n    }\n\n    this.close(action);\n  }\n\n  private close(result: ConfirmationType): void {\n    this.dialogRef.close(result);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -1154,7 +1264,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 13,
+                "line": 12,
                 "jsdoctags": [
                     {
                         "name": "config",
@@ -1183,7 +1293,7 @@
         },
         {
             "name": "DialogComponent",
-            "id": "component-DialogComponent-57fe6b604f648e5fc536feb9f8e1770cdf2136ede3325bf6b43aa6a0a5a3dc316e8ab8c9763f3920f608d7f7bf1c65b96624c731c0c4ac5d80aad5cbb2fc5ef1",
+            "id": "component-DialogComponent-0483bb2fe1e7bee918ba678b4fc7d2769fbfb1d4e0e84fc8dd72d6619067bd68d4b946977326cd772c5b055171277e10792da979d069f71301b3e0d82e38596f",
             "file": "stories/dialog/dialog.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1197,7 +1307,7 @@
             "selector": "storybook-dialog",
             "styleUrls": [],
             "styles": [],
-            "template": "<button\n  (click)=\"onOpen()\"\n  class=\"btn btn-primary\"\n  type=\"button\"\n>\n  Open confirmation dialog\n</button>\n",
+            "template": "<button\n  (click)=\"onOpen()\"\n  class=\"btn btn-primary\"\n  type=\"button\"\n>\n  Open dialog\n</button>\n",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
@@ -1205,8 +1315,8 @@
                     "name": "config",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 20,
-                    "type": "ConfirmDialogConfig",
+                    "line": 19,
+                    "type": "DialogConfig",
                     "decorators": []
                 }
             ],
@@ -1219,9 +1329,12 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 25,
+                    "line": 23,
                     "deprecated": false,
-                    "deprecationMessage": ""
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
                 }
             ],
             "deprecated": false,
@@ -1231,7 +1344,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {DialogService\n} from \"../../projects/extra-clarity/src\";\nimport {ConfirmDialogConfig} from \"../../projects/extra-clarity/src/lib/modules/dialog/dialog-config\";\n\n@Component({\n  selector: 'storybook-dialog',\n  template: `\n    <button\n      (click)=\"onOpen()\"\n      class=\"btn btn-primary\"\n      type=\"button\"\n    >\n      Open confirmation dialog\n    </button>\n  `,\n  providers: [DialogService],\n})\nexport class DialogComponent {\n  @Input() config: ConfirmDialogConfig;\n\n  constructor(private readonly dialogService: DialogService) {\n  }\n\n  onOpen(): void {\n    this.dialogService.confirm({\n      ...this.config,\n    })\n      .afterClosed()\n      .subscribe();\n  }\n}\n",
+            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {FormDialogComponent} from \"./form-dialog/form-dialog.component\";\nimport {DialogConfig, DialogService} from \"@extrawest/extra-clarity/dialog\";\n\n@Component({\n  selector: 'storybook-dialog',\n  template: `\n    <button\n      (click)=\"onOpen()\"\n      class=\"btn btn-primary\"\n      type=\"button\"\n    >\n      Open dialog\n    </button>\n  `,\n  providers: [DialogService],\n})\nexport class DialogComponent {\n  @Input() config: DialogConfig;\n\n  constructor(private readonly dialogService: DialogService) {}\n\n  public onOpen(): void {\n    this.dialogService.open(FormDialogComponent, {\n      ...this.config,\n    })\n      .afterClosed()\n      .subscribe((v) => console.log(v));\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -1248,7 +1361,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 20,
+                "line": 19,
                 "jsdoctags": [
                     {
                         "name": "dialogService",
@@ -1573,6 +1686,84 @@
                 }
             },
             "templateData": "<h3 class=\"p2 filter-title\">Filter by {{ propertyDisplayName }}</h3>\n<form [formGroup]=\"form\">\n  <clr-radio-wrapper *ngFor=\"let value of values\">\n    <input type=\"radio\" clrRadio [value]=\"value\" formControlName=\"input\" />\n    <label>{{ value.toString() | titlecase }}</label>\n  </clr-radio-wrapper>\n  <button\n    type=\"button\"\n    class=\"btn btn-icon btn-block btn-sm\"\n    (click)=\"reset()\"\n    [disabled]=\"!isDirty\"\n  >\n    <clr-icon shape=\"refresh\"></clr-icon>\n    RESET\n  </button>\n</form>\n"
+        },
+        {
+            "name": "FormDialogComponent",
+            "id": "component-FormDialogComponent-43c2afbc2b977df00648700ac22a71a30573cabb066511a09278369d1e1e6dc285c8eb88f307905dfff4aaee859d7b52dbcaf772399d2955ee151cce71b871e4",
+            "file": "stories/dialog/form-dialog/form-dialog.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "styleUrls": [],
+            "styles": [],
+            "template": "<form clrForm clrLayout=\"vertical\" [formGroup]=\"exampleForm\">\n  <clr-input-container>\n    <label>Input label</label>\n    <input clrInput type=\"text\" formControlName=\"sample\" />\n    <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>\n    <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>\n  </clr-input-container>\n\n  <button class=\"btn btn-primary\" type=\"button\" style=\"margin-top: 24px; float: right;\" (click)=\"onClose()\">Close</button>\n</form>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "exampleForm",
+                    "defaultValue": "new FormGroup({\n    sample: new FormControl('', Validators.required),\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "onClose",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 30,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {Component} from '@angular/core';\nimport {ClarityModule, ClrInputModule} from \"@clr/angular\";\nimport {FormControl, FormGroup, Validators} from \"@angular/forms\";\nimport {DialogRef} from \"@extrawest/extra-clarity/dialog\";\n\n@Component({\n  template: `\n    <form clrForm clrLayout=\"vertical\" [formGroup]=\"exampleForm\">\n      <clr-input-container>\n        <label>Input label</label>\n        <input clrInput type=\"text\" formControlName=\"sample\" />\n        <clr-control-helper>Helper text that shows while it is pristine and valid</clr-control-helper>\n        <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>\n      </clr-input-container>\n\n      <button class=\"btn btn-primary\" type=\"button\" style=\"margin-top: 24px; float: right;\" (click)=\"onClose()\">Close</button>\n    </form>\n  `,\n  imports: [ClrInputModule, ClarityModule]\n})\nexport class FormDialogComponent {\n  exampleForm = new FormGroup({\n    sample: new FormControl('', Validators.required),\n  });\n\n  constructor(\n    private readonly dialogRef: DialogRef,\n  ) {}\n\n  onClose(): void {\n    this.dialogRef.close(this.exampleForm);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "dialogRef",
+                        "type": "DialogRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 24,
+                "jsdoctags": [
+                    {
+                        "name": "dialogRef",
+                        "type": "DialogRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
         },
         {
             "name": "PartialStringFilterComponent",
@@ -1919,135 +2110,6 @@
                 }
             },
             "templateData": "<form [formGroup]=\"form\">\n  <input\n    type=\"text\"\n    autocomplete=\"off\"\n    placeholder=\"{{ placeholder }}\"\n    clrInput\n    formControlName=\"input\"\n    #input\n  />\n  <clr-control-helper *ngIf=\"isToShort\">\n    Please provide at least {{ characterLimit }} characters\n  </clr-control-helper>\n  <clr-control-helper *ngIf=\"!isToShort\">\n    Searching '{{ propertyDisplayName }}' by partial match\n  </clr-control-helper>\n  <button\n    type=\"button\"\n    class=\"btn btn-icon btn-block btn-sm\"\n    (click)=\"reset()\"\n    [disabled]=\"!isDirty\"\n  >\n    <clr-icon shape=\"refresh\"></clr-icon>\n    RESET\n  </button>\n</form>\n"
-        },
-        {
-            "name": "ProcessingButtonComponent",
-            "id": "component-ProcessingButtonComponent-0377f56821eb596b3408bc88492b352f71b6d304dc6a7f2a4a6c92bb13649de1e8d5a92c1c5b2b051b153d97e1a88d565367c9887fd532439987968b2b78ffa2",
-            "file": "projects/extra-clarity/src/lib/modules/processing-button/processing-button.component.ts",
-            "changeDetection": "ChangeDetectionStrategy.OnPush",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "lib-processing-button",
-            "styleUrls": [
-                "./processing-button.component.css"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./processing-button.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [
-                {
-                    "name": "loading",
-                    "defaultValue": "false",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 10
-                }
-            ],
-            "methodsClass": [],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "\n",
-            "type": "component",
-            "sourceCode": "import {ChangeDetectionStrategy, Component} from '@angular/core';\n\n@Component({\n  selector: 'lib-processing-button',\n  templateUrl: './processing-button.component.html',\n  styleUrls: ['./processing-button.component.css'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class ProcessingButtonComponent {\n  loading = false;\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "",
-                    "styleUrl": "./processing-button.component.css"
-                }
-            ],
-            "stylesData": "",
-            "templateData": "<button\n  [clrLoading]=\"loading\"\n  class=\"btn btn-primary\"\n  (click)=\"loading = !loading\"\n>\n  test\n</button>\n"
-        },
-        {
-            "name": "TestDialogComponent",
-            "id": "component-TestDialogComponent-43f7ad24169e14c3f212137bf3a8cb3e89a6c32276e7c5b25d9ae4e3a8918db20a916ca69c91d376cb835a1cee0735b12fc2e960231272cd1a3021cd72e158d0",
-            "file": "stories/dialog/test-dialog.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "storybook-confirmation-dialog",
-            "styleUrls": [],
-            "styles": [],
-            "template": "<button\n  (click)=\"onClose()\"\n  class=\"btn btn-primary\"\n  type=\"button\"\n>\n  Open confirmation dialog\n</button>\n",
-            "templateUrl": [],
-            "viewProviders": [],
-            "inputsClass": [
-                {
-                    "name": "config",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 20,
-                    "type": "ConfirmDialogConfig",
-                    "decorators": []
-                }
-            ],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "onClose",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 27,
-                    "deprecated": false,
-                    "deprecationMessage": ""
-                }
-            ],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "\n",
-            "type": "component",
-            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {DialogService\n} from \"../../projects/extra-clarity/src\";\nimport {ConfirmDialogConfig} from \"../../projects/extra-clarity/src/lib/modules/dialog/dialog-config\";\nimport {DialogRef} from \"../../projects/extra-clarity/src/lib/modules/dialog/dialog-ref\";\n\n@Component({\n  selector: 'storybook-confirmation-dialog',\n  template: `\n    <button\n      (click)=\"onClose()\"\n      class=\"btn btn-primary\"\n      type=\"button\"\n    >\n      Open confirmation dialog\n    </button>\n  `,\n})\nexport class TestDialogComponent {\n  @Input() config: ConfirmDialogConfig;\n\n  constructor(\n    private readonly dialogRef: DialogRef,\n  ) {\n  }\n\n  onClose(): void {\n    this.dialogRef.close();\n  }\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": "",
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [
-                    {
-                        "name": "dialogRef",
-                        "type": "DialogRef",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "line": 20,
-                "jsdoctags": [
-                    {
-                        "name": "dialogRef",
-                        "type": "DialogRef",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            }
         }
     ],
     "modules": [
@@ -2057,7 +2119,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.module.ts",
+            "file": "projects/extra-clarity/auto-refresh/src/auto-refresh.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { AutoRefreshComponent } from './auto-refresh.component';\nimport {ClrCheckboxModule} from \"@clr/angular\";\nimport {ReactiveFormsModule} from \"@angular/forms\";\n\n@NgModule({\n  declarations: [AutoRefreshComponent],\n  imports: [\n    CommonModule,\n    ReactiveFormsModule,\n    ClrCheckboxModule,\n  ],\n  exports: [AutoRefreshComponent],\n})\nexport class AutoRefreshModule { }\n",
             "children": [
@@ -2144,7 +2206,7 @@
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/extra-clarity/src/lib/modules/dialog/dialog.module.ts",
+            "file": "projects/extra-clarity/dialog/src/dialog.module.ts",
             "methods": [],
             "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport {ClrModalModule} from \"@clr/angular\";\nimport {BrowserAnimationsModule} from \"@angular/platform-browser/animations\";\nimport {DialogService} from \"./services/dialog.service\";\nimport {BaseDialogContainerComponent, ConfirmationDialogComponent} from \"./containers\";\n\n@NgModule({\n  declarations: [\n    ConfirmationDialogComponent,\n    BaseDialogContainerComponent,\n  ],\n  imports: [\n    CommonModule,\n    BrowserAnimationsModule,\n    ClrModalModule,\n  ],\n  providers: [DialogService],\n})\nexport class DialogModule { }\n",
             "children": [
@@ -2230,14 +2292,14 @@
             ]
         },
         {
-            "name": "ExtraClarityLibModule",
-            "id": "module-ExtraClarityLibModule-cf4872773b2c68e5caade05bd6d466a30d0220e6d983c901f0c6eee831517b8fa156bf6b0d88d142e7bc9bbc3f8fc9b53115efd6fff6a6c72460a004849ebe1e",
+            "name": "FormDialogModule",
+            "id": "module-FormDialogModule-974b2542cd2a5dc16e22b4c755aead52d0d467af9f6b2d4199ce4a6d5603383373c3630585113395c94fafd06fcb2520f10c434af9b544452d1e4e843648521b",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "projects/extra-clarity/src/lib/extra-clarity-lib.module.ts",
+            "file": "stories/dialog/form-dialog/form-dialog.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { AutoRefreshModule } from './modules';\nimport {DialogModule} from \"./modules/dialog\";\n\nconst MODULES = [\n  AutoRefreshModule,\n  DialogModule,\n]\n\n@NgModule({\n  imports: [\n    ...MODULES,\n  ],\n  exports: [\n    ...MODULES,\n  ],\n})\nexport class ExtraClarityLibModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport {FormDialogComponent} from \"./form-dialog.component\";\nimport {ReactiveFormsModule} from \"@angular/forms\";\nimport {ClarityModule} from \"@clr/angular\";\n\n@NgModule({\n  declarations: [FormDialogComponent],\n  imports: [\n    CommonModule,\n    ReactiveFormsModule,\n    ClarityModule,\n  ],\n})\nexport class FormDialogModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -2245,29 +2307,19 @@
                 },
                 {
                     "type": "declarations",
-                    "elements": []
+                    "elements": [
+                        {
+                            "name": "FormDialogComponent"
+                        }
+                    ]
                 },
                 {
                     "type": "imports",
-                    "elements": [
-                        {
-                            "name": "AutoRefreshModule"
-                        },
-                        {
-                            "name": "DialogModule"
-                        }
-                    ]
+                    "elements": []
                 },
                 {
                     "type": "exports",
-                    "elements": [
-                        {
-                            "name": "AutoRefreshModule"
-                        },
-                        {
-                            "name": "DialogModule"
-                        }
-                    ]
+                    "elements": []
                 },
                 {
                     "type": "bootstrap",
@@ -2322,64 +2374,10 @@
                     "elements": []
                 }
             ]
-        },
-        {
-            "name": "ProcessingButtonModule",
-            "id": "module-ProcessingButtonModule-7506d5c3102becf64f90b1378f6f8bc358f713395a68368e0a7ede3a58ace32238260608b794d5bb1268274695af1b1454cac6e00ef472aa45dca2e197b5999d",
-            "description": "",
-            "deprecationMessage": "",
-            "deprecated": false,
-            "file": "projects/extra-clarity/src/lib/modules/processing-button/processing-button.module.ts",
-            "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ProcessingButtonComponent } from './processing-button.component';\nimport {ClrLoadingButtonModule, ClrLoadingModule} from \"@clr/angular\";\nimport {BrowserAnimationsModule} from \"@angular/platform-browser/animations\";\n\n@NgModule({\n  declarations: [ProcessingButtonComponent],\n  imports: [\n    CommonModule,\n    BrowserAnimationsModule,\n    ClrLoadingButtonModule,\n    ClrLoadingModule,\n  ],\n  exports: [ProcessingButtonComponent],\n})\nexport class ProcessingButtonModule { }\n",
-            "children": [
-                {
-                    "type": "providers",
-                    "elements": []
-                },
-                {
-                    "type": "declarations",
-                    "elements": [
-                        {
-                            "name": "ProcessingButtonComponent"
-                        }
-                    ]
-                },
-                {
-                    "type": "imports",
-                    "elements": []
-                },
-                {
-                    "type": "exports",
-                    "elements": [
-                        {
-                            "name": "ProcessingButtonComponent"
-                        }
-                    ]
-                },
-                {
-                    "type": "bootstrap",
-                    "elements": []
-                },
-                {
-                    "type": "classes",
-                    "elements": []
-                }
-            ]
         }
     ],
     "miscellaneous": {
         "variables": [
-            {
-                "name": "context",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/extra-clarity/src/test.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
-            },
             {
                 "name": "context",
                 "ctype": "miscellaneous",
@@ -2394,11 +2392,21 @@
                 "name": "DEFAULT_PERIOD_SEC",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+                "file": "projects/extra-clarity/auto-refresh/src/auto-refresh.component.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "number",
-                "defaultValue": "10"
+                "defaultValue": "60"
+            },
+            {
+                "name": "defaultParameters",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "stories/auto-refresh/auto-refresh.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Parameters",
+                "defaultValue": "{\n  title: 'Auto refresh',\n  args: {\n    period: 60,\n    refreshing: false,\n    disabled: false,\n  },\n}"
             },
             {
                 "name": "defaultParameters",
@@ -2408,7 +2416,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Parameters",
-                "defaultValue": "{\n  title: 'Dialog/Confirmation Dialog',\n  argTypes: {\n    // inputs\n    clrModalLabelledById: { defaultValue: '' },\n    clrModalSize: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },\n\n    // outputs\n    clrModalAlternateClose: { control: { disable: true } },\n    clrModalOpenChange: { control: { disable: true } },\n\n    // methods\n    fadeDone: { control: { disable: true }, table: { disable: true } },\n    open: { control: { disable: true }, table: { disable: true } },\n    close: { control: { disable: true }, table: { disable: true } },\n    // story helpers\n    createArray: { control: { disable: true }, table: { disable: true } },\n  },\n  args: {\n    // story helpers\n    title: 'Modal Title',\n    message: 'Test confirmation confirmation-dialog message...',\n\n    // outputs\n    clrModalAlternateClose: action('clrModalAlternateClose'),\n    clrModalOpenChange: action('clrModalOpenChange'),\n  },\n}"
+                "defaultValue": "{\n  title: 'Dialog/Confirmation Dialog',\n  argTypes: {\n    size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },\n  },\n  args: {\n    title: 'Title',\n    message: 'Test confirmation dialog message...',\n    closable: true,\n    closableBackdrop: true,\n    rejectBtnHidden: false,\n    rejectBtn: {\n      label: 'Reject',\n      icon: '',\n      classes: 'btn-secondary',\n    },\n    acceptBtn: {\n      label: 'Accept',\n      icon: '',\n      classes: 'btn-primary',\n    },\n  },\n}"
             },
             {
                 "name": "defaultParameters",
@@ -2418,7 +2426,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Parameters",
-                "defaultValue": "{\n  title: 'Dialog/Dialog',\n  argTypes: {\n    // inputs\n    clrModalLabelledById: { defaultValue: '' },\n    clrModalSize: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },\n\n    // outputs\n    clrModalAlternateClose: { control: { disable: true } },\n    clrModalOpenChange: { control: { disable: true } },\n\n    // methods\n    fadeDone: { control: { disable: true }, table: { disable: true } },\n    open: { control: { disable: true }, table: { disable: true } },\n    close: { control: { disable: true }, table: { disable: true } },\n    // story helpers\n    createArray: { control: { disable: true }, table: { disable: true } },\n  },\n  args: {\n    // story helpers\n    title: 'Modal Title',\n    message: 'Test confirmation confirmation-dialog message...',\n\n    // outputs\n    clrModalAlternateClose: action('clrModalAlternateClose'),\n    clrModalOpenChange: action('clrModalOpenChange'),\n  },\n}"
+                "defaultValue": "{\n  title: 'Dialog/Dialog',\n  argTypes: {\n    size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },\n  },\n  args: {\n    title: 'Title',\n    closable: true,\n    closableBackdrop: true,\n  },\n}"
+            },
+            {
+                "name": "defaultStory",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "stories/auto-refresh/auto-refresh.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "args => ({\n  template: `<ew-auto-refresh\n    [period]=\"period\"\n    [refreshing]=\"refreshing\"\n    [disabled]=\"disabled\"\n  ></ew-auto-refresh>`,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "defaultStory",
@@ -2438,13 +2456,13 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "args => ({\n  // template: `\n  //   <button type=\"button\" class=\"btn btn-primary\" (click)=\"clrModalOpen = true\">Open Dialog</button>\n  // `,\n  template: `<storybook-dialog [config]=\"config\"></storybook-dialog>`,\n  moduleMetadata: {\n    declarations: [DialogComponent],\n  },\n  props: {\n    config: {\n      ...args,\n    },\n  },\n})"
+                "defaultValue": "args => ({\n  template: `<storybook-dialog [config]=\"config\"></storybook-dialog>`,\n  moduleMetadata: {\n    declarations: [DialogComponent],\n    imports: [FormDialogModule],\n  },\n  props: {\n    config: {\n      ...args,\n    },\n  },\n})"
             },
             {
                 "name": "DIALOG_CONFIG",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/extra-clarity/src/lib/modules/dialog/tokens/dialog-config.token.ts",
+                "file": "projects/extra-clarity/dialog/src/tokens/dialog-config.token.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -2454,50 +2472,11 @@
                 "name": "DIALOG_DATA",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/extra-clarity/src/lib/modules/dialog/tokens/dialog-data.token.ts",
+                "file": "projects/extra-clarity/dialog/src/tokens/dialog-data.token.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "new InjectionToken('DialogData')"
-            },
-            {
-                "name": "MODULES",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/extra-clarity/src/lib/extra-clarity-lib.module.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "[]",
-                "defaultValue": "[\n  AutoRefreshModule,\n  DialogModule,\n]"
-            },
-            {
-                "name": "Primary",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "stories/auto-refresh/auto-refresh.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Primary",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "stories/processing-button/processing-button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "require",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/extra-clarity/src/test.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "literal type"
             },
             {
                 "name": "require",
@@ -2509,24 +2488,14 @@
                 "type": "literal type"
             },
             {
-                "name": "Template",
+                "name": "variants",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "stories/auto-refresh/auto-refresh.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: AutoRefreshComponent\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "stories/processing-button/processing-button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: ProcessingButtonComponent,\n})"
+                "type": "Parameters[]",
+                "defaultValue": "[]"
             },
             {
                 "name": "variants",
@@ -2681,7 +2650,7 @@
                         "type": "string",
                         "deprecated": false,
                         "deprecationMessage": "",
-                        "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                        "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                         "destructuredParameter": true
                     },
                     {
@@ -2689,7 +2658,7 @@
                         "type": "any",
                         "deprecated": false,
                         "deprecationMessage": "",
-                        "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                        "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                         "destructuredParameter": true
                     },
                     {
@@ -2697,7 +2666,7 @@
                         "type": "number",
                         "deprecated": false,
                         "deprecationMessage": "",
-                        "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                        "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                         "destructuredParameter": true
                     }
                 ],
@@ -2716,7 +2685,7 @@
                         "type": "string",
                         "deprecated": false,
                         "deprecationMessage": "",
-                        "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                        "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                         "destructuredParameter": true,
                         "tagName": {
                             "text": "param"
@@ -2727,7 +2696,7 @@
                         "type": "any",
                         "deprecated": false,
                         "deprecationMessage": "",
-                        "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                        "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                         "destructuredParameter": true,
                         "tagName": {
                             "text": "param"
@@ -2738,7 +2707,7 @@
                         "type": "number",
                         "deprecated": false,
                         "deprecationMessage": "",
-                        "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                        "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                         "destructuredParameter": true,
                         "tagName": {
                             "text": "param"
@@ -2753,22 +2722,11 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "function",
-                "file": "projects/extra-clarity/src/lib/modules/dialog/dialog-config.ts",
+                "file": "projects/extra-clarity/dialog/src/dialog-config.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
                 "kind": 178
-            },
-            {
-                "name": "Size",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
-                "file": "projects/extra-clarity/src/lib/types/size.type.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 186
             }
         ],
         "enumerations": [
@@ -2791,7 +2749,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
-                "file": "projects/extra-clarity/src/lib/modules/dialog/enums/confirmation-type.enum.ts"
+                "file": "projects/extra-clarity/dialog/src/enums/confirmation-type.enum.ts"
             },
             {
                 "name": "DialogState",
@@ -2812,31 +2770,10 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
-                "file": "projects/extra-clarity/src/lib/modules/dialog/enums/dialog-state.enum.ts"
+                "file": "projects/extra-clarity/dialog/src/enums/dialog-state.enum.ts"
             }
         ],
         "groupedVariables": {
-            "projects/extra-clarity/src/test.ts": [
-                {
-                    "name": "context",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/extra-clarity/src/test.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
-                },
-                {
-                    "name": "require",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/extra-clarity/src/test.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "literal type"
-                }
-            ],
             "projects/datagrid-filters/src/test.ts": [
                 {
                     "name": "context",
@@ -2858,16 +2795,48 @@
                     "type": "literal type"
                 }
             ],
-            "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts": [
+            "projects/extra-clarity/auto-refresh/src/auto-refresh.component.ts": [
                 {
                     "name": "DEFAULT_PERIOD_SEC",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+                    "file": "projects/extra-clarity/auto-refresh/src/auto-refresh.component.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "number",
-                    "defaultValue": "10"
+                    "defaultValue": "60"
+                }
+            ],
+            "stories/auto-refresh/auto-refresh.stories.ts": [
+                {
+                    "name": "defaultParameters",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "stories/auto-refresh/auto-refresh.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Parameters",
+                    "defaultValue": "{\n  title: 'Auto refresh',\n  args: {\n    period: 60,\n    refreshing: false,\n    disabled: false,\n  },\n}"
+                },
+                {
+                    "name": "defaultStory",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "stories/auto-refresh/auto-refresh.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "args => ({\n  template: `<ew-auto-refresh\n    [period]=\"period\"\n    [refreshing]=\"refreshing\"\n    [disabled]=\"disabled\"\n  ></ew-auto-refresh>`,\n  props: {\n    ...args,\n  },\n})"
+                },
+                {
+                    "name": "variants",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "stories/auto-refresh/auto-refresh.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Parameters[]",
+                    "defaultValue": "[]"
                 }
             ],
             "stories/confirmation-dialog/confirmation-dialog.stories.ts": [
@@ -2879,7 +2848,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Parameters",
-                    "defaultValue": "{\n  title: 'Dialog/Confirmation Dialog',\n  argTypes: {\n    // inputs\n    clrModalLabelledById: { defaultValue: '' },\n    clrModalSize: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },\n\n    // outputs\n    clrModalAlternateClose: { control: { disable: true } },\n    clrModalOpenChange: { control: { disable: true } },\n\n    // methods\n    fadeDone: { control: { disable: true }, table: { disable: true } },\n    open: { control: { disable: true }, table: { disable: true } },\n    close: { control: { disable: true }, table: { disable: true } },\n    // story helpers\n    createArray: { control: { disable: true }, table: { disable: true } },\n  },\n  args: {\n    // story helpers\n    title: 'Modal Title',\n    message: 'Test confirmation confirmation-dialog message...',\n\n    // outputs\n    clrModalAlternateClose: action('clrModalAlternateClose'),\n    clrModalOpenChange: action('clrModalOpenChange'),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Dialog/Confirmation Dialog',\n  argTypes: {\n    size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },\n  },\n  args: {\n    title: 'Title',\n    message: 'Test confirmation dialog message...',\n    closable: true,\n    closableBackdrop: true,\n    rejectBtnHidden: false,\n    rejectBtn: {\n      label: 'Reject',\n      icon: '',\n      classes: 'btn-secondary',\n    },\n    acceptBtn: {\n      label: 'Accept',\n      icon: '',\n      classes: 'btn-primary',\n    },\n  },\n}"
                 },
                 {
                     "name": "defaultStory",
@@ -2911,7 +2880,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Parameters",
-                    "defaultValue": "{\n  title: 'Dialog/Dialog',\n  argTypes: {\n    // inputs\n    clrModalLabelledById: { defaultValue: '' },\n    clrModalSize: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },\n\n    // outputs\n    clrModalAlternateClose: { control: { disable: true } },\n    clrModalOpenChange: { control: { disable: true } },\n\n    // methods\n    fadeDone: { control: { disable: true }, table: { disable: true } },\n    open: { control: { disable: true }, table: { disable: true } },\n    close: { control: { disable: true }, table: { disable: true } },\n    // story helpers\n    createArray: { control: { disable: true }, table: { disable: true } },\n  },\n  args: {\n    // story helpers\n    title: 'Modal Title',\n    message: 'Test confirmation confirmation-dialog message...',\n\n    // outputs\n    clrModalAlternateClose: action('clrModalAlternateClose'),\n    clrModalOpenChange: action('clrModalOpenChange'),\n  },\n}"
+                    "defaultValue": "{\n  title: 'Dialog/Dialog',\n  argTypes: {\n    size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },\n  },\n  args: {\n    title: 'Title',\n    closable: true,\n    closableBackdrop: true,\n  },\n}"
                 },
                 {
                     "name": "defaultStory",
@@ -2921,7 +2890,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "args => ({\n  // template: `\n  //   <button type=\"button\" class=\"btn btn-primary\" (click)=\"clrModalOpen = true\">Open Dialog</button>\n  // `,\n  template: `<storybook-dialog [config]=\"config\"></storybook-dialog>`,\n  moduleMetadata: {\n    declarations: [DialogComponent],\n  },\n  props: {\n    config: {\n      ...args,\n    },\n  },\n})"
+                    "defaultValue": "args => ({\n  template: `<storybook-dialog [config]=\"config\"></storybook-dialog>`,\n  moduleMetadata: {\n    declarations: [DialogComponent],\n    imports: [FormDialogModule],\n  },\n  props: {\n    config: {\n      ...args,\n    },\n  },\n})"
                 },
                 {
                     "name": "variants",
@@ -2934,84 +2903,28 @@
                     "defaultValue": "[]"
                 }
             ],
-            "projects/extra-clarity/src/lib/modules/dialog/tokens/dialog-config.token.ts": [
+            "projects/extra-clarity/dialog/src/tokens/dialog-config.token.ts": [
                 {
                     "name": "DIALOG_CONFIG",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/extra-clarity/src/lib/modules/dialog/tokens/dialog-config.token.ts",
+                    "file": "projects/extra-clarity/dialog/src/tokens/dialog-config.token.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "new InjectionToken('DialogConfig')"
                 }
             ],
-            "projects/extra-clarity/src/lib/modules/dialog/tokens/dialog-data.token.ts": [
+            "projects/extra-clarity/dialog/src/tokens/dialog-data.token.ts": [
                 {
                     "name": "DIALOG_DATA",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/extra-clarity/src/lib/modules/dialog/tokens/dialog-data.token.ts",
+                    "file": "projects/extra-clarity/dialog/src/tokens/dialog-data.token.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "new InjectionToken('DialogData')"
-                }
-            ],
-            "projects/extra-clarity/src/lib/extra-clarity-lib.module.ts": [
-                {
-                    "name": "MODULES",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/extra-clarity/src/lib/extra-clarity-lib.module.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "[]",
-                    "defaultValue": "[\n  AutoRefreshModule,\n  DialogModule,\n]"
-                }
-            ],
-            "stories/auto-refresh/auto-refresh.stories.ts": [
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "stories/auto-refresh/auto-refresh.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "stories/auto-refresh/auto-refresh.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: AutoRefreshComponent\n})"
-                }
-            ],
-            "stories/processing-button/processing-button.stories.ts": [
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "stories/processing-button/processing-button.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "stories/processing-button/processing-button.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "({  }) => ({\n  props: {\n\n  },\n  component: ProcessingButtonComponent,\n})"
                 }
             ]
         },
@@ -3148,7 +3061,7 @@
                             "type": "string",
                             "deprecated": false,
                             "deprecationMessage": "",
-                            "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                            "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                             "destructuredParameter": true
                         },
                         {
@@ -3156,7 +3069,7 @@
                             "type": "any",
                             "deprecated": false,
                             "deprecationMessage": "",
-                            "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                            "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                             "destructuredParameter": true
                         },
                         {
@@ -3164,7 +3077,7 @@
                             "type": "number",
                             "deprecated": false,
                             "deprecationMessage": "",
-                            "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                            "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                             "destructuredParameter": true
                         }
                     ],
@@ -3183,7 +3096,7 @@
                             "type": "string",
                             "deprecated": false,
                             "deprecationMessage": "",
-                            "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                            "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                             "destructuredParameter": true,
                             "tagName": {
                                 "text": "param"
@@ -3194,7 +3107,7 @@
                             "type": "any",
                             "deprecated": false,
                             "deprecationMessage": "",
-                            "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                            "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                             "destructuredParameter": true,
                             "tagName": {
                                 "text": "param"
@@ -3205,7 +3118,7 @@
                             "type": "number",
                             "deprecated": false,
                             "deprecationMessage": "",
-                            "destrucuredGroupId": "aee97fe5-900e-4e7e-b2c9-b5f0b5eeb78a",
+                            "destrucuredGroupId": "ee40f492-ceea-432b-9721-a17175d97c48",
                             "destructuredParameter": true,
                             "tagName": {
                                 "text": "param"
@@ -3216,7 +3129,7 @@
             ]
         },
         "groupedEnumerations": {
-            "projects/extra-clarity/src/lib/modules/dialog/enums/confirmation-type.enum.ts": [
+            "projects/extra-clarity/dialog/src/enums/confirmation-type.enum.ts": [
                 {
                     "name": "ConfirmationType",
                     "childs": [
@@ -3236,10 +3149,10 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
-                    "file": "projects/extra-clarity/src/lib/modules/dialog/enums/confirmation-type.enum.ts"
+                    "file": "projects/extra-clarity/dialog/src/enums/confirmation-type.enum.ts"
                 }
             ],
-            "projects/extra-clarity/src/lib/modules/dialog/enums/dialog-state.enum.ts": [
+            "projects/extra-clarity/dialog/src/enums/dialog-state.enum.ts": [
                 {
                     "name": "DialogState",
                     "childs": [
@@ -3259,35 +3172,22 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
-                    "file": "projects/extra-clarity/src/lib/modules/dialog/enums/dialog-state.enum.ts"
+                    "file": "projects/extra-clarity/dialog/src/enums/dialog-state.enum.ts"
                 }
             ]
         },
         "groupedTypeAliases": {
-            "projects/extra-clarity/src/lib/modules/dialog/dialog-config.ts": [
+            "projects/extra-clarity/dialog/src/dialog-config.ts": [
                 {
                     "name": "OnClickCallback",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
                     "rawtype": "function",
-                    "file": "projects/extra-clarity/src/lib/modules/dialog/dialog-config.ts",
+                    "file": "projects/extra-clarity/dialog/src/dialog-config.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
                     "kind": 178
-                }
-            ],
-            "projects/extra-clarity/src/lib/types/size.type.ts": [
-                {
-                    "name": "Size",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
-                    "file": "projects/extra-clarity/src/lib/types/size.type.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 186
                 }
             ]
         }
@@ -3366,26 +3266,16 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/extra-clarity-lib.module.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "MODULES",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+                "filePath": "projects/extra-clarity/auto-refresh/src/auto-refresh.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "AutoRefreshComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/9",
+                "coverageCount": "0/13",
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/auto-refresh/auto-refresh.component.ts",
+                "filePath": "projects/extra-clarity/auto-refresh/src/auto-refresh.component.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3395,7 +3285,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/containers/base-dialog-container/base-dialog-container.component.ts",
+                "filePath": "projects/extra-clarity/dialog/src/containers/base-dialog-container/base-dialog-container.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "BaseDialogContainerComponent",
@@ -3404,7 +3294,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/containers/confirmation-dialog/confirmation-dialog.component.ts",
+                "filePath": "projects/extra-clarity/dialog/src/containers/confirmation-dialog/confirmation-dialog.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "ConfirmationDialogComponent",
@@ -3413,7 +3303,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/dialog-config.ts",
+                "filePath": "projects/extra-clarity/dialog/src/dialog-config.ts",
                 "type": "class",
                 "linktype": "classe",
                 "name": "BaseDialogConfig",
@@ -3422,7 +3312,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/dialog-config.ts",
+                "filePath": "projects/extra-clarity/dialog/src/dialog-config.ts",
                 "type": "class",
                 "linktype": "classe",
                 "name": "ConfirmDialogConfig",
@@ -3431,7 +3321,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/dialog-config.ts",
+                "filePath": "projects/extra-clarity/dialog/src/dialog-config.ts",
                 "type": "class",
                 "linktype": "classe",
                 "name": "DialogConfig",
@@ -3440,7 +3330,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/dialog-ref.ts",
+                "filePath": "projects/extra-clarity/dialog/src/dialog-ref.ts",
                 "type": "class",
                 "linktype": "classe",
                 "name": "DialogRef",
@@ -3449,7 +3339,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/models/dialog-button-config.model.ts",
+                "filePath": "projects/extra-clarity/dialog/src/models/dialog-button-config.model.ts",
                 "type": "interface",
                 "linktype": "interface",
                 "name": "DialogButtonConfig",
@@ -3458,7 +3348,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/services/dialog.service.ts",
+                "filePath": "projects/extra-clarity/dialog/src/services/dialog.service.ts",
                 "type": "injectable",
                 "linktype": "injectable",
                 "name": "DialogService",
@@ -3467,7 +3357,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/tokens/dialog-config.token.ts",
+                "filePath": "projects/extra-clarity/dialog/src/tokens/dialog-config.token.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3477,7 +3367,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/dialog/tokens/dialog-data.token.ts",
+                "filePath": "projects/extra-clarity/dialog/src/tokens/dialog-data.token.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -3487,30 +3377,11 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/extra-clarity/src/lib/modules/processing-button/processing-button.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "ProcessingButtonComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/2",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/extra-clarity/src/test.ts",
+                "filePath": "stories/auto-refresh/auto-refresh.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "context",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/extra-clarity/src/test.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "require",
+                "name": "defaultParameters",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -3520,7 +3391,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Primary",
+                "name": "defaultStory",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -3530,7 +3401,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Template",
+                "name": "variants",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -3614,32 +3485,12 @@
                 "status": "low"
             },
             {
-                "filePath": "stories/dialog/test-dialog.component.ts",
+                "filePath": "stories/dialog/form-dialog/form-dialog.component.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "TestDialogComponent",
+                "name": "FormDialogComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/4",
-                "status": "low"
-            },
-            {
-                "filePath": "stories/processing-button/processing-button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Primary",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "stories/processing-button/processing-button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
                 "status": "low"
             }
         ]

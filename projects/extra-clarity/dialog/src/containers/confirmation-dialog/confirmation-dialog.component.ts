@@ -6,7 +6,6 @@ import {DIALOG_CONFIG} from "../../tokens/dialog-config.token";
 import {isPromise} from "rxjs/internal/util/isPromise";
 
 @Component({
-  selector: 'lib-confirmation-dialog',
   templateUrl: './confirmation-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

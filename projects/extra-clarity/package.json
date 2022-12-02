@@ -1,9 +1,28 @@
 {
-  "name": "extra-clarity",
+  "name": "@extrawest/extra-clarity",
   "version": "0.0.1",
+  "description": "Extrawest Angular components",
+  "author": "extrawest.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/extrawest/extra-clarity.git"
+  },
+  "homepage": "https://github.com/extrawest/extra-clarity",
+  "keywords": [
+    "angular",
+    "clarity-design",
+    "typescript"
+  ],
+  "license": "MIT",
   "peerDependencies": {
+    "@angular/animations": "^14.2.0",
     "@angular/common": "^14.2.0",
-    "@angular/core": "^14.2.0"
+    "@angular/core": "^14.2.0",
+    "@angular/forms": "^14.2.0",
+    "@cds/core": "^6.2.2",
+    "@clr/angular": "^13.10.1",
+    "@clr/icons": "^13.0.2",
+    "@clr/ui": "^13.10.1"
   },
   "dependencies": {
     "tslib": "^2.3.0"

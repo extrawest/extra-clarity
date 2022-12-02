@@ -1,8 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {DialogService
-} from "../../projects/extra-clarity/src";
-import {DialogConfig} from "../../projects/extra-clarity/src/lib/modules/dialog/dialog-config";
 import {FormDialogComponent} from "./form-dialog/form-dialog.component";
+import {DialogConfig, DialogService} from "@extrawest/extra-clarity/dialog";
 
 @Component({
   selector: 'storybook-dialog',

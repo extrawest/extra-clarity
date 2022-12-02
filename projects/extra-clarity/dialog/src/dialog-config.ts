@@ -1,11 +1,10 @@
-import {Size} from "../../types/size.type";
 import {DialogButtonConfig} from "./models/dialog-button-config.model";
 
 type OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;
 
 export class BaseDialogConfig {
   title: string;
-  size?: Size;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   closable?: boolean = true;
   closableBackdrop?: boolean = true;
 }

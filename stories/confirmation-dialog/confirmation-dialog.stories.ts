@@ -1,8 +1,7 @@
 import {Story, Parameters} from "@storybook/angular";
-import {action} from "@storybook/addon-actions";
 import {setupStory} from "../../.storybook/helpers/setup-story.helper";
-import {DialogModule} from "../../projects/extra-clarity/src";
 import {ConfirmationDialogComponent} from "./confirmation-dialog.component";
+import {DialogModule} from "@extrawest/extra-clarity/dialog";
 
 const defaultStory: Story = args => ({
   template: `<storybook-confirmation-dialog [config]="config"></storybook-confirmation-dialog>`,

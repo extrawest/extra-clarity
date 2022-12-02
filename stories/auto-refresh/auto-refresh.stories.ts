@@ -1,13 +1,13 @@
 import {Parameters, Story} from "@storybook/angular";
-import {AutoRefreshModule} from "../../projects/extra-clarity/src";
 import {setupStory} from "../../.storybook/helpers/setup-story.helper";
+import {AutoRefreshModule} from "@extrawest/extra-clarity/auto-refresh";
 
 const defaultStory: Story = args => ({
-  template: `<lib-auto-refresh
+  template: `<ew-auto-refresh
     [period]="period"
     [refreshing]="refreshing"
     [disabled]="disabled"
-  ></lib-auto-refresh>`,
+  ></ew-auto-refresh>`,
   props: {
     ...args,
   },

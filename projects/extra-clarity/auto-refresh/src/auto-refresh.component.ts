@@ -14,9 +14,8 @@ import {FormControl} from "@angular/forms";
 const DEFAULT_PERIOD_SEC = 60;
 
 @Component({
-  selector: 'lib-auto-refresh',
+  selector: 'ew-auto-refresh',
   templateUrl: './auto-refresh.component.html',
-  styleUrls: ['./auto-refresh.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutoRefreshComponent implements OnDestroy {
@@ -27,7 +26,7 @@ export class AutoRefreshComponent implements OnDestroy {
     }
   }
   @Input() public set disabled(v: boolean) {
-    this.toggleControl.patchValue(v);
+    this.toggleControl.patchValue(!v);
   }
 
   @Output() public refresh = new EventEmitter<void>();
@@ -44,7 +43,7 @@ export class AutoRefreshComponent implements OnDestroy {
       withLatestFrom(this.period$),
       takeUntil(this.destroy$),
       map(([seconds, period]) => period - seconds),
-      takeWhile((seconds) => seconds > 0),
+      takeWhile((seconds) => seconds > 0 && !this.refreshing),
       finalize(() => this.refresh.emit()),
       repeat(),
     )
