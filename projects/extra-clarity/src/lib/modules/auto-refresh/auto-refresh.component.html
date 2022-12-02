@@ -12,8 +12,8 @@
       </ng-container>
 
       <ng-template #timer>
-        <ng-container *ngIf="!refreshing && timer$ | async as timer; else refresh">
-          Auto refresh in {{ timer }} sec
+        <ng-container *ngIf="!refreshing && time$ | async as time; else refresh">
+          Auto refresh in {{ time }} sec
         </ng-container>
 
         <ng-template #refresh>

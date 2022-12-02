@@ -1,8 +1,17 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {delayWhen, finalize, map, of, repeat, take, timer} from "rxjs";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {
+  BehaviorSubject,
+  finalize,
+  map,
+  Observable,
+  repeat,
+  Subject,
+  takeUntil, takeWhile,
+  timer, withLatestFrom
+} from "rxjs";
 import {FormControl} from "@angular/forms";
 
-const DEFAULT_PERIOD_SEC = 10;
+const DEFAULT_PERIOD_SEC = 60;
 
 @Component({
   selector: 'lib-auto-refresh',
@@ -10,24 +19,40 @@ const DEFAULT_PERIOD_SEC = 10;
   styleUrls: ['./auto-refresh.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AutoRefreshComponent {
-  @Input() public period: number = DEFAULT_PERIOD_SEC;
+export class AutoRefreshComponent implements OnDestroy {
   @Input() public refreshing: boolean;
-  @Input() public disabled: boolean = false;
+  @Input() public set period(v: number) {
+    if (v > 0) {
+      this.period$.next(v);
+    }
+  }
+  @Input() public set disabled(v: boolean) {
+    this.toggleControl.patchValue(v);
+  }
 
   @Output() public refresh = new EventEmitter<void>();
   @Output() public toggle = new EventEmitter<boolean>();
 
-  public readonly toggleControl = new FormControl<boolean>(!this.disabled, { nonNullable: true });
+  public readonly toggleControl = new FormControl<boolean>(false, { nonNullable: true });
 
-  public readonly timer$ = timer(0, 1000)
+  private readonly timer$: Observable<number> = timer(0, 1000);
+  private readonly period$: BehaviorSubject<number> = new BehaviorSubject(DEFAULT_PERIOD_SEC);
+  private readonly destroy$: Subject<void> = new Subject();
+
+  public readonly time$: Observable<number> = this.timer$
     .pipe(
-      map((seconds) => this.period - seconds - 1),
-      take(this.period),
-      delayWhen(() => of(this.refreshing)),
+      withLatestFrom(this.period$),
+      takeUntil(this.destroy$),
+      map(([seconds, period]) => period - seconds),
+      takeWhile((seconds) => seconds > 0),
       finalize(() => this.refresh.emit()),
       repeat(),
-    );
+    )
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   public onToggle(): void {
     this.toggle.emit(this.toggleControl.value);
