@@ -20,12 +20,26 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - name: Installing dependencies
+      - name: Install dependencies
         run: npm i
-      - name: Build
+      - name: Build libraries
         run: npm run build:extra-clarity
-      - name: Publish
+      - name: Publish libraries to NPM
         working-directory: dist/extra-clarity
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+  deploy:
+    needs: [publish]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm i
+      - run: npm run build-storybook
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    
