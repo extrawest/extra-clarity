@@ -23,5 +23,9 @@ jobs:
       - run: npm i
       - run: npm run build:extra-clarity
       - run: cd dist/extra-clarity
+      - run: ls
+      - run: |
+          cd dist/extra-clarity
+          ls
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
