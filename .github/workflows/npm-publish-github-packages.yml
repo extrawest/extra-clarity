@@ -26,6 +26,6 @@ jobs:
         run: npm run build:extra-clarity
       - name: Publish
         working-directory: dist/extra-clarity
-        run: ls
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
