@@ -20,12 +20,12 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: npm i
-      - run: npm run build:extra-clarity
-      - run: cd dist/extra-clarity
-      - run: ls
-      - run: |
-          cd dist/extra-clarity
-          ls
+      - name: Installing dependencies
+        run: npm i
+      - name: Build
+        run: npm run build:extra-clarity
+      - name: Publish
+        working-directory: dist/extra-clarity
+        run: ls
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
