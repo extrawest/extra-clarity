@@ -5,7 +5,8 @@ name: Publish extra-clarity package to NPM
 
 on:
   push:
-    branches: ['main']
+    branches:
+      - main
 
 jobs:
   build:
