@@ -31,6 +31,9 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: ls
+      - run: npm i
+      - run: npm run build:extra-clarity
+      - working-directory: dist/extra-clarity
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
