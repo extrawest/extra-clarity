@@ -1,25 +1,24 @@
-<clr-toggle-container>
-  <clr-toggle-wrapper>
-    <input
-      type="checkbox"
-      clrToggle
-      [formControl]="toggleControl"
-      (change)="onToggle()"
-    >
-    <label class="p5 text-label">
-      <ng-container *ngIf="!toggleControl.value; else timer">
-        Auto refresh disabled
+<clr-toggle-wrapper>
+  <input
+    type="checkbox"
+    clrToggle
+    [formControl]="toggleControl"
+    (change)="onToggle()"
+    class="form-control"
+  >
+  <label class="p5 text-label">
+    <ng-container *ngIf="!toggleControl.value; else timer">
+      Auto refresh disabled
+    </ng-container>
+
+    <ng-template #timer>
+      <ng-container *ngIf="!refreshing && (time$ | async) as time; else refresh">
+        Auto refresh in {{ time }} sec
       </ng-container>
 
-      <ng-template #timer>
-        <ng-container *ngIf="!refreshing && (time$ | async) as time; else refresh">
-          Auto refresh in {{ time }} sec
-        </ng-container>
-
-        <ng-template #refresh>
-          Refreshing...
-        </ng-template>
+      <ng-template #refresh>
+        Refreshing...
       </ng-template>
-    </label>
-  </clr-toggle-wrapper>
-</clr-toggle-container>
+    </ng-template>
+  </label>
+</clr-toggle-wrapper>

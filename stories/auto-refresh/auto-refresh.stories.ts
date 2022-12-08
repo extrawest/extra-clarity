@@ -41,12 +41,11 @@ export const AutoRefreshGroupStory: Story = args => ({
   },
   viewMode: 'story',
   template: `
-    <div style="width: 300px; display: flex; align-items: center">
-      <ew-auto-refresh-group
-        [period]="period"
-        [refreshing]="refreshing"
-        [disabled]="disabled"
-      ></ew-auto-refresh-group>
-  </div>`,
+    <ew-auto-refresh-group
+      [period]="period"
+      [refreshing]="refreshing"
+      [autoRefreshDisabled]="disabled"
+    ></ew-auto-refresh-group>
+  `,
 });
 AutoRefreshGroupStory.storyName = 'Auto refresh group';

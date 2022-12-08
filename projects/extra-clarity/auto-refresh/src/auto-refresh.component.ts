@@ -16,6 +16,7 @@ const DEFAULT_PERIOD_SEC = 60;
 @Component({
   selector: 'ew-auto-refresh',
   templateUrl: './auto-refresh.component.html',
+  styleUrls: ['./auto-refresh.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutoRefreshComponent implements OnDestroy {

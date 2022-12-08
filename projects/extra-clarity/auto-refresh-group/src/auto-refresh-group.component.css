@@ -1,10 +1,5 @@
-/*
-  min-width: 15.6rem = 312 px = width of a page wrapper (by clarity styles)
-  when the screen width is 360px (minimal supported width in our app)
-*/
-
 .container {
-  display: flex;
+  display: inline-flex;
   align-items: center;
 }
 

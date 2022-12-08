@@ -1,7 +1,7 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {AutoRefreshGroupComponent} from "./auto-refresh-group.component";
-import {ClarityModule, ClrIconModule} from "@clr/angular";
+import {ClrIconModule} from "@clr/angular";
 import {AutoRefreshModule} from "@extrawest/extra-clarity/auto-refresh";
 import '@cds/core/icon/register.js';
 
@@ -12,7 +12,6 @@ import '@cds/core/icon/register.js';
     CommonModule,
     ClrIconModule,
     AutoRefreshModule,
-    ClarityModule,
   ],
   exports: [AutoRefreshGroupComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
