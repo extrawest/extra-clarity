@@ -1,0 +1,37 @@
+
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  title="Components/Confirmation Dialog/Overview"
+  parameters={{
+    viewMode: 'docs'
+  }}
+/>
+
+# Confirmation Dialog
+
+<br/>
+
+`import { DialogModule } from '@extrawest/extra-clarity/dialog';`
+
+<br/>
+
+## Usage
+
+1) Inject DialogService into your Component
+
+`constructor(private readonly dialogService: DialogService) {}`
+
+2) Invoke `confirm` method from this service with config object.
+
+```
+let dialogRef = dialogService.confirm({
+  title: 'Title',
+  message: 'Lorem ipsum dolor sit amet...',
+  size: 'lg',
+});
+```
+The `DialogRef` provides a handle on the opened dialog. It can be used to close the dialog and to receive notifications when the dialog has been closed.
+
+
+

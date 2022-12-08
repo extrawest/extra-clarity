@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
-import {ClarityModule, ClrInputModule} from "@clr/angular";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {DialogRef} from "@extrawest/extra-clarity/dialog";
+import {DialogRef} from "../../../projects/extra-clarity/dialog";
 
 @Component({
   template: `
@@ -16,7 +15,6 @@ import {DialogRef} from "@extrawest/extra-clarity/dialog";
       <button class="btn btn-primary" type="button" style="margin-top: 24px; float: right;" (click)="onClose()">Close</button>
     </form>
   `,
-  imports: [ClrInputModule, ClarityModule]
 })
 export class FormDialogComponent {
   exampleForm = new FormGroup({

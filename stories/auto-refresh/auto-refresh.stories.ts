@@ -1,27 +1,52 @@
-import {Parameters, Story} from "@storybook/angular";
-import {setupStory} from "../../.storybook/helpers/setup-story.helper";
-import {AutoRefreshModule} from "@extrawest/extra-clarity/auto-refresh";
+import {Meta, moduleMetadata, Story} from "@storybook/angular";
+import {AutoRefreshModule} from "../../projects/extra-clarity/auto-refresh";
+import {AutoRefreshGroupModule} from "../../projects/extra-clarity/auto-refresh-group";
 
-const defaultStory: Story = args => ({
-  template: `<ew-auto-refresh
-    [period]="period"
-    [refreshing]="refreshing"
-    [disabled]="disabled"
-  ></ew-auto-refresh>`,
-  props: {
-    ...args,
-  },
-});
-
-const defaultParameters: Parameters = {
-  title: 'Auto refresh',
+export default {
+  title: 'Components/Auto refresh',
+  decorators: [
+    moduleMetadata({
+      imports: [
+        AutoRefreshModule,
+        AutoRefreshGroupModule,
+      ],
+    }),
+  ],
   args: {
     period: 60,
     refreshing: false,
     disabled: false,
   },
-};
+  parameters: {
+    viewMode: 'story',
+  },
+} as Meta;
 
-const variants: Parameters[] = [];
+export const AutoRefreshStory: Story = args => ({
+  props: {
+    ...args,
+  },
+  viewMode: 'story',
+  template: `<ew-auto-refresh
+    [period]="period"
+    [refreshing]="refreshing"
+    [disabled]="disabled"
+  ></ew-auto-refresh>`,
+});
+AutoRefreshStory.storyName = 'Auto refresh';
 
-setupStory(AutoRefreshModule, defaultStory, defaultParameters, variants);
+export const AutoRefreshGroupStory: Story = args => ({
+  props: {
+    ...args,
+  },
+  viewMode: 'story',
+  template: `
+    <div style="width: 300px; display: flex; align-items: center">
+      <ew-auto-refresh-group
+        [period]="period"
+        [refreshing]="refreshing"
+        [disabled]="disabled"
+      ></ew-auto-refresh-group>
+  </div>`,
+});
+AutoRefreshGroupStory.storyName = 'Auto refresh group';

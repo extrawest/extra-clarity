@@ -1,0 +1,27 @@
+<div [style.width.px]="width">
+  <clr-control-container>
+    <input
+      #inputEl
+      clrInput
+      [formControl]="control"
+      [placeholder]="placeholder"
+      type="text"
+      autocomplete="off"
+    />
+    <clr-control-helper *ngIf="isTooShort && minLength > 1">
+      Please provide at least {{ minLength }} characters
+    </clr-control-helper>
+    <clr-control-helper *ngIf="!isTooShort">
+      Searching '{{ propertyDisplayName }}' by partial match
+    </clr-control-helper>
+  </clr-control-container>
+
+  <button
+    type="button"
+    class="btn btn-icon btn-block btn-sm"
+    (click)="onReset()"
+    [disabled]="!control.dirty"
+  >
+    RESET
+  </button>
+</div>

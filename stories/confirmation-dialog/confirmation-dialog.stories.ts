@@ -1,22 +1,15 @@
-import {Story, Parameters} from "@storybook/angular";
-import {setupStory} from "../../.storybook/helpers/setup-story.helper";
+import {Story, moduleMetadata, Meta} from "@storybook/angular";
 import {ConfirmationDialogComponent} from "./confirmation-dialog.component";
-import {DialogModule} from "@extrawest/extra-clarity/dialog";
+import {DialogModule} from "../../projects/extra-clarity/dialog";
 
-const defaultStory: Story = args => ({
-  template: `<storybook-confirmation-dialog [config]="config"></storybook-confirmation-dialog>`,
-  moduleMetadata: {
-    declarations: [ConfirmationDialogComponent],
-  },
-  props: {
-    config: {
-      ...args,
-    },
-  },
-});
-
-const defaultParameters: Parameters = {
-  title: 'Dialog/Confirmation Dialog',
+export default {
+  title: 'Components/Confirmation Dialog',
+  decorators: [
+    moduleMetadata({
+      declarations: [ConfirmationDialogComponent],
+      imports: [DialogModule],
+    }),
+  ],
   argTypes: {
     size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },
   },
@@ -37,8 +30,17 @@ const defaultParameters: Parameters = {
       classes: 'btn-primary',
     },
   },
-};
+  parameters: {
+    viewMode: 'story',
+  },
+} as Meta;
 
-const variants: Parameters[] = [];
-
-setupStory(DialogModule, defaultStory, defaultParameters, variants);
+export const ConfirmationDialog: Story = args => ({
+  props: {
+    config: {
+      ...args,
+    },
+  },
+  template: `<storybook-confirmation-dialog [config]="config"></storybook-confirmation-dialog>`,
+});
+ConfirmationDialog.storyName = 'Basic usage';

@@ -1,24 +1,15 @@
 # ExtraClarity
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
+![Clarity Angular](logo.png)
 
-## Code scaffolding
+## 📦 Installation
 
-Run `ng generate component component-name --project extra-clarity` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project extra-clarity`.
-> Note: Don't forget to add `--project extra-clarity` or else it will be added to the default project in your `angular.json` file. 
+You can install `extra-clarity` lib with npm or yarn
 
-## Build
+```bash
+$ npm install @extrawest/extra-clarity
+```
+## Documentation
 
-Run `ng build extra-clarity` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build extra-clarity`, go to the dist folder `cd dist/extra-clarity` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test extra-clarity` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+For documentation on the Clarity Angular, including a list of components
+and example usage, see [our website](https://extra-clarity-lib.web.app/).

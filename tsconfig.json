@@ -1,6 +1,7 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
+  "include": ["types/mdx.d.ts"],
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
@@ -27,7 +28,8 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "types": ["mdx"],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

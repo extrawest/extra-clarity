@@ -1,0 +1,22 @@
+<div [style.width.px]="width">
+  <h3 class="p2 filter-title">Filter by {{ propertyDisplayName }}</h3>
+
+  <clr-radio-wrapper *ngFor="let value of values">
+    <input
+      type="radio"
+      clrRadio
+      [value]="value"
+      [formControl]="control"
+    />
+    <label>{{ value.toString() | titlecase }}</label>
+  </clr-radio-wrapper>
+
+  <button
+    type="button"
+    class="btn btn-icon btn-block btn-sm filter-reset-btn"
+    (click)="onReset()"
+    [disabled]="!control.dirty"
+  >
+    RESET
+  </button>
+</div>

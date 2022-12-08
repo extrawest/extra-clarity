@@ -1,24 +1,28 @@
-import {Story, Parameters} from "@storybook/angular";
-import {setupStory} from "../../.storybook/helpers/setup-story.helper";
-import {DialogComponent} from "./dialog.component";
-import {FormDialogModule} from "./form-dialog/form-dialog.module";
+import {Story, moduleMetadata, Meta} from "@storybook/angular";
+import {DialogComponent} from "./components/dialog.component";
 import {DialogModule} from "@extrawest/extra-clarity/dialog";
+import {ReactiveFormsModule} from "@angular/forms";
+import {ClarityModule} from "@clr/angular";
+import {CommonModule} from "@angular/common";
+import {FormDialogComponent} from "./components/form-dialog.component";
 
-const defaultStory: Story = args => ({
-  template: `<storybook-dialog [config]="config"></storybook-dialog>`,
-  moduleMetadata: {
-    declarations: [DialogComponent],
-    imports: [FormDialogModule],
-  },
-  props: {
-    config: {
-      ...args,
-    },
-  },
-});
-
-const defaultParameters: Parameters = {
-  title: 'Dialog/Dialog',
+export default {
+  title: 'Components/Dialog',
+  viewMode: 'story',
+  decorators: [
+    moduleMetadata({
+      declarations: [
+        FormDialogComponent,
+        DialogComponent,
+      ],
+      imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        ClarityModule,
+        DialogModule,
+      ],
+    }),
+  ],
   argTypes: {
     size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },
   },
@@ -27,8 +31,18 @@ const defaultParameters: Parameters = {
     closable: true,
     closableBackdrop: true,
   },
-};
+  parameters: {
+    viewMode: 'story',
+  },
+} as Meta;
 
-const variants: Parameters[] = [];
-
-setupStory(DialogModule, defaultStory, defaultParameters, variants);
+export const WithBasicUsage: Story = args => ({
+  props: {
+    config: {
+      ...args,
+    },
+  },
+  viewMode: 'story',
+  template: `<storybook-dialog [config]="config"></storybook-dialog>`,
+});
+WithBasicUsage.storyName = 'Basic usage';

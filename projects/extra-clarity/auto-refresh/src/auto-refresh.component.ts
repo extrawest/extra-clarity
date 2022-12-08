@@ -28,6 +28,13 @@ export class AutoRefreshComponent implements OnDestroy {
   @Input() public set disabled(v: boolean) {
     this.toggleControl.patchValue(!v);
   }
+  @Input() public set blocked(value: boolean) {
+    if (value) {
+      this.toggleControl.disable();
+    } else {
+      this.toggleControl.enable();
+    }
+  }
 
   @Output() public refresh = new EventEmitter<void>();
   @Output() public toggle = new EventEmitter<boolean>();
