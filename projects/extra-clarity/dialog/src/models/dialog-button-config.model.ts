@@ -1,5 +1,5 @@
 export interface DialogButtonConfig {
-  label: string;
+  label?: string;
   icon?: string;
   classes?: string;
 }

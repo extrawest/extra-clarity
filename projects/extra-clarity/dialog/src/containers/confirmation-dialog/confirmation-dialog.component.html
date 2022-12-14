@@ -15,6 +15,10 @@
     type="button"
     class="btn btn-primary"
     [ngClass]="config.acceptBtn?.classes"
+    [class.btn-info]="config.type === 'info'"
+    [class.btn-success]="config.type === 'success'"
+    [class.btn-warning]="config.type === 'warning'"
+    [class.btn-danger]="config.type === 'error'"
     (click)="onAccept()"
   >
     {{ config.acceptBtn?.label || 'Ok' }}

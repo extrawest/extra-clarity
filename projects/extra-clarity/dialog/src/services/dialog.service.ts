@@ -9,6 +9,7 @@ import {
 import {ConfirmDialogConfig, DialogConfig} from "../dialog-config";
 import {BaseDialogContainerComponent, ConfirmationDialogComponent} from "../containers";
 import {DialogRef} from "../dialog-ref";
+import { ConfirmType } from '../types/dialog-types';
 
 @Injectable()
 export class DialogService {
@@ -17,8 +18,24 @@ export class DialogService {
     private readonly injector: EnvironmentInjector,
   ) {}
 
-  public confirm(config: ConfirmDialogConfig): DialogRef {
-    return this.open(ConfirmationDialogComponent, config);
+  public confirm(config: ConfirmDialogConfig, type?: ConfirmType): DialogRef {
+    return this.open(ConfirmationDialogComponent, { ...config, type } as ConfirmDialogConfig);
+  }
+
+  public info(config: ConfirmDialogConfig): DialogRef {
+    return this.confirm(config, 'info');
+  }
+
+  public success(config: ConfirmDialogConfig): DialogRef {
+    return this.confirm(config, 'success');
+  }
+
+  public error(config: ConfirmDialogConfig): DialogRef {
+    return this.confirm(config, 'error');
+  }
+
+  public warning(config: ConfirmDialogConfig): DialogRef {
+    return this.confirm(config, 'warning');
   }
 
   public open<T>(component: Type<T>, config?: DialogConfig): DialogRef {
