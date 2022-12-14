@@ -30,8 +30,8 @@ export class DialogService {
     return this.confirm(config, 'success');
   }
 
-  public error(config: ConfirmDialogConfig): DialogRef {
-    return this.confirm(config, 'error');
+  public danger(config: ConfirmDialogConfig): DialogRef {
+    return this.confirm(config, 'danger');
   }
 
   public warning(config: ConfirmDialogConfig): DialogRef {
