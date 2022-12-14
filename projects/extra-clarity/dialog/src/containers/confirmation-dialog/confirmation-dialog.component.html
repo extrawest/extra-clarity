@@ -6,6 +6,10 @@
     type="button"
     class="btn btn-outline"
     [ngClass]="config.rejectBtn?.classes"
+    [class.btn-info-outline]="config.type === 'info'"
+    [class.btn-success-outline]="config.type === 'success'"
+    [class.btn-warning-outline]="config.type === 'warning'"
+    [class.btn-danger-outline]="config.type === 'danger'"
     (click)="onReject()"
   >
     {{ config.rejectBtn?.label || 'Cancel' }}
@@ -18,7 +22,7 @@
     [class.btn-info]="config.type === 'info'"
     [class.btn-success]="config.type === 'success'"
     [class.btn-warning]="config.type === 'warning'"
-    [class.btn-danger]="config.type === 'error'"
+    [class.btn-danger]="config.type === 'danger'"
     (click)="onAccept()"
   >
     {{ config.acceptBtn?.label || 'Ok' }}
