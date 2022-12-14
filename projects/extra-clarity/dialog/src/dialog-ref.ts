@@ -17,7 +17,7 @@ export class DialogRef<T = any> {
     return this.afterClosed$.asObservable();
   }
 
-  close(result?: T): void {
+  public close(result?: T): void {
     if (this.state !== DialogState.OPEN) {
       return;
     }

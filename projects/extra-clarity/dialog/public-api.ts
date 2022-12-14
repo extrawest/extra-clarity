@@ -1,4 +1,5 @@
 export * from './src/dialog.module';
+export * from './src/directives';
 export * from './src/tokens/dialog-config.token';
 export * from './src/tokens/dialog-data.token';
 export * from './src/enums/confirmation-type.enum';

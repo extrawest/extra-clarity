@@ -91,7 +91,6 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
   }
 
   public accepts(item: T): boolean {
-    console.log('item: ', item);
     if (!this.control.valid) {
       return true;
     }

@@ -12,7 +12,7 @@ import {DialogRef} from "../../../projects/extra-clarity/dialog";
         <clr-control-error>Error message that appears after focus is lost and control is invalid</clr-control-error>
       </clr-input-container>
 
-      <button class="btn btn-primary" type="button" style="margin-top: 24px; float: right;" (click)="onClose()">Close</button>
+      <button class="btn btn-primary" dialog-close type="button" style="margin-top: 24px; float: right;">Close</button>
     </form>
   `,
 })

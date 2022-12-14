@@ -1,10 +1,10 @@
 import {Story, moduleMetadata, Meta} from "@storybook/angular";
 import {DialogComponent} from "./components/dialog.component";
-import {DialogModule} from "@extrawest/extra-clarity/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ClarityModule} from "@clr/angular";
 import {CommonModule} from "@angular/common";
 import {FormDialogComponent} from "./components/form-dialog.component";
+import { DialogModule } from "../../projects/extra-clarity/dialog";
 
 export default {
   title: 'Components/Dialog',
