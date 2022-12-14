@@ -21,5 +21,5 @@ export class ConfirmDialogConfig extends BaseDialogConfig {
   rejectBtnHidden?: boolean;
   onAccept?: OnClickCallback;
   onReject?: OnClickCallback;
-  type: ConfirmType;
+  type?: ConfirmType;
 }
