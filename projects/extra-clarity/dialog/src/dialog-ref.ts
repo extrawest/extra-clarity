@@ -24,6 +24,8 @@ export class DialogRef<T = any> {
 
     this.containerRef.destroy();
     this.afterClosed$.next(result);
+    this.afterClosed$.complete();
+
     this.state = DialogState.CLOSED;
   }
 }
