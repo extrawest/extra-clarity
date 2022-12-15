@@ -15,7 +15,7 @@ export class DialogConfig<T = any> {
 export class ConfirmDialogConfig extends DialogConfig {
   type?: ConfirmType;
   message?: string;
-  template: TemplateRef<any>;
+  template?: TemplateRef<any>;
   acceptBtn?: DialogButtonConfig;
   rejectBtn?: DialogButtonConfig;
   rejectBtnHidden?: boolean;
