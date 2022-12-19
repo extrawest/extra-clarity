@@ -5,14 +5,14 @@ import { ConfirmType, DialogSize } from "./types/dialog-types";
 type OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;
 
 export class DialogConfig<T = any> {
-  title: string;
   size?: DialogSize;
-  closable?: boolean = true;
-  closableBackdrop?: boolean = true;
+  closable?: boolean;
+  closableBackdrop?: boolean;
   data?: T;
 }
 
 export class ConfirmDialogConfig extends DialogConfig {
+  title: string;
   type?: ConfirmType;
   message?: string;
   template?: TemplateRef<any>;

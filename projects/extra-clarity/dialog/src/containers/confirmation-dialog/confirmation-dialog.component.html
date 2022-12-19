@@ -1,36 +1,38 @@
-<p *ngIf="!config.template">{{ config.message }}</p>
+<ew-dialog>
+  <p *ngIf="!config.template">{{ config.message }}</p>
 
-<ng-container
-  *ngIf="config.template"
-  [ngTemplateOutlet]="config.template"
-  [ngTemplateOutletContext]="config.data"
-></ng-container>
+  <ng-container
+    *ngIf="config.template"
+    [ngTemplateOutlet]="config.template"
+    [ngTemplateOutletContext]="config.data"
+  ></ng-container>
 
-<div class="modal-footer">
-  <button
-    *ngIf="!config.rejectBtnHidden"
-    type="button"
-    class="btn btn-outline"
-    [class.btn-info-outline]="config.type === 'info'"
-    [class.btn-success-outline]="config.type === 'success'"
-    [class.btn-warning-outline]="config.type === 'warning'"
-    [class.btn-danger-outline]="config.type === 'danger'"
-    [ngClass]="config.rejectBtn?.classes"
-    (click)="onReject()"
-  >
-    {{ config.rejectBtn?.label || 'Cancel' }}
-  </button>
+  <div class="modal-footer">
+    <button
+      *ngIf="!config.rejectBtnHidden"
+      type="button"
+      class="btn btn-outline"
+      [class.btn-info-outline]="config.type === 'info'"
+      [class.btn-success-outline]="config.type === 'success'"
+      [class.btn-warning-outline]="config.type === 'warning'"
+      [class.btn-danger-outline]="config.type === 'danger'"
+      [ngClass]="config.rejectBtn?.classes"
+      (click)="onReject()"
+    >
+      {{ config.rejectBtn?.label || 'Cancel' }}
+    </button>
 
-  <button
-    type="button"
-    class="btn btn-primary"
-    [class.btn-info]="config.type === 'info'"
-    [class.btn-success]="config.type === 'success'"
-    [class.btn-warning]="config.type === 'warning'"
-    [class.btn-danger]="config.type === 'danger'"
-    [ngClass]="config.acceptBtn?.classes"
-    (click)="onAccept()"
-  >
-    {{ config.acceptBtn?.label || 'Ok' }}
-  </button>
-</div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [class.btn-info]="config.type === 'info'"
+      [class.btn-success]="config.type === 'success'"
+      [class.btn-warning]="config.type === 'warning'"
+      [class.btn-danger]="config.type === 'danger'"
+      [ngClass]="config.acceptBtn?.classes"
+      (click)="onAccept()"
+    >
+      {{ config.acceptBtn?.label || 'Ok' }}
+    </button>
+  </div>
+</ew-dialog>

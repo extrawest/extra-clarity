@@ -5,5 +5,6 @@ export * from './src/tokens/dialog-data.token';
 export * from './src/enums/confirmation-type.enum';
 export * from './src/services/dialog.service';
 export * from './src/models/dialog-button-config.model';
+export * from './src/containers/dialog-container/dialog.container';
 export * from './src/dialog-config';
 export * from './src/dialog-ref';

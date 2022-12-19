@@ -1,2 +1,2 @@
-export * from './base-dialog-container/base-dialog-container.component';
+export * from './dialog-container/dialog.container';
 export * from './confirmation-dialog/confirmation-dialog.component';

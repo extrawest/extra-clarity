@@ -8,10 +8,10 @@ import { DialogRef } from "../dialog-ref";
     '(click)': 'onClick()',
   },
 })
-export class DialogClose {
+export class DialogCloseDirective {
   constructor(private readonly dialogRef: DialogRef) {}
 
-  private onClick() {
+  private onClick(): void {
     this.dialogRef.close();
   }
 }

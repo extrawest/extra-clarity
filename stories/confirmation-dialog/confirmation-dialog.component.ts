@@ -24,16 +24,8 @@ export class ConfirmationDialogComponent {
   onOpen(): void {
     this.dialogService.confirm({
       ...this.config,
-    })
-      .afterClosed()
-      .pipe(filter((v) => !!v))
-      .subscribe((v: ConfirmationType) => {
-        const message = {
-          [ConfirmationType.Accept]: 'accepted',
-          [ConfirmationType.Reject]: 'rejected',
-        }[v];
-
-        alert(message);
-      });
+      onAccept: () => alert('accepted'),
+      onReject: () => alert('rejected'),
+    });
   }
 }
