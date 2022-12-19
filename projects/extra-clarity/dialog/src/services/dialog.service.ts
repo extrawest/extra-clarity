@@ -41,7 +41,7 @@ export class DialogService {
     return this.confirm(config, 'warning');
   }
 
-  public open<T, C, R>(component: Type<T>, config?: DialogConfig<C>): DialogRef<T, R> {
+  public open<T, C = any, R = any>(component: Type<T>, config?: DialogConfig<C>): DialogRef<T, R> {
     const mergedConfig = { ...(new DialogConfig()), ...config };
     const dialogRef = new DialogRef<T, R>(mergedConfig);
     const containerRef = createComponent(component, {
