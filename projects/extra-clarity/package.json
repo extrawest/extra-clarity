@@ -1,6 +1,6 @@
 {
   "name": "@extrawest/extra-clarity",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Extrawest Angular components",
   "author": "extrawest.com",
   "repository": {
@@ -21,7 +21,6 @@
     "@angular/forms": "^14.2.0",
     "@cds/core": "^6.2.2",
     "@clr/angular": "^13.10.1",
-    "@clr/icons": "^13.0.2",
     "@clr/ui": "^13.10.1"
   },
   "dependencies": {
