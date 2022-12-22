@@ -20,7 +20,7 @@ export default {
     refreshing: false,
     autoRefreshBlocked: false,
     autoRefreshState: false,
-    autoRefreshDisabled: false,
+    autoRefreshEnabled: true,
     useAutoRefresh: true,
   },
   parameters: {

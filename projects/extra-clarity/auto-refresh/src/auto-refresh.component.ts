@@ -61,7 +61,7 @@ export class AutoRefreshComponent implements OnInit, OnDestroy {
         map(([seconds, period]) => period - seconds),
         takeWhile((seconds) => seconds > 0),
         finalize(() => {
-          if (!this.toggleControl.value) {
+          if (this.toggleControl.value) {
             this.refresh.emit();
           }
         }),
