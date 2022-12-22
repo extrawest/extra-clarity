@@ -1,11 +1,13 @@
 import {Meta, moduleMetadata, Story} from "@storybook/angular";
 import {AutoRefreshModule} from "../../projects/extra-clarity/auto-refresh";
 import {AutoRefreshGroupModule} from "../../projects/extra-clarity/auto-refresh-group";
+import {AutoRefreshGroupComponent} from "./auto-refresh-group.component";
 
 export default {
   title: 'Components/Auto refresh',
   decorators: [
     moduleMetadata({
+      declarations: [AutoRefreshGroupComponent],
       imports: [
         AutoRefreshModule,
         AutoRefreshGroupModule,
@@ -13,9 +15,13 @@ export default {
     }),
   ],
   args: {
-    period: 60,
+    failed: false,
+    period: 5,
     refreshing: false,
-    disabled: false,
+    autoRefreshBlocked: false,
+    autoRefreshState: false,
+    autoRefreshDisabled: false,
+    useAutoRefresh: true,
   },
   parameters: {
     viewMode: 'story',
@@ -27,11 +33,13 @@ export const AutoRefreshStory: Story = args => ({
     ...args,
   },
   viewMode: 'story',
-  template: `<ew-auto-refresh
-    [period]="period"
-    [refreshing]="refreshing"
-    [disabled]="disabled"
-  ></ew-auto-refresh>`,
+  template: `
+    <ec-auto-refresh
+      [period]="period"
+      [refreshing]="refreshing"
+      [disabled]="disabled"
+    ></ec-auto-refresh>
+    `,
 });
 AutoRefreshStory.storyName = 'Auto refresh';
 
@@ -41,11 +49,24 @@ export const AutoRefreshGroupStory: Story = args => ({
   },
   viewMode: 'story',
   template: `
-    <ew-auto-refresh-group
+    <storybook-auto-refresh-group
+      [failed]="failed"
       [period]="period"
       [refreshing]="refreshing"
-      [autoRefreshDisabled]="disabled"
-    ></ew-auto-refresh-group>
+      [autoRefreshBlocked]="autoRefreshBlocked"
+      [autoRefreshState]="autoRefreshState"
+      [autoRefreshEnabled]="autoRefreshEnabled"
+      [useAutoRefresh]="useAutoRefresh"
+    ></storybook-auto-refresh-group>
   `,
+  args: {
+    failed: false,
+    period: 5,
+    refreshing: false,
+    autoRefreshBlocked: false,
+    autoRefreshState: false,
+    autoRefreshEnabled: true,
+    useAutoRefresh: true,
+  },
 });
 AutoRefreshGroupStory.storyName = 'Auto refresh group';

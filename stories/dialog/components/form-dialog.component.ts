@@ -4,7 +4,7 @@ import {DialogRef} from "../../../projects/extra-clarity/dialog";
 
 @Component({
   template: `
-    <ew-dialog>
+    <ec-dialog>
       <div dialog-title>
         Title
       </div>
@@ -22,7 +22,7 @@ import {DialogRef} from "../../../projects/extra-clarity/dialog";
       <div dialog-footer>
         <button class="btn btn-primary" dialog-close type="button" style="margin-top: 24px">Close</button>
       </div>
-    </ew-dialog>
+    </ec-dialog>
   `,
 })
 export class FormDialogComponent {

@@ -1,4 +1,6 @@
-<ew-dialog>
+<ec-dialog [size]="config.size || 'md'">
+  <div dialog-title>{{ config.title }}</div>
+
   <p *ngIf="!config.template">{{ config.message }}</p>
 
   <ng-container
@@ -7,7 +9,7 @@
     [ngTemplateOutletContext]="config.data"
   ></ng-container>
 
-  <div class="modal-footer">
+  <div dialog-footer>
     <button
       *ngIf="!config.rejectBtnHidden"
       type="button"
@@ -35,4 +37,4 @@
       {{ config.acceptBtn?.label || 'Ok' }}
     </button>
   </div>
-</ew-dialog>
+</ec-dialog>

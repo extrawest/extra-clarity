@@ -1,13 +1,14 @@
 <div class="container" [ngClass]="{ 'with-auto-refresh': useAutoRefresh }">
-  <ew-auto-refresh
+  <ec-auto-refresh
     *ngIf="useAutoRefresh"
     [blocked]="autoRefreshBlocked"
-    [disabled]="autoRefreshDisabled"
+    [enabled]="autoRefreshEnabled"
     [period]="period"
     [refreshing]="refreshing"
     (refresh)="onRefresh()"
     (toggle)="onAutoRefreshChanged($event)"
-  ></ew-auto-refresh>
+    class="ec-auto-refresh"
+  ></ec-auto-refresh>
 
   <div class="refresh-state">
     <cds-icon
@@ -16,19 +17,24 @@
       status="danger"
       size="18"
     ></cds-icon>
-    <span
-      *ngIf="refreshing"
-      class="spinner spinner-inline"
-    ></span>
   </div>
 
   <button
     type="button"
     class="btn btn-link refresh-btn"
-    [ngClass]="{ 'failed': failed }"
+    [ngClass]="{ 'failed': failed && !refreshing }"
+    [disabled]="refreshing"
     (click)="onRefresh()"
   >
     {{ lastFetchTimestamp | date:'mediumTime' }}
-    <cds-icon shape="refresh" status="{{ failed ? 'danger': '' }}"></cds-icon>
+
+    <cds-icon
+      *ngIf="!refreshing; else spinner"
+      shape="refresh"
+      status="{{ failed ? 'danger': '' }}"
+    ></cds-icon>
+    <ng-template #spinner>
+      <span class="spinner spinner-inline"></span>
+    </ng-template>
   </button>
 </div>

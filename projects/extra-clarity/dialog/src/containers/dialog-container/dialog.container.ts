@@ -6,7 +6,7 @@ import {DialogSize} from "../../types/dialog-types";
 import {DialogFooterDirective} from "../../directives";
 
 @Component({
-  selector: 'ew-dialog, [dialog]',
+  selector: 'ec-dialog, [dialog]',
   template: `
     <clr-modal
       [clrModalOpen]="true"

@@ -5,7 +5,7 @@ import { ConfirmType, DialogSize } from "./types/dialog-types";
 type OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;
 
 export class DialogConfig<T = any> {
-  size?: DialogSize;
+  size?: DialogSize = 'md';
   closable?: boolean;
   closableBackdrop?: boolean;
   data?: T;

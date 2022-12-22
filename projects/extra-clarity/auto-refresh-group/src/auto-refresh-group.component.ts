@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 
 @Component({
-  selector: 'ew-auto-refresh-group',
+  selector: 'ec-auto-refresh-group',
   templateUrl: './auto-refresh-group.component.html',
   styleUrls: ['./auto-refresh-group.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -10,18 +10,18 @@ export class AutoRefreshGroupComponent implements OnChanges {
   @Input() public failed = false;
   @Input() public refreshing = false;
   @Input() public autoRefreshBlocked = false;
-  @Input() public autoRefreshDisabled = false;
+  @Input() public autoRefreshEnabled = true;
   @Input() public autoRefreshState = false;
   @Input() public period = 60;
   @Input() public useAutoRefresh = true;
 
-  @Output() refresh = new EventEmitter();
-  @Output() autoRefreshToggled = new EventEmitter<boolean>();
+  @Output() public readonly refresh = new EventEmitter<void>();
+  @Output() public readonly autoRefreshToggled = new EventEmitter<boolean>();
 
-  lastFetchTimestamp = Date.now();
+  public lastFetchTimestamp = Date.now();
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (('loading' in changes) && !changes['loading'].currentValue) {
+    if (('refreshing' in changes) && !changes['refreshing'].currentValue) {
       this.lastFetchTimestamp = Date.now();
     }
   }

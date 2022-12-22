@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {filter} from "rxjs";
-import {ConfirmationType, ConfirmDialogConfig, DialogService} from "../../projects/extra-clarity/dialog";
+import {ConfirmDialogConfig, DialogService} from "../../projects/extra-clarity/dialog";
 
 @Component({
   selector: 'storybook-confirmation-dialog',
