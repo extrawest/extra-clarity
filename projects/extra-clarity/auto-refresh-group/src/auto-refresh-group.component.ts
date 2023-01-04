@@ -1,10 +1,31 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { ClarityIcons, errorStandardIcon, refreshIcon } from '@cds/core/icon';
+import '@cds/core/icon/register.js';
+import { AutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
+
+ClarityIcons.addIcons(refreshIcon, errorStandardIcon);
 
 @Component({
   selector: 'ec-auto-refresh-group',
   templateUrl: './auto-refresh-group.component.html',
-  styleUrls: ['./auto-refresh-group.component.css'],
+  styleUrls: ['./auto-refresh-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    AutoRefreshComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AutoRefreshGroupComponent implements OnChanges {
   @Input() public failed = false;

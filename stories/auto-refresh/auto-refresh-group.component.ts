@@ -16,7 +16,7 @@ import {Component, Input} from '@angular/core';
     ></ec-auto-refresh-group>
   `,
 })
-export class AutoRefreshGroupComponent {
+export class AutoRefreshGroupStoryComponent {
   @Input() public failed = false;
   @Input() public refreshing = false;
   @Input() public autoRefreshBlocked = false;

@@ -1,21 +1,29 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {ClrDatagridFilter, ClrDatagridFilterInterface} from '@clr/angular';
-import {Observable, Subject, takeUntil} from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 const DEFAULT_MIN_LENGTH = 200;
 
 @Component({
-  selector: 'ew-enumerated-value-filter',
+  selector: 'ec-enumerated-value-filter',
   templateUrl: './enumerated-value-filter.component.html',
   styleUrls: ['./enumerated-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ClrRadioModule,
+  ],
 })
+// eslint-disable-next-line
 export class EnumeratedValueFilterComponent<T extends { [key: string]: string | number }> implements ClrDatagridFilterInterface<T>, OnInit, OnDestroy {
-  @Input() width = DEFAULT_MIN_LENGTH;
-  @Input() values: Array<string | number> = [];
-  @Input() propertyKey: string;
-  @Input() propertyDisplayName?: string;
+  @Input() public width = DEFAULT_MIN_LENGTH;
+  @Input() public values: Array<string | number> = [];
+  @Input() public propertyKey: string;
+  @Input() public propertyDisplayName?: string;
 
   public readonly control = new FormControl<string | number>('');
 
@@ -43,7 +51,7 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
     this.destroy$.complete();
   }
 
-  public get value() {
+  public get value(): string | number | null {
     return this.control.value;
   }
 
@@ -65,7 +73,7 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
     return propertyValue === this.value;
   }
 
-  public onReset() {
+  public onReset(): void {
     this.control.reset();
   }
 }

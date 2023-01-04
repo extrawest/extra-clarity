@@ -1,7 +1,8 @@
-import {Observable, Subject } from "rxjs";
-import {DialogConfig} from "./dialog-config";
-import {ComponentRef} from "@angular/core";
-import {DialogState} from "./enums/dialog-state.enum";
+import { ComponentRef } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+
+import { DialogConfig } from './dialog-config';
+import { DialogState } from './enums/dialog-state.enum';
 
 export class DialogRef<T = any, R = any> {
   public containerRef: ComponentRef<T>;

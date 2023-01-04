@@ -1,4 +1,7 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ClrCheckboxModule } from '@clr/angular';
 import {
   BehaviorSubject,
   finalize,
@@ -6,9 +9,8 @@ import {
   Observable, repeat,
   Subject,
   takeUntil, takeWhile,
-  timer, withLatestFrom
-} from "rxjs";
-import {FormControl} from "@angular/forms";
+  timer, withLatestFrom,
+} from 'rxjs';
 
 const DEFAULT_PERIOD_SEC = 60;
 
@@ -17,6 +19,12 @@ const DEFAULT_PERIOD_SEC = 60;
   templateUrl: './auto-refresh.component.html',
   styleUrls: ['./auto-refresh.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ClrCheckboxModule,
+  ],
 })
 export class AutoRefreshComponent implements OnInit, OnDestroy {
   @Input() public refreshing: boolean;

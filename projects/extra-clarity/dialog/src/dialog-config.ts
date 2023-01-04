@@ -1,6 +1,7 @@
-import { TemplateRef } from "@angular/core";
-import {DialogButtonConfig} from "./models/dialog-button-config.model";
-import { ConfirmType, DialogSize } from "./types/dialog-types";
+import { TemplateRef } from '@angular/core';
+
+import { DialogButtonConfig } from './models/dialog-button-config.model';
+import { ConfirmType, DialogSize } from './types/dialog-types';
 
 type OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;
 

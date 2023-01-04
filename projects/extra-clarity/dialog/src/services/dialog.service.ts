@@ -4,15 +4,16 @@ import {
   createComponent,
   EnvironmentInjector,
   Injectable, Injector,
-  Type
+  Type,
 } from '@angular/core';
-import {ConfirmDialogConfig, DialogConfig} from "../dialog-config";
-import {ConfirmationDialogComponent} from "../containers";
-import {DialogRef} from "../dialog-ref";
+
+import { ConfirmationDialogComponent } from '../containers';
+import { ConfirmDialogConfig, DialogConfig } from '../dialog-config';
+import { DialogRef } from '../dialog-ref';
+import { ConfirmationType } from '../enums/confirmation-type.enum';
+import { DIALOG_CONFIG } from '../tokens/dialog-config.token';
+import { DIALOG_DATA } from '../tokens/dialog-data.token';
 import { ConfirmType } from '../types/dialog-types';
-import {DIALOG_DATA} from "../tokens/dialog-data.token";
-import {DIALOG_CONFIG} from "../tokens/dialog-config.token";
-import {ConfirmationType} from "../enums/confirmation-type.enum";
 
 @Injectable()
 export class DialogService {

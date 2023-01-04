@@ -1,5 +1,6 @@
-import { Directive } from "@angular/core";
-import { DialogRef } from "../dialog-ref";
+import { Directive } from '@angular/core';
+
+import { DialogRef } from '../dialog-ref';
 
 @Directive({
   selector: '[dialog-close]',

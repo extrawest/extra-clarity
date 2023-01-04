@@ -31,8 +31,23 @@
             "tsConfig": "projects/extra-clarity/tsconfig.spec.json",
             "karmaConfig": "projects/extra-clarity/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/extra-clarity/**/*.ts",
+              "projects/extra-clarity/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

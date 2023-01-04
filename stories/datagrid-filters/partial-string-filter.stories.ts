@@ -1,6 +1,6 @@
 import { ClrDatagridModule } from "@clr/angular";
 import {Meta, moduleMetadata, Story} from "@storybook/angular";
-import { EnumeratedValueFilterModule, PartialStringFilterModule } from "../../projects/extra-clarity/datagrid-filters";
+import {PartialStringFilterComponent} from "../../projects/extra-clarity/datagrid-filters";
 import { USERS_DATA } from './constants';
 
 export default {
@@ -8,8 +8,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
-        EnumeratedValueFilterModule,
-        PartialStringFilterModule,
+        PartialStringFilterComponent,
         ClrDatagridModule,
       ],
     }),
@@ -44,7 +43,7 @@ export const PartialStringFilterStory: Story = args => ({
       <clr-dg-column>
       <ng-container>Name</ng-container>
         <clr-dg-filter>
-          <ew-partial-string-filter
+          <ec-partial-string-filter
             [minLength]="minLength"
             [propertyKey]="'name'"
             [width]="width"
@@ -52,7 +51,7 @@ export const PartialStringFilterStory: Story = args => ({
             [propertyKey]="propertyKey"
             [placeholder]="placeholder"
             [debounceTimeMs]="debounceTimeMs"
-          ></ew-partial-string-filter>
+          ></ec-partial-string-filter>
         </clr-dg-filter>
       </clr-dg-column>
       <clr-dg-column>Creation date</clr-dg-column>

@@ -1,16 +1,16 @@
 import {Meta, moduleMetadata, Story} from "@storybook/angular";
-import {AutoRefreshModule} from "../../projects/extra-clarity/auto-refresh";
-import {AutoRefreshGroupModule} from "../../projects/extra-clarity/auto-refresh-group";
-import {AutoRefreshGroupComponent} from "./auto-refresh-group.component";
+import {AutoRefreshComponent} from "../../projects/extra-clarity/auto-refresh";
+import {AutoRefreshGroupComponent} from "../../projects/extra-clarity/auto-refresh-group";
+import {AutoRefreshGroupStoryComponent} from "./auto-refresh-group.component";
 
 export default {
   title: 'Components/Auto refresh',
   decorators: [
     moduleMetadata({
-      declarations: [AutoRefreshGroupComponent],
+      declarations: [AutoRefreshGroupStoryComponent],
       imports: [
-        AutoRefreshModule,
-        AutoRefreshGroupModule,
+        AutoRefreshComponent,
+        AutoRefreshGroupComponent,
       ],
     }),
   ],

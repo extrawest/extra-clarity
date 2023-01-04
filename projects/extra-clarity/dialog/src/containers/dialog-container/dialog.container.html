@@ -1,0 +1,22 @@
+<clr-modal
+  [clrModalOpen]="true"
+  [clrModalClosable]="config.closable ?? closable"
+  [clrModalStaticBackdrop]="!config.closableBackdrop ?? !closableBackdrop"
+  [clrModalSize]="config.size ?? size"
+  (clrModalOpenChange)="onClose()"
+>
+  <div class="modal-title">
+    <ng-container *ngIf="!config.title; else titleTpl">
+      <ng-content select="[dialog-title]"></ng-content>
+    </ng-container>
+    <ng-template #titleTpl>{{ config.title }}</ng-template>
+  </div>
+
+  <div class="modal-body">
+    <ng-content></ng-content>
+  </div>
+
+  <div *ngIf="!footer" class="modal-footer">
+    <ng-content select="[dialog-footer]"></ng-content>
+  </div>
+</clr-modal>
