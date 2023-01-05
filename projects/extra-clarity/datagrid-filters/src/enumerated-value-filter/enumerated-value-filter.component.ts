@@ -24,6 +24,7 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
   @Input() public values: Array<string | number> = [];
   @Input() public propertyKey: string;
   @Input() public propertyDisplayName?: string;
+  @Input() public serverDriven: boolean = false;
 
   public readonly control = new FormControl<string | number>('');
 
@@ -60,6 +61,10 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
   }
 
   public accepts(item: T): boolean {
+    if (this.serverDriven) {
+      return false;
+    }
+
     if (!Object(item).hasOwnProperty(this.propertyKey)) {
       return false;
     }

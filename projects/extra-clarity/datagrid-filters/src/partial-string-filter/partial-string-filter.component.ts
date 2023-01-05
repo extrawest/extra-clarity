@@ -37,6 +37,7 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
   @Input() public propertyKey: string;
   @Input() public propertyDisplayName?: string;
   @Input() public width = DEFAULT_CONTAINER_WIDTH_PX;
+  @Input() public serverDriven: boolean = false;
 
   public readonly control = new FormControl<string>('', {
     nonNullable: true,
@@ -97,6 +98,10 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
   }
 
   public accepts(item: T): boolean {
+    if (this.serverDriven) {
+      return false;
+    }
+
     if (!this.control.valid) {
       return true;
     }
