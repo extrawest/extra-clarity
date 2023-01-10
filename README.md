@@ -1,21 +1,30 @@
+![Maintaner](https://img.shields.io/badge/maintainer-extrawest.com-blue)
+![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
+![GitHub release](https://img.shields.io/github/package-json/v/extrawest/extra-clarity)
 
-publish:
-runs-on: ubuntu-latest
-permissions:
-contents: read
-packages: write
-steps:
-- uses: actions/checkout@v3
-- uses: actions/setup-node@v3
-with:
-node-version: 16
-registry-url: https://registry.npmjs.org/
-- name: Install dependencies
-run: npm i
-- name: Build libraries
-run: npm run build:extra-clarity
-- name: Publish libraries to NPM
-working-directory: dist/extra-clarity
-run: npm publish
-env:
-NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+# ExtraClarity
+
+Extrawest Angular components library based on Clarity Design
+
+## 📦 Installation
+
+You can install `extra-clarity` lib with npm or yarn
+
+```bash
+$ npm install @extrawest/extra-clarity
+```
+## Documentation
+
+For documentation on the Clarity Angular, including a list of components
+and example usage, see [our website](https://extra-clarity-lib.web.app/).
+
+## Available Components
+
+- Dialog
+- Confirmation dialog
+- Autorefresh
+- Autorefresh group
+- Datagrid filters:
+  - Enumerated value filter
+  - String value filter
