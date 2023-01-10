@@ -8,14 +8,22 @@
       [value]="value"
       [formControl]="control"
     />
-    <label>{{ value.toString() | titlecase }}</label>
+    <label>
+      <ng-container
+        [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
+        [ngTemplateOutletContext]="{ $implicit: value }"
+      ></ng-container>
+    </label>
+    <ng-template #defaultLabelTpl>
+      {{ value.toString() | titlecase }}
+    </ng-template>
   </clr-radio-wrapper>
 
   <button
     type="button"
     class="btn btn-icon btn-block btn-sm filter-reset-btn"
     (click)="onReset()"
-    [disabled]="!control.dirty"
+    [disabled]="!control.dirty && !control.value"
   >
     RESET
   </button>

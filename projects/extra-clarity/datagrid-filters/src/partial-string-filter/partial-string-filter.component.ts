@@ -35,9 +35,13 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
   @Input() public debounceTimeMs = DEFAULT_DEBOUNCE_TIME_MS;
   @Input() public placeholder = DEFAULT_PLACEHOLDER;
   @Input() public propertyKey: string;
-  @Input() public propertyDisplayName?: string;
+  @Input() public propertyDisplayName: string;
   @Input() public width = DEFAULT_CONTAINER_WIDTH_PX;
-  @Input() public serverDriven: boolean = false;
+  @Input() public serverDriven: boolean;
+  @Input() public fullMatch: boolean;
+  @Input() public set value(v) {
+    this.control.patchValue(v);
+  }
 
   public readonly control = new FormControl<string>('', {
     nonNullable: true,
@@ -116,7 +120,11 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
       return false;
     }
 
-    return propertyValue.toLowerCase().indexOf(this.value.toLowerCase()) > -1;
+    if (this.fullMatch) {
+      return propertyValue.toLowerCase() === this.value.toLowerCase();
+    }
+
+    return propertyValue.toLowerCase().indexOf(this.value.toLowerCase()) !== -1;
   }
 
   public onReset(): void {

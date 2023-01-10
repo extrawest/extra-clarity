@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule} from '@clr/angular';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 const DEFAULT_MIN_LENGTH = 200;
@@ -24,7 +24,11 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
   @Input() public values: Array<string | number> = [];
   @Input() public propertyKey: string;
   @Input() public propertyDisplayName?: string;
-  @Input() public serverDriven: boolean = false;
+  @Input() public serverDriven: boolean;
+  @Input() public customLabelTpl: TemplateRef<any>;
+  @Input() public set value(v) {
+    this.control.patchValue(v);
+  }
 
   public readonly control = new FormControl<string | number>('');
 
@@ -44,7 +48,9 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
 
     this.control.valueChanges
       .pipe(takeUntil(this.destroy$))
-      .subscribe(value => this.changesSubject$.next(value));
+      .subscribe(value => {
+        this.changesSubject$.next(value)
+      });
   }
 
   public ngOnDestroy(): void {

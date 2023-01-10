@@ -1,16 +1,19 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { isPromise } from 'rxjs/internal/util/isPromise';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
+import {isPromise} from 'rxjs/internal/util/isPromise';
 
-import { ConfirmDialogConfig } from '../../dialog-config';
-import { DialogRef } from '../../dialog-ref';
-import { ConfirmationType } from '../../enums/confirmation-type.enum';
-import { DIALOG_CONFIG } from '../../tokens/dialog-config.token';
+import {ConfirmDialogConfig} from '../../dialog-config';
+import {DialogRef} from '../../dialog-ref';
+import {ConfirmationType} from '../../enums/confirmation-type.enum';
+import {DIALOG_CONFIG} from '../../tokens/dialog-config.token';
+import {ClrLoadingState} from "@clr/angular";
 
 @Component({
   templateUrl: './confirmation-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationDialogComponent {
+  public acceptBtnState = ClrLoadingState.DEFAULT;
+
   constructor(
     @Inject(DIALOG_CONFIG) public readonly config: ConfirmDialogConfig,
     private readonly dialogRef: DialogRef,
@@ -25,6 +28,8 @@ export class ConfirmationDialogComponent {
   }
 
   private async trigger(action: ConfirmationType): Promise<void> {
+    this.acceptBtnState = ClrLoadingState.LOADING;
+
     const trigger = {
       [ConfirmationType.Accept]: this.config.onAccept,
       [ConfirmationType.Reject]: this.config.onReject,

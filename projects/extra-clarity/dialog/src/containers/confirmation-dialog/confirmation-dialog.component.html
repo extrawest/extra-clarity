@@ -1,4 +1,8 @@
-<ec-dialog [size]="config.size || 'md'">
+<ec-dialog
+  [closable]="config.closable"
+  [closableBackdrop]="config.closableBackdrop"
+  [size]="config.size"
+>
   <div dialog-title>{{ config.title }}</div>
 
   <p *ngIf="!config.template">{{ config.message }}</p>
@@ -32,6 +36,7 @@
       [class.btn-warning]="config.type === 'warning'"
       [class.btn-danger]="config.type === 'danger'"
       [ngClass]="config.acceptBtn?.classes"
+      [clrLoading]="acceptBtnState"
       (click)="onAccept()"
     >
       {{ config.acceptBtn?.label || 'Ok' }}

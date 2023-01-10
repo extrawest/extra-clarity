@@ -12,13 +12,11 @@ import {ConfirmDialogConfig, DialogService} from "../../projects/extra-clarity/d
       Open confirmation dialog
     </button>
   `,
-  providers: [DialogService],
 })
 export class ConfirmationDialogComponent {
   @Input() config: ConfirmDialogConfig;
 
-  constructor(private readonly dialogService: DialogService) {
-  }
+  constructor(private readonly dialogService: DialogService) {}
 
   onOpen(): void {
     this.dialogService.confirm({
