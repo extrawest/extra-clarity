@@ -8,3 +8,4 @@ export * from './src/models/dialog-button-config.model';
 export * from './src/containers/dialog-container/dialog.container';
 export * from './src/dialog-config';
 export * from './src/dialog-ref';
+export * from './src/types/dialog-types';
