@@ -22,7 +22,6 @@ const DIRECTIVES = [
   ],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     ClrModalModule,
     ClrLoadingModule,
     ClrLoadingButtonModule,
