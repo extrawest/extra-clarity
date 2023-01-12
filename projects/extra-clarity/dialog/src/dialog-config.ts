@@ -7,8 +7,8 @@ type OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;
 
 export class DialogConfig<T = any> {
   size?: DialogSize = 'md';
-  closable?: boolean;
-  closableBackdrop?: boolean;
+  closable?: boolean = true;
+  closableBackdrop?: boolean = true;
   data?: T;
 }
 
