@@ -6,7 +6,11 @@
   <div dialog-title>{{ config.title }}</div>
 
   <div dialog-content>
-    <p *ngIf="!config.template && !config.component">{{ config.message }}</p>
+    <clr-alert *ngIf="config.message" [clrAlertType]="config.type" [clrAlertClosable]="false">
+      <clr-alert-item>
+        <span class="alert-text">{{ config.message }}</span>
+      </clr-alert-item>
+    </clr-alert>
 
     <ng-container
       *ngIf="config.template"
