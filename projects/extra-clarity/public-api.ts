@@ -1,3 +1,1 @@
-export * from './auto-refresh';
-export * from './auto-refresh-group';
-export * from './datagrid-filters';
+export const EXTRA_CLARITY_SDK = "@extrawest/extra-clarity";
