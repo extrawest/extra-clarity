@@ -22,7 +22,7 @@ export class DialogService {
     private readonly injector: EnvironmentInjector,
   ) {}
 
-  public confirm<T, C>(
+  public confirm<T, C = any>(
     config: ConfirmDialogConfig<T, C>,
     type?: ConfirmType,
   ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
@@ -32,19 +32,19 @@ export class DialogService {
     );
   }
 
-  public info<T, C>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+  public info<T, C = any>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'info');
   }
 
-  public success<T, C>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+  public success<T, C = any>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'success');
   }
 
-  public danger<T, C>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+  public danger<T, C = any>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'danger');
   }
 
-  public warning<T, C>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+  public warning<T, C = any>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'warning');
   }
 
