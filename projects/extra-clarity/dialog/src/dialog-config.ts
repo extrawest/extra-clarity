@@ -1,9 +1,9 @@
-import { TemplateRef } from '@angular/core';
+import {TemplateRef, Type} from '@angular/core';
 
 import { DialogButtonConfig } from './models/dialog-button-config.model';
 import { ConfirmType, DialogSize } from './types/dialog-types';
 
-type OnClickCallback = () => (false | void | {}) | Promise<false | void | {}>;
+type OnClickCallback = () => void | Promise<void>;
 
 export class DialogConfig<T = any> {
   size?: DialogSize = 'md';
@@ -12,11 +12,12 @@ export class DialogConfig<T = any> {
   data?: T;
 }
 
-export class ConfirmDialogConfig extends DialogConfig {
+export class ConfirmDialogConfig<T = any, C = any> extends DialogConfig<C> {
   title: string;
   type?: ConfirmType;
   message?: string;
-  template?: TemplateRef<any>;
+  template?: TemplateRef<T>;
+  component?: Type<T>;
   acceptBtn?: DialogButtonConfig;
   rejectBtn?: DialogButtonConfig;
   rejectBtnHidden?: boolean;

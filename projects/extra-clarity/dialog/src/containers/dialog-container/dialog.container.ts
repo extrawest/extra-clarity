@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 
-import { ConfirmDialogConfig } from '../../dialog-config';
+import {DialogConfig} from '../../dialog-config';
 import { DialogRef } from '../../dialog-ref';
-import { DialogFooterDirective } from '../../directives';
 import { DIALOG_CONFIG } from '../../tokens/dialog-config.token';
 import { DialogSize } from '../../types/dialog-types';
 
@@ -16,11 +15,9 @@ export class DialogContainer {
   @Input() public closable = true;
   @Input() public closableBackdrop = true;
 
-  @ViewChild(DialogFooterDirective) public footer: DialogFooterDirective;
-
   constructor(
     private readonly dialogRef: DialogRef,
-    @Inject(DIALOG_CONFIG) public readonly config: ConfirmDialogConfig,
+    @Inject(DIALOG_CONFIG) public readonly config: DialogConfig,
   ) {}
 
   public onClose(): void {

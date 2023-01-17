@@ -22,24 +22,30 @@ export class DialogService {
     private readonly injector: EnvironmentInjector,
   ) {}
 
-  public confirm(config: ConfirmDialogConfig, type?: ConfirmType): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
-    return this.open(ConfirmationDialogComponent, { ...config, type } as ConfirmDialogConfig);
+  public confirm<T, C>(
+    config: ConfirmDialogConfig<T, C>,
+    type?: ConfirmType,
+  ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+    return this.open<ConfirmationDialogComponent, C>(
+      ConfirmationDialogComponent,
+      { ...config, type } as ConfirmDialogConfig<T, C>,
+    );
   }
 
-  public info(config: ConfirmDialogConfig): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
-    return this.confirm(config, 'info');
+  public info<T, C>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+    return this.confirm<T, C>(config, 'info');
   }
 
-  public success(config: ConfirmDialogConfig): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
-    return this.confirm(config, 'success');
+  public success<T, C>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+    return this.confirm<T, C>(config, 'success');
   }
 
-  public danger(config: ConfirmDialogConfig): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
-    return this.confirm(config, 'danger');
+  public danger<T, C>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+    return this.confirm<T, C>(config, 'danger');
   }
 
-  public warning(config: ConfirmDialogConfig): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
-    return this.confirm(config, 'warning');
+  public warning<T, C>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+    return this.confirm<T, C>(config, 'warning');
   }
 
   public open<T, C = any, R = any>(component: Type<T>, config?: DialogConfig<C>): DialogRef<T, R> {

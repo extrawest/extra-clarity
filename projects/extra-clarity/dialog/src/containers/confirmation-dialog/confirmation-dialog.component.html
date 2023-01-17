@@ -5,13 +5,21 @@
 >
   <div dialog-title>{{ config.title }}</div>
 
-  <p *ngIf="!config.template">{{ config.message }}</p>
+  <div dialog-content>
+    <p *ngIf="!config.template && !config.component">{{ config.message }}</p>
 
-  <ng-container
-    *ngIf="config.template"
-    [ngTemplateOutlet]="config.template"
-    [ngTemplateOutletContext]="config.data"
-  ></ng-container>
+    <ng-container
+      *ngIf="config.template"
+      [ngTemplateOutlet]="config.template"
+      [ngTemplateOutletContext]="config.data"
+    ></ng-container>
+
+    <ng-container
+      *ngIf="config.component"
+      [ngComponentOutlet]="config.component"
+      [ngComponentOutletContent]="config.data"
+    ></ng-container>
+  </div>
 
   <div dialog-footer>
     <button

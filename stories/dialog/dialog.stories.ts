@@ -5,6 +5,7 @@ import {ClarityModule} from "@clr/angular";
 import {CommonModule} from "@angular/common";
 import {FormDialogComponent} from "./components/form-dialog.component";
 import { DialogModule } from "../../projects/extra-clarity/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export default {
   title: 'Components/Dialog',
@@ -17,6 +18,7 @@ export default {
       ],
       imports: [
         CommonModule,
+        BrowserAnimationsModule,
         ReactiveFormsModule,
         ClarityModule,
         DialogModule,

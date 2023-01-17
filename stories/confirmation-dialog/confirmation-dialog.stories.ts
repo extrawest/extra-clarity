@@ -1,13 +1,17 @@
 import {Story, moduleMetadata, Meta} from "@storybook/angular";
 import {ConfirmationDialogComponent} from "./confirmation-dialog.component";
 import {DialogModule} from "../../projects/extra-clarity/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export default {
   title: 'Components/Confirmation Dialog',
   decorators: [
     moduleMetadata({
       declarations: [ConfirmationDialogComponent],
-      imports: [DialogModule],
+      imports: [
+        BrowserAnimationsModule,
+        DialogModule,
+      ],
     }),
   ],
   argTypes: {

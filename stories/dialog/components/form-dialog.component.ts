@@ -19,9 +19,9 @@ import {DialogRef} from "../../../projects/extra-clarity/dialog";
         </form>
       </div>
 
-      <div dialog-footer>
+      <footer dialog-footer>
         <button class="btn btn-primary" dialog-close type="button" style="margin-top: 24px">Close</button>
-      </div>
+      </footer>
     </ec-dialog>
   `,
 })
