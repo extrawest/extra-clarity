@@ -19,7 +19,9 @@ export class ConfirmDialogConfig<T = any, C = any> extends DialogConfig<C> {
   template?: TemplateRef<T>;
   component?: Type<T>;
   acceptBtn?: DialogButtonConfig;
+  acceptBtnLabel: string;
   rejectBtn?: DialogButtonConfig;
+  rejectBtnLabel: string;
   rejectBtnHidden?: boolean;
   onAccept?: OnClickCallback;
   onReject?: OnClickCallback;

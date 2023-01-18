@@ -37,7 +37,7 @@
       [ngClass]="config.rejectBtn?.classes"
       (click)="onReject()"
     >
-      {{ config.rejectBtn?.label || 'Cancel' }}
+      {{ config.rejectBtn?.label || config.rejectBtnLabel || 'Cancel' }}
     </button>
 
     <button
@@ -51,7 +51,7 @@
       [clrLoading]="acceptBtnState"
       (click)="onAccept()"
     >
-      {{ config.acceptBtn?.label || 'Ok' }}
+      {{ config.acceptBtn?.label || config.acceptBtnLabel || 'Ok' }}
     </button>
   </div>
 </ec-dialog>
