@@ -32,7 +32,6 @@ export class AutoRefreshGroupComponent implements OnChanges {
   @Input() public refreshing = false;
   @Input() public autoRefreshBlocked = false;
   @Input() public autoRefreshEnabled = true;
-  @Input() public autoRefreshState = false;
   @Input() public period = 60;
   @Input() public useAutoRefresh = true;
 

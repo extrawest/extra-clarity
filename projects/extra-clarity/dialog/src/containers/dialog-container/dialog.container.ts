@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 
-import {DialogConfig} from '../../dialog-config';
+import { DialogConfig } from '../../dialog-config';
 import { DialogRef } from '../../dialog-ref';
 import { DIALOG_CONFIG } from '../../tokens/dialog-config.token';
 import { DialogSize } from '../../types/dialog-types';

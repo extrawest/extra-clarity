@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
-import {isPromise} from 'rxjs/internal/util/isPromise';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ClrLoadingState } from '@clr/angular';
+import { isPromise } from 'rxjs/internal/util/isPromise';
 
-import {ConfirmDialogConfig} from '../../dialog-config';
-import {DialogRef} from '../../dialog-ref';
-import {ConfirmationType} from '../../enums/confirmation-type.enum';
-import {DIALOG_CONFIG} from '../../tokens/dialog-config.token';
-import {ClrLoadingState} from "@clr/angular";
+import { ConfirmDialogConfig } from '../../dialog-config';
+import { DialogRef } from '../../dialog-ref';
+import { ConfirmationType } from '../../enums/confirmation-type.enum';
+import { DIALOG_CONFIG } from '../../tokens/dialog-config.token';
 
 @Component({
   templateUrl: './confirmation-dialog.component.html',

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule} from '@clr/angular';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 const DEFAULT_MIN_LENGTH = 200;
@@ -49,7 +49,7 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
     this.control.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
-        this.changesSubject$.next(value)
+        this.changesSubject$.next(value);
       });
   }
 

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {ClrAlertModule, ClrLoadingButtonModule, ClrLoadingModule, ClrModalModule} from '@clr/angular';
+import { ClrAlertModule, ClrLoadingButtonModule, ClrLoadingModule, ClrModalModule } from '@clr/angular';
 
 import { ConfirmationDialogComponent, DialogContainer } from './containers';
 import { DialogCloseDirective, DialogContentDirective, DialogFooterDirective, DialogTitleDirective } from './directives';

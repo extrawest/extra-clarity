@@ -1,4 +1,4 @@
-import {TemplateRef, Type} from '@angular/core';
+import { TemplateRef, Type } from '@angular/core';
 
 import { DialogButtonConfig } from './models/dialog-button-config.model';
 import { ConfirmType, DialogSize } from './types/dialog-types';
@@ -6,9 +6,9 @@ import { ConfirmType, DialogSize } from './types/dialog-types';
 type OnClickCallback = () => void | Promise<void>;
 
 export class DialogConfig<T = any> {
-  size?: DialogSize = 'md';
-  closable?: boolean = true;
-  closableBackdrop?: boolean = true;
+  size?: DialogSize;
+  closable?: boolean;
+  closableBackdrop?: boolean;
   data?: T;
 }
 

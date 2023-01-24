@@ -29,7 +29,6 @@ export default {
     size: { defaultValue: 'md', control: { type: 'radio', options: ['sm', 'md', 'lg', 'xl'] } },
   },
   args: {
-    title: 'Title',
     closable: true,
     closableBackdrop: true,
   },
