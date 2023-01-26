@@ -43,6 +43,10 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
     this.control.patchValue(v);
   }
 
+  public get value(): string {
+    return this.control.value;
+  }
+
   public readonly control = new FormControl<string>('', {
     nonNullable: true,
     validators: Validators.minLength(this.minLength),
@@ -56,7 +60,7 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
   constructor(
     private readonly clrDatagridFilter: ClrDatagridFilter,
     private readonly clrPopoverToggleService: ClrPopoverToggleService,
-  ) {}
+  ) { }
 
   public get changes(): Observable<string> {
     return this.changesSubject$.asObservable();
@@ -131,10 +135,6 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
     this.control.reset();
     this.changesSubject$.next('');
     this.inputRef.nativeElement.focus();
-  }
-
-  public get value(): string {
-    return this.control.value;
   }
 
   public get isTooShort(): boolean {

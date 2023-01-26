@@ -30,6 +30,10 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
     this.control.patchValue(v);
   }
 
+  public get value(): string | number | null {
+    return this.control.value;
+  }
+
   public readonly control = new FormControl<string | number>('');
 
   private readonly destroy$ = new Subject<void>();
@@ -37,7 +41,7 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
 
   constructor(
     private readonly clrDatagridFilter: ClrDatagridFilter,
-  ) {}
+  ) { }
 
   public get changes(): Observable<string | number | null> {
     return this.changesSubject$.asObservable();
@@ -56,10 +60,6 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  public get value(): string | number | null {
-    return this.control.value;
   }
 
   public isActive(): boolean {
