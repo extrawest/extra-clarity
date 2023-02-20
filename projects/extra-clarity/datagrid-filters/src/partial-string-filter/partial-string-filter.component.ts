@@ -12,6 +12,7 @@ import {
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
 import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
+import {FilterState} from "../interfaces/filter-state.interface";
 
 const DEFAULT_MIN_LENGTH = 1;
 const DEFAULT_DEBOUNCE_TIME_MS = 300;
@@ -30,7 +31,7 @@ const DEFAULT_CONTAINER_WIDTH_PX = 200;
     ClrInputModule,
   ],
 })
-export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterface<T>, OnInit, OnDestroy, AfterViewInit {
+export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterface<T, FilterState<string>>, OnInit, OnDestroy, AfterViewInit {
   @Input() public minLength = DEFAULT_MIN_LENGTH;
   @Input() public debounceTimeMs = DEFAULT_DEBOUNCE_TIME_MS;
   @Input() public placeholder = DEFAULT_PLACEHOLDER;
@@ -139,5 +140,12 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
 
   public get isTooShort(): boolean {
     return this.control.value.length < this.minLength;
+  }
+
+  public get state(): FilterState<string> {
+    return {
+      property: this.propertyKey,
+      value: this.value,
+    };
   }
 }

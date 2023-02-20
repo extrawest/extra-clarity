@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateR
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import {FilterState} from '../interfaces/filter-state.interface';
 
 const DEFAULT_MIN_LENGTH = 200;
 
@@ -19,7 +20,8 @@ const DEFAULT_MIN_LENGTH = 200;
   ],
 })
 // eslint-disable-next-line
-export class EnumeratedValueFilterComponent<T extends { [key: string]: string | number }> implements ClrDatagridFilterInterface<T>, OnInit, OnDestroy {
+export class EnumeratedValueFilterComponent<T extends { [key: string]: string | number }>
+  implements ClrDatagridFilterInterface<T, FilterState<string | number>>, OnInit, OnDestroy {
   @Input() public width = DEFAULT_MIN_LENGTH;
   @Input() public values: Array<string | number> = [];
   @Input() public propertyKey: string;
@@ -30,7 +32,9 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
     this.control.patchValue(v);
   }
 
-  public readonly control = new FormControl<string | number>('');
+  public readonly control = new FormControl<string | number>('', {
+    nonNullable: true,
+  });
 
   private readonly destroy$ = new Subject<void>();
   private readonly changesSubject$ = new Subject<string | number | null>();
@@ -58,7 +62,7 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
     this.destroy$.complete();
   }
 
-  public get value(): string | number | null {
+  public get value(): string | number {
     return this.control.value;
   }
 
@@ -86,5 +90,12 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
 
   public onReset(): void {
     this.control.reset();
+  }
+
+  public get state(): FilterState<string | number> {
+    return {
+      property: this.propertyKey,
+      value: this.value,
+    };
   }
 }
