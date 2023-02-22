@@ -5,6 +5,7 @@
       clrInput
       [formControl]="control"
       [placeholder]="placeholder"
+      [minlength]="minLength"
       type="text"
       autocomplete="off"
     />
@@ -12,7 +13,7 @@
       Please provide at least {{ minLength }} characters
     </clr-control-helper>
     <clr-control-helper *ngIf="!isTooShort">
-      Searching '{{ propertyDisplayName }}' by partial match
+      Searching '{{ value }}' by {{ fullMatch ? 'full' : 'partial' }} match
     </clr-control-helper>
   </clr-control-container>
 

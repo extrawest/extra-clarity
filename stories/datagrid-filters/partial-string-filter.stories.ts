@@ -22,6 +22,7 @@ export default {
     debounceTimeMs: 200,
     placeholder: 'Type smthing',
     propertyDisplayName: '',
+    fullMatch: false,
   },
   parameters: {
     viewMode: 'story',
@@ -45,10 +46,10 @@ export const PartialStringFilterStory: Story = args => ({
         <clr-dg-filter>
           <ec-partial-string-filter
             [minLength]="minLength"
-            [propertyKey]="'name'"
             [width]="width"
             [propertyDisplayName]="propertyDisplayName"
             [propertyKey]="propertyKey"
+            [fullMatch]="fullMatch"
             [placeholder]="placeholder"
             [debounceTimeMs]="debounceTimeMs"
           ></ec-partial-string-filter>

@@ -20,8 +20,19 @@ export default {
   },
   args: {
     width: 200,
-    values: ['John', 'Anna', 'test2'],
+    values: [{
+      label: 'John',
+      value: 'John',
+      selected: true,
+    }, {
+      label: 'Anna',
+      value: 'Anna',
+    }, {
+      label: 'test2',
+      value: 'test2',
+    }],
     propertyDisplayName: '',
+    multiple: false,
   },
   parameters: {
     viewMode: 'story',
@@ -44,6 +55,7 @@ export const EnumeratedValueFilterStory: Story = args => ({
             [values]="values"
             [width]="width"
             [propertyKey]="'name'"
+            [multiple]="multiple"
             [propertyDisplayName]="propertyDisplayName"
           ></ec-enumerated-value-filter>
         </clr-dg-filter>

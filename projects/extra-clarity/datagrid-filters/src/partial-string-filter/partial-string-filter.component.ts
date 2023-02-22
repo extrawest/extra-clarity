@@ -9,9 +9,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
-import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, Observable, Subject, takeUntil} from 'rxjs';
 import {FilterState} from "../interfaces/filter-state.interface";
 
 const DEFAULT_MIN_LENGTH = 1;
@@ -32,7 +32,7 @@ const DEFAULT_CONTAINER_WIDTH_PX = 200;
   ],
 })
 export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterface<T, FilterState<string>>, OnInit, OnDestroy, AfterViewInit {
-  @Input() public minLength = DEFAULT_MIN_LENGTH;
+  @Input() public minLength: number = DEFAULT_MIN_LENGTH;
   @Input() public debounceTimeMs = DEFAULT_DEBOUNCE_TIME_MS;
   @Input() public placeholder = DEFAULT_PLACEHOLDER;
   @Input() public propertyKey: string;
@@ -46,7 +46,6 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
 
   public readonly control = new FormControl<string>('', {
     nonNullable: true,
-    validators: Validators.minLength(this.minLength),
   });
 
   @ViewChild('inputEl') private inputRef: ElementRef<HTMLInputElement>;
@@ -69,6 +68,7 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
     this.control.valueChanges
       .pipe(
         takeUntil(this.destroy$),
+        filter((value) => !value.length || value.length >= this.minLength),
         debounceTime(this.debounceTimeMs),
         distinctUntilChanged(),
       )
@@ -104,10 +104,10 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
 
   public accepts(item: T): boolean {
     if (this.serverDriven) {
-      return false;
+      return true;
     }
 
-    if (!this.control.valid) {
+    if (this.control.invalid) {
       return true;
     }
 

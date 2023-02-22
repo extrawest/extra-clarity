@@ -1,11 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef
+} from '@angular/core';
+import {ClrCheckboxModule, ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule} from '@clr/angular';
+import { Observable, Subject } from 'rxjs';
 import {FilterState} from '../interfaces/filter-state.interface';
 
 const DEFAULT_MIN_LENGTH = 200;
+
+export interface EnumFilterValue {
+  label: string | number;
+  value: any;
+  selected?: boolean;
+}
 
 @Component({
   selector: 'ec-enumerated-value-filter',
@@ -15,64 +28,50 @@ const DEFAULT_MIN_LENGTH = 200;
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     ClrRadioModule,
+    ClrCheckboxModule,
   ],
 })
-// eslint-disable-next-line
 export class EnumeratedValueFilterComponent<T extends { [key: string]: string | number }>
-  implements ClrDatagridFilterInterface<T, FilterState<string | number>>, OnInit, OnDestroy {
+  implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit {
+
   @Input() public width = DEFAULT_MIN_LENGTH;
-  @Input() public values: Array<string | number> = [];
   @Input() public propertyKey: string;
   @Input() public propertyDisplayName?: string;
-  @Input() public serverDriven: boolean;
+  @Input() public serverDriven: boolean = true;
   @Input() public customLabelTpl: TemplateRef<any>;
-  @Input() public set value(v) {
-    this.control.patchValue(v);
+  @Input() public multiple: boolean;
+  @Input() public set values(filters: EnumFilterValue[]) {
+    this.filters = filters;
+    this.defaultFiltersValues = filters;
   }
 
-  public readonly control = new FormControl<string | number>('', {
-    nonNullable: true,
-  });
+  @Output() public readonly valuesChange = new EventEmitter<EnumFilterValue[]>();
 
-  private readonly destroy$ = new Subject<void>();
-  private readonly changesSubject$ = new Subject<string | number | null>();
+  filters: EnumFilterValue[] = [];
+  defaultFiltersValues: EnumFilterValue[] = [];
 
-  constructor(
-    private readonly clrDatagridFilter: ClrDatagridFilter,
-  ) {}
+  isDirty = false;
 
-  public get changes(): Observable<string | number | null> {
+  private readonly changesSubject$ = new Subject<void>();
+
+  constructor(private readonly clrDatagridFilter: ClrDatagridFilter) {}
+
+  public get changes(): Observable<void> {
     return this.changesSubject$.asObservable();
   }
 
   public ngOnInit(): void {
     this.clrDatagridFilter.setFilter(this);
-
-    this.control.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(value => {
-        this.changesSubject$.next(value);
-      });
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  public get value(): string | number {
-    return this.control.value;
   }
 
   public isActive(): boolean {
-    return !!this.propertyKey && !!this.value;
+    return !!this.propertyKey && this.isDirty;
   }
 
   public accepts(item: T): boolean {
     if (this.serverDriven) {
-      return false;
+      return true;
     }
 
     if (!Object(item).hasOwnProperty(this.propertyKey)) {
@@ -81,21 +80,59 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
 
     const propertyValue = item[this.propertyKey as keyof typeof item];
 
-    if (typeof this.value !== typeof propertyValue) {
-      return false;
+    if (!this.filters.some(({ selected }) => selected)) {
+      return true;
     }
 
-    return propertyValue === this.value;
+    return this.filters.some((filter) => filter.selected && (filter.value === propertyValue || filter.label === propertyValue));
+  }
+
+  public onSelect(filter: EnumFilterValue): void {
+    if (this.multiple) {
+      this.filters = this.filters.map((item) => {
+        if (item.value === filter.value) {
+          return { ...item, selected: !filter.selected };
+        }
+        return item;
+      });
+      this.isDirty = true;
+    } else {
+      if (filter.selected) {
+        return;
+      }
+
+      this.filters = this.filters.map((item) => ({...item, selected: item === filter}));
+    }
+
+    this.isDirty = true;
+    this.changesSubject$.next();
+    this.valuesChange.emit(this.filters);
   }
 
   public onReset(): void {
-    this.control.reset();
+    this.filters = this.defaultFiltersValues;
+    this.changesSubject$.next();
   }
 
-  public get state(): FilterState<string | number> {
+  public get state(): FilterState<string | string[]> {
+    const value = this.getSelectedFiltersValue();
     return {
       property: this.propertyKey,
-      value: this.value,
+      value: this.multiple ? value : value[0],
     };
+  }
+
+  trackByValue(index: number, item: EnumFilterValue): any {
+    return item.value;
+  }
+
+  private getSelectedFiltersValue(): string[] {
+    let values: string[] = [];
+    this.filters.forEach((filter) => {
+      if (filter.selected) {
+        values.push(filter.value);
+      }
+    });
+    return values;
   }
 }

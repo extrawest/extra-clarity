@@ -1,29 +1,34 @@
 <div [style.width.px]="width">
   <h3 class="p2 filter-title">Filter by {{ propertyDisplayName }}</h3>
 
-  <clr-radio-wrapper *ngFor="let value of values">
+  <div
+    *ngFor="let filter of filters; trackBy: trackByValue"
+    [class.clr-checkbox-wrapper]="multiple"
+    [class.clr-radio-wrapper]="!multiple"
+  >
     <input
-      type="radio"
-      clrRadio
-      [value]="value"
-      [formControl]="control"
+      [type]="multiple ? 'checkbox' : 'radio'"
+      [value]="filter"
+      [checked]="filter.selected"
+      [class.clr-checkbox]="multiple"
+      [class.clr-radio]="!multiple"
     />
-    <label>
+    <label (click)="onSelect(filter)" class="clr-control-label">
       <ng-container
         [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
-        [ngTemplateOutletContext]="{ $implicit: value }"
+        [ngTemplateOutletContext]="{ $implicit: filter }"
       ></ng-container>
     </label>
     <ng-template #defaultLabelTpl>
-      {{ value.toString() | titlecase }}
+      {{ filter.label.toString() | titlecase }}
     </ng-template>
-  </clr-radio-wrapper>
+  </div>
 
   <button
     type="button"
     class="btn btn-icon btn-block btn-sm filter-reset-btn"
     (click)="onReset()"
-    [disabled]="!control.dirty && !control.value"
+    [disabled]="!isDirty"
   >
     RESET
   </button>
