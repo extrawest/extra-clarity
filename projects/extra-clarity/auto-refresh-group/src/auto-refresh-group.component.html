@@ -21,7 +21,7 @@
 
   <button
     type="button"
-    class="btn btn-link refresh-btn"
+    class="btn btn-sm btn-link refresh-btn"
     [ngClass]="{ 'failed': failed && !refreshing }"
     [disabled]="refreshing"
     (click)="onRefresh()"
