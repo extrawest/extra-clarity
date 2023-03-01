@@ -1,15 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrCheckboxModule } from '@clr/angular';
 import {
-  BehaviorSubject,
   finalize,
   map,
   Observable, repeat,
-  Subject,
-  takeUntil, takeWhile,
-  timer, withLatestFrom,
+  takeWhile,
+  timer,
 } from 'rxjs';
 
 const DEFAULT_PERIOD_SEC = 60;
@@ -26,19 +24,19 @@ const DEFAULT_PERIOD_SEC = 60;
     ClrCheckboxModule,
   ],
 })
-export class AutoRefreshComponent implements OnInit, OnDestroy {
+export class AutoRefreshComponent {
   @Input() public refreshing: boolean;
 
   @Input()
-  public set period(v: number) {
-    if (v > 0) {
-      this.period$.next(v);
+  public set period(value: number) {
+    if (value > 0) {
+      this._period = value;
     }
   }
 
   @Input()
-  public set enabled(v: boolean) {
-    this.toggleControl.patchValue(v);
+  public set enabled(value: boolean) {
+    this.toggleControl.patchValue(value);
   }
 
   @Input()
@@ -55,32 +53,19 @@ export class AutoRefreshComponent implements OnInit, OnDestroy {
 
   public readonly toggleControl = new FormControl<boolean>(false, { nonNullable: true });
 
-  public time$: Observable<number>;
+  _period = DEFAULT_PERIOD_SEC;
 
-  private readonly timer$: Observable<number> = timer(0, 1000);
-  private readonly period$: BehaviorSubject<number> = new BehaviorSubject(DEFAULT_PERIOD_SEC);
-  private readonly destroy$: Subject<void> = new Subject();
-
-  public ngOnInit(): void {
-    this.time$ = this.timer$
-      .pipe(
-        withLatestFrom(this.period$),
-        takeUntil(this.destroy$),
-        map(([seconds, period]) => period - seconds),
-        takeWhile((seconds) => seconds > 0),
-        finalize(() => {
-          if (this.toggleControl.value) {
-            this.refresh.emit();
-          }
-        }),
-        repeat(),
-      );
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  readonly timer$: Observable<number> = timer(0, 1000)
+    .pipe(
+      map((seconds) => this._period - seconds),
+      takeWhile((seconds) => seconds > 0),
+      finalize(() => {
+        if (this.toggleControl.value && !this.refreshing) {
+          this.refresh.emit();
+        }
+      }),
+      repeat(),
+    );
 
   public onToggle(): void {
     this.toggle.emit(this.toggleControl.value);
