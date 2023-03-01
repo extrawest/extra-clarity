@@ -4,12 +4,15 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrCheckboxModule } from '@clr/angular';
 import {
   BehaviorSubject,
-  Observable,
+  finalize,
+  map,
+  Observable, repeat,
   Subject,
+  takeUntil, takeWhile,
+  timer, withLatestFrom,
 } from 'rxjs';
 
-import { DEFAULT_PERIOD_SEC, DEFAULT_TIMER_ID } from './constants';
-import { AutoRefreshService } from './services';
+const DEFAULT_PERIOD_SEC = 60;
 
 @Component({
   selector: 'ec-auto-refresh',
@@ -25,8 +28,6 @@ import { AutoRefreshService } from './services';
 })
 export class AutoRefreshComponent implements OnInit, OnDestroy {
   @Input() public refreshing: boolean;
-
-  @Input() timerId = DEFAULT_TIMER_ID;
 
   @Input()
   public set period(v: number) {
@@ -56,19 +57,24 @@ export class AutoRefreshComponent implements OnInit, OnDestroy {
 
   public time$: Observable<number>;
 
+  private readonly timer$: Observable<number> = timer(0, 1000);
   private readonly period$: BehaviorSubject<number> = new BehaviorSubject(DEFAULT_PERIOD_SEC);
   private readonly destroy$: Subject<void> = new Subject();
 
-  constructor(private readonly autoRefreshService: AutoRefreshService) { }
-
   public ngOnInit(): void {
-    this.time$ = this.autoRefreshService.getTimer(
-      this.timerId,
-      {
-        period$: this.period$,
-        callback: this.finalizeCallback.bind(this),
-      },
-    );
+    this.time$ = this.timer$
+      .pipe(
+        withLatestFrom(this.period$),
+        takeUntil(this.destroy$),
+        map(([seconds, period]) => period - seconds),
+        takeWhile((seconds) => seconds > 0),
+        finalize(() => {
+          if (this.toggleControl.value) {
+            this.refresh.emit();
+          }
+        }),
+        repeat(),
+      );
   }
 
   public ngOnDestroy(): void {
@@ -78,11 +84,5 @@ export class AutoRefreshComponent implements OnInit, OnDestroy {
 
   public onToggle(): void {
     this.toggle.emit(this.toggleControl.value);
-  }
-
-  private finalizeCallback(): void {
-    if (this.toggleControl.value) {
-      this.refresh.emit();
-    }
   }
 }
