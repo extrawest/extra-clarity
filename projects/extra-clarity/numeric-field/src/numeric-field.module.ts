@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClarityModule, ClrFormsModule } from '@clr/angular';
 
-import { ClrNumericField } from './numeric-field';
-import { ClrMaxNumeric, ClrMinNumeric } from './numeric-field-validators';
+import { NumericField } from './numeric-field';
+import { MaxNumeric, MinNumeric } from './numeric-field-validators';
 
 @NgModule({
   imports: [
@@ -14,14 +14,14 @@ import { ClrMaxNumeric, ClrMinNumeric } from './numeric-field-validators';
     FormsModule,
   ],
   declarations: [
-    ClrNumericField,
-    ClrMaxNumeric,
-    ClrMinNumeric,
+    NumericField,
+    MaxNumeric,
+    MinNumeric,
   ],
   exports: [
-    ClrNumericField,
-    ClrMaxNumeric,
-    ClrMinNumeric,
+    NumericField,
+    MaxNumeric,
+    MinNumeric,
   ],
 })
-export class ClrNumericFieldModule {}
+export class NumericFieldModule {}

@@ -1,6 +1,7 @@
 import { ComponentRef, ViewRef } from '@angular/core';
-import {NotificationComponent} from './notification.component';
 import { take } from 'rxjs/operators';
+
+import { NotificationComponent } from './notification.component';
 
 export class ContentRef {
   constructor(public nodes: any[], public viewRef?: ViewRef, public componentRef?: ComponentRef<any>) {}

@@ -20,7 +20,7 @@ const OTHER_CONTROL_KEYS = new Set([224, 91, 93]);
 const NUMBERS = new Set(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
 
 @Directive({
-  selector: '[clrNumeric]',
+  selector: '[ecNumeric]',
   host: {
     '[class.text-right]': 'textAlign === "right"',
     '(change)': 'onChange(getValueForFormControl())',
@@ -30,12 +30,12 @@ const NUMBERS = new Set(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ClrNumericField),
+      useExisting: forwardRef(() => NumericField),
       multi: true,
     },
   ],
 })
-export class ClrNumericField implements OnInit, OnDestroy, AfterViewChecked, ControlValueAccessor {
+export class NumericField implements OnInit, OnDestroy, AfterViewChecked, ControlValueAccessor {
   @Input() textAlign = 'right';
   @Input() decimalPlaces = 2;
   @Input() roundValue = false;
@@ -54,7 +54,7 @@ export class ClrNumericField implements OnInit, OnDestroy, AfterViewChecked, Con
   private keyupListener: () => void;
   private keydownListener: () => void;
 
-  @Input('clrNumericValue')
+  @Input()
   set numericValue(value: number) {
     if (this._numericValue !== value && !(isNaN(this._numericValue) && (isNaN(value) || value === null))) {
       this.originalValue = value;
@@ -63,7 +63,7 @@ export class ClrNumericField implements OnInit, OnDestroy, AfterViewChecked, Con
     }
   }
 
-  @Input('clrUnit')
+  @Input()
   set unit(value: string) {
     if (value != this._unit) {
       this._unit = value;
@@ -190,7 +190,7 @@ export class ClrNumericField implements OnInit, OnDestroy, AfterViewChecked, Con
   handleInputChanged(): void {
     this.updateInput(
       this.formatNumber(this._numericValue.toString().replace(new RegExp('[.]', 'g'), this.decimalSeparator), true),
-      true
+      true,
     );
   }
 

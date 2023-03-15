@@ -1,0 +1,32 @@
+<div class="card">
+  <ec-card-header *ngIf="title">
+    <div class="card-header-title">{{ title }}</div>
+
+    <div class="card-header-actions">
+      <ng-content select="[ec-card-header-actions]"></ng-content>
+    </div>
+  </ec-card-header>
+
+  <ec-card-block>
+    <ng-container *ngIf="!loading && !error">
+      <ng-content></ng-content>
+    </ng-container>
+
+    <ng-container *ngIf="loading">
+      <div class="card-placeholder">
+        <clr-spinner clrMedium clrAssertive>
+          Loading...
+        </clr-spinner>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!loading && error">
+      <div class="card-placeholder">
+        <p class="text-center">Something went wrong.<br>Try to reload data.</p>
+        <button (click)="onReload()" class="btn btn-sm" style="margin-top: 1rem">Reload</button>
+      </div>
+    </ng-container>
+  </ec-card-block>
+
+  <ng-content select="ec-card-footer, [ecCardFooter]"></ng-content>
+</div>

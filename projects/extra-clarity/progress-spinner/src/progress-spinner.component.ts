@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy} from '@angular/core';
-import {CommonModule} from "@angular/common";
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'ec-progress-spinner',
@@ -9,23 +9,23 @@ import {CommonModule} from "@angular/common";
       <span>&nbsp;<ng-content></ng-content></span>
     </ng-container>
   `,
+  styleUrls: ['./progress-spinner.component.scss'],
   host: {
     '[class.progress-spinner-overlay]': '_showSpinner',
   },
   standalone: true,
   imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClrProgressSpinnerComponent implements OnDestroy {
+export class ProgressSpinnerComponent implements OnDestroy {
   private static readonly MINIMUM_VISIBLE_DURATION = 200;
   private startTimestamp: number;
   private hideTimeout: any;
 
-  @Input('clrSize') size = 'sm';
+  @Input() size = 'sm';
 
   _showSpinner: boolean;
 
-  @Input('clrShowSpinner')
+  @Input()
   set showSpinner(value: boolean) {
     if (value) {
       this.show();
@@ -56,7 +56,7 @@ export class ClrProgressSpinnerComponent implements OnDestroy {
   }
 
   private getRemainingVisibleTime(): number {
-    return Math.max(0, ClrProgressSpinnerComponent.MINIMUM_VISIBLE_DURATION - this.getVisibleTime());
+    return Math.max(0, ProgressSpinnerComponent.MINIMUM_VISIBLE_DURATION - this.getVisibleTime());
   }
 
   private getVisibleTime(): number {

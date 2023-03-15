@@ -1,0 +1,25 @@
+:host ::ng-deep {
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-header-actions {
+    display: flex;
+    align-items: center;
+
+    & > * {
+      margin-left: .6rem;
+    }
+  }
+
+  .card-placeholder {
+    min-height: 250px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

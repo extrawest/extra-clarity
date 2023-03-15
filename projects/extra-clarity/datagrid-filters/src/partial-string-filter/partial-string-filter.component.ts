@@ -11,8 +11,9 @@ import {
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
-import {debounceTime, distinctUntilChanged, filter, Observable, Subject, takeUntil} from 'rxjs';
-import {FilterState} from "../interfaces/filter-state.interface";
+import { debounceTime, distinctUntilChanged, filter, Observable, Subject, takeUntil } from 'rxjs';
+
+import { FilterState } from '../interfaces/filter-state.interface';
 
 const DEFAULT_MIN_LENGTH = 1;
 const DEFAULT_DEBOUNCE_TIME_MS = 300;

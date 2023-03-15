@@ -6,11 +6,12 @@ import {
   Input,
   OnInit,
   Output,
-  TemplateRef
+  TemplateRef,
 } from '@angular/core';
-import {ClrCheckboxModule, ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule} from '@clr/angular';
+import { ClrCheckboxModule, ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
 import { Observable, Subject } from 'rxjs';
-import {FilterState} from '../interfaces/filter-state.interface';
+
+import { FilterState } from '../interfaces/filter-state.interface';
 
 const DEFAULT_MIN_LENGTH = 200;
 
@@ -33,12 +34,11 @@ export interface EnumFilterValue {
   ],
 })
 export class EnumeratedValueFilterComponent<T extends { [key: string]: string | number }>
-  implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit {
-
+implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit {
   @Input() public width = DEFAULT_MIN_LENGTH;
   @Input() public propertyKey: string;
   @Input() public propertyDisplayName?: string;
-  @Input() public serverDriven: boolean = true;
+  @Input() public serverDriven = true;
   @Input() public customLabelTpl: TemplateRef<any>;
   @Input() public multiple: boolean;
   @Input() public set values(filters: EnumFilterValue[]) {
@@ -101,7 +101,7 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
         return;
       }
 
-      this.filters = this.filters.map((item) => ({...item, selected: item === filter}));
+      this.filters = this.filters.map((item) => ({ ...item, selected: item === filter }));
     }
 
     this.isDirty = true;
@@ -127,7 +127,7 @@ export class EnumeratedValueFilterComponent<T extends { [key: string]: string | 
   }
 
   private getSelectedFiltersValue(): string[] {
-    let values: string[] = [];
+    const values: string[] = [];
     this.filters.forEach((filter) => {
       if (filter.selected) {
         values.push(filter.value);

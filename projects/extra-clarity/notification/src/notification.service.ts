@@ -9,8 +9,9 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { take } from 'rxjs/operators';
-import { NotificationComponent } from './notification.component';
+
 import { ContentRef, NotificationRef } from './notification-ref';
+import { NotificationComponent } from './notification.component';
 
 export interface NotificationOptions {
   timeout?: number;
@@ -28,14 +29,14 @@ export class NotificationService {
     private _injector: Injector,
     private _applicationRef: ApplicationRef,
     private _componentFactoryResolver: ComponentFactoryResolver,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private _document: Document,
   ) {}
 
   open(content: TemplateRef<unknown> | string, options: NotificationOptions = {}): NotificationRef {
     const contentRef = this._getContentRef(content, options);
     const notificationCmptRef: ComponentRef<NotificationComponent> = this._attachWindowComponent(
       this._document.body,
-      contentRef
+      contentRef,
     );
     const notificationRef: NotificationRef = new NotificationRef(notificationCmptRef, contentRef);
 
@@ -49,7 +50,7 @@ export class NotificationService {
         if (el !== notificationCmptRef.instance) {
           el.moveDown(notificationCmptRef.instance.height);
         }
-      })
+      }),
     );
     this.elements.add(notificationCmptRef.instance);
 

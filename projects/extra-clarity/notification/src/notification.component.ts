@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, NgZone, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
-import { animate, style, transition, trigger, state } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ClarityModule, ClrAlert } from '@clr/angular';
 import { Subscription } from 'rxjs';
-import {ClarityModule, ClrAlert} from '@clr/angular';
+
 import { zonedInterval, zonedTimer } from './scheduler-utils';
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'ec-notification',
@@ -86,7 +87,7 @@ export class NotificationComponent implements OnInit {
       if (this.progressbar) {
         this.startTime = new Date().getTime();
         this.interval = zonedInterval(this.timeout / (this.timeout / this.step), this.ngZone).subscribe(() =>
-          this.updateProgressStatus()
+          this.updateProgressStatus(),
         );
       }
 
@@ -124,7 +125,7 @@ export class NotificationComponent implements OnInit {
 
   private setCurrentPosition(): void {
     zonedTimer(300, this.ngZone).subscribe(
-      () => (this.state = { value: 'currentPosition', params: { absolute: this._translate } })
+      () => (this.state = { value: 'currentPosition', params: { absolute: this._translate } }),
     );
   }
 }

@@ -1,39 +1,44 @@
 import {Meta, moduleMetadata, Story} from "@storybook/angular";
 import {CommonModule} from "@angular/common";
-import {NotificationStoryComponent} from "./components/notification.component";
-import {NotificationComponent, NotificationService} from "../../projects/extra-clarity/notification";
+import {CardStoryComponent} from "./components/card.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CardModule} from "../../projects/extra-clarity/card";
 import {ClarityModule} from "@clr/angular";
-import {FormsModule} from "@angular/forms";
 
 export default {
-  title: 'Components/Notification',
+  title: 'Components/Card',
   viewMode: 'story',
   decorators: [
     moduleMetadata({
-      declarations: [NotificationStoryComponent],
+      declarations: [CardStoryComponent],
       imports: [
         CommonModule,
         BrowserAnimationsModule,
-        NotificationComponent,
+        CardModule,
         ClarityModule,
-        FormsModule,
       ],
-      providers: [NotificationService],
     }),
   ],
   parameters: {
     viewMode: 'story',
   },
+  args: {
+    title: 'Card title',
+    loading: false,
+    error: false,
+  },
 } as Meta;
 
 export const WithBasicUsage: Story = args => ({
   props: {
-    config: {
-      ...args,
-    },
+    ...args,
   },
   viewMode: 'story',
-  template: `<storybook-notification></storybook-notification>`,
+  template: `
+    <storybook-card
+      [title]="title"
+      [loading]="loading"
+      [error]="error"
+    ></storybook-card>`,
 });
 WithBasicUsage.storyName = 'Basic usage';

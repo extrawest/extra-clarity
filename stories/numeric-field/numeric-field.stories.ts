@@ -1,25 +1,25 @@
 import {Meta, moduleMetadata, Story} from "@storybook/angular";
 import {CommonModule} from "@angular/common";
-import {NotificationStoryComponent} from "./components/notification.component";
-import {NotificationComponent, NotificationService} from "../../projects/extra-clarity/notification";
+import {NumericFieldStoryComponent} from "./components/numeric-field.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ClarityModule} from "@clr/angular";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NumericFieldModule} from "../../projects/extra-clarity/numeric-field";
 
 export default {
-  title: 'Components/Notification',
+  title: 'Components/Numeric field',
   viewMode: 'story',
   decorators: [
     moduleMetadata({
-      declarations: [NotificationStoryComponent],
+      declarations: [NumericFieldStoryComponent],
       imports: [
         CommonModule,
         BrowserAnimationsModule,
-        NotificationComponent,
+        NumericFieldModule,
         ClarityModule,
         FormsModule,
+        ReactiveFormsModule,
       ],
-      providers: [NotificationService],
     }),
   ],
   parameters: {
@@ -34,6 +34,6 @@ export const WithBasicUsage: Story = args => ({
     },
   },
   viewMode: 'story',
-  template: `<storybook-notification></storybook-notification>`,
+  template: `<storybook-numeric-field></storybook-numeric-field>`,
 });
 WithBasicUsage.storyName = 'Basic usage';

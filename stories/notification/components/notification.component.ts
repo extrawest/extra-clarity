@@ -6,43 +6,27 @@ import {NotificationService} from "../../../projects/extra-clarity/notification"
   templateUrl: './notification.component.html',
 })
 export class NotificationStoryComponent {
-  constructor(private readonly notificationService: NotificationService) {}
+  clrExampleTimeout = 2000;
+  clrExampleType = 'info';
+  clrExampleDismissable = true;
+  clrExampleProgressbar = true;
+
+  constructor(private notificationService: NotificationService) {
+  }
 
   onClose(): void {
     console.log('notification closed');
   }
 
-  showAlert(): void {
-    alert('Button was clicked');
+  openNotify(content: any, options: any): void {
+    this.notificationService.open(content, options).result.then(this.onClose);
   }
 
-  openInfo(content: TemplateRef<unknown> | string): void {
-    this.notificationService
-      .open(content, { timeout: 100000, notificationType: 'info', dismissable: true, progressbar: true })
-      .result.then(this.onClose);
+  openString(): void {
+    this.notificationService.open('This is a string message', { progressbar: true, dismissable: true });
   }
 
-  openWarning(content: TemplateRef<unknown>): void {
-    this.notificationService
-      .open(content, {
-        timeout: 20000,
-        notificationType: 'warning',
-        dismissable: true,
-        progressbar: true,
-        ngTemplateOutletContext: { variable1: 123, variable2: 456 },
-      })
-      .result.then(this.onClose);
-  }
-
-  openSuccess(content: TemplateRef<unknown>): void {
-    this.notificationService
-      .open(content, { timeout: 30000, notificationType: 'success', dismissable: true, progressbar: true })
-      .result.then(this.onClose);
-  }
-
-  openDanger(content: TemplateRef<unknown>): void {
-    this.notificationService
-      .open(content, { timeout: 40000, notificationType: 'danger', dismissable: true, progressbar: true })
-      .result.then(this.onClose);
+  log() {
+    console.log('log from notification');
   }
 }
