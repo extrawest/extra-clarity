@@ -1,8 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import {
   ApplicationRef,
-  ComponentFactoryResolver,
-  ComponentRef,
+  ComponentRef, createComponent, EnvironmentInjector,
   Inject,
   Injectable,
   Injector,
@@ -26,16 +25,16 @@ export class NotificationService {
   private elements = new Set<NotificationComponent>();
 
   constructor(
-    private _injector: Injector,
-    private _applicationRef: ApplicationRef,
-    private _componentFactoryResolver: ComponentFactoryResolver,
-    @Inject(DOCUMENT) private _document: Document,
+    private readonly environmentInjector: EnvironmentInjector,
+    private readonly injector: Injector,
+    private readonly applicationRef: ApplicationRef,
+    @Inject(DOCUMENT) private readonly document: Document,
   ) {}
 
   open(content: TemplateRef<unknown> | string, options: NotificationOptions = {}): NotificationRef {
     const contentRef = this._getContentRef(content, options);
-    const notificationCmptRef: ComponentRef<NotificationComponent> = this._attachWindowComponent(
-      this._document.body,
+    const notificationCmptRef: ComponentRef<NotificationComponent> = this.attachWindowComponent(
+      this.document.body,
       contentRef,
     );
     const notificationRef: NotificationRef = new NotificationRef(notificationCmptRef, contentRef);
@@ -80,21 +79,24 @@ export class NotificationService {
 
   private _createFromTemplateRef(content: TemplateRef<unknown>, context: Record<string, unknown>): ContentRef {
     const viewRef = content.createEmbeddedView(context);
-    this._applicationRef.attachView(viewRef);
+    this.applicationRef.attachView(viewRef);
     return new ContentRef([viewRef.rootNodes], viewRef);
   }
 
   private _createFromString(content: string): ContentRef {
-    const component = this._document.createTextNode(`${content}`);
+    const component = this.document.createTextNode(`${content}`);
     return new ContentRef([[component]]);
   }
 
-  private _attachWindowComponent(containerEl: HTMLElement, contentRef: ContentRef): ComponentRef<NotificationComponent> {
-    const containerFactory = this._componentFactoryResolver.resolveComponentFactory(NotificationComponent);
-    const containerCmptRef = containerFactory.create(this._injector, contentRef.nodes);
-    this._applicationRef.attachView(containerCmptRef.hostView);
-    containerEl.appendChild(containerCmptRef.location.nativeElement);
-    return containerCmptRef;
+  private attachWindowComponent(containerEl: HTMLElement, contentRef: ContentRef): ComponentRef<NotificationComponent> {
+    const containerRef = createComponent(NotificationComponent, {
+      elementInjector: this.injector,
+      environmentInjector: this.environmentInjector,
+      projectableNodes: contentRef.nodes,
+    });
+    this.applicationRef.attachView(containerRef.hostView);
+    containerEl.appendChild(containerRef.location.nativeElement);
+    return containerRef;
   }
 
   private _applyWindowOptions(notificationInstance: NotificationComponent, options: NotificationOptions): void {
