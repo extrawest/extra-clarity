@@ -1,0 +1,18 @@
+.notification {
+  position: relative;
+  width: 400px;
+  margin-bottom: .5rem;
+  margin-left: auto;
+
+  &-top,
+  &-bottom {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  &-topLeft,
+  &-bottomLeft {
+    margin-right: auto;
+    margin-left: 0;
+  }
+}

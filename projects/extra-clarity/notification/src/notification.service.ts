@@ -1,116 +1,73 @@
-import { DOCUMENT } from '@angular/common';
 import {
   ApplicationRef,
-  ComponentRef, createComponent, EnvironmentInjector,
-  Inject,
+  ComponentRef,
+  createComponent,
+  EnvironmentInjector,
   Injectable,
-  Injector,
-  TemplateRef,
+  TemplateRef
 } from '@angular/core';
-import { take } from 'rxjs/operators';
+import {NotificationContainerComponent} from "./components";
+import {NotificationConfig, NotificationData, NotificationType} from "./typings";
 
-import { ContentRef, NotificationRef } from './notification-ref';
-import { NotificationComponent } from './notification.component';
+let notificationId = 0;
 
-export interface NotificationOptions {
-  timeout?: number;
-  notificationType?: string;
-  dismissable?: boolean;
-  progressbar?: boolean;
-  ngTemplateOutletContext?: Record<string, unknown>;
-}
-
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NotificationService {
-  private elements = new Set<NotificationComponent>();
+  private container?: ComponentRef<NotificationContainerComponent>;
 
   constructor(
-    private readonly environmentInjector: EnvironmentInjector,
-    private readonly injector: Injector,
     private readonly applicationRef: ApplicationRef,
-    @Inject(DOCUMENT) private readonly document: Document,
+    private readonly injector: EnvironmentInjector,
   ) {}
 
-  open(content: TemplateRef<unknown> | string, options: NotificationOptions = {}): NotificationRef {
-    const contentRef = this._getContentRef(content, options);
-    const notificationCmptRef: ComponentRef<NotificationComponent> = this.attachWindowComponent(
-      this.document.body,
-      contentRef,
-    );
-    const notificationRef: NotificationRef = new NotificationRef(notificationCmptRef, contentRef);
-
-    this._applyWindowOptions(notificationCmptRef.instance, options);
-    notificationCmptRef.instance.closed
-      .pipe(take(1))
-      .subscribe(this._afterClose.bind(this, notificationCmptRef.instance));
-
-    notificationCmptRef.instance.heightInitalized.then(() =>
-      this.elements.forEach(el => {
-        if (el !== notificationCmptRef.instance) {
-          el.moveDown(notificationCmptRef.instance.height);
-        }
-      }),
-    );
-    this.elements.add(notificationCmptRef.instance);
-
-    return notificationRef;
+  success(message: string, config?: NotificationConfig): void {
+    this.createInstance({ type: 'success', message }, config);
   }
 
-  private _afterClose(notification: NotificationComponent): void {
-    this.elements.delete(notification);
+  danger(message: string, config?: NotificationConfig): void {
+    this.createInstance({ type: 'danger', message }, config);
+  }
 
-    this.elements.forEach(el => {
-      if (el.translate > notification.translate) {
-        el.moveUp(notification.height);
-      }
+  info(message: string, config?: NotificationConfig): void {
+    this.createInstance({ type: 'info', message }, config);
+  }
+
+  warning(message: string, config?: NotificationConfig): void {
+    this.createInstance({ type: 'danger', message }, config);
+  }
+
+  template(type: NotificationType, template: TemplateRef<{}>, config?: NotificationConfig): void {
+    this.createInstance({ type, template }, config);
+  }
+
+  create(type: NotificationType, message: string, config?: NotificationConfig): void {
+    this.createInstance({ type, message }, config);
+  }
+
+  private createInstance(data: NotificationData, config?: NotificationConfig): void {
+    if (!this.container) {
+      this.container = this.createNotificationContainer();
+    }
+
+    this.container.instance.create({
+      ...data,
+      id: this.generateNotificationId(),
+      config,
     });
   }
 
-  private _getContentRef(content: TemplateRef<unknown> | string, options: NotificationOptions): ContentRef {
-    if (content instanceof TemplateRef) {
-      // @ts-ignore
-      return this._createFromTemplateRef(content, options.ngTemplateOutletContext);
-    } else if (typeof content === 'string') {
-      return this._createFromString(content);
-    }
-
-    return new ContentRef([]);
-  }
-
-  private _createFromTemplateRef(content: TemplateRef<unknown>, context: Record<string, unknown>): ContentRef {
-    const viewRef = content.createEmbeddedView(context);
-    this.applicationRef.attachView(viewRef);
-    return new ContentRef([viewRef.rootNodes], viewRef);
-  }
-
-  private _createFromString(content: string): ContentRef {
-    const component = this.document.createTextNode(`${content}`);
-    return new ContentRef([[component]]);
-  }
-
-  private attachWindowComponent(containerEl: HTMLElement, contentRef: ContentRef): ComponentRef<NotificationComponent> {
-    const containerRef = createComponent(NotificationComponent, {
-      elementInjector: this.injector,
-      environmentInjector: this.environmentInjector,
-      projectableNodes: contentRef.nodes,
+  private createNotificationContainer(): ComponentRef<NotificationContainerComponent> {
+    const container = createComponent(NotificationContainerComponent, {
+      environmentInjector: this.injector,
     });
-    this.applicationRef.attachView(containerRef.hostView);
-    containerEl.appendChild(containerRef.location.nativeElement);
-    return containerRef;
+
+    document.body.appendChild(container.location.nativeElement);
+    this.applicationRef.attachView(container.hostView);
+
+    return container;
   }
 
-  private _applyWindowOptions(notificationInstance: NotificationComponent, options: NotificationOptions): void {
-    if (options.timeout != undefined && options.timeout != null) {
-      notificationInstance.timeout = options.timeout;
-    }
-    if (options.notificationType != undefined && options.notificationType != null) {
-      notificationInstance.notificationType = options.notificationType;
-    }
-    if (options.dismissable != undefined && options.dismissable != null) {
-      notificationInstance.dismissable = options.dismissable;
-    }
-    if (options.progressbar != undefined && options.progressbar != null) {
-      notificationInstance.progressbar = options.progressbar;
-    }
+  private generateNotificationId(): string {
+    return `notification-${ notificationId++ }`;
   }
 }

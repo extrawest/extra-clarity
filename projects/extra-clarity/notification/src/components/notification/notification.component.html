@@ -1,0 +1,27 @@
+<div
+  class="notification"
+  [@slide]="state"
+  (@slide.done)="animationStateChanged$.next($event)"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  <clr-alert
+    [clrAlertType]="data.type"
+    [clrAlertClosable]="config.closable"
+    (clrAlertClosedChange)="onClose()"
+  >
+    <clr-alert-item>
+    <span class="alert-text">
+      <ng-container *ngIf="!data.template">
+        {{ instance.message }}
+      </ng-container>
+
+      <ng-container
+        *ngIf="data.template"
+        [ngTemplateOutlet]="instance.template!"
+        [ngTemplateOutletContext]="{ $implicit: this, data: config.data }"
+      ></ng-container>
+    </span>
+    </clr-alert-item>
+  </clr-alert>
+</div>

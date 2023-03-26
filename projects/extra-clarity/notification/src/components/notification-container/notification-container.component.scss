@@ -1,0 +1,56 @@
+$notification-wrapper-offset: .6rem;
+
+.notification-wrapper {
+  box-sizing: border-box;
+  padding: 0;
+  position: fixed;
+  z-index: 1010;
+
+  &-top,
+  &-bottom {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  &-topLeft,
+  &-bottomLeft {
+    margin-left: $notification-wrapper-offset;
+  }
+
+  &-topRight,
+  &-bottomRight {
+    margin-right: $notification-wrapper-offset;
+  }
+
+  &-top {
+    top: $notification-wrapper-offset;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &-bottom {
+    bottom: $notification-wrapper-offset;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &-topLeft {
+    top: $notification-wrapper-offset;
+    left: 0;
+  }
+
+  &-topRight {
+    top: $notification-wrapper-offset;
+    right: 0;
+  }
+
+  &-bottomLeft {
+    bottom: $notification-wrapper-offset;
+    left: 0;
+  }
+
+  &-bottomRight {
+    bottom: $notification-wrapper-offset;
+    right: 0;
+  }
+}

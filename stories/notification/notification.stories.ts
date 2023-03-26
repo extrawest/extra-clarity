@@ -1,10 +1,10 @@
 import {Meta, moduleMetadata, Story} from "@storybook/angular";
 import {CommonModule} from "@angular/common";
 import {NotificationStoryComponent} from "./components/notification.component";
-import {NotificationComponent, NotificationService} from "../../projects/extra-clarity/notification";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ClarityModule} from "@clr/angular";
 import {FormsModule} from "@angular/forms";
+import {NotificationModule} from "../../projects/extra-clarity/notification/src/notification.module";
 
 export default {
   title: 'Components/Notification',
@@ -15,13 +15,23 @@ export default {
       imports: [
         CommonModule,
         BrowserAnimationsModule,
-        NotificationComponent,
+        NotificationModule,
         ClarityModule,
         FormsModule,
       ],
-      providers: [NotificationService],
     }),
   ],
+  argTypes: {
+    type: { defaultValue: 'info', control: { type: 'select', options: ['info', 'success', 'warning', 'danger'] } },
+    position: { defaultValue: 'top', control: { type: 'select', options: ['top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', 'bottomRight'] } },
+  },
+  args: {
+    message: '',
+    pauseOnHover: true,
+    autoClose: true,
+    closable: true,
+    duration: 3000,
+  },
   parameters: {
     viewMode: 'story',
   },
@@ -32,8 +42,9 @@ export const WithBasicUsage: Story = args => ({
     config: {
       ...args,
     },
+    ...args,
   },
   viewMode: 'story',
-  template: `<storybook-notification></storybook-notification>`,
+  template: `<storybook-notification [type]="type" [message]="message" [config]="config"></storybook-notification>`,
 });
 WithBasicUsage.storyName = 'Basic usage';
