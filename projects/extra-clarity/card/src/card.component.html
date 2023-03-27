@@ -1,4 +1,9 @@
-<div class="card">
+<div
+  class="card"
+  [class.loading]="loading"
+  [class.empty]="empty"
+  [class.has-error]="error"
+>
   <ec-card-header *ngIf="title">
     <div class="card-header-title">{{ title }}</div>
 
@@ -8,24 +13,28 @@
   </ec-card-header>
 
   <ec-card-block>
-    <ng-container *ngIf="!loading && !error">
+    <ng-container *ngIf="!empty && !error">
       <ng-content></ng-content>
     </ng-container>
 
-    <ng-container *ngIf="loading">
-      <div class="card-placeholder">
-        <clr-spinner clrMedium clrAssertive>
-          Loading...
-        </clr-spinner>
-      </div>
-    </ng-container>
+    <ec-progress-spinner
+      [showSpinner]="loading"
+    ></ec-progress-spinner>
 
-    <ng-container *ngIf="!loading && error">
-      <div class="card-placeholder">
-        <p class="text-center">Something went wrong.<br>Try to reload data.</p>
-        <button (click)="onReload()" class="btn btn-sm" style="margin-top: 1rem">Reload</button>
-      </div>
-    </ng-container>
+    <div
+      *ngIf="!loading && error"
+      class="card-placeholder"
+    >
+      <div class="text-center">Something went wrong.<br>Try to reload data.</div>
+      <button (click)="onReload()" class="btn btn-sm" style="margin-top: 1rem">Reload</button>
+    </div>
+
+    <div
+      *ngIf="empty && !loading && !error"
+      class="card-placeholder"
+    >
+      <div class="text-center">No data</div>
+    </div>
   </ec-card-block>
 
   <ng-content select="ec-card-footer, [ecCardFooter]"></ng-content>

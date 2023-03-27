@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ClrSpinnerModule } from '@clr/angular';
 
 import { CardComponent } from './card.component';
 import { CardBlockDirective, CardFooterDirective, CardHeaderDirective, CardTitleDirective } from './directives';
+import {ProgressSpinnerComponent} from "../../progress-spinner";
 
 const COMPONENTS = [
   CardComponent,
@@ -19,7 +19,7 @@ const COMPONENTS = [
   ],
   imports: [
     CommonModule,
-    ClrSpinnerModule,
+    ProgressSpinnerComponent,
   ],
   exports: [
     ...COMPONENTS,

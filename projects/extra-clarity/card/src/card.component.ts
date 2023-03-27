@@ -8,11 +8,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
-  @Input() title?: string;
+  @Input() title: string;
 
-  @Input() loaded?: boolean;
-  @Input() loading?: boolean;
-  @Input() error?: HttpErrorResponse | null;
+  @Input() empty: boolean;
+  @Input() loading: boolean;
+  @Input() error: HttpErrorResponse | null;
 
   @Output() readonly reload = new EventEmitter<void>();
 

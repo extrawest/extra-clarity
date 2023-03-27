@@ -25,6 +25,7 @@ export default {
   args: {
     title: 'Card title',
     loading: false,
+    empty: false,
     error: false,
   },
 } as Meta;
@@ -38,6 +39,7 @@ export const WithBasicUsage: Story = args => ({
     <storybook-card
       [title]="title"
       [loading]="loading"
+      [empty]="empty"
       [error]="error"
     ></storybook-card>`,
 });

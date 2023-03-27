@@ -4,7 +4,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 const example1 = `
   <ec-card
     [title]="title"
-    [loaded]="loaded"
+    [empty]="empty"
     [loading]="loading"
     [error]="error"
   >
@@ -22,7 +22,7 @@ const example1 = `
 export class CardStoryComponent {
   @Input() title?: string;
 
-  @Input() loaded?: boolean;
+  @Input() empty?: boolean;
   @Input() loading?: boolean;
   @Input() error?: HttpErrorResponse | null;
 

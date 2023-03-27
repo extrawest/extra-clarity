@@ -4,7 +4,6 @@ import { Directive } from '@angular/core';
   selector: 'ec-card-block, [ecCardBlock]',
   host: {
     class: 'card-block',
-    style: 'display: block',
   },
 })
 export class CardBlockDirective {
