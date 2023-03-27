@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { CardComponent } from './card.component';
 import { CardBlockDirective, CardFooterDirective, CardHeaderDirective, CardTitleDirective } from './directives';
-import {ProgressSpinnerComponent} from "../../progress-spinner";
+import {ProgressSpinnerComponent} from '@extrawest/extra-clarity/progress-spinner';
 
 const COMPONENTS = [
   CardComponent,
