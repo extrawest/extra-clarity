@@ -66,7 +66,7 @@ implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit
   }
 
   public isActive(): boolean {
-    return !!this.propertyKey && this.isDirty;
+    return this.serverDriven ? this.isDirty : !!this.propertyKey && this.isDirty;
   }
 
   public get hasSelectedItem(): boolean {

@@ -99,7 +99,7 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
   }
 
   public isActive(): boolean {
-    return !!this.control.value && !!this.propertyKey;
+    return this.serverDriven ? true : !!this.propertyKey;
   }
 
   public accepts(item: T): boolean {
