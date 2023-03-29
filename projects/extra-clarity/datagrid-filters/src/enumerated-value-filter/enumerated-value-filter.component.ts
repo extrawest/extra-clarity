@@ -69,6 +69,10 @@ implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit
     return this.serverDriven ? this.isDirty : !!this.propertyKey && this.isDirty;
   }
 
+  public get hasDefaultSelectedItem(): boolean {
+    return this.defaultFiltersValues.some(({ selected }) => selected);
+  }
+
   public get hasSelectedItem(): boolean {
     return this.filters.some(({ selected }) => selected);
   }
