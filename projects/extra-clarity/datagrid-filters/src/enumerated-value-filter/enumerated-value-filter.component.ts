@@ -69,6 +69,10 @@ implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit
     return !!this.propertyKey && this.isDirty;
   }
 
+  public get hasSelectedItem(): boolean {
+    return this.filters.some(({ selected }) => selected);
+  }
+
   public accepts(item: T): boolean {
     if (this.serverDriven) {
       return true;
@@ -114,6 +118,11 @@ implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit
     this.changesSubject$.next();
   }
 
+  public onClear(): void {
+    this.filters = this.filters.map((filter) => ({ ...filter, selected: false }));
+    this.changesSubject$.next();
+  }
+
   public get state(): FilterState<string | string[]> {
     const value = this.getSelectedFiltersValue();
     return {
@@ -127,12 +136,11 @@ implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit
   }
 
   private getSelectedFiltersValue(): string[] {
-    const values: string[] = [];
-    this.filters.forEach((filter) => {
+    return this.filters.reduce((result: string[], filter) => {
       if (filter.selected) {
-        values.push(filter.value);
+        result.push(filter.value);
       }
-    });
-    return values;
+      return result;
+    }, []);
   }
 }

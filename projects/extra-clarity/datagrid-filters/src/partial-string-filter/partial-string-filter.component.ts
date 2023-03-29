@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
-import { debounceTime, distinctUntilChanged, filter, Observable, Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 
 import { FilterState } from '../interfaces/filter-state.interface';
 
@@ -69,7 +69,6 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
     this.control.valueChanges
       .pipe(
         takeUntil(this.destroy$),
-        filter((value) => !value.length || value.length >= this.minLength),
         debounceTime(this.debounceTimeMs),
         distinctUntilChanged(),
       )

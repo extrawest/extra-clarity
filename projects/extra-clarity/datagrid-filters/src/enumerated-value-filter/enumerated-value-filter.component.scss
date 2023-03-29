@@ -1,7 +1,12 @@
 .filter-title {
   margin-top: 0 !important;
+  margin-bottom: .5rem;
 }
 
-.filter-reset-btn {
+.filter-controls {
   margin-top: 1rem;
+
+  button + button {
+    margin-bottom: .5rem;
+  }
 }

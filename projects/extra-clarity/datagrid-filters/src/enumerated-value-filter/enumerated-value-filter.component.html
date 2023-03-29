@@ -24,12 +24,24 @@
     </ng-template>
   </div>
 
-  <button
-    type="button"
-    class="btn btn-icon btn-block btn-sm filter-reset-btn"
-    (click)="onReset()"
-    [disabled]="!isDirty"
-  >
-    RESET
-  </button>
+  <div class="filter-controls">
+    <button
+      *ngIf="hasSelectedItem"
+      type="button"
+      class="btn btn-icon btn-block btn-sm"
+      (click)="onReset()"
+      [disabled]="!isDirty"
+    >
+      Reset
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-icon btn-block btn-sm"
+      (click)="onClear()"
+      [disabled]="!hasSelectedItem"
+    >
+      Clear
+    </button>
+  </div>
 </div>
