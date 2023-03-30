@@ -118,6 +118,7 @@ implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit
   }
 
   public onReset(): void {
+    this.isDirty = false;
     this.filters = this.defaultFiltersValues;
     this.changesSubject$.next();
   }
