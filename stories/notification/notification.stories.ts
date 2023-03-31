@@ -26,7 +26,7 @@ export default {
     position: { defaultValue: 'top', control: { type: 'select', options: ['top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', 'bottomRight'] } },
   },
   args: {
-    message: '',
+    message: 'Notification message...',
     pauseOnHover: true,
     autoClose: true,
     closable: true,
