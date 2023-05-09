@@ -1,0 +1,74 @@
+<div [style.width.px]="widthPx">
+  <ng-container *ngIf="!configErrors; else wrongConfig">
+
+    <ng-container *ngIf="!loading; else loadingOptions">
+      <div class="filter-title" *ngIf="title">
+        {{ title }}
+      </div>
+
+      <div class="filter-selected-amount" *ngIf="showSelectedAmount">
+        Selected: {{ selectedAmount }}
+      </div>
+
+      <div class="filter-options" [style.max-height.px]="heightPx">
+        <clr-checkbox-container class="checkbox-container">
+          <clr-checkbox-wrapper *ngFor="let option of options; trackBy: trackByValue">
+            <input
+              type="checkbox"
+              clrCheckbox
+              [name]="propertyKey"
+              [checked]="selectedValues.has(option.value)"
+              (change)="onInputChange($event, option.value)"
+            />
+            <label>
+              <ng-container
+                [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
+                [ngTemplateOutletContext]="{ $implicit: option }"
+              ></ng-container>
+              <ng-template #defaultLabelTpl>
+                {{ option.label ?? option.value }}
+              </ng-template>
+            </label>
+          </clr-checkbox-wrapper>
+        </clr-checkbox-container>
+      </div>
+      <div class="filter-buttons">
+        <button
+          type="button"
+          class="btn btn-block btn-sm"
+          (click)="unselectAll()"
+          [disabled]="!selectedValues.size"
+        >
+          Show All
+        </button>
+        <button
+          *ngIf="hasCustomDefaultState"
+          type="button"
+          class="btn btn-block btn-sm"
+          (click)="resetToDefault()"
+          [disabled]="isStateDefault"
+        >
+          Reset to Default
+        </button>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #loadingOptions>
+  <div class="await-loading">
+    <div>
+      Loading... <span class="spinner spinner-inline"></span>
+    </div>
+    <div>Please wait</div>
+  </div>
+</ng-template>
+
+<ng-template #wrongConfig>
+  <div class="config-errors">
+    There are some issues with the component's inputs:
+    <ul>
+      <li *ngFor="let error of configErrors">{{ error }}</li>
+    </ul>
+  </div>
+</ng-template>

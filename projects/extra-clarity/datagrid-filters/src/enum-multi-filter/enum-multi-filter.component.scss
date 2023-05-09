@@ -1,0 +1,50 @@
+.filter-options {
+  overflow-y: auto;
+  padding-left: .15rem;
+
+  &:not(:first-child) {
+    margin-top: .25rem;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: .65rem;
+  }
+}
+
+.checkbox-container {
+  margin-top: 0;
+}
+
+.filter-title,
+.filter-selected-amount {
+  font-size: .65rem;
+  font-weight: 500;
+  line-height: 1.2rem;
+}
+
+.filter-title {
+  font-weight: 600;
+}
+
+.filter-buttons {
+  button {
+    margin: 0;
+
+    &:not(:last-of-type) {
+      margin-bottom: .25rem;
+    }
+  }
+}
+
+.await-loading {
+  font-size: .65rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.config-errors {
+  font-size: .65rem;
+  line-height: 1.5;
+}

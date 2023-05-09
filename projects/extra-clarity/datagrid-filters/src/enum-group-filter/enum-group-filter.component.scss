@@ -1,0 +1,53 @@
+$title-padding-left: .2rem;
+
+.filter-options {
+  overflow: auto;
+  padding-left: .15rem;
+
+  &:not(:first-child) {
+    margin-top: .25rem;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: .65rem;
+  }
+}
+
+.filter-title,
+.filter-selected-amount {
+  font-size: .65rem;
+  font-weight: 500;
+  line-height: 1.2rem;
+  padding-left: $title-padding-left;
+}
+
+.filter-title {
+  font-weight: 600;
+}
+
+.filter-group-label {
+  font-weight: 500;
+}
+
+.filter-buttons {
+  button {
+    margin: 0;
+
+    &:not(:last-of-type) {
+      margin-bottom: .25rem;
+    }
+  }
+}
+
+.await-loading {
+  font-size: .65rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.config-errors {
+  font-size: .65rem;
+  line-height: 1.5;
+}

@@ -1,0 +1,24 @@
+:host ::ng-deep .clr-form-control {
+  margin-top: 0;
+
+  .clr-control-container {
+    width: 100%;
+
+    .clr-input-wrapper {
+      display: flex;
+
+      input {
+        flex-grow: 1;
+      }
+    }
+  }
+}
+
+clr-control-helper,
+clr-control-error {
+  overflow-wrap: anywhere
+}
+
+button {
+  margin-top: 1rem;
+}
