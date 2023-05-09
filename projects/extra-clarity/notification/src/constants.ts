@@ -1,4 +1,4 @@
-import {NotificationAnimationState, NotificationConfig, NotificationPosition} from "./typings";
+import { NotificationAnimationState, NotificationConfig, NotificationPosition } from './typings';
 
 export const NOTIFICATION_DEFAULT_CONFIG: NotificationConfig = {
   position: 'topRight',
@@ -6,7 +6,7 @@ export const NOTIFICATION_DEFAULT_CONFIG: NotificationConfig = {
   closable: true,
   autoClose: true,
   pauseOnHover: true,
-}
+};
 
 export const NOTIFICATION_ANIMATION_STATE_CONFIG: Record<NotificationPosition, NotificationAnimationState> = {
   ['top']: NotificationAnimationState.enterTop,
@@ -15,4 +15,4 @@ export const NOTIFICATION_ANIMATION_STATE_CONFIG: Record<NotificationPosition, N
   ['bottomLeft']: NotificationAnimationState.enterLeft,
   ['topRight']: NotificationAnimationState.enterRight,
   ['bottomRight']: NotificationAnimationState.enterRight,
-}
+};

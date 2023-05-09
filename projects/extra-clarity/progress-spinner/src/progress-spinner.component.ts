@@ -1,14 +1,9 @@
-import {CommonModule} from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'ec-progress-spinner',
-  template: `
-    <ng-container *ngIf="_showSpinner">
-      <span [class]="'spinner-' + size + ' spinner'"></span>
-      <span>&nbsp;<ng-content></ng-content></span>
-    </ng-container>
-  `,
+  templateUrl: './progress-spinner.component.html',
   styleUrls: ['./progress-spinner.component.scss'],
   host: {
     '[class.progress-spinner-overlay]': '_showSpinner',
@@ -18,13 +13,13 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy}
   imports: [CommonModule],
 })
 export class ProgressSpinnerComponent implements OnDestroy {
-  private static readonly MINIMUM_VISIBLE_DURATION = 200;
-  private startTimestamp: number;
-  private hideTimeout: any;
-
   @Input() size = 'sm';
 
   _showSpinner: boolean;
+
+  private static readonly MINIMUM_VISIBLE_DURATION = 200;
+  private startTimestamp?: number;
+  private hideTimeout: any;
 
   @Input()
   set showSpinner(value: boolean) {
@@ -49,7 +44,6 @@ export class ProgressSpinnerComponent implements OnDestroy {
 
   private hide(): void {
     this.hideTimeout = setTimeout(() => {
-      // @ts-ignore
       this.startTimestamp = undefined;
       this._showSpinner = false;
       this.changeDetectorRef.markForCheck();

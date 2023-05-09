@@ -7,22 +7,22 @@ function isEmptyInputValue(value: any): boolean {
 
 export class NumericFieldValidators {
   static min(min: number, groupingSeparator = '.', decimalSeparator = ','): ValidatorFn {
-    const validatorFn: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const validatorFn: ValidatorFn = (control: AbstractControl<string>): ValidationErrors | null => {
       if (isEmptyInputValue(control.value) || isEmptyInputValue(min)) {
         return null;
       }
-      const value: number = this.parseInputString(control.value, groupingSeparator, decimalSeparator);
+      const value: number = this.parseInputString(control.value as string, groupingSeparator, decimalSeparator);
       return !isNaN(value) && value < min ? { min: { min, actual: value } } : null;
     };
     return validatorFn;
   }
 
   static max(max: number, groupingSeparator = '.', decimalSeparator = ','): ValidatorFn {
-    const validatorFn: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const validatorFn: ValidatorFn = (control: AbstractControl<string>): ValidationErrors | null => {
       if (isEmptyInputValue(control.value) || isEmptyInputValue(max)) {
         return null;
       }
-      const value: number = this.parseInputString(control.value, groupingSeparator, decimalSeparator);
+      const value: number = this.parseInputString(control.value as string, groupingSeparator, decimalSeparator);
       return !isNaN(value) && value > max ? { max: { max, actual: value } } : null;
     };
     return validatorFn;
@@ -40,28 +40,28 @@ export class NumericFieldValidators {
 
 @Directive({
   selector: '[maxNumeric]',
-  providers: [{ provide: NG_VALIDATORS, useExisting: MaxNumeric, multi: true }],
+  providers: [{ provide: NG_VALIDATORS, useExisting: MaxNumericDirective, multi: true }],
 })
-export class MaxNumeric implements Validator {
-  @Input('maxNumeric') _max: number;
-  @Input('groupingSep') _groupingSep = '.';
-  @Input('decimalSep') _decimalSep = ',';
+export class MaxNumericDirective implements Validator {
+  @Input() maxNumeric: number;
+  @Input() groupingSep = '.';
+  @Input() decimalSep = ',';
 
   validate(control: AbstractControl): { [key: string]: any } | null {
-    return NumericFieldValidators.max(this._max, this._groupingSep, this._decimalSep)(control);
+    return NumericFieldValidators.max(this.maxNumeric, this.groupingSep, this.decimalSep)(control);
   }
 }
 
 @Directive({
   selector: '[minNumeric]',
-  providers: [{ provide: NG_VALIDATORS, useExisting: MinNumeric, multi: true }],
+  providers: [{ provide: NG_VALIDATORS, useExisting: MinNumericDirective, multi: true }],
 })
-export class MinNumeric implements Validator {
-  @Input('minNumeric') _min: number;
-  @Input('groupingSep') _groupingSep = '.';
-  @Input('decimalSep') _decimalSep = ',';
+export class MinNumericDirective implements Validator {
+  @Input() minNumeric: number;
+  @Input() groupingSep = '.';
+  @Input() decimalSep = ',';
 
   validate(control: AbstractControl): { [key: string]: any } | null {
-    return NumericFieldValidators.min(this._min, this._groupingSep, this._decimalSep)(control);
+    return NumericFieldValidators.min(this.minNumeric, this.groupingSep, this.decimalSep)(control);
   }
 }

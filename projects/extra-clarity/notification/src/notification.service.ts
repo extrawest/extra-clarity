@@ -4,10 +4,11 @@ import {
   createComponent,
   EnvironmentInjector,
   Injectable,
-  TemplateRef
+  TemplateRef,
 } from '@angular/core';
-import {NotificationContainerComponent} from "./components";
-import {NotificationConfig, NotificationData, NotificationType} from "./typings";
+
+import { NotificationContainerComponent } from './components';
+import { NotificationConfig, NotificationData, NotificationType } from './typings';
 
 let notificationId = 0;
 
@@ -68,6 +69,6 @@ export class NotificationService {
   }
 
   private generateNotificationId(): string {
-    return `notification-${ notificationId++ }`;
+    return `notification-${notificationId++}`;
   }
 }

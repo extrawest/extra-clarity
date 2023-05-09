@@ -1,7 +1,6 @@
-import {TemplateRef} from "@angular/core";
+import { TemplateRef } from '@angular/core';
 
 export type NotificationPosition = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight';
-
 export type NotificationType = 'warning' | 'danger' | 'info' | 'success';
 
 export enum NotificationAnimationState {
@@ -24,7 +23,7 @@ export interface NotificationConfig<T = {}> {
 export interface NotificationData {
   id?: string;
   message?: string;
-  template?: TemplateRef<{}>
+  template?: TemplateRef<{}>;
   type?: NotificationType;
   config?: NotificationConfig;
 }

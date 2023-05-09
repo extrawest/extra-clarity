@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {NotificationData} from "../../typings";
-import {BehaviorSubject, map} from "rxjs";
-import {groupBy, toPairs} from "lodash";
-import {NOTIFICATION_DEFAULT_CONFIG} from "../../constants";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { groupBy, toPairs } from 'lodash';
+import { BehaviorSubject, map } from 'rxjs';
+
+import { NOTIFICATION_DEFAULT_CONFIG } from '../../constants';
+import { NotificationData } from '../../typings';
 
 @Component({
   selector: 'ec-notification-container',
@@ -37,13 +38,13 @@ export class NotificationContainerComponent {
     });
   }
 
+  trackGroupById(index: number, [group]: [string, NotificationData[]]): string {
+    return group;
+  }
+
   private mergeConfig(instance: NotificationData): Required<NotificationData> {
     instance.config = { ...NOTIFICATION_DEFAULT_CONFIG, ...instance.config };
 
     return instance as Required<NotificationData>;
-  }
-
-  trackGroupById(index: number, [group]: [string, NotificationData[]]): string {
-    return group;
   }
 }

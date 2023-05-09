@@ -1,3 +1,4 @@
+import { AnimationEvent } from '@angular/animations';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,9 +7,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
-import {NotificationConfig, NotificationData} from "../../typings";
 import {
   BehaviorSubject,
   filter, finalize,
@@ -18,11 +18,12 @@ import {
   take,
   takeUntil,
   takeWhile,
-  withLatestFrom
-} from "rxjs";
-import {notificationAnimation} from "../../animations";
-import {NOTIFICATION_ANIMATION_STATE_CONFIG} from "../../constants";
-import {AnimationEvent} from "@angular/animations";
+  withLatestFrom,
+} from 'rxjs';
+
+import { notificationAnimation } from '../../animations';
+import { NOTIFICATION_ANIMATION_STATE_CONFIG } from '../../constants';
+import { NotificationConfig, NotificationData } from '../../typings';
 
 const NOTIFICATION_INTERVAL_STEP = 200;
 
@@ -38,9 +39,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   @Output() readonly destroyed = new EventEmitter<void>();
 
-  private _state: 'enter' | 'leave' = 'enter';
-
   readonly animationStateChanged$ = new Subject<AnimationEvent>();
+
+  private _state: 'enter' | 'leave' = 'enter';
 
   private paused$ = new BehaviorSubject<boolean>(false);
 
@@ -74,7 +75,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
         finalize(() => this.onClose()),
       )
       .subscribe();
-
 
     this.animationStateChanged$
       .pipe(

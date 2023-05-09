@@ -32,7 +32,8 @@ const DEFAULT_CONTAINER_WIDTH_PX = 200;
     ClrInputModule,
   ],
 })
-export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterface<T, FilterState<string>>, OnInit, OnDestroy, AfterViewInit {
+export class PartialStringFilterComponent<T>
+implements ClrDatagridFilterInterface<T, FilterState<string>>, OnInit, OnDestroy, AfterViewInit {
   @Input() public minLength: number = DEFAULT_MIN_LENGTH;
   @Input() public debounceTimeMs = DEFAULT_DEBOUNCE_TIME_MS;
   @Input() public placeholder = DEFAULT_PLACEHOLDER;
@@ -43,6 +44,9 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
   @Input() public fullMatch: boolean;
   @Input() public set value(v) {
     this.control.patchValue(v);
+  }
+  public get value(): string {
+    return this.control.value;
   }
 
   public readonly control = new FormControl<string>('', {
@@ -132,10 +136,6 @@ export class PartialStringFilterComponent<T> implements ClrDatagridFilterInterfa
     this.control.reset();
     this.changesSubject$.next('');
     this.inputRef.nativeElement.focus();
-  }
-
-  public get value(): string {
-    return this.control.value;
   }
 
   public get isTooShort(): boolean {

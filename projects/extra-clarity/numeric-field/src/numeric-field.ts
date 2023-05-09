@@ -30,12 +30,12 @@ const NUMBERS = new Set(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NumericField),
+      useExisting: forwardRef(() => NumericFieldDirective),
       multi: true,
     },
   ],
 })
-export class NumericField implements OnInit, OnDestroy, AfterViewChecked, ControlValueAccessor {
+export class NumericFieldDirective implements OnInit, OnDestroy, AfterViewChecked, ControlValueAccessor {
   @Input() textAlign = 'right';
   @Input() decimalPlaces = 2;
   @Input() roundValue = false;
@@ -48,8 +48,8 @@ export class NumericField implements OnInit, OnDestroy, AfterViewChecked, Contro
   private displayValue = '';
   private originalValue = NaN;
   private _numericValue: number;
-  // @ts-ignore
-  private _unit: string = null;
+
+  private _unit: string | null = null;
   private inputChangeListener: () => void;
   private keyupListener: () => void;
   private keydownListener: () => void;
@@ -78,6 +78,8 @@ export class NumericField implements OnInit, OnDestroy, AfterViewChecked, Contro
   private unitSpan: HTMLSpanElement;
   private allowedKeys = new Set(NUMBERS);
 
+  constructor(private renderer: Renderer2, private inputEl: ElementRef) {}
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onChange = (_: number): void => {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -98,8 +100,6 @@ export class NumericField implements OnInit, OnDestroy, AfterViewChecked, Contro
   writeValue(value: number): void {
     this.numericValue = value;
   }
-
-  constructor(private renderer: Renderer2, private inputEl: ElementRef) {}
 
   ngOnInit(): void {
     this.decimalPlaces = Number.parseInt(this.decimalPlaces.toString(), 10);
