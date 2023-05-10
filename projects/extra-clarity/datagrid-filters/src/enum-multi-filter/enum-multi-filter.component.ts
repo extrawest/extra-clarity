@@ -6,8 +6,8 @@ import {
 import { ClrCheckboxModule, ClrDatagridFilterInterface } from '@clr/angular';
 import { Subject } from 'rxjs';
 
-import { areSetsEqual } from '../../../shared';
 import { EnumFilterOption, FilterState } from '../interfaces/filter-state.interface';
+import { areSetsEqual } from '../utils';
 
 const DEFAULT_MAX_HEIGHT_PX = 300;
 const DEFAULT_WIDTH_PX = 200;
