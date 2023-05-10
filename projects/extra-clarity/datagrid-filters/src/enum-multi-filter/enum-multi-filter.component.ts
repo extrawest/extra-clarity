@@ -6,6 +6,7 @@ import {
 import { ClrCheckboxModule, ClrDatagridFilterInterface } from '@clr/angular';
 import { Subject } from 'rxjs';
 
+import { areSetsEqual } from '../../../shared';
 import { EnumFilterOption, FilterState } from '../interfaces/filter-state.interface';
 
 const DEFAULT_MAX_HEIGHT_PX = 300;
@@ -97,19 +98,21 @@ implements ClrDatagridFilterInterface<T, FilterState<E[]>>, OnChanges, OnDestroy
       return;
     }
 
-    (event.target as HTMLInputElement).checked
-      ? this.selectedValues.add(inputValue)
-      : this.selectedValues.delete(inputValue);
+    const newSelectedValues = new Set(this.selectedValues);
 
-    this.onFilterStateUpdate();
+    (event.target as HTMLInputElement).checked
+      ? newSelectedValues.add(inputValue)
+      : newSelectedValues.delete(inputValue);
+
+    this.updateSelectedValues(newSelectedValues);
   }
 
   resetToDefault(): void {
-    this.selectedValues.clear();
+    const newSelectedValues = new Set<E>();
     this.options
       .filter(option => option.selectedByDefault)
-      .forEach(option => this.selectedValues.add(option.value));
-    this.onFilterStateUpdate();
+      .forEach(option => newSelectedValues.add(option.value));
+    this.updateSelectedValues(newSelectedValues);
   }
 
   trackByValue(index: number, option: EnumFilterOption<E>): E {
@@ -117,8 +120,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[]>>, OnChanges, OnDestroy
   }
 
   unselectAll(): void {
-    this.selectedValues.clear();
-    this.onFilterStateUpdate();
+    this.updateSelectedValues(new Set<E>());
   }
 
   private areAllValuesAllowed(filterValues: E[]): boolean {
@@ -149,17 +151,9 @@ implements ClrDatagridFilterInterface<T, FilterState<E[]>>, OnChanges, OnDestroy
       return;
     }
 
-    this.selectedValues.clear();
-    selectValues.forEach(value => this.selectedValues.add(value));
-    this.onFilterStateUpdate();
-  }
-
-  private onFilterStateUpdate(params: { emit: boolean } = { emit: true }): void {
-    this.isStateDefault = this.checkIfStateIsDefault();
-    if (params.emit) {
-      this.selectionChanged.emit(this.state);
-      this.changes.next();
-    }
+    const newSelectedValues = new Set<E>();
+    selectValues.forEach(value => newSelectedValues.add(value));
+    this.updateSelectedValues(newSelectedValues);
   }
 
   private onOptionsChange(): void {
@@ -171,5 +165,20 @@ implements ClrDatagridFilterInterface<T, FilterState<E[]>>, OnChanges, OnDestroy
     }
 
     this.forceSelection(this.selectValues);
+  }
+
+  private updateSelectedValues(
+    newSelectedValues: Set<E>,
+    params: { emit: boolean } = { emit: true },
+  ): void {
+    if (areSetsEqual(newSelectedValues, this.selectedValues, { ignoreOrder: true })) {
+      return;
+    }
+    this.selectedValues = newSelectedValues;
+    this.isStateDefault = this.checkIfStateIsDefault();
+    if (params.emit) {
+      this.selectionChanged.emit(this.state);
+      this.changes.next();
+    }
   }
 }

@@ -1,6 +1,15 @@
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -51,6 +60,8 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
 
   /* for client-driven data-grids only */
   @Input() fullMatch = false;
+
+  @Output() filterValueChanged = new EventEmitter<FilterState<string>>();
 
   @ViewChild('inputElement') inputRef?: ElementRef<HTMLInputElement>;
   @ViewChild(ClrInput) clrInput?: ClrInput;
@@ -247,6 +258,7 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   private updateFilterValue(value: string): void {
     if (value !== this.filterValue) {
       this.filterValue = value;
+      this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
   }

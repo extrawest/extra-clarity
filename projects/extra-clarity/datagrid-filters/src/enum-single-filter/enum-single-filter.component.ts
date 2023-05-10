@@ -93,13 +93,11 @@ implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, 
   }
 
   onInputChange(inputValue: E): void {
-    this.selectedValue = inputValue;
-    this.onFilterStateUpdate();
+    this.updateSelectedValue(inputValue);
   }
 
   resetToDefault(): void {
-    this.selectedValue = this.defaultValue;
-    this.onFilterStateUpdate();
+    this.updateSelectedValue(this.defaultValue);
   }
 
   trackByValue(index: number, option: EnumFilterOption<E>): E {
@@ -107,8 +105,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, 
   }
 
   unselectAll(): void {
-    this.selectedValue = undefined;
-    this.onFilterStateUpdate();
+    this.updateSelectedValue(undefined);
   }
 
   private isValueAllowed(value: E): boolean {
@@ -130,17 +127,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, 
       this.resetToDefault();
       return;
     }
-
-    this.selectedValue = selectValue;
-    this.onFilterStateUpdate();
-  }
-
-  private onFilterStateUpdate(params: { emit: boolean } = { emit: true }): void {
-    this.isStateDefault = this.selectedValue === this.defaultValue;
-    if (params.emit) {
-      this.selectionChanged.emit(this.state);
-      this.changes.next();
-    }
+    this.updateSelectedValue(selectValue);
   }
 
   private onOptionsChange(): void {
@@ -158,5 +145,20 @@ implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, 
     }
 
     this.forceSelection(this.selectValue);
+  }
+
+  private updateSelectedValue(
+    newSelectedValue: E | undefined,
+    params: { emit: boolean } = { emit: true },
+  ): void {
+    if (newSelectedValue === this.selectedValue) {
+      return;
+    }
+    this.selectedValue = newSelectedValue;
+    this.isStateDefault = this.selectedValue === this.defaultValue;
+    if (params.emit) {
+      this.selectionChanged.emit(this.state);
+      this.changes.next();
+    }
   }
 }
