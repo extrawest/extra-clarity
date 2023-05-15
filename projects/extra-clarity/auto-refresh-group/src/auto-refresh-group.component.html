@@ -8,7 +8,7 @@
     (refresh)="onRefresh()"
     (toggle)="onAutoRefreshChanged($event)"
     class="ec-auto-refresh"
-  ></ec-auto-refresh>
+  />
 
   <div class="refresh-state">
     <cds-icon
@@ -16,7 +16,7 @@
       shape="error-standard"
       status="danger"
       size="18"
-    ></cds-icon>
+    />
   </div>
 
   <button
@@ -31,8 +31,8 @@
     <cds-icon
       *ngIf="!refreshing; else spinner"
       shape="refresh"
-      status="{{ failed ? 'danger': '' }}"
-    ></cds-icon>
+      [status]="failed ? 'danger': 'info'"
+    />
     <ng-template #spinner>
       <span class="spinner spinner-inline"></span>
     </ng-template>

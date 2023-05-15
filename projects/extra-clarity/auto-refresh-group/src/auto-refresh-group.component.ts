@@ -2,15 +2,14 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  CUSTOM_ELEMENTS_SCHEMA,
   EventEmitter,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, errorStandardIcon, refreshIcon } from '@cds/core/icon';
-import '@cds/core/icon/register.js';
 import { AutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 
 ClarityIcons.addIcons(refreshIcon, errorStandardIcon);
@@ -23,9 +22,9 @@ ClarityIcons.addIcons(refreshIcon, errorStandardIcon);
   standalone: true,
   imports: [
     CommonModule,
+    CdsIconModule,
     AutoRefreshComponent,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AutoRefreshGroupComponent implements OnChanges {
   @Input() public failed = false;

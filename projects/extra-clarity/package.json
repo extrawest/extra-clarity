@@ -1,6 +1,6 @@
 {
   "name": "@extrawest/extra-clarity",
-  "version": "0.15.5",
+  "version": "0.15.6",
   "description": "Extrawest Angular components based on the Clarity Design System",
   "author": "extrawest.com",
   "repository": {
@@ -19,7 +19,7 @@
     "@angular/common": "^15.2.0 || ^16.0.0",
     "@angular/core": "^15.2.0 || ^16.0.0",
     "@angular/forms": "^15.2.0 || ^16.0.0",
-    "@cds/core": "^6.4.0",
+    "@cds/angular": "^6.4.0",
     "@clr/angular": "^15.3.0",
     "@clr/ui": "^15.3.0"
   },
