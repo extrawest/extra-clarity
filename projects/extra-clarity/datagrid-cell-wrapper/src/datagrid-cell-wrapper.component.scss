@@ -1,0 +1,32 @@
+.flex-layout {
+  display: flex;
+}
+
+.inline-layout {
+  .cell-content,
+  .copy-button {
+    display: inline;
+  }
+}
+
+.flex-layout.with-btn-right-aligned {
+  justify-content: space-between;
+}
+
+.flex-layout .copy-button {
+  flex: 0 0;
+}
+
+.trunc-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.break-overflow {
+  overflow-wrap: anywhere;
+}
+
+.cell-content {
+  margin-right: .15rem;
+}
