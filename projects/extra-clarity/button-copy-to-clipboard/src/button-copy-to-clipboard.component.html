@@ -1,0 +1,31 @@
+<button
+  type="button"
+  class="btn btn-icon fixed-width"
+  [ngClass]="{
+    'btn-sm': small,
+    'no-border': !withBorder,
+    'no-vertical-margins': noVerticalMargins,
+  }"
+  [title]="title ?? 'Copy to Clipboard'"
+  [disabled]="disabled || !textToCopy"
+  (click)="copy()"
+  @parent
+>
+  <!-- Imitating button[clrLoading], but without the initial animation (i.e. w/o 'fade in' for the DEFAULT state) -->
+  <ng-container [ngSwitch]="btnLoadingState">
+    <span *ngSwitchCase="clrLoadingState.LOADING">
+      <span @spinner class="spinner spinner-inline"></span>
+    </span>
+
+    <span *ngSwitchCase="clrLoadingState.SUCCESS">
+      <span
+        @validated (@validated.done)="resetToDefaultState()"
+        class="spinner spinner-inline spinner-check"
+      ></span>
+    </span>
+
+    <span *ngSwitchCase="clrLoadingState.DEFAULT">
+      <cds-icon @defaultButton shape="copy" />
+    </span>
+  </ng-container>
+</button>
