@@ -4,10 +4,11 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { ClrDatagridFilterInterface, ClrTreeViewModule } from '@clr/angular';
+import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject } from 'rxjs';
 
 import { EnumFilterOption, EnumGroupFilterOption, FilterState } from '../interfaces/filter-state.interface';
-import { areSetsEqual } from '../utils';
+
 
 const DEFAULT_MAX_HEIGHT_PX = 300;
 const DEFAULT_WIDTH_PX = 200;

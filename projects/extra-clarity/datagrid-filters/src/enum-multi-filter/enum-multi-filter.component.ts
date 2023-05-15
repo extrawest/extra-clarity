@@ -4,10 +4,10 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { ClrCheckboxModule, ClrDatagridFilterInterface } from '@clr/angular';
+import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject } from 'rxjs';
 
 import { EnumFilterOption, FilterState } from '../interfaces/filter-state.interface';
-import { areSetsEqual } from '../utils';
 
 const DEFAULT_MAX_HEIGHT_PX = 300;
 const DEFAULT_WIDTH_PX = 200;
