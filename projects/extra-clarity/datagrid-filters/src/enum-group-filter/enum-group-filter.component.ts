@@ -9,7 +9,6 @@ import { Subject } from 'rxjs';
 
 import { EnumFilterOption, EnumGroupFilterOption, FilterState } from '../interfaces/filter-state.interface';
 
-
 const DEFAULT_MAX_HEIGHT_PX = 300;
 const DEFAULT_WIDTH_PX = 200;
 

@@ -30,7 +30,12 @@
             "suffixes": ["Component", "Container"]
           }
         ],
-        "@angular-eslint/component-max-inline-declarations": "error",
+        "@angular-eslint/component-max-inline-declarations": [
+          "error",
+          {
+            "template": 10
+          }
+        ],
         "@angular-eslint/directive-selector": "off",
         "@angular-eslint/directive-class-suffix": [
           "error",

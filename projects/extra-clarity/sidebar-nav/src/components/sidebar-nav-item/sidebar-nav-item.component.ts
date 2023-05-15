@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } 
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ClrVerticalNavModule } from '@clr/angular';
 
-import { NavItemTypeEnum, NavListItem } from '../../sidebar-nav.models';
+import { NAV_ITEM_TYPE, NavListItem } from '../../sidebar-nav.models';
 import { SidebarNavService } from '../../sidebar-nav.service';
 import { SidebarNavLabelComponent } from '../sidebar-nav-label';
 
@@ -24,7 +24,7 @@ import { SidebarNavLabelComponent } from '../sidebar-nav-label';
 export class SidebarNavItemComponent implements OnInit {
   @Input() navItem?: NavListItem;
 
-  readonly NavItemTypeEnum = NavItemTypeEnum;
+  readonly NavItemTypeEnum = NAV_ITEM_TYPE;
 
   constructor(
     readonly changeDetectionRef: ChangeDetectorRef,

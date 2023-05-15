@@ -1,4 +1,4 @@
-export const NavItemTypeEnum = {
+export const NAV_ITEM_TYPE = {
   Divider: 'divider',
   Href: 'href',
   RouterLink: 'router-link',
@@ -6,11 +6,11 @@ export const NavItemTypeEnum = {
 } as const;
 
 interface NavItemDivider {
-  type: typeof NavItemTypeEnum.Divider;
+  type: typeof NAV_ITEM_TYPE.Divider;
 }
 
 export interface NavItemLink {
-  type: typeof NavItemTypeEnum.RouterLink | typeof NavItemTypeEnum.Href;
+  type: typeof NAV_ITEM_TYPE.RouterLink | typeof NAV_ITEM_TYPE.Href;
   label: string;
   icon?: string;
   link: string;
@@ -18,7 +18,7 @@ export interface NavItemLink {
 }
 
 export interface NavItemGroup {
-  type: typeof NavItemTypeEnum.Group;
+  type: typeof NAV_ITEM_TYPE.Group;
   label: string;
   icon?: string;
   expanded?: boolean;

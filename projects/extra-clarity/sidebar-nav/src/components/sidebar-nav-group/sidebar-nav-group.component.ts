@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { ClrVerticalNavModule } from '@clr/angular';
 import { Subject, takeUntil } from 'rxjs';
 
-import { NavItemGroup, NavItemTypeEnum } from '../../sidebar-nav.models';
+import { NAV_ITEM_TYPE, NavItemGroup } from '../../sidebar-nav.models';
 import { SidebarNavService } from '../../sidebar-nav.service';
 import { SidebarNavItemComponent } from '../sidebar-nav-item';
 import { SidebarNavLabelComponent } from '../sidebar-nav-label';
@@ -52,7 +52,7 @@ export class SidebarNavGroupComponent implements OnDestroy, OnInit {
 
   private checkForActiveLinks(): void {
     this.hasActiveLink = !!this.navItem?.children.some(nestedItem => (
-      nestedItem.type === NavItemTypeEnum.RouterLink &&
+      nestedItem.type === NAV_ITEM_TYPE.RouterLink &&
       this.navService.isPathActive(nestedItem.link, 'subset')
     ));
 

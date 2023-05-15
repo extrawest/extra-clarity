@@ -1,23 +1,23 @@
-import { NavItemGroup, NavItemLink, NavItemTypeEnum, NavListSingleItem } from './sidebar-nav.models';
+import { NAV_ITEM_TYPE, NavItemGroup, NavItemLink, NavListSingleItem } from './sidebar-nav.models';
 
 export const divider = {
-  type: NavItemTypeEnum.Divider,
+  type: NAV_ITEM_TYPE.Divider,
 };
 
 export const createGroup = (label: string, children: NavListSingleItem[]): NavItemGroup => ({
   label,
   children,
-  type: NavItemTypeEnum.Group,
+  type: NAV_ITEM_TYPE.Group,
 });
 
 export const createHrefLink = (label: string, link: string): NavItemLink => ({
   label,
   link,
-  type: NavItemTypeEnum.Href,
+  type: NAV_ITEM_TYPE.Href,
 });
 
 export const createRouterLink = (label: string, link: string): NavItemLink => ({
   label,
   link,
-  type: NavItemTypeEnum.RouterLink,
+  type: NAV_ITEM_TYPE.RouterLink,
 });
