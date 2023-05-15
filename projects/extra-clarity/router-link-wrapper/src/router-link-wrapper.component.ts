@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-router-link-wrapper',
+  selector: 'ec-router-link-wrapper',
   template: `
     <a [routerLink]="fwdRouterLink" *ngIf="enabled; else content">
       <ng-container *ngTemplateOutlet="content" />

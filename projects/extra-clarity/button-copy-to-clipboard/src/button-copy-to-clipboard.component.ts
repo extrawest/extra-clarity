@@ -11,7 +11,7 @@ import { animations } from './button-copy-to-clipboard.animations';
 ClarityIcons.addIcons(copyIcon);
 
 @Component({
-  selector: 'app-button-copy-to-clipboard',
+  selector: 'ec-button-copy-to-clipboard',
   templateUrl: './button-copy-to-clipboard.component.html',
   styleUrls: ['./button-copy-to-clipboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
