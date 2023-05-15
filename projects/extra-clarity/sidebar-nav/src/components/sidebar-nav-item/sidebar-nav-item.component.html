@@ -1,0 +1,22 @@
+<ng-container *ngIf="navItem">
+  <ng-container *ngIf="navItem.type === NavItemTypeEnum.Divider">
+    <div class="nav-divider"></div>
+  </ng-container>
+
+  <ng-container *ngIf="navItem.type === NavItemTypeEnum.Href">
+    <a clrVerticalNavLink [href]="navItem.link">
+      <ec-sidebar-nav-label [navItem]="navItem" />
+    </a>
+  </ng-container>
+
+  <ng-container *ngIf="navItem.type === NavItemTypeEnum.RouterLink">
+    <a
+      clrVerticalNavLink
+      routerLinkActive="active"
+      [routerLink]="navItem.link"
+      [ngClass]="{ disabled: navService.isPathActive(navItem.link, 'exact') }"
+    >
+      <ec-sidebar-nav-label [navItem]="navItem" />
+    </a>
+  </ng-container>
+</ng-container>

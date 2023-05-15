@@ -1,0 +1,4 @@
+/* This rule prevents from losing query params by clicking on the already activated link */
+a.active.disabled {
+  pointer-events: none;
+}

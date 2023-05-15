@@ -1,0 +1,13 @@
+<ng-container *ngFor="let navItem of navList">
+  <ec-sidebar-nav-group
+    *ngIf="navItem.type === NavItemTypeEnum.Group"
+    [navItem]="navItem"
+  />
+  <ec-sidebar-nav-item
+    *ngIf="navItem.type !== NavItemTypeEnum.Group"
+    [navItem]="navItem"
+  />
+</ng-container>
+
+<!-- Fixes NG0100 ExpressionChangedAfterItHasBeenCheckedError -->
+<clr-vertical-nav-group hidden aria-hidden="true" />
