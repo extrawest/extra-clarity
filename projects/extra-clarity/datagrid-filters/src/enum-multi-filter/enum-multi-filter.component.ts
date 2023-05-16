@@ -50,8 +50,11 @@ implements ClrDatagridFilterInterface<T, FilterState<E[]>>, OnChanges, OnDestroy
 
   get selectedAmount(): string {
     const selected = this.selectedValues.size;
+    if (selected === 0) {
+      return 'none';
+    }
     const total = this.options.length;
-    return (selected === 0) ? 'none' : `${selected} out of ${total}`;
+    return `${selected} out of ${total}`;
   }
 
   get state(): FilterState<E[]> {
@@ -136,13 +139,10 @@ implements ClrDatagridFilterInterface<T, FilterState<E[]>>, OnChanges, OnDestroy
   }
 
   private checkInputsValidity(): string[] | undefined {
-    const inputsErrors: string[] = [];
-
-    if (!this.propertyKey) {
-      inputsErrors.push('[propertyKey] is required');
+    if (this.propertyKey) {
+      return;
     }
-
-    return (inputsErrors.length > 0) ? inputsErrors : undefined;
+    return ['[propertyKey] is required'];
   }
 
   private forceSelection(selectValues: E[] | null): void {

@@ -113,13 +113,10 @@ implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, 
   }
 
   private checkInputsValidity(): string[] | undefined {
-    const inputsErrors: string[] = [];
-
-    if (!this.propertyKey) {
-      inputsErrors.push('[propertyKey] is required');
+    if (this.propertyKey) {
+      return;
     }
-
-    return (inputsErrors.length > 0) ? inputsErrors : undefined;
+    return ['[propertyKey] is required'];
   }
 
   private forceSelection(selectValue: E | null): void {
