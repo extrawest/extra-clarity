@@ -4,7 +4,12 @@
     !btnInline ? 'with-btn-right-aligned' : '',
   ]">
     <ng-container *ngTemplateOutlet="cellContent" />
-    <ec-button-copy-to-clipboard [textToCopy]="textToCopy" class="copy-button" />
+    <ec-button-copy-to-clipboard
+      [textToCopy]="textToCopy"
+      (copied)="copied.emit($event)"
+      (failed)="failed.emit($event)"
+      сlass="copy-button"
+    />
   </div>
 </ng-container>
 
