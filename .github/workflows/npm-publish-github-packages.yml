@@ -29,22 +29,3 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-  deploy:
-    needs: [publish]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: npm i
-      - run: npm run build:extra-clarity
-      - run: npm run build-storybook
-      - uses: w9jds/firebase-action@master
-        with:
-          args: deploy
-        env:
-          FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
-
