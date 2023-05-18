@@ -1,4 +1,4 @@
-{
+module.exports = {
   "extends": "../../.eslintrc.json",
   "ignorePatterns": [
     "!**/*"
@@ -10,9 +10,10 @@
       ],
       "parserOptions": {
         "project": [
-          "projects/extra-clarity/tsconfig.lib.json",
-          "projects/extra-clarity/tsconfig.spec.json"
+          "./tsconfig.lib.json",
+          "./tsconfig.spec.json"
         ],
+        "tsconfigRootDir": __dirname,
         "createDefaultProgram": true
       },
       "rules": {
