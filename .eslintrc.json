@@ -422,9 +422,5 @@
         "@angular-eslint/template/eqeqeq": "error"
       }
     }
-  ],
-  "extends": [
-    null,
-    "plugin:storybook/recommended"
   ]
 }
