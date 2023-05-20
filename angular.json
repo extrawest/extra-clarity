@@ -29,14 +29,16 @@
           "options": {
             "lintFilePatterns": [
               "projects/extra-clarity/**/*.ts",
-              "projects/extra-clarity/**/*.html"
+              "projects/extra-clarity/**/*.html",
+              ".storybook/**/*.mdx",
+              ".storybook/**/*.ts"
             ]
           }
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
           "options": {
-            "configDir": "projects/extra-clarity/.storybook",
+            "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
             "compodoc": false,
             "port": 6006
@@ -45,7 +47,7 @@
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
           "options": {
-            "configDir": "projects/extra-clarity/.storybook",
+            "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
             "compodoc": false,
             "outputDir": "dist/storybook-static"
