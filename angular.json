@@ -32,6 +32,24 @@
               "projects/extra-clarity/**/*.html"
             ]
           }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "projects/extra-clarity/.storybook",
+            "browserTarget": "extra-clarity:build",
+            "compodoc": false,
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "projects/extra-clarity/.storybook",
+            "browserTarget": "extra-clarity:build",
+            "compodoc": false,
+            "outputDir": "storybook-static"
+          }
         }
       }
     }
