@@ -48,7 +48,7 @@
             "configDir": "projects/extra-clarity/.storybook",
             "browserTarget": "extra-clarity:build",
             "compodoc": false,
-            "outputDir": "storybook-static"
+            "outputDir": "dist/storybook-static"
           }
         }
       }
