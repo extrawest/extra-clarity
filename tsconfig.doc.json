@@ -1,0 +1,10 @@
+{
+  "include": [
+    "./.storybook/stories/**/*",
+    "./projects/extra-clarity/**/*.component.ts",
+  ],
+  "exclude": [
+    "./.storybook/stories/test.ts",
+    "./.storybook/stories/**/*.spec.ts",
+  ],
+}

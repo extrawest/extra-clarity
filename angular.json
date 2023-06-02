@@ -40,7 +40,8 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
-            "compodoc": false,
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal"],
             "port": 6006
           }
         },
@@ -49,7 +50,8 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
-            "compodoc": false,
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal"],
             "outputDir": "dist/storybook-static"
           }
         }

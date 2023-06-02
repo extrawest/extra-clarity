@@ -16,6 +16,7 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: 'tag',
+    defaultName: 'Docs',
   },
   core: {
     disableTelemetry: true,
