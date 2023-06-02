@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import type { User } from './User';
+import type { User } from '../types/User';
 
 @Component({
   selector: 'storybook-page',
