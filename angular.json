@@ -41,7 +41,7 @@
             "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
             "compodoc": true,
-            "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal"],
+            "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal", "--disablePrivate", "--disableProtected"],
             "port": 6006
           }
         },
@@ -51,7 +51,7 @@
             "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
             "compodoc": true,
-            "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal"],
+            "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal", "--disablePrivate", "--disableProtected"],
             "outputDir": "dist/storybook-static"
           }
         }
