@@ -42,7 +42,10 @@
             "browserTarget": "extra-clarity:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal", "--disablePrivate", "--disableProtected"],
-            "port": 6006
+            "port": 6006,
+            "styles": [
+              "node_modules/@clr/ui/clr-ui.min.css"
+            ]
           }
         },
         "build-storybook": {
@@ -52,7 +55,10 @@
             "browserTarget": "extra-clarity:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal", "--disablePrivate", "--disableProtected"],
-            "outputDir": "dist/storybook-static"
+            "outputDir": "dist/storybook-static",
+            "styles": [
+              "node_modules/@clr/ui/clr-ui.min.css"
+            ]
           }
         }
       }
