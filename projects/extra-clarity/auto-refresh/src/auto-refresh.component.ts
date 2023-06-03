@@ -2,15 +2,9 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrCheckboxModule } from '@clr/angular';
-import {
-  finalize,
-  map,
-  Observable, repeat,
-  takeWhile,
-  timer,
-} from 'rxjs';
+import { finalize, map, Observable, repeat, takeWhile, timer } from 'rxjs';
 
-const DEFAULT_PERIOD_SEC = 60;
+export const DEFAULT_PERIOD_SEC = 60;
 
 @Component({
   selector: 'ec-auto-refresh',
@@ -25,8 +19,10 @@ const DEFAULT_PERIOD_SEC = 60;
   ],
 })
 export class AutoRefreshComponent {
-  @Input() public refreshing: boolean;
+  @Input()
+  public refreshing: boolean;
 
+  /** Refreshing period in seconds */
   @Input()
   public set period(value: number) {
     if (value > 0) {
@@ -48,14 +44,23 @@ export class AutoRefreshComponent {
     }
   }
 
-  @Output() public readonly refresh = new EventEmitter<void>();
-  @Output() public readonly toggle = new EventEmitter<boolean>();
+  /**
+   * `EventEmitter<void>`
+   * */
+  @Output()
+  public readonly refresh = new EventEmitter<void>();
 
-  public readonly toggleControl = new FormControl<boolean>(false, { nonNullable: true });
+  /**
+   * `EventEmitter<boolean>`
+   * */
+  @Output()
+  public readonly toggle = new EventEmitter<boolean>();
 
-  _period = DEFAULT_PERIOD_SEC;
+  protected readonly toggleControl = new FormControl<boolean>(false, { nonNullable: true });
 
-  readonly timer$: Observable<number> = timer(0, 1000)
+  private _period = DEFAULT_PERIOD_SEC;
+
+  protected readonly timer$: Observable<number> = timer(0, 1000)
     .pipe(
       map((seconds) => this._period - seconds),
       takeWhile((seconds) => seconds > 0),
@@ -67,7 +72,7 @@ export class AutoRefreshComponent {
       repeat(),
     );
 
-  public onToggle(): void {
+  protected onToggle(): void {
     this.toggle.emit(this.toggleControl.value);
   }
 }
