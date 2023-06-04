@@ -40,9 +40,17 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
-            "compodoc": true,
-            "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal", "--disablePrivate", "--disableProtected"],
             "port": 6006,
+            "compodoc": true,
+            "compodocArgs": [
+              "-e", "json",
+              "-d", ".",
+              "-p", "tsconfig.doc.json",
+              "--minimal",
+              "--disableLifeCycleHooks",
+              "--disablePrivate",
+              "--disableProtected"
+            ],
             "styles": [
               "node_modules/@clr/ui/clr-ui.min.css"
             ]
@@ -54,7 +62,15 @@
             "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
             "compodoc": true,
-            "compodocArgs": ["-e", "json", "-d", ".", "-p", "tsconfig.doc.json", "--minimal", "--disablePrivate", "--disableProtected"],
+            "compodocArgs": [
+              "-e", "json",
+              "-d", ".",
+              "-p", "tsconfig.doc.json",
+              "--minimal",
+              "--disableLifeCycleHooks",
+              "--disablePrivate",
+              "--disableProtected"
+            ],
             "outputDir": "dist/storybook-static",
             "styles": [
               "node_modules/@clr/ui/clr-ui.min.css"

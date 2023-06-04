@@ -11,7 +11,7 @@
     "lint:fix": "ng lint --fix",
     "storybook": "ng run extra-clarity:storybook",
     "build-storybook": "ng run extra-clarity:build-storybook",
-    "docs:extra-clarity": "npx compodoc -e json -d . -p tsconfig.doc.json --minimal --disablePrivate --disableProtected"
+    "docs:extra-clarity": "npx compodoc -e json -d . -p tsconfig.doc.json --minimal --disableLifeCycleHooks --disablePrivate --disableProtected"
   },
   "private": true,
   "dependencies": {
