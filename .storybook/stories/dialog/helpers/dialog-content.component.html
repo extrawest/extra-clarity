@@ -1,0 +1,37 @@
+<ec-dialog>
+  <div dialog-title>
+    Title
+  </div>
+
+  <div dialog-content>
+    <form clrForm clrLayout="vertical" [formGroup]="exampleForm">
+      <clr-input-container>
+        <label>Input label</label>
+        <input clrInput type="text" formControlName="sample" />
+        <clr-control-helper>
+          Helper text that shows while it is pristine and valid
+        </clr-control-helper>
+        <clr-control-error>
+          Error message that appears after focus is lost and control is invalid
+        </clr-control-error>
+      </clr-input-container>
+    </form>
+  </div>
+
+  <footer dialog-footer>
+    <button
+      dialog-close
+      class="btn btn-outline"
+      type="button"
+    >
+      Cancel
+    </button>
+    <button
+      class="btn btn-primary"
+      type="button"
+      (click)="onConfirm()"
+    >
+      Confirm
+    </button>
+  </footer>
+</ec-dialog>

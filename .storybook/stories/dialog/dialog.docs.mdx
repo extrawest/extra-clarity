@@ -1,0 +1,70 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta
+  title="Components/Dialog/Overview"
+/>
+
+# Dialog
+
+```js
+import { DialogModule } from '@extrawest/extra-clarity/dialog';
+```
+
+### Usage
+
+<br/>
+
+1) Inject DialogService into your component:
+
+```typescript
+private readonly dialogService = inject(DialogService);
+```
+
+2) Invoke `open` method from this service with a custom component to be shown as a dialog body and a config object:
+
+```typescript
+const dialogRef: DialogRef = dialogService.open(CustomDialogComponent, {
+  title: 'Title',
+  size: 'lg',
+});
+```
+
+The `DialogRef` provides a handle on the opened dialog. It can be used to close the dialog and to receive notifications when the dialog has been closed.
+
+```
+dialogRef.afterClosed()
+  .subscribe((result) => {
+    console.log(`Dialog result: ${result}`); // Dialog result: Done!
+  });
+
+...
+
+dialogRef.close('Done!');
+```
+
+### Passing data into the Dialog component
+
+If you want to pass some data into a dialog, you can use the `data` property in the config object:
+
+```typescript
+const dialogRef: DialogRef = dialogService.open(CustomDialogComponent, {
+  data: {
+    name: 'John',
+  },
+});
+```
+
+To access the data from the dialog component, you have to use the `DIALOG_DATA` injection token:
+
+```typescript
+import { Component, Inject } from '@angular/core';
+import { DIALOG_DATA } from '@extrawest/extra-clarity/dialog';
+
+@Component({
+  selector: 'custom-dialog',
+  template: 'passed in {{ data.name }}',
+})
+export class CustomDialogComponent {
+  constructor(@Inject(DIALOG_DATA) public readonly data: { name: string }) {}
+}
+```
