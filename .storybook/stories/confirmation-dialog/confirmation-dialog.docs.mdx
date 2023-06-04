@@ -1,0 +1,33 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta
+  title="Components/Confirmation Dialog/Overview"
+/>
+
+# Confirmation Dialog
+
+```typescript
+import { DialogModule } from '@extrawest/extra-clarity/dialog';
+```
+
+### Usage
+
+<br />
+
+1) Inject DialogService into your component:
+
+```typescript
+private readonly dialogService = inject(DialogService);
+```
+
+2) Invoke `confirm` method from this service with config object:
+
+```typescript
+const dialogRef: DialogRef = dialogService.confirm({
+  title: 'Title',
+  message: 'Lorem ipsum dolor sit amet...',
+  size: 'lg',
+});
+```
+
+The `DialogRef` provides a handle on the opened dialog. It can be used to close the dialog and to receive notifications when the dialog has been closed.
