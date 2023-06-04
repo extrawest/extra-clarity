@@ -5,7 +5,7 @@ import { AutoRefreshComponent, DEFAULT_PERIOD_SEC } from '../../../projects/extr
 type Story = StoryObj<AutoRefreshComponent>;
 
 export default {
-  title: 'Components/Auto refresh',
+  title: 'Components/Auto Refresh',
   component: AutoRefreshComponent,
   argTypes: {
     period: {
@@ -32,7 +32,7 @@ export default {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const AutoRefreshStory: Story = {
-  name: 'Auto refresh',
+  name: 'Auto Refresh',
   args: {
     period: 5,
     blocked: false,
