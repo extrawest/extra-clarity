@@ -14,9 +14,10 @@ export class CardComponent {
   @Input() loading: boolean;
   @Input() error: HttpErrorResponse | null;
 
+  /** `EventEmitter<void>` */
   @Output() readonly reload = new EventEmitter<void>();
 
-  onReload(): void {
+  protected onReload(): void {
     this.reload.emit();
   }
 }

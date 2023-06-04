@@ -1,0 +1,34 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta
+  title="Components/Card/Overview"
+/>
+
+# Card
+
+A card presents high-level information and can guide the user toward related actions and details.
+
+<br/>
+
+### Import module
+
+```typescript
+import { CardModule } from "@extrawest/extra-clarity/card";
+```
+
+### Code block
+
+```html
+<ec-card
+  [title]="title"
+  [empty]="empty"
+  [loading]="loading"
+  [error]="error"
+>
+  ...
+
+  <ec-card-footer>
+    ...
+  </ec-card-footer>
+</ec-card>
+```
