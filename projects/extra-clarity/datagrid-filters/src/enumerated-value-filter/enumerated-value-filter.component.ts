@@ -13,7 +13,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { FilterState } from '../interfaces/filter-state.interface';
 
-const DEFAULT_MIN_LENGTH = 200;
+export const DEFAULT_MIN_WIDTH_PX = 200;
 
 export interface EnumFilterValue {
   label: string | number;
@@ -35,7 +35,7 @@ export interface EnumFilterValue {
 })
 export class EnumeratedValueFilterComponent<T extends { [key: string]: string | number }>
 implements ClrDatagridFilterInterface<T, FilterState<string | string[]>>, OnInit {
-  @Input() public width = DEFAULT_MIN_LENGTH;
+  @Input() public width = DEFAULT_MIN_WIDTH_PX;
   @Input() public propertyKey: string;
   @Input() public propertyDisplayName?: string;
   @Input() public serverDriven = true;
