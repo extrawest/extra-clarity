@@ -15,10 +15,10 @@ import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } fr
 
 import { FilterState } from '../interfaces/filter-state.interface';
 
-const DEFAULT_MIN_LENGTH = 1;
-const DEFAULT_DEBOUNCE_TIME_MS = 300;
-const DEFAULT_PLACEHOLDER = 'Type to search...';
-const DEFAULT_CONTAINER_WIDTH_PX = 200;
+export const DEFAULT_MIN_LENGTH = 1;
+export const DEFAULT_DEBOUNCE_TIME_MS = 300;
+export const DEFAULT_PLACEHOLDER = 'Type to search...';
+export const DEFAULT_CONTAINER_WIDTH_PX = 200;
 
 @Component({
   selector: 'ec-partial-string-filter',
