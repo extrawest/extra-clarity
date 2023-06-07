@@ -1,0 +1,93 @@
+
+name: Build & publish extra-clarity and storybook
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build-extra-clarity:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        id: node-modules-cache
+        with:
+          path: './node_modules'
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
+      - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+      - uses: actions/cache@v3
+        id: lib-build-cache
+        with:
+          path: './dist/extra-clarity'
+          key: ${{ runner.os }}-lib-build
+      - run: npm run build:extra-clarity
+
+
+  publish-package-to-npm:
+    needs: [build-extra-clarity]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - uses: actions/cache@v3
+        id: lib-build-cache
+        with:
+          path: './dist/extra-clarity'
+          key: ${{ runner.os }}-lib-build
+      - uses: dorny/paths-filter@v2
+        id: check-package-json
+        with:
+          filters: |
+            changed:
+              - 'projects/extra-clarity/package-json'
+      - if: ${{ steps.check-package-json.outputs.changed != 'true' }}
+        run: echo "package.json was not changed - the package will not be published"
+      - if: ${{ steps.lib-build-cache.outputs.cache-hit != 'true' }}
+        run: echo "The cached build is not available from the initial step; please check the logs"
+      - if: ${{ steps.check-package-json.outputs.changed == 'true' && steps.lib-build-cache.outputs.cache-hit != 'true' }}
+        run: npm publish
+        working-directory: dist/extra-clarity
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+
+  build-publish-storybook:
+    needs: [build-extra-clarity]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        id: node-modules-cache
+        with:
+          path: './node_modules'
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
+      - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+      - uses: actions/cache@v3
+        id: lib-build-cache
+        with:
+          path: './dist/extra-clarity'
+          key: ${{ runner.os }}-lib-build
+      - if: ${{ steps.lib-build-cache.outputs.cache-hit != 'true' }}
+        run: npm run build:extra-clarity
+      - run: npm run build-storybook
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EXTRACLARITY }}
+          projectId: storybook-deploy
+          target: storybook-hosting
+          channelId: live
