@@ -67,12 +67,15 @@ implements ClrDatagridFilterInterface<T, FilterState<E[]>>, OnChanges, OnDestroy
 
   getSelectedAmountTotal(): string {
     const selected = this.selectedValues.size;
+    if (selected === 0) {
+      return 'none';
+    }
     const total = this.options.reduce((sum, group) => sum + group.items.length, 0);
-    return (selected === 0) ? 'none' : `${selected} out of ${total}`;
+    return `${selected} out of ${total}`;
   }
 
   getSelectedAmountInGroup(group: EnumGroupFilterOption<E>): string {
-    const selected = group.items.filter(item => this.selectedValues.has(item.value as E)).length;
+    const selected = group.items.filter(item => this.selectedValues.has(item.value)).length;
     const total = group.items.length;
     return `${selected}/${total}`;
   }
@@ -169,13 +172,10 @@ implements ClrDatagridFilterInterface<T, FilterState<E[]>>, OnChanges, OnDestroy
   }
 
   private checkInputsValidity(): string[] | undefined {
-    const inputsErrors: string[] = [];
-
-    if (!this.propertyKey) {
-      inputsErrors.push('[propertyKey] is required');
+    if (this.propertyKey) {
+      return;
     }
-
-    return (inputsErrors.length > 0) ? inputsErrors : undefined;
+    return ['[propertyKey] is required'];
   }
 
   private forceSelection(selectValues: E[] | null): void {
