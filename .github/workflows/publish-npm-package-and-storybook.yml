@@ -100,7 +100,7 @@ jobs:
           name: ${{ env.LIB_ARTIFACT_NAME }}
           path: ${{ env.LIB_DIST_PATH }}
       - name: Build storybook
-        run: npm run ${{ env.CMD_BUILD_STORYBOOK }}
+        run: npm run ${{ env.SCRIPT_BUILD_STORYBOOK }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
