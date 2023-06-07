@@ -7,14 +7,24 @@ on:
       - main
 
 env:
-  LIB_ARTIFACT_NAME: lib-build-artifact
-  LIB_DIST: dist/extra-clarity
+  # artifact names (available on the github actions page after completing the workflow)
+  LIB_ARTIFACT_NAME: extra-clarity-build
+  # paths to specific folders & files
+  LIB_DIST_PATH: dist/extra-clarity
   LIB_PACKAGE_JSON: projects/extra-clarity/package.json
-  MAIN_PACKAGE_JSON: package-lock.json
-  NODE_MODULES: node_modules
+  MAIN_PACKAGE_LOCK_JSON: package-lock.json
+  NODE_MODULES_PATH: node_modules
+  # settings for publishing the package
+  NODE_VER: 16
+  NPM_REGISTRY: https://registry.npmjs.org/
+  # firebase settings from '.firebaserc' & 'firebase.json'
+  SB_FIREBASE_PROJECT_ID: storybook-deploy
+  SB_FIREBASE_TARGET_HOSTING: storybook-hosting
+  # script names from the main 'package.json' to be called with 'npm run'
+  SCRIPT_BUILD_LIB: build:extra-clarity
+  SCRIPT_BUILD_STORYBOOK: build-storybook
 
 jobs:
-
   build-extra-clarity:
     runs-on: ubuntu-latest
     permissions:
@@ -24,17 +34,17 @@ jobs:
       - uses: actions/cache@v3
         id: node-modules-cache
         with:
-          path: ${{ env.NODE_MODULES }}
-          key: node-modules-${{ runner.os }}-${{ hashFiles(env.MAIN_PACKAGE_JSON) }}
+          path: ${{ env.NODE_MODULES_PATH }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles(env.MAIN_PACKAGE_LOCK_JSON) }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
-      - run: npm run build:extra-clarity
+      - name: Build extra-clarity
+        run: npm run ${{ env.SCRIPT_BUILD_LIB }}
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
-          path: ${{ env.LIB_DIST }}
+          path: ${{ env.LIB_DIST_PATH }}
           if-no-files-found: error
-
 
   check-if-package-json-changed:
     runs-on: ubuntu-latest
@@ -51,7 +61,6 @@ jobs:
             changed:
               - ${{ env.LIB_PACKAGE_JSON }}
 
-
   publish-package-to-npm:
     needs: [build-extra-clarity, check-if-package-json-changed]
     if: ${{ needs.check-if-package-json-changed.outputs.package-json-changed == 'true' }}
@@ -61,17 +70,16 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
+          node-version: ${{ env.NODE_VER }}
+          registry-url: ${{ env.NPM_REGISTRY }}
       - uses: actions/download-artifact@v3
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
-          path: ${{ env.LIB_DIST }}
+          path: ${{ env.LIB_DIST_PATH }}
       - run: npm publish
-        working-directory: dist/extra-clarity
+        working-directory: ${{ env.LIB_DIST_PATH }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
 
   build-and-publish-storybook:
     needs: [build-extra-clarity]
@@ -83,19 +91,20 @@ jobs:
       - uses: actions/cache@v3
         id: node-modules-cache
         with:
-          path: ${{ env.NODE_MODULES }}
-          key: node-modules-${{ runner.os }}-${{ hashFiles(env.MAIN_PACKAGE_JSON) }}
+          path: ${{ env.NODE_MODULES_PATH }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles(env.MAIN_PACKAGE_LOCK_JSON) }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
       - uses: actions/download-artifact@v3
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
-          path: ${{ env.LIB_DIST }}
-      - run: npm run build-storybook
+          path: ${{ env.LIB_DIST_PATH }}
+      - name: Build storybook
+        run: npm run ${{ env.CMD_BUILD_STORYBOOK }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.STORYBOOK_FIREBASE_SERVICE_ACCOUNT }}
-          projectId: storybook-deploy
-          target: storybook-hosting
+          projectId: ${{ env.SB_FIREBASE_PROJECT_ID }}
+          target: ${{ env.SB_FIREBASE_TARGET_HOSTING }}
           channelId: live
