@@ -18,19 +18,35 @@ jobs:
         id: node-modules-cache
         with:
           path: './node_modules'
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
       - uses: actions/cache@v3
         id: lib-build-cache
         with:
           path: './dist/extra-clarity'
-          key: ${{ runner.os }}-lib-build
+          key: lib-build-${{ github.sha }}
       - run: npm run build:extra-clarity
 
 
+  check-if-package-json-changed:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      package-json-changed: ${{ steps.check-package-json.outputs.changed }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: check-package-json
+        with:
+          filters: |
+            changed:
+              - 'projects/extra-clarity/package.json'
+
+
   publish-package-to-npm:
-    needs: [build-extra-clarity]
+    needs: [build-extra-clarity, check-if-package-json-changed]
+    if: ${{ needs.check-if-package-json-changed.outputs.package-json-changed == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -44,22 +60,11 @@ jobs:
         id: lib-build-cache
         with:
           path: './dist/extra-clarity'
-          key: ${{ runner.os }}-lib-build
-      - uses: dorny/paths-filter@v2
-        id: check-package-json
-        with:
-          filters: |
-            changed:
-              - 'projects/extra-clarity/package-json'
-      - if: ${{ steps.check-package-json.outputs.changed != 'true' }}
-        run: echo "package.json was not changed - the package will not be published"
-      - if: ${{ steps.lib-build-cache.outputs.cache-hit != 'true' }}
-        run: echo "The cached build is not available from the initial step; please check the logs"
-      - if: ${{ steps.check-package-json.outputs.changed == 'true' && steps.lib-build-cache.outputs.cache-hit != 'true' }}
-        run: npm publish
+          key: lib-build-${{ github.sha }}
+      - run: npm publish
         working-directory: dist/extra-clarity
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
   build-publish-storybook:
@@ -73,14 +78,14 @@ jobs:
         id: node-modules-cache
         with:
           path: './node_modules'
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
       - uses: actions/cache@v3
         id: lib-build-cache
         with:
           path: './dist/extra-clarity'
-          key: ${{ runner.os }}-lib-build
+          key: lib-build-${{ github.sha }}
       - if: ${{ steps.lib-build-cache.outputs.cache-hit != 'true' }}
         run: npm run build:extra-clarity
       - run: npm run build-storybook
