@@ -21,7 +21,7 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - name: Install dependencies
-        run: npm i
+        run: npm ci
       - name: Build libraries
         run: npm run build:extra-clarity
       - name: Publish libraries to NPM
@@ -29,3 +29,20 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+  deploy-storybook:
+    needs: [publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm ci
+      - run: npm run build-storybook
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EXTRACLARITY }}
+          projectId: storybook-deploy
+          channelId: storybook-hosting

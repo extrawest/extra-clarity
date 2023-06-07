@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "p---extraclarity",
+    "storybook-deploy": "p---extraclarity"
+  },
+  "targets": {
+    "p---extraclarity": {
+      "hosting": {
+        "storybook-hosting": [
+          "extra-clarity-docs"
+        ]
+      }
+    }
+  }
+}
