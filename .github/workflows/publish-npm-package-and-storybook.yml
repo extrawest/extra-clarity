@@ -7,10 +7,10 @@ on:
       - main
 
 env:
-  LIB_ARTIFACT_NAME: 'lib-build-artifact'
-  LIB_DIST: 'dist/extra-clarity'
-  LIB_PACKAGE_JSON: 'projects/extra-clarity/package.json'
-  NODE_MODULES: 'node_modules'
+  LIB_ARTIFACT_NAME: lib-build-artifact
+  LIB_DIST: dist/extra-clarity
+  LIB_PACKAGE_JSON: projects/extra-clarity/package.json
+  NODE_MODULES: node_modules
 
 jobs:
 
