@@ -61,13 +61,14 @@ jobs:
         with:
           path: './dist/extra-clarity'
           key: lib-build-${{ github.sha }}
+          fail-on-cache-miss: true
       - run: npm publish
         working-directory: dist/extra-clarity
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
-  build-publish-storybook:
+  build-and-publish-storybook:
     needs: [build-extra-clarity]
     runs-on: ubuntu-latest
     permissions:
