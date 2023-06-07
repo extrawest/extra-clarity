@@ -10,6 +10,7 @@ env:
   LIB_ARTIFACT_NAME: lib-build-artifact
   LIB_DIST: dist/extra-clarity
   LIB_PACKAGE_JSON: projects/extra-clarity/package.json
+  MAIN_PACKAGE_JSON: package-lock.json
   NODE_MODULES: node_modules
 
 jobs:
@@ -24,7 +25,7 @@ jobs:
         id: node-modules-cache
         with:
           path: ${{ env.NODE_MODULES }}
-          key: node-modules-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles(env.MAIN_PACKAGE_JSON) }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
       - run: npm run build:extra-clarity
@@ -83,7 +84,7 @@ jobs:
         id: node-modules-cache
         with:
           path: ${{ env.NODE_MODULES }}
-          key: node-modules-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles(env.MAIN_PACKAGE_JSON) }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
       - uses: actions/download-artifact@v3
@@ -94,7 +95,7 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EXTRACLARITY }}
+          firebaseServiceAccount: ${{ secrets.STORYBOOK_FIREBASE_SERVICE_ACCOUNT }}
           projectId: storybook-deploy
           target: storybook-hosting
           channelId: live
