@@ -27,12 +27,12 @@ jobs:
           key: node-modules-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
+      - run: npm run build:extra-clarity
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
           path: ${{ env.LIB_DIST }}
           if-no-files-found: error
-      - run: npm run build:extra-clarity
 
 
   check-if-package-json-changed:
