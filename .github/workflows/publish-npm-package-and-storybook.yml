@@ -6,6 +6,12 @@ on:
     branches:
       - main
 
+env:
+  LIB_ARTIFACT_NAME: 'lib-build-artifact'
+  LIB_DIST: 'dist/extra-clarity'
+  LIB_PACKAGE_JSON: 'projects/extra-clarity/package.json'
+  NODE_MODULES: 'node_modules'
+
 jobs:
 
   build-extra-clarity:
@@ -17,15 +23,15 @@ jobs:
       - uses: actions/cache@v3
         id: node-modules-cache
         with:
-          path: './node_modules'
+          path: $NODE_MODULES
           key: node-modules-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
-      - uses: actions/cache@v3
-        id: lib-build-cache
+      - uses: actions/upload-artifact@v3
         with:
-          path: './dist/extra-clarity'
-          key: lib-build-${{ github.sha }}
+          name: $LIB_ARTIFACT_NAME
+          path: $LIB_DIST
+          if-no-files-found: error
       - run: npm run build:extra-clarity
 
 
@@ -42,7 +48,7 @@ jobs:
         with:
           filters: |
             changed:
-              - 'projects/extra-clarity/package.json'
+              - $LIB_PACKAGE_JSON
 
 
   publish-package-to-npm:
@@ -56,12 +62,10 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - uses: actions/cache@v3
-        id: lib-build-cache
+      - uses: actions/download-artifact@v3
         with:
-          path: './dist/extra-clarity'
-          key: lib-build-${{ github.sha }}
-          fail-on-cache-miss: true
+          name: $LIB_ARTIFACT_NAME
+          path: $LIB_DIST
       - run: npm publish
         working-directory: dist/extra-clarity
         env:
@@ -78,17 +82,14 @@ jobs:
       - uses: actions/cache@v3
         id: node-modules-cache
         with:
-          path: './node_modules'
+          path: $NODE_MODULES
           key: node-modules-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
-      - uses: actions/cache@v3
-        id: lib-build-cache
+      - uses: actions/download-artifact@v3
         with:
-          path: './dist/extra-clarity'
-          key: lib-build-${{ github.sha }}
-      - if: ${{ steps.lib-build-cache.outputs.cache-hit != 'true' }}
-        run: npm run build:extra-clarity
+          name: $LIB_ARTIFACT_NAME
+          path: $LIB_DIST
       - run: npm run build-storybook
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
