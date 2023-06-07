@@ -23,14 +23,14 @@ jobs:
       - uses: actions/cache@v3
         id: node-modules-cache
         with:
-          path: $NODE_MODULES
+          path: ${{ env.NODE_MODULES }}
           key: node-modules-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
       - uses: actions/upload-artifact@v3
         with:
-          name: $LIB_ARTIFACT_NAME
-          path: $LIB_DIST
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST }}
           if-no-files-found: error
       - run: npm run build:extra-clarity
 
@@ -48,7 +48,7 @@ jobs:
         with:
           filters: |
             changed:
-              - $LIB_PACKAGE_JSON
+              - ${{ env.LIB_PACKAGE_JSON }}
 
 
   publish-package-to-npm:
@@ -64,8 +64,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - uses: actions/download-artifact@v3
         with:
-          name: $LIB_ARTIFACT_NAME
-          path: $LIB_DIST
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST }}
       - run: npm publish
         working-directory: dist/extra-clarity
         env:
@@ -82,14 +82,14 @@ jobs:
       - uses: actions/cache@v3
         id: node-modules-cache
         with:
-          path: $NODE_MODULES
+          path: ${{ env.NODE_MODULES }}
           key: node-modules-${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
       - uses: actions/download-artifact@v3
         with:
-          name: $LIB_ARTIFACT_NAME
-          path: $LIB_DIST
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST }}
       - run: npm run build-storybook
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
