@@ -6,15 +6,22 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
-  ClrDatagridFilter, ClrDatagridFilterInterface, ClrInput, ClrInputModule, ClrPopoverToggleService,
+  ClrDatagridFilter,
+  ClrDatagridFilterInterface,
+  ClrInput,
+  ClrInputModule,
+  ClrPopoverToggleService,
 } from '@clr/angular';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
@@ -22,11 +29,13 @@ import { FilterState } from '../interfaces/filter-state.interface';
 
 import { StringValidatorEnum, uuidValidator, ValidationErrorEnum } from './datagrid-string-filter.utils';
 
-const DEFAULT_CONTAINER_WIDTH_PX = 250;
-const DEFAULT_DEBOUNCE_TIME_MS = 300;
-const DEFAULT_MIN_LENGTH = 1;
-const DEFAULT_MAX_LENGTH = 200;
-const DEFAULT_PLACEHOLDER = 'Type to search...';
+export const STRING_FILTER_DEFAULTS = {
+  debounceTimeMs: 300,
+  maxLength: 200,
+  minLength: 1,
+  placeholder: 'Type to search...',
+  widthPx: 250,
+} as const;
 
 @Component({
   selector: 'ec-datagrid-string-filter',
@@ -40,58 +49,184 @@ const DEFAULT_PLACEHOLDER = 'Type to search...';
     ClrInputModule,
   ],
 })
-export class DatagridStringFilterComponent<T>
-implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, OnDestroy, OnInit {
-  @Input() set value(newValue: string) {
-    this.updateFormControlValue(newValue);
-  }
+export class DatagridStringFilterComponent<T = unknown>
+implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, OnChanges, OnDestroy, OnInit {
+  /**
+   * Debounce delay for the input field in milliseconds, i.e. a delay between entering the last character and assigning
+   * the entered value to the filterValue. Ignored on clearing the input field.
+   */
+  @Input()
+  public debounceTimeMs: number = STRING_FILTER_DEFAULTS.debounceTimeMs;
 
-  @Input() debounceTimeMs: number = DEFAULT_DEBOUNCE_TIME_MS;
-  @Input() maxLength: number = DEFAULT_MAX_LENGTH;
-  @Input() minLength: number = DEFAULT_MIN_LENGTH;
-  @Input() pattern?: string | RegExp;
-  @Input() patternErrMsg?: string;
-  @Input() placeholder: string = DEFAULT_PLACEHOLDER;
-  @Input() propertyDisplayName?: string;
-  @Input() propertyKey = '';
-  @Input() serverDriven = true;
-  @Input() validator?: StringValidatorEnum;
-  @Input() widthPx: number = DEFAULT_CONTAINER_WIDTH_PX;
+  /**
+   * Max length validation for the filter's value.
+   *
+   * Utilizes `Validators.maxlength` from `@angular/forms`.
+   *
+   * This input is read only on component initialization.
+   * */
+  @Input()
+  public maxLength: number = STRING_FILTER_DEFAULTS.maxLength;
 
-  /* for client-driven data-grids only */
-  @Input() fullMatch = false;
+  /**
+   * Min length validation for the filter's value.
+   * */
+  @Input()
+  public minLength: number = STRING_FILTER_DEFAULTS.minLength;
 
-  @Output() filterValueChanged = new EventEmitter<FilterState<string>>();
+  /**
+   * Pattern for a validator that requires the entered value to match a regex pattern.
+   *
+   * Utilizes `Validators.pattern` from `@angular/forms`.
+   *
+   * Requires another input `[validator]="'pattern'"`.
+   *
+   * This input is read only on component initialization.
+   */
+  @Input()
+  public pattern?: string | RegExp;
 
-  @ViewChild('inputElement') inputRef?: ElementRef<HTMLInputElement>;
-  @ViewChild(ClrInput) clrInput?: ClrInput;
+  /**
+   * Error message shown under the input field if the entered value is invalid against the `pattern` validator
+   * */
+  @Input()
+  public patternErrMsg?: string;
 
-  configErrors: string[] = [];
-  filterValue = '';
-  readonly formControl = new FormControl<string>('', { nonNullable: true });
+  /**
+   * Placeholder for the empty input field.
+   * */
+  @Input()
+  public placeholder: string = STRING_FILTER_DEFAULTS.placeholder;
+
+  /**
+   * Free-from identifier of a filtering field to be shown in the helper text under the input field.
+   *
+   * If not set, the `[propertyKey]` value will be used instead.
+   * */
+  @Input()
+  public propertyDisplayName?: string;
+
+  /**
+   * When `[serverDriven]="true"`: a free-form identifier defined by a developer, that will be shown as `property`
+   * in the output state to help identify the filter's state amidst another filters;
+   *
+   * When `[serverDriven]="false"`: must be equal to the name of a field in the object passed to the `[clrDgItem]`
+   * input on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+   *
+   * @required
+   */
+  @Input()
+  public propertyKey = '';
+
+  /**
+   * Is the filter and the datagrid server-driven? If `false`, then filtering is processed by the filter's `accepts()`
+   * method, otherwise - not by the filter, but externally.
+   *
+   * @required
+   */
+  @Input()
+  public serverDriven = true;
+
+  /**
+   * Apply an additional validator for the entered value.
+   *
+   * Options:
+   *
+   * `'email'`: apply `Validators.email` from `@angular/forms`.
+   *
+   * `'pattern'`: apply `Validators.pattern` from `@angular/forms`;
+   * the regular expression must be set via the `[pattern]` input.
+   *
+   * `'uuid'`: test the entered value against a predefined regular expression to allow only uuid-like strings.
+   *
+   * This input is read only on component initialization.
+   */
+  @Input()
+  public validator?: StringValidatorEnum;
+
+  /**
+   * Set a string as the actual filter's value.
+   * If the provided string is invalid, the actual filter's value will be reset to the default state (an empty string).
+   *
+   * Reacts only to changes (processed by ngOnChanges). `undefined` is ignored
+   * */
+  @Input()
+  public value?: string;
+
+  /**
+   * Width in pixels of the filter's container (`div`-element)
+   * */
+  @Input()
+  public widthPx: number = STRING_FILTER_DEFAULTS.widthPx;
+
+  /**
+   * Affects only client-driven datagrids;
+   *
+   * `false` = search for partial and full matches
+   *
+   * `true` = search for a full match only
+   * */
+  @Input()
+  public fullMatch = false;
+
+  /**
+   * Emits the filter's state object on every change of the internal filter value.
+   * The state object contains the name of a `property` to filter by, defined by the `[propertyKey]` input,
+   * and the actual filter `value` as a string.
+   *
+   * If the filter is in the default state (an empty string), then the state object contains `value` as `undefined`.
+   *
+   * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
+   * for all non-default filter values.
+   *
+   * `EventEmitter<FilterState<string>>`
+   */
+  @Output()
+  public filterValueChanged = new EventEmitter<FilterState<string>>();
+
+  @ViewChild('inputElement')
+  protected inputElementRef?: ElementRef<HTMLInputElement>;
+
+  @ViewChild(ClrInput)
+  protected clrInputRef?: ClrInput;
+
+  protected _filterValue = '';
+  protected configErrors: string[] = [];
+  protected readonly formControl = new FormControl<string>('', { nonNullable: true });
+
+  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   readonly changes = new Subject<void>();
+
   private readonly destroy$ = new Subject<void>();
 
-  constructor(
-    private changeDetectionRef: ChangeDetectorRef,
-    private clrDatagridFilterContainer: ClrDatagridFilter,
-    private clrPopoverToggleService: ClrPopoverToggleService,
-  ) {
-    this.clrDatagridFilterContainer.setFilter(this);
+  private readonly changeDetectionRef = inject(ChangeDetectorRef);
+  private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
+  private readonly clrPopoverToggleService = inject(ClrPopoverToggleService, { optional: true });
+
+  constructor() {
+    this.clrDatagridFilterContainer?.setFilter(this);
   }
 
-  get isValueTooShort(): boolean {
-    return this.formControl.value.length < this.minLength;
+  /**
+   * Get the actual filter value as a string
+   * */
+  get filterValue(): string {
+    return this._filterValue;
   }
 
+  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   get state(): FilterState<string> {
     return {
       property: this.propertyKey,
-      value: this.filterValue || undefined,
+      value: this._filterValue || undefined,
     };
   }
 
-  get validationErrorMessage(): string | undefined {
+  protected get isValueTooShort(): boolean {
+    return this.formControl.value.length < this.minLength;
+  }
+
+  protected get validationErrorMessage(): string | undefined {
     if (this.formControl.valid) {
       return;
     }
@@ -121,12 +256,9 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
     return 'The entered value is invalid';
   }
 
+  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   accepts(item: T): boolean {
-    if (this.serverDriven) {
-      return false;
-    }
-
-    if (!item || typeof item !== 'object') {
+    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
       return false;
     }
 
@@ -137,31 +269,38 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
     }
 
     const propertyValueInLowerCase = propertyValue.toLowerCase();
-    const filterValueInLowerCase = this.filterValue.toLowerCase();
+    const filterValueInLowerCase = this._filterValue.toLowerCase();
 
     return this.fullMatch
       ? propertyValueInLowerCase === filterValueInLowerCase
       : propertyValueInLowerCase.includes(filterValueInLowerCase);
   }
 
+  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   isActive(): boolean {
-    return !!this.propertyKey && !!this.filterValue;
+    return !!this.propertyKey && !!this._filterValue;
   }
 
   ngAfterViewInit(): void {
-    this.clrPopoverToggleService.openChange
+    this.clrPopoverToggleService?.openChange
       .pipe(takeUntil(this.destroy$))
       .subscribe((isOpen: boolean) => {
         if (!isOpen) {
           return;
         }
-        if (this.formControl.value !== this.filterValue) {
-          this.updateFormControlValue(this.filterValue);
-          this.clrInput?.triggerValidation();
+        if (this.formControl.value !== this._filterValue) {
+          this.updateFormControlValue(this._filterValue);
+          this.clrInputRef?.triggerValidation();
           this.changeDetectionRef.markForCheck();
         }
         setTimeout(() => this.focusInputElement());
       });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (('value' in changes) && (typeof this.value === 'string') && this.propertyKey) {
+      this.updateFormControlValue(this.value);
+    }
   }
 
   ngOnDestroy(): void {
@@ -183,8 +322,15 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
     this.formControl.markAsTouched();
   }
 
-  onReset(): void {
+  /**
+   * Reset the filter to the default state (an empty string)
+   * */
+  resetToDefault(): void {
     this.updateFormControlValue('');
+  }
+
+  protected onReset(): void {
+    this.resetToDefault();
     this.focusInputElement();
   }
 
@@ -208,17 +354,17 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
       inputsErrors.push(`[maxLength] must be less than or equal to [minLength] (${this.maxLength} < ${this.minLength})`);
     }
     if (!this.pattern && this.validator === StringValidatorEnum.PATTERN) {
-      inputsErrors.push(`'[pattern] is required as [validator]="'pattern'"`);
+      inputsErrors.push(`'[pattern] is required when [validator]="'pattern'"`);
     }
     if (this.pattern && this.validator !== StringValidatorEnum.PATTERN) {
-      inputsErrors.push(`[pattern] is provided, but [validator] is not equal to 'pattern'`);
+      inputsErrors.push(`[pattern] is provided, but [validator] is not set to 'pattern'`);
     }
 
     return inputsErrors;
   }
 
   private focusInputElement(): void {
-    this.inputRef?.nativeElement.focus();
+    this.inputElementRef?.nativeElement.focus();
   }
 
   private observeInputChanges(): void {
@@ -256,8 +402,8 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   }
 
   private updateFilterValue(value: string): void {
-    if (value !== this.filterValue) {
-      this.filterValue = value;
+    if (value !== this._filterValue) {
+      this._filterValue = value;
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
