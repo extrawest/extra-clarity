@@ -15,6 +15,7 @@
   ],
   "include": [
     "./stories/**/*",
+    "./helpers/**/*.ts",
   ],
   "files": [
     "./preview.ts",
