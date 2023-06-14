@@ -1,0 +1,127 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+
+import * as StringFilterStories from './datagrid-string-filter.stories';
+
+<style>
+{`
+  h3 {
+    margin: 36px 0 12px !important;
+    font-size: 20px !important;
+  }
+
+  p {
+    margin-top: 12px !important;
+  }
+
+  .docblock-argstable-body p {
+    margin: 0 !important;
+  }
+
+  .docblock-argstable {
+    margin-top: 0 !important;
+  }
+
+  .docblock-source {
+    margin: 12px 0 18px !important;
+  }
+`}
+</style>
+
+<Meta
+  of={StringFilterStories}
+  name="Overview"
+/>
+
+## Datagrid String Filter
+
+> **Standalone component**: yes
+
+```typescript
+import { DatagridStringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
+```
+```html
+<ec-datagrid-string-filter />
+```
+```html
+<clr-datagrid>
+  ...
+  <clr-dg-column>
+    Station ID
+    <clr-dg-filter>
+      <ec-datagrid-string-filter [propertyKey]="'stationId'" />
+    </clr-dg-filter>
+  </clr-dg-column>
+  ...
+</clr-datagrid>
+```
+
+### Description
+
+This component is a custom filter implementation for filtering datagrids by the selected field (column) with string
+literals.
+
+The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
+datagrids.
+
+When using as client-driven, the component provides only case-insensitive filtering by transforming
+the entered value and a cell content to lower case strings before comparing them.
+
+The default (inactive) filter's value is an empty string.
+
+The component's output `(filterValueChanged)` emits a new filter state every time when the filter gets a new valid value.
+The same state is also emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component for all non-default
+filter values.
+
+The output state is an object, where `property` is the name of a field to filter by, and `value` is the actual string to
+filter with:
+```typescript
+// interface FilterState<string>
+{
+  property: string | number;
+  value: string | undefined;
+}
+```
+When the filter is in the default state, the output state contains `value` as `undefined`.
+
+The value entered in the input field is accepted as the actual filter value only if it's valid.
+There are multiple inputs for setting up validation for the filter, please refer to the [API](#api) section for more
+details.
+
+The actual filter's value also may be set programmatically via the `[value]` input.
+If a new value passed to this input is invalid, then the filter will be reset to the default state (an empty string).
+
+The actual filter value may be read using the getters `filterValue: string` and `state.value: string | undefined`:
+
+```html
+...
+<ec-datagrid-string-filter #filterByName>
+...
+<span>{{ filterByName.filterValue }}</span>
+<span>{{ filterByName.state.value }}</span>
+```
+
+The only required inputs are `[propertyKey]` and `[serverDriven]`:
+* for server-driven datagrids `propertyKey` is a free-form identifier defined by a developer, that will be used as
+the `property` value in the output state to help identify the filter's state amidst another filters;
+* for client-driven datagrids `propertyKey` must be equal to the name of a field in the object passed to
+the `[clrDgItem]` input on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+
+The public method `resetToDefault()` resets the filter's state to default.
+
+The component uses `ClrPopoverToggleService` internally (as an optional injector provided by the `<clr-dg-column>` parent
+component) to react to opening the filter: to focus the input field and reset an invalid entered value to the last
+valid value. That's why we recommend to use the filter as nested in the `<clr-dg-column>` component (see code examples
+on this page).
+
+### Example
+
+<Canvas of={StringFilterStories.DocsExampleStory} />
+
+### Stories
+
+* [A string filter within a client-driven datagrid](/story/components-datagrid-filters-string-filter--within-datagrid-story)
+* [A string filter in isolation](/story/components-datagrid-filters-string-filter--filter-itself-story)
+
+### API
+
+<ArgTypes sort="requiredFirst" />
