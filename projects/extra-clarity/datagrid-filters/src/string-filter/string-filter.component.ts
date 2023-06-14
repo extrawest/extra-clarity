@@ -27,7 +27,7 @@ import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
 import { FilterState } from '../interfaces/filter-state.interface';
 
-import { StringValidatorEnum, uuidValidator, ValidationErrorEnum } from './datagrid-string-filter.utils';
+import { StringValidatorEnum, uuidValidator, ValidationErrorEnum } from './string-filter.utils';
 
 export const STRING_FILTER_DEFAULTS = {
   debounceTimeMs: 300,
@@ -38,9 +38,9 @@ export const STRING_FILTER_DEFAULTS = {
 } as const;
 
 @Component({
-  selector: 'ec-datagrid-string-filter',
-  templateUrl: './datagrid-string-filter.component.html',
-  styleUrls: ['./datagrid-string-filter.component.scss'],
+  selector: 'ec-string-filter',
+  templateUrl: './string-filter.component.html',
+  styleUrls: ['./string-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -49,7 +49,7 @@ export const STRING_FILTER_DEFAULTS = {
     ClrInputModule,
   ],
 })
-export class DatagridStringFilterComponent<T = unknown>
+export class StringFilterComponent<T = unknown>
 implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * Debounce delay for the input field in milliseconds, i.e. a delay between entering the last character and assigning
