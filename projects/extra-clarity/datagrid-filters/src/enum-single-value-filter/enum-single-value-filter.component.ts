@@ -12,9 +12,9 @@ const DEFAULT_MAX_HEIGHT_PX = 300;
 const DEFAULT_WIDTH_PX = 200;
 
 @Component({
-  selector: 'ec-enum-single-filter',
-  templateUrl: './enum-single-filter.component.html',
-  styleUrls: ['./enum-single-filter.component.scss'],
+  selector: 'ec-enum-single-value-filter',
+  templateUrl: './enum-single-value-filter.component.html',
+  styleUrls: ['./enum-single-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -23,7 +23,7 @@ const DEFAULT_WIDTH_PX = 200;
     ClrCheckboxModule,
   ],
 })
-export class EnumSingleFilterComponent<T, E>
+export class EnumSingleValueFilterComponent<T extends object = {}, E = unknown>
 implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, OnInit {
   @Input() heightPx: number = DEFAULT_MAX_HEIGHT_PX;
   @Input() widthPx: number = DEFAULT_WIDTH_PX;
