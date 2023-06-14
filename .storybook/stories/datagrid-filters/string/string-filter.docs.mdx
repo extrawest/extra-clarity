@@ -1,6 +1,6 @@
 import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
 
-import * as StringFilterStories from './datagrid-string-filter.stories';
+import * as StringFilterStories from './string-filter.stories';
 import { docsStylePatch } from '../../../helpers/styles';
 
 <style>
@@ -12,15 +12,15 @@ import { docsStylePatch } from '../../../helpers/styles';
   name="Overview"
 />
 
-## Datagrid String Filter
+## String Filter
 
 > **Standalone component**: yes
 
 ```typescript
-import { DatagridStringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
+import { StringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
 ```
 ```html
-<ec-datagrid-string-filter />
+<ec-string-filter />
 ```
 ```html
 <clr-datagrid>
@@ -28,7 +28,7 @@ import { DatagridStringFilterComponent } from '@extrawest/extra-clarity/datagrid
   <clr-dg-column>
     Station ID
     <clr-dg-filter>
-      <ec-datagrid-string-filter [propertyKey]="'stationId'" />
+      <ec-string-filter [propertyKey]="'stationId'" />
     </clr-dg-filter>
   </clr-dg-column>
   ...
@@ -74,7 +74,7 @@ The actual filter value may be read using the getters `filterValue: string` and 
 
 ```html
 ...
-<ec-datagrid-string-filter #filterByName>
+<ec-string-filter #filterByName>
 ...
 <span>{{ filterByName.filterValue }}</span>
 <span>{{ filterByName.state.value }}</span>
