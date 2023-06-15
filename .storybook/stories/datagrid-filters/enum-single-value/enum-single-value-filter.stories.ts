@@ -64,17 +64,17 @@ const MetaStory = {
     },
     serverDriven: {
     },
-    setValue: {
-      control: { type: 'text' },
-      type: {
-        name: 'string',
-      },
-    },
     showSelectedValue: {
     },
     title: {
       // set type: 'text' explicitly to show an empty input field without double quotes
       control: { type: 'text' },
+    },
+    value: {
+      control: { type: 'text' },
+      type: {
+        name: 'string',
+      },
     },
     widthPx: {
       table: {
@@ -85,7 +85,7 @@ const MetaStory = {
       },
     },
     // OUTPUTS
-    selectionChanged: {
+    filterValueChanged: {
       control: false,
       table: {
         type: {
@@ -94,13 +94,13 @@ const MetaStory = {
       },
     },
     // METHODS
-    forceSelection: {
-      control: { type: null },
-    },
     isActive: {
       control: { type: null },
     },
     resetToDefault: {
+      control: { type: null },
+    },
+    setValue: {
       control: { type: null },
     },
     unselectAll: {
@@ -112,7 +112,7 @@ const MetaStory = {
       description:
         `Get the actual filter state in the same shape as it's emitted to the parent datagrid. ` +
         `<br/> ` +
-        `Refer to the <strong>selectionChanged</strong> output's description for more details.`,
+        `Refer to the <strong>filterValueChanged</strong> output's description for more details.`,
       control: false,
       table: {
         category: 'Getters',
@@ -128,9 +128,9 @@ const MetaStory = {
     options: [],
     propertyKey: '',
     serverDriven: true,
-    setValue: undefined,
     showSelectedValue: false,
     title: '',
+    value: undefined,
     widthPx: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx,
   },
 } as Meta<EnumSingleValueFilterComponent<unknown>>;
@@ -174,15 +174,15 @@ export const WithinDatagridStory: Story = {
       <ec-enum-single-value-filter
         [options]="options"
         [propertyKey]="propertyKey"
-        [serverDriven]="serverDriven"
         [customLabelTpl]="customLabelTpl"
         [loading]="loading"
         [maxHeightPx]="maxHeightPx"
-        [setValue]="setValue"
+        [serverDriven]="serverDriven"
         [showSelectedValue]="showSelectedValue"
         [title]="title"
+        [value]="value"
         [widthPx]="widthPx"
-        (selectionChanged)="selectionChanged($event)"
+        (filterValueChanged)="filterValueChanged($event)"
       />
     `),
   }),

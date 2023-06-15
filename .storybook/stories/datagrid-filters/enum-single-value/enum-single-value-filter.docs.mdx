@@ -114,7 +114,7 @@ you will need to provide additional logic for the datagrid's `(clrDgRefresh)` ha
 
 #### Output state
 
-The component's output `(selectionChanged)` emits a new filter state on every selection change.
+The component's output `(filterValueChanged)` emits a new filter state on every selection change.
 
 The same state is also emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component for any
 non-default filter state.
@@ -144,8 +144,8 @@ The actual state of the filter can be read by the public getter `state` as `Filt
 To check if the state is default you can use the `isActive()` method, which returns `false` for the default state.
 
 There are two ways to set a new value programmatically:
-* put a value into the input `[setValue]`
-* pass a value into the method `forceSelection(value: E | null)`
+* put a value into the input `[value]`
+* pass a value into the method `setValue(value: E | null)`
 
 The public method `resetToDefault()` resets the filter to the default state, and
 `unselectAll()` resets the filter to the empty state (nothing selected).
