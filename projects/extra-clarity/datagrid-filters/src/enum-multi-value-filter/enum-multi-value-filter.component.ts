@@ -127,8 +127,8 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
   /**
    * A value to be set as the actual filter's value on this input change or on `[options]` change.
    *
-   * If any provided value is not included in the values within the option list,
-   * the filter state will be reset to default.
+   * If any of the provided values is not included in the values within the option list,
+   * the filter will be reset to the default state.
    *
    * Providing `null` will clear the current selection, and `undefined` will be ignored.
    * */
@@ -278,8 +278,8 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
   /**
    * Set a new value as the actual filter's value.
    *
-   * If any provided value is not included in the values within the option list,
-   *   the filter state will be reset to default.
+   * If any of the provided values is not included in the values within the option list,
+   *   the filter will be reset to the default state.
    *
    * Providing `null` will clear the current selection, which is equivalent to calling `unselectAll()`.
    * */
