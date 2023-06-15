@@ -289,9 +289,13 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
       : propertyValueToCompare.includes(filterValueToCompare);
   }
 
-  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
+  /**
+   * Indicate whether the filter is active, i.e. has a non-default value selected.
+   *
+   * Implements the `ClrDatagridFilterInterface` interface.
+   * */
   isActive(): boolean {
-    return !!this.propertyKey && !!this.filterValue;
+    return !!this.propertyKey && !this.isStateDefault;
   }
 
   ngAfterViewInit(): void {
