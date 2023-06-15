@@ -40,7 +40,7 @@ import { EnumSingleValueFilterComponent } from '@extrawest/extra-clarity/datagri
 
 ### Description
 
-This component is suitable for filtering datagrids with a single value from an enumerated list of options.
+This component is designed for filtering datagrids with a single value from an enumerated list of options.
 
 The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
 datagrids. By the way, the provided API allows to use the component outside of datagrids as well.
@@ -49,15 +49,15 @@ datagrids. By the way, the provided API allows to use the component outside of d
 
 To configure the component you need to provide the following inputs:
 
-1. `serverDriven`  A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
+1. `[serverDriven]`  A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
 If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
 Otherwise, filtering is processed by the filter's `accepts()` method.
-2. `propertyKey`
+2. `[propertyKey]`
     * For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
         as the `property` value in the output state to help identify the filter's state amidst another filters.
     * For client-driven datagrids it must be equal to the name of a field in the object passed to the `[clrDgItem]` input
         on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
-3. `options` An array of options to select from. Each option is an object that contains the following fields:
+3. `[options]` An array of options to select from. Each option is an object that contains the following fields:
     ```typescript
     export interface EnumFilterOption<E> {
         value: E;
@@ -100,7 +100,7 @@ The entire option object `EnumFilterOption<E>` is passed to this template as the
 </ng-template>
 ```
 
-Please refer to the [API](#api) section for the details about another inputs.
+Please refer to the [API](#api) section below for more details about all the component's inputs.
 
 #### Default state
 
@@ -141,15 +141,16 @@ The actual state of the filter can be read by the public getter `state` as `Filt
 ...
 ```
 
-To check if the state is default you can use the `isActive()` method, which returns `false` for the default state.
+To check if the state is default, you can use the `isActive()` method, which returns `false` for the default state.
 
 There are two ways to set a new value programmatically:
 * put a value into the input `[value]`
 * pass a value into the method `setValue(value: E | null)`
 
+If the value provided to these methods is invalid, then the filter will be reset to the default state.
+
 The public method `resetToDefault()` resets the filter to the default state, and
 `unselectAll()` resets the filter to the empty state (nothing selected).
-
 
 ### Example
 
