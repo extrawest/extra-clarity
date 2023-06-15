@@ -1,5 +1,5 @@
 <div [style.width.px]="widthPx">
-  <ng-container *ngIf="!configErrors; else wrongConfig">
+  <ng-container *ngIf="!configErrors.length; else wrongConfig">
 
     <ng-container *ngIf="!loading; else loadingOptions">
       <div class="filter-title" *ngIf="title">
@@ -7,10 +7,10 @@
       </div>
 
       <div class="filter-selected-amount" *ngIf="showSelectedAmount">
-        Selected: {{ selectedAmount }}
+        Selected: {{ selectedAmountLabel }}
       </div>
 
-      <div class="filter-options" [style.max-height.px]="heightPx">
+      <div class="filter-options" [style.max-height.px]="maxHeightPx">
         <clr-checkbox-container class="checkbox-container">
           <clr-checkbox-wrapper *ngFor="let option of options; trackBy: trackByValue">
             <input
@@ -24,7 +24,7 @@
               <ng-container
                 [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
                 [ngTemplateOutletContext]="{ $implicit: option }"
-              ></ng-container>
+              />
               <ng-template #defaultLabelTpl>
                 {{ option.label ?? option.value }}
               </ng-template>
