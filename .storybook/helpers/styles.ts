@@ -4,6 +4,11 @@ export const docsStylePatch = `
     font-size: 20px !important;
   }
 
+  h4 {
+    margin: 18px 0 12px !important;
+    font-size: 16px !important;
+  }
+
   p {
     margin-top: 12px !important;
   }
