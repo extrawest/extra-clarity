@@ -28,7 +28,9 @@ import { StringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters
   <clr-dg-column>
     Station ID
     <clr-dg-filter>
-      <ec-string-filter [propertyKey]="'stationId'" />
+      <ec-string-filter
+        [propertyKey]="'stationId'"
+      />
     </clr-dg-filter>
   </clr-dg-column>
   ...
@@ -37,56 +39,78 @@ import { StringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters
 
 ### Description
 
-This component is a custom filter implementation for filtering datagrids by the selected field (column) with string
-literals.
+This component is designed for filtering datagrids with a string value.
 
 The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
-datagrids.
+datagrids. By the way, the provided API allows to use the component outside of datagrids as well.
 
-When using as client-driven, the component provides only case-insensitive filtering by transforming
-the entered value and a cell content to lower case strings before comparing them.
+#### Configuration
 
-The default (inactive) filter's value is an empty string.
+To configure the component you need to provide the following inputs:
 
-The component's output `(filterValueChanged)` emits a new filter state every time when the filter gets a new valid value.
-The same state is also emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component for all non-default
-filter values.
+1. `[serverDriven]`  A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
+If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
+Otherwise, filtering is processed by the filter's `accepts()` method.
+2. `[propertyKey]`
+    * For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
+        as the `property` value in the output state to help identify the filter's state amidst another filters.
+    * For client-driven datagrids it must be equal to the name of a field in the object passed to the `[clrDgItem]` input
+        on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
 
-The output state is an object, where `property` is the name of a field to filter by, and `value` is the actual string to
-filter with:
+For client-driven datagrids you can also configure the filtering algorithm by setting the inputs
+`[caseSensitive]` and `[fullMatch]`.
+
+Please refer to the [API](#api) section below for more details about all the component's inputs.
+
+#### Default state
+
+The default (inactive) filter's state is an empty string (nothing to filter).
+
+#### Output state
+
+The component's output `(filterValueChanged)` emits an object with the actual filter state every time when the filter
+gets a new valid value via the input field or programmatically.
+
+The same state is also emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component for any
+non-default filter state.
+
+The output state is an object with two fields: `property` as the name of a field to filter by, and `value` as the
+actual string to filter with:
 ```typescript
 // interface FilterState<string>
 {
   property: string | number;
-  value: string | undefined;
+  value: string;
 }
 ```
-When the filter is in the default state, the output state contains `value` as `undefined`.
 
-The value entered in the input field is accepted as the actual filter value only if it's valid.
-There are multiple inputs for setting up validation for the filter, please refer to the [API](#api) section for more
-details.
+#### Read/Write the state
 
-The actual filter's value also may be set programmatically via the `[value]` input.
-If a new value passed to this input is invalid, then the filter will be reset to the default state (an empty string).
-
-The actual filter value may be read using the getters `filterValue: string` and `state.value: string | undefined`:
+The actual state of the filter can be read by the public getter `state` as `FilterState<string>`:
 
 ```html
 ...
 <ec-string-filter #filterByName>
 ...
-<span>{{ filterByName.filterValue }}</span>
 <span>{{ filterByName.state.value }}</span>
 ```
 
-The only required inputs are `[propertyKey]` and `[serverDriven]`:
-* for server-driven datagrids `propertyKey` is a free-form identifier defined by a developer, that will be used as
-the `property` value in the output state to help identify the filter's state amidst another filters;
-* for client-driven datagrids `propertyKey` must be equal to the name of a field in the object passed to
-the `[clrDgItem]` input on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+To check if the state is default, you can use the `isActive()` method, which returns `false` for the default state.
 
-The public method `resetToDefault()` resets the filter's state to default.
+The value entered in the input field is accepted as the actual filter value only if it's valid.
+
+There are also two ways to set a new value programmatically:
+* put a value into the input `[value]`
+* pass a value into the method `setValue(value: string)`
+
+If the value provided to these methods is invalid, then the filter will be reset to the default state.
+
+There are multiple inputs for setting up the validation, please refer to the **'Inputs/Validation'** subcategory in
+the [API](#api) section below for more details.
+
+The public method `resetToDefault()` resets the filter to the default state.
+
+#### Additional info
 
 The component uses `ClrPopoverToggleService` internally (as an optional injector provided by the `<clr-dg-column>` parent
 component) to react to opening the filter: to focus the input field and reset an invalid entered value to the last
@@ -99,8 +123,8 @@ on this page).
 
 ### Stories
 
-* [A string filter within a client-driven datagrid](/story/components-datagrid-filters-string-filter--within-datagrid-story)
-* [A string filter in isolation](/story/components-datagrid-filters-string-filter--filter-itself-story)
+* [A filter within a client-driven datagrid](/story/components-datagrid-filters-string-filter--within-datagrid-story)
+* [A filter in isolation](/story/components-datagrid-filters-string-filter--filter-itself-story)
 
 ### API
 
