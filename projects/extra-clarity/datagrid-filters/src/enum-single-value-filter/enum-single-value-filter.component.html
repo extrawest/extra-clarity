@@ -17,7 +17,7 @@
               type="radio"
               clrRadio
               [name]="propertyKey"
-              [checked]="option.value === selectedValue"
+              [checked]="option.value === filterValue"
               (change)="onInputChange(option.value)"
             />
             <label>
@@ -38,7 +38,7 @@
           type="button"
           class="btn btn-block btn-sm"
           (click)="unselectAll()"
-          [disabled]="selectedValue === null"
+          [disabled]="filterValue === null"
         >
           Show All
         </button>
