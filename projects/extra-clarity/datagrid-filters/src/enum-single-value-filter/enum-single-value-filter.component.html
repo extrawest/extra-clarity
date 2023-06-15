@@ -1,5 +1,5 @@
 <div [style.width.px]="widthPx">
-  <ng-container *ngIf="!configErrors; else wrongConfig">
+  <ng-container *ngIf="!configErrors.length; else wrongConfig">
 
     <ng-container *ngIf="!loading; else loadingOptions">
       <div class="filter-title" *ngIf="title">
@@ -7,10 +7,10 @@
       </div>
 
       <div class="filter-selected-value" *ngIf="showSelectedValue">
-        Selected: {{ shownSelectedValue }}
+        Selected: {{ selectedValueLabel }}
       </div>
 
-      <div class="filter-options" [style.max-height.px]="heightPx">
+      <div class="filter-options" [style.max-height.px]="maxHeightPx">
         <clr-radio-container class="radio-container">
           <clr-radio-wrapper *ngFor="let option of options; trackBy: trackByValue">
             <input
@@ -24,7 +24,7 @@
               <ng-container
                 [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
                 [ngTemplateOutletContext]="{ $implicit: option }"
-              ></ng-container>
+              />
               <ng-template #defaultLabelTpl>
                 {{ option.label ?? option.value }}
               </ng-template>
@@ -38,7 +38,7 @@
           type="button"
           class="btn btn-block btn-sm"
           (click)="unselectAll()"
-          [disabled]="selectedValue === undefined"
+          [disabled]="selectedValue === null"
         >
           Show All
         </button>

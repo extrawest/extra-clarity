@@ -3,8 +3,8 @@ export interface FilterState<T> {
   value: T | undefined;
 }
 
-export interface EnumFilterOption<T> {
-  value: T;
+export interface EnumFilterOption<E> {
+  value: E;
   label?: string;
   selectedByDefault?: boolean;
 }

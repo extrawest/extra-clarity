@@ -1,15 +1,26 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
   TemplateRef,
 } from '@angular/core';
-import { ClrCheckboxModule, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
+import { ClrCheckboxModule, ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
 import { Subject } from 'rxjs';
 
 import { EnumFilterOption, FilterState } from '../interfaces/filter-state.interface';
 
-const DEFAULT_MAX_HEIGHT_PX = 300;
-const DEFAULT_WIDTH_PX = 200;
+export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
+  maxHeightPx: 300,
+  widthPx: 200,
+} as const;
 
 @Component({
   selector: 'ec-enum-single-value-filter',
@@ -23,51 +34,194 @@ const DEFAULT_WIDTH_PX = 200;
     ClrCheckboxModule,
   ],
 })
-export class EnumSingleValueFilterComponent<T extends object = {}, E = unknown>
-implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, OnInit {
-  @Input() heightPx: number = DEFAULT_MAX_HEIGHT_PX;
-  @Input() widthPx: number = DEFAULT_WIDTH_PX;
+export class EnumSingleValueFilterComponent<E, T extends object = {}>
+implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDestroy, OnInit {
+  /**
+   * TemplateRef for a template to use as a custom option label.
+   * May be useful to show icons within an option label or to apply a custom format to it.
+   *
+   * The entire `option` object is passed to this template as the $implicit context parameter.
+   */
+  @Input()
+  public customLabelTpl?: TemplateRef<unknown>;
 
-  @Input() propertyKey = '';
-  @Input() title?: string;
-  @Input() showSelectedValue = false;
-  @Input() customLabelTpl?: TemplateRef<unknown>;
+  /**
+   * Show a placeholder 'Loading, please wait...' to inform users
+   * that the list of options is loading
+   */
+  @Input()
+  public loading = false;
 
-  @Input() loading = false;
-  @Input() options: EnumFilterOption<E>[] = [];
-  @Input() selectValue: E | null | undefined;
+  /**
+   * Max height in pixels of the option list container.
+   * If the container's content exceeds the limit, a vertical scrollbar is shown.
+   * */
+  @Input()
+  public maxHeightPx: number = ENUM_SINGLE_VALUE_FILTER_DEFAULTS.maxHeightPx;
 
-  @Output() selectionChanged = new EventEmitter<FilterState<E>>();
+  /**
+   * List of options to select from. Each option contains:
+   *
+   * * `value`: a value of any type `<E>` to be used as a new filter value on selecting this option;
+   *   values must be unique among all options
+   *
+   * * `label`: an optional string label for the option;
+   *   if not provided, then the stringified `value` is shown as a label
+   *
+   * * `selectedByDefault`: an optional boolean flag to mark the option selected by default,
+   *   i.e. to define a custom default state of the filter;
+   *   when provided for multiple options or not provided at all,
+   *   then the default state is empty (null).
+   *
+   * NOTE: The parent `<clr-datagrid>` component treats the default filter's state as inactive
+   * and ignores the selected filter's value in that case. So, if you set a custom default value,
+   * you have to provide additional logic for the datagrid's `(clrDgRefresh)` handler to perform proper filtering.
+   *
+   * @required
+   */
+  @Input()
+  public options: EnumFilterOption<E>[] = [];
 
-  configErrors?: string[];
-  defaultValue?: E;
-  hasCustomDefaultState = false;
-  isStateDefault = true;
-  selectedValue?: E;
+  /**
+   * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
+   * in the output state to help identify the filter's state amidst another filters;
+   *
+   * When `[serverDriven]="false"`, it must be equal to the name of a field in the object passed to the `[clrDgItem]`
+   * input on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+   *
+   * @required
+   */
+  @Input()
+  public propertyKey = '';
 
+  /**
+   * Whether to show a label with selected value above the option list.
+   * May be useful for a long list of options.
+   */
+  @Input()
+  public showSelectedValue = false;
+
+  /**
+   * Optional label to show above the option list
+   */
+  @Input()
+  public title?: string;
+
+  /**
+   * A value to be set as the actual filter's value on this input change or on `[options]` change.
+   *
+   * If the provided value is not included in the values within the option list,
+   * the filter state will be reset to default.
+   *
+   * Providing `null` will clear the current selection, and `undefined` will be ignored.
+   * */
+  @Input()
+  public setValue: E | null | undefined;
+
+  /**
+   * Whether the filter and the datagrid are server-driven:
+   * * `true` = filtering is processed externally (e.g. by a backend), not by the filter.
+   * * `false` = filtering is processed by the filter's `accepts()` method.
+   *
+   * @required
+   */
+  @Input()
+  public serverDriven = true;
+
+  /**
+   * Width in pixels of the filter's container
+   * */
+  @Input()
+  public widthPx: number = ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx;
+
+  /**
+   * Emits the filter's state object on every change of the internal filter value.
+   * The state object contains the name of a `property` to filter by, defined by the `[propertyKey]` input,
+   * and the actual filter `value`.
+   *
+   * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
+   * for all non-default filter values.
+   *
+   * `EventEmitter<FilterState<E | null>>`
+   */
+  @Output()
+  public selectionChanged = new EventEmitter<FilterState<E | null>>();
+
+  protected configErrors: string[] = [];
+  protected defaultValue: E | null = null;
+  protected hasCustomDefaultState = false;
+  protected isStateDefault = true;
+  protected selectedValue: E | null = null;
+
+  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   readonly changes = new Subject<void>();
 
   private readonly destroy$ = new Subject<void>();
 
-  get shownSelectedValue(): string {
-    if (this.selectedValue === undefined) {
-      return 'none';
-    }
-    const selectedOption = this.options.find(option => option.value === this.selectedValue);
-    return selectedOption?.label || String(this.selectedValue);
+  private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
+
+  constructor() {
+    this.clrDatagridFilterContainer?.setFilter(this);
   }
 
-  get state(): FilterState<E> {
+  /**
+   * Get the actual filter state in the same shape as it's emitted to the parent datagrid.
+   *
+   * @see {@link selectionChanged} for details
+   *
+   * Implements the `ClrDatagridFilterInterface` interface.
+   * */
+  get state(): FilterState<E | null> {
     return {
       property: this.propertyKey,
       value: this.selectedValue,
     };
   }
 
-  accepts(item: T): boolean {
-    return false;
+  protected get selectedValueLabel(): string {
+    if (this.selectedValue === null) {
+      return 'none';
+    }
+    const selectedOption = this.options.find(option => option.value === this.selectedValue);
+    return selectedOption?.label || String(this.selectedValue);
   }
 
+  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
+  accepts(item: T): boolean {
+    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
+      return false;
+    }
+
+    if (this.selectedValue === null) {
+      return true;
+    }
+
+    const propertyValue = (item as Record<string | number, unknown>)[this.propertyKey];
+
+    return propertyValue === this.selectedValue;
+  }
+
+  /**
+   * Set a new value as the actual filter's value.
+   *
+   * If the provided value is not included in the values within the option list,
+   * the filter state will be reset to default.
+   *
+   * Providing `null` will clear the current selection, which is equivalent to calling `unselectAll()`.
+   * */
+  forceSelection(value: E | null): void {
+    if (value !== null && !this.isValueAllowed(value)) {
+      this.resetToDefault();
+      return;
+    }
+    this.updateSelectedValue(value);
+  }
+
+  /**
+   * Indicate whether the filter is active, i.e. has a non-default value selected.
+   *
+   * Implements the `ClrDatagridFilterInterface` interface.
+   * */
   isActive(): boolean {
     return !!this.propertyKey && !this.isStateDefault;
   }
@@ -78,8 +232,8 @@ implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, 
       return;
     }
 
-    if (changes['selectValues'] && this.selectValue !== undefined) {
-      this.forceSelection(this.selectValue);
+    if (changes['setValue'] && this.setValue !== undefined) {
+      this.forceSelection(this.setValue);
     }
   }
 
@@ -92,39 +246,37 @@ implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, 
     this.configErrors = this.checkInputsValidity();
   }
 
-  onInputChange(inputValue: E): void {
-    this.updateSelectedValue(inputValue);
-  }
-
+  /**
+   * Reset the filter to the default state
+   * */
   resetToDefault(): void {
     this.updateSelectedValue(this.defaultValue);
   }
 
-  trackByValue(index: number, option: EnumFilterOption<E>): E {
+  /**
+   * Reset the filter to the empty state
+   * */
+  unselectAll(): void {
+    this.updateSelectedValue(null);
+  }
+
+  protected onInputChange(inputValue: E): void {
+    this.updateSelectedValue(inputValue);
+  }
+
+  protected trackByValue(index: number, option: EnumFilterOption<E>): E {
     return option.value;
   }
 
-  unselectAll(): void {
-    this.updateSelectedValue(undefined);
-  }
-
-  private isValueAllowed(value: E): boolean {
+  private isValueAllowed(value: E | null): boolean {
     return this.options.some(option => option.value === value);
   }
 
-  private checkInputsValidity(): string[] | undefined {
+  private checkInputsValidity(): string[] {
     if (this.propertyKey) {
-      return;
+      return [];
     }
     return ['[propertyKey] is required'];
-  }
-
-  private forceSelection(selectValue: E | null): void {
-    if (selectValue === null || !this.isValueAllowed(selectValue)) {
-      this.resetToDefault();
-      return;
-    }
-    this.updateSelectedValue(selectValue);
   }
 
   private onOptionsChange(): void {
@@ -132,20 +284,20 @@ implements ClrDatagridFilterInterface<T, FilterState<E>>, OnChanges, OnDestroy, 
 
     this.defaultValue = optionsSelectedByDefault.length === 1
       ? optionsSelectedByDefault[0].value
-      : undefined;
+      : null;
 
-    this.hasCustomDefaultState = this.defaultValue !== undefined;
+    this.hasCustomDefaultState = this.defaultValue !== null;
 
-    if (this.selectValue === undefined) {
-      this.resetToDefault();
+    if (this.setValue === undefined) {
+      this.forceSelection(this.selectedValue ?? this.defaultValue);
       return;
     }
 
-    this.forceSelection(this.selectValue);
+    this.forceSelection(this.setValue);
   }
 
   private updateSelectedValue(
-    newSelectedValue: E | undefined,
+    newSelectedValue: E | null,
     params: { emit: boolean } = { emit: true },
   ): void {
     if (newSelectedValue === this.selectedValue) {
