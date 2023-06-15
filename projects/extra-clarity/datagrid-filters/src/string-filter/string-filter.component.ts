@@ -49,14 +49,36 @@ export const STRING_FILTER_DEFAULTS = {
     ClrInputModule,
   ],
 })
-export class StringFilterComponent<T = unknown>
+export class StringFilterComponent<T extends object = {}>
 implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, OnChanges, OnDestroy, OnInit {
+  /**
+   * Comparison type for the filtering algorithm:
+   * * `false` = case-insensitive, when both filter value and cell content value are transformed to lower case
+   * before comparing;
+   * * `true` = case-sensitive, when both filter value and cell content value are compared directly
+   * without any transformation.
+   *
+   * NOTE: Affects only client-driven filters, i.e. requires another input `[serverDriven]="false"`.
+   */
+  @Input()
+  public caseSensitive = false;
+
   /**
    * Debounce delay for the input field in milliseconds, i.e. a delay between entering the last character and assigning
    * the entered value to the filterValue. Ignored on clearing the input field.
    */
   @Input()
   public debounceTimeMs: number = STRING_FILTER_DEFAULTS.debounceTimeMs;
+
+  /**
+   * Comparison type for the filtering algorithm:
+   * * `false` = search for partial and full matches;
+   * * `true` = search for a full match only.
+   *
+   * NOTE: Affects only client-driven filters, i.e. requires another input `[serverDriven]="false"`.
+   * */
+  @Input()
+  public fullMatch = false;
 
   /**
    * Max length validation for the filter's value.
@@ -79,7 +101,7 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
    *
    * Utilizes `Validators.pattern` from `@angular/forms`.
    *
-   * Requires another input `[validator]="'pattern'"`.
+   * Requires another input `[validator]` to be set to "'pattern'"`.
    *
    * This input is read only on component initialization.
    */
@@ -87,13 +109,13 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   public pattern?: string | RegExp;
 
   /**
-   * Error message shown under the input field if the entered value is invalid against the `pattern` validator
+   * Error message shown under the input field if the entered value is invalid due to the `pattern` validator
    * */
   @Input()
   public patternErrMsg?: string;
 
   /**
-   * Placeholder for the empty input field.
+   * Placeholder for the empty input field
    * */
   @Input()
   public placeholder: string = STRING_FILTER_DEFAULTS.placeholder;
@@ -107,10 +129,10 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   public propertyDisplayName?: string;
 
   /**
-   * When `[serverDriven]="true"`: a free-form identifier defined by a developer, that will be shown as `property`
+   * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
    * in the output state to help identify the filter's state amidst another filters;
    *
-   * When `[serverDriven]="false"`: must be equal to the name of a field in the object passed to the `[clrDgItem]`
+   * When `[serverDriven]="false"`, it must be equal to the name of a field in the object passed to the `[clrDgItem]`
    * input on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
    *
    * @required
@@ -119,8 +141,9 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   public propertyKey = '';
 
   /**
-   * Is the filter and the datagrid server-driven? If `false`, then filtering is processed by the filter's `accepts()`
-   * method, otherwise - not by the filter, but externally.
+   * Whether the filter and the datagrid are server-driven:
+   * * `true` = filtering is processed externally (e.g. by a backend), not by the filter.
+   * * `false` = filtering is processed by the filter's `accepts()` method.
    *
    * @required
    */
@@ -128,16 +151,11 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   public serverDriven = true;
 
   /**
-   * Apply an additional validator for the entered value.
-   *
-   * Options:
-   *
-   * `'email'`: apply `Validators.email` from `@angular/forms`.
-   *
-   * `'pattern'`: apply `Validators.pattern` from `@angular/forms`;
+   * Apply an additional validator for the entered value. Options:
+   * * `'email'`: apply `Validators.email` from `@angular/forms`.
+   * * `'pattern'`: apply `Validators.pattern` from `@angular/forms`;
    * the regular expression must be set via the `[pattern]` input.
-   *
-   * `'uuid'`: test the entered value against a predefined regular expression to allow only uuid-like strings.
+   * * `'uuid'`: test the entered value against a predefined regular expression to allow only uuid-like strings.
    *
    * This input is read only on component initialization.
    */
@@ -145,36 +163,23 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   public validator?: StringValidatorEnum;
 
   /**
-   * Set a string as the actual filter's value.
-   * If the provided string is invalid, the actual filter's value will be reset to the default state (an empty string).
+   * A value to be set as the actual filter's value on this input change. `undefined` will be ignored.
    *
-   * Reacts only to changes (processed by ngOnChanges). `undefined` is ignored
+   * If the provided string is invalid, the actual filter's value will be reset to the default state (an empty string).
    * */
   @Input()
-  public value?: string;
+  public value: string | undefined;
 
   /**
-   * Width in pixels of the filter's container (`div`-element)
+   * Width in pixels of the filter's container
    * */
   @Input()
   public widthPx: number = STRING_FILTER_DEFAULTS.widthPx;
 
   /**
-   * Affects only client-driven datagrids;
-   *
-   * `false` = search for partial and full matches
-   *
-   * `true` = search for a full match only
-   * */
-  @Input()
-  public fullMatch = false;
-
-  /**
    * Emits the filter's state object on every change of the internal filter value.
    * The state object contains the name of a `property` to filter by, defined by the `[propertyKey]` input,
    * and the actual filter `value` as a string.
-   *
-   * If the filter is in the default state (an empty string), then the state object contains `value` as `undefined`.
    *
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
@@ -190,8 +195,8 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   @ViewChild(ClrInput)
   protected clrInputRef?: ClrInput;
 
-  protected _filterValue = '';
   protected configErrors: string[] = [];
+  protected filterValue = '';
   protected readonly formControl = new FormControl<string>('', { nonNullable: true });
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
@@ -208,18 +213,21 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   }
 
   /**
-   * Get the actual filter value as a string
+   * Get the actual filter state in the same shape as it's emitted to the parent datagrid.
+   *
+   * @see {@link filterValueChanged} for more details
+   *
+   * Implements the `ClrDatagridFilterInterface` interface.
    * */
-  get filterValue(): string {
-    return this._filterValue;
-  }
-
-  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   get state(): FilterState<string> {
     return {
       property: this.propertyKey,
-      value: this._filterValue || undefined,
+      value: this.filterValue,
     };
+  }
+
+  protected get isStateDefault(): boolean {
+    return !this.filterValue;
   }
 
   protected get isValueTooShort(): boolean {
@@ -268,17 +276,22 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
       return false;
     }
 
-    const propertyValueInLowerCase = propertyValue.toLowerCase();
-    const filterValueInLowerCase = this._filterValue.toLowerCase();
+    const propertyValueToCompare = this.caseSensitive
+      ? propertyValue
+      : propertyValue.toLowerCase();
+
+    const filterValueToCompare = this.caseSensitive
+      ? this.filterValue
+      : this.filterValue.toLowerCase();
 
     return this.fullMatch
-      ? propertyValueInLowerCase === filterValueInLowerCase
-      : propertyValueInLowerCase.includes(filterValueInLowerCase);
+      ? propertyValueToCompare === filterValueToCompare
+      : propertyValueToCompare.includes(filterValueToCompare);
   }
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   isActive(): boolean {
-    return !!this.propertyKey && !!this._filterValue;
+    return !!this.propertyKey && !!this.filterValue;
   }
 
   ngAfterViewInit(): void {
@@ -288,8 +301,8 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
         if (!isOpen) {
           return;
         }
-        if (this.formControl.value !== this._filterValue) {
-          this.updateFormControlValue(this._filterValue);
+        if (this.formControl.value !== this.filterValue) {
+          this.updateFormControlValue(this.filterValue);
           this.clrInputRef?.triggerValidation();
           this.changeDetectionRef.markForCheck();
         }
@@ -298,7 +311,7 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (('value' in changes) && (typeof this.value === 'string') && this.propertyKey) {
+    if (changes['value'] && (typeof this.value === 'string') && this.propertyKey) {
       this.updateFormControlValue(this.value);
     }
   }
@@ -320,6 +333,17 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
     this.observeInputChanges();
 
     this.formControl.markAsTouched();
+  }
+
+  /**
+   * Set a new value as the actual filter's value.
+   *
+   * If the provided value is invalid, the filter value will be reset to default (an empty string).
+   * */
+  setValue(value: string): void {
+    if (this.propertyKey) {
+      this.updateFormControlValue(value);
+    }
   }
 
   /**
@@ -401,9 +425,15 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
     this.formControl.updateValueAndValidity({ emitEvent: false });
   }
 
-  private updateFilterValue(value: string): void {
-    if (value !== this._filterValue) {
-      this._filterValue = value;
+  private updateFilterValue(
+    value: string,
+    params: { emit: boolean } = { emit: true },
+  ): void {
+    if (value === this.filterValue) {
+      return;
+    }
+    this.filterValue = value;
+    if (params.emit) {
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }

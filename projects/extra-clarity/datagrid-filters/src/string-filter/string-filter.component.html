@@ -24,7 +24,7 @@
       type="button"
       class="btn btn-block btn-sm"
       (click)="onReset()"
-      [disabled]="!_filterValue && !formControl.value"
+      [disabled]="isStateDefault && !formControl.value"
     >
       Clear
     </button>
