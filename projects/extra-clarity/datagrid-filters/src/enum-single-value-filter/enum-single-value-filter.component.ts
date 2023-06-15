@@ -12,7 +12,7 @@ import {
   SimpleChanges,
   TemplateRef,
 } from '@angular/core';
-import { ClrCheckboxModule, ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
+import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
 import { Subject } from 'rxjs';
 
 import { EnumFilterOption, FilterState } from '../interfaces/filter-state.interface';
@@ -60,13 +60,10 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
 
   /**
    * List of options to select from. Each option contains:
-   *
    * * `value`: a value of any type `<E>` to be used as a new filter value on selecting this option;
    *   values must be unique among all options
-   *
    * * `label`: an optional string label for the option;
    *   if not provided, then the stringified `value` is shown as a label
-   *
    * * `selectedByDefault`: an optional boolean flag to mark the option selected by default,
    *   i.e. to define a custom default state of the filter;
    *   when provided for multiple options or not provided at all,
@@ -94,6 +91,16 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
   public propertyKey = '';
 
   /**
+   * Whether the filter and the datagrid are server-driven:
+   * * `true` = filtering is processed externally (e.g. by a backend), not by the filter.
+   * * `false` = filtering is processed by the filter's `accepts()` method.
+   *
+   * @required
+   */
+  @Input()
+  public serverDriven = true;
+
+  /**
    * Whether to show a label with selected value above the option list.
    * May be useful for a long list of options.
    */
@@ -115,17 +122,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
    * Providing `null` will clear the current selection, and `undefined` will be ignored.
    * */
   @Input()
-  public setValue: E | null | undefined;
-
-  /**
-   * Whether the filter and the datagrid are server-driven:
-   * * `true` = filtering is processed externally (e.g. by a backend), not by the filter.
-   * * `false` = filtering is processed by the filter's `accepts()` method.
-   *
-   * @required
-   */
-  @Input()
-  public serverDriven = true;
+  public value: E | null | undefined;
 
   /**
    * Width in pixels of the filter's container
@@ -144,13 +141,12 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
    * `EventEmitter<FilterState<E | null>>`
    */
   @Output()
-  public selectionChanged = new EventEmitter<FilterState<E | null>>();
+  public filterValueChanged = new EventEmitter<FilterState<E | null>>();
 
   protected configErrors: string[] = [];
   protected defaultValue: E | null = null;
+  protected filterValue: E | null = null;
   protected hasCustomDefaultState = false;
-  protected isStateDefault = true;
-  protected selectedValue: E | null = null;
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   readonly changes = new Subject<void>();
@@ -166,23 +162,27 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
   /**
    * Get the actual filter state in the same shape as it's emitted to the parent datagrid.
    *
-   * @see {@link selectionChanged} for details
+   * @see {@link filterValueChanged} for more details
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
   get state(): FilterState<E | null> {
     return {
       property: this.propertyKey,
-      value: this.selectedValue,
+      value: this.filterValue,
     };
   }
 
+  protected get isStateDefault(): boolean {
+    return this.filterValue === this.defaultValue;
+  }
+
   protected get selectedValueLabel(): string {
-    if (this.selectedValue === null) {
+    if (this.filterValue === null) {
       return 'none';
     }
-    const selectedOption = this.options.find(option => option.value === this.selectedValue);
-    return selectedOption?.label || String(this.selectedValue);
+    const selectedOption = this.options.find(option => option.value === this.filterValue);
+    return selectedOption?.label || String(this.filterValue);
   }
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
@@ -191,29 +191,13 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
       return false;
     }
 
-    if (this.selectedValue === null) {
+    if (this.filterValue === null) {
       return true;
     }
 
     const propertyValue = (item as Record<string | number, unknown>)[this.propertyKey];
 
-    return propertyValue === this.selectedValue;
-  }
-
-  /**
-   * Set a new value as the actual filter's value.
-   *
-   * If the provided value is not included in the values within the option list,
-   * the filter state will be reset to default.
-   *
-   * Providing `null` will clear the current selection, which is equivalent to calling `unselectAll()`.
-   * */
-  forceSelection(value: E | null): void {
-    if (value !== null && !this.isValueAllowed(value)) {
-      this.resetToDefault();
-      return;
-    }
-    this.updateSelectedValue(value);
+    return propertyValue === this.filterValue;
   }
 
   /**
@@ -231,8 +215,8 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
       return;
     }
 
-    if (changes['setValue'] && this.setValue !== undefined) {
-      this.forceSelection(this.setValue);
+    if (changes['value'] && this.value !== undefined) {
+      this.setValue(this.value);
     }
   }
 
@@ -249,18 +233,37 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
    * Reset the filter to the default state
    * */
   resetToDefault(): void {
-    this.updateSelectedValue(this.defaultValue);
+    if (this.defaultValue !== null && !this.isValueAllowed(this.defaultValue)) {
+      this.defaultValue = null;
+    }
+    this.setValue(this.defaultValue);
+  }
+
+  /**
+   * Set a new value as the actual filter's value.
+   *
+   * If the provided value is not included in the values within the option list,
+   * the filter state will be reset to default.
+   *
+   * Providing `null` will clear the current selection, which is equivalent to calling `unselectAll()`.
+   * */
+  setValue(value: E | null): void {
+    if (value !== null && !this.isValueAllowed(value)) {
+      this.resetToDefault();
+      return;
+    }
+    this.updateFilterValue(value);
   }
 
   /**
    * Reset the filter to the empty state
    * */
   unselectAll(): void {
-    this.updateSelectedValue(null);
+    this.setValue(null);
   }
 
   protected onInputChange(inputValue: E): void {
-    this.updateSelectedValue(inputValue);
+    this.setValue(inputValue);
   }
 
   protected trackByValue(index: number, option: EnumFilterOption<E>): E {
@@ -287,25 +290,24 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
 
     this.hasCustomDefaultState = this.defaultValue !== null;
 
-    if (this.setValue === undefined) {
-      this.forceSelection(this.selectedValue ?? this.defaultValue);
+    if (this.value === undefined) {
+      this.setValue(this.filterValue ?? this.defaultValue);
       return;
     }
 
-    this.forceSelection(this.setValue);
+    this.setValue(this.value);
   }
 
-  private updateSelectedValue(
-    newSelectedValue: E | null,
+  private updateFilterValue(
+    value: E | null,
     params: { emit: boolean } = { emit: true },
   ): void {
-    if (newSelectedValue === this.selectedValue) {
+    if (value === this.filterValue) {
       return;
     }
-    this.selectedValue = newSelectedValue;
-    this.isStateDefault = this.selectedValue === this.defaultValue;
+    this.filterValue = value;
     if (params.emit) {
-      this.selectionChanged.emit(this.state);
+      this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
   }
