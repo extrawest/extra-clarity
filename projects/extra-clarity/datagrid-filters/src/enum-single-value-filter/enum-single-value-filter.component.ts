@@ -31,7 +31,6 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   imports: [
     CommonModule,
     ClrRadioModule,
-    ClrCheckboxModule,
   ],
 })
 export class EnumSingleValueFilterComponent<E, T extends object = {}>
