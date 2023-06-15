@@ -12,8 +12,12 @@ import {
   ENUM_SINGLE_VALUE_FILTER_DEFAULTS,
   EnumSingleValueFilterComponent,
 } from '../../../../projects/extra-clarity/datagrid-filters';
-import { hideAllControlRows } from '../../../helpers/arg-types';
-import { colorEnumOptions, USERS_DATA } from '../helpers/mocks';
+import {
+  colorEnumOptions,
+  hideAllControlRows,
+  USERS_DATA,
+  wrapFilterWithinDatagrid,
+} from '../../../helpers';
 
 type Story = StoryObj<EnumSingleValueFilterComponent<unknown>>;
 
@@ -184,7 +188,7 @@ export const WithinDatagridStory: Story = {
         [widthPx]="widthPx"
         (filterValueChanged)="filterValueChanged($event)"
       />
-    `),
+    `, 'color'),
   }),
   args: {
     propertyKey: 'color',
@@ -210,7 +214,7 @@ export const DocsExampleStory: Story = {
         [propertyKey]="'color'"
         [serverDriven]="false"
       />
-    `),
+    `, 'color'),
   }),
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {
@@ -220,30 +224,3 @@ export const DocsExampleStory: Story = {
     options: colorEnumOptions,
   },
 };
-
-const wrapFilterWithinDatagrid = (filterTemplate: string): string => `
-  <clr-datagrid>
-    <clr-dg-placeholder>
-      No data found for the selected filter settings
-    </clr-dg-placeholder>
-
-    <clr-dg-column> User ID </clr-dg-column>
-    <clr-dg-column> Name </clr-dg-column>
-    <clr-dg-column> Creation date </clr-dg-column>
-    <clr-dg-column>
-      Favorite color
-      <clr-dg-filter>
-        ${filterTemplate}
-      </clr-dg-filter>
-    </clr-dg-column>
-
-    <clr-dg-row *clrDgItems="let user of users" [clrDgItem]="user">
-      <clr-dg-cell>{{ user.id }}</clr-dg-cell>
-      <clr-dg-cell>{{ user.name }}</clr-dg-cell>
-      <clr-dg-cell>{{ user.createdAt | date }}</clr-dg-cell>
-      <clr-dg-cell>{{ user.color }}</clr-dg-cell>
-    </clr-dg-row>
-
-    <clr-dg-footer>{{ users.length }} users</clr-dg-footer>
-  </clr-datagrid>
-`;

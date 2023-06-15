@@ -10,8 +10,7 @@ import {
 } from '@storybook/angular';
 
 import { STRING_FILTER_DEFAULTS, StringFilterComponent } from '../../../../projects/extra-clarity/datagrid-filters';
-import { hideAllControlRows } from '../../../helpers/arg-types';
-import { USERS_DATA } from '../helpers/mocks';
+import { hideAllControlRows, USERS_DATA, wrapFilterWithinDatagrid } from '../../../helpers';
 
 type Story = StoryObj<StringFilterComponent>;
 
@@ -215,7 +214,7 @@ export const WithinDatagridStory: Story = {
         [validator]="validator"
         (filterValueChanged)="filterValueChanged($event)"
       />
-    `),
+    `, 'name'),
   }),
   args: {
     propertyKey: 'name',
@@ -237,7 +236,7 @@ export const DocsExampleStory: Story = {
         [serverDriven]="false"
         [maxLength]="10"
       />
-    `),
+    `, 'name'),
   }),
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {
@@ -246,30 +245,3 @@ export const DocsExampleStory: Story = {
   args: {
   },
 };
-
-const wrapFilterWithinDatagrid = (filterTemplate: string): string => `
-  <clr-datagrid>
-    <clr-dg-placeholder>
-      No data found for the selected filter settings
-    </clr-dg-placeholder>
-
-    <clr-dg-column> User ID </clr-dg-column>
-    <clr-dg-column>
-      <ng-container> Name </ng-container>
-      <clr-dg-filter>
-        ${filterTemplate}
-      </clr-dg-filter>
-    </clr-dg-column>
-    <clr-dg-column> Creation date </clr-dg-column>
-    <clr-dg-column> Favorite color </clr-dg-column>
-
-    <clr-dg-row *clrDgItems="let user of users" [clrDgItem]="user">
-      <clr-dg-cell>{{ user.id }}</clr-dg-cell>
-      <clr-dg-cell>{{ user.name }}</clr-dg-cell>
-      <clr-dg-cell>{{ user.createdAt | date }}</clr-dg-cell>
-      <clr-dg-cell>{{ user.color }}</clr-dg-cell>
-    </clr-dg-row>
-
-    <clr-dg-footer>{{ users.length }} users</clr-dg-footer>
-  </clr-datagrid>
-`;

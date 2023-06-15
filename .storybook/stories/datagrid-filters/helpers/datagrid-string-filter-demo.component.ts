@@ -3,8 +3,7 @@ import { Component, Input } from '@angular/core';
 import { ClrDatagridModule } from '@clr/angular';
 
 import { PartialStringFilterComponent } from '../../../../projects/extra-clarity/datagrid-filters';
-
-import { USERS_DATA } from './mocks';
+import { USERS_DATA } from '../../../helpers';
 
 @Component({
   selector: 'ec-datagrid-string-filter-demo',
