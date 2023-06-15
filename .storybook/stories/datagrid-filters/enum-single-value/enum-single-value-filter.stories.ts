@@ -75,10 +75,7 @@ const MetaStory = {
       control: { type: 'text' },
     },
     value: {
-      control: { type: 'text' },
-      type: {
-        name: 'string',
-      },
+      control: { type: 'object' },
     },
     widthPx: {
       table: {
