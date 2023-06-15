@@ -24,4 +24,8 @@ export const docsStylePatch = `
   .docblock-source {
     margin: 12px 0 18px !important;
   }
+
+  .table-of-contents {
+    margin-top: 24px;
+  }
 `;
