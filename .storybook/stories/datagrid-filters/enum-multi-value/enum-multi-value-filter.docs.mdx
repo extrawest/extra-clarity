@@ -1,0 +1,167 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+
+import * as FilterStories from './enum-multi-value-filter.stories';
+import { docsStylePatch } from '../../../helpers';
+
+<style>
+  { docsStylePatch }
+</style>
+
+<Meta
+  of={FilterStories}
+  name="Overview"
+/>
+
+## Enumerated Multi-Value Filter
+
+> **Standalone component**: yes
+
+```typescript
+import { EnumMultiValueFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
+```
+```html
+<ec-enum-multi-value-filter />
+```
+```html
+<clr-datagrid>
+  ...
+  <clr-dg-column>
+    Connector Type
+    <clr-dg-filter>
+      <ec-enum-multi-value-filter
+        [propertyKey]="'connectorType'"
+        [options]="connectorTypeOptions"
+      />
+    </clr-dg-filter>
+  </clr-dg-column>
+  ...
+</clr-datagrid>
+```
+
+### Description
+
+This component is designed for filtering datagrids with multiple values selectable from an enumerated list of options.
+
+The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
+datagrids. By the way, the provided API allows to use the component outside of datagrids as well.
+
+#### Configuration
+
+To configure the component you need to provide the following inputs:
+
+1. `[serverDriven]`  A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
+If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
+Otherwise, filtering is processed by the filter's `accepts()` method.
+2. `[propertyKey]`
+    * For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
+        as the `property` value in the output state to help identify the filter's state amidst another filters.
+    * For client-driven datagrids it must be equal to the name of a field in the object passed to the `[clrDgItem]` input
+        on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+3. `[options]` An array of options to select from. Each option is an object that contains the following fields:
+    ```typescript
+    export interface EnumFilterOption<E> {
+        value: E;
+        label?: string;
+        selectedByDefault?: boolean;
+    }
+    ```
+    * `value`
+        A required field, of any type (generic `E` from `EnumFilterOption<E>`) to be used as a new filter value
+        on selecting this option; values must be unique among all options. Usually, it's a string.
+    * `label`
+        An optional string label for the option.
+        If not provided, then the stringified `value` is shown as the label.
+    * `selectedByDefault`
+        An optional boolean flag to mark the option to be selected by default,
+        i.e. to define a custom default state for the filter.
+        When not provided for any option, the default state is empty (null)
+
+The simplest option list may be formed in this way:
+```typescript
+const options: EnumFilterOption<string>[] = ['red','green','blue'].map(value => ({ value }));
+```
+
+If you need to format or map option labels separately from underlying values,
+you should provide a string within the `label` field for such options.
+
+If you need more advanced labels (e.g. with icons) you may utilize the `[customLabelTpl]` input of the filter component.
+The entire option object `EnumFilterOption<E>` is passed to this template as the `$implicit` context parameter:
+
+```html
+<ec-enum-multi-value-filter
+  [propertyKey]="'color'"
+  [options]="colors"
+  [customLabelTpl]="customColorLabel"
+/>
+...
+<ng-template #customColorLabel let-option>
+  <span>{{ option.label ?? option.value }}</span>
+  <cds-icon shape="mapOptionToCdsIconShape(option)" />
+</ng-template>
+```
+
+Please refer to the [API](#api) section below for more details about all the component's inputs.
+
+#### Default state
+
+If not modified by the option list, the default filter's state is 'Show all' (nothing selected),
+which corresponds to the filter's value of `null`.
+
+You can modify the default state by providing `selectedByDefault: true` for any options in the option list.
+But please note, that the parent `<clr-datagrid>` component treats the default filter's state as inactive
+and ignores the selected filter's value in that case. So, if you set a custom default value, you will need
+to provide additional logic for the datagrid's `(clrDgRefresh)` handler to perform proper filtering.
+
+#### Output state
+
+The component's output `(filterValueChanged)` emits a new filter state on every selection change.
+
+The same state is also emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component for any
+non-default filter state.
+
+The output state is an object with two fields: `property` as the name of a field to filter by, and `value` as the
+actual value to filter with:
+```typescript
+// interface FilterState<E[] | null>
+{
+  property: string | number;
+  value: E[] | null;
+}
+```
+
+#### Read/Write the state
+
+The actual state of the filter can be read by the public getter `state` as `FilterState<E[] | null>`:
+
+```html
+...
+<ec-enum-multi-value-filter #filterByColor />
+...
+<span>{{ filterByColor.state.value }}</span>
+...
+```
+
+To check if the state is default, you can use the `isActive()` method, which returns `false` for the default state.
+
+There are two ways to set a new value programmatically:
+* put a value into the input `[value]` as `E[] | null`
+* pass a value into the method `setValue(value: E[] | null)`
+
+If any of the provided values is not included in the values within the option list,
+the filter will be reset to the default state. Providing `null` will clear the current selection.
+
+The public method `resetToDefault()` resets the filter to the default state, and
+`unselectAll()` resets the filter to the empty state (nothing selected).
+
+### Example
+
+<Canvas of={FilterStories.DocsExampleStory} />
+
+### Stories
+
+* [A filter within a client-driven datagrid](/story/components-datagrid-filters-enum-multi-value-filter--within-datagrid-story)
+* [A filter in isolation](/story/components-datagrid-filters-enum-multi-value-filter--filter-itself-story)
+
+### API
+
+<ArgTypes sort="requiredFirst" />
