@@ -1,4 +1,4 @@
-export * from './src/enum-group-filter';
+export * from './src/enum-grouped-value-filter';
 export * from './src/enum-multi-value-filter';
 export * from './src/enum-single-value-filter';
 export * from './src/enumerated-value-filter';

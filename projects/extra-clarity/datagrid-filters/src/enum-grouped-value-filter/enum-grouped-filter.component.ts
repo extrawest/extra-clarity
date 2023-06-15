@@ -13,9 +13,9 @@ const DEFAULT_MAX_HEIGHT_PX = 300;
 const DEFAULT_WIDTH_PX = 200;
 
 @Component({
-  selector: 'ec-enum-group-filter',
-  templateUrl: './enum-group-filter.component.html',
-  styleUrls: ['./enum-group-filter.component.scss'],
+  selector: 'ec-enum-grouped-value-filter',
+  templateUrl: './enum-grouped-filter.component.html',
+  styleUrls: ['./enum-grouped-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -23,7 +23,7 @@ const DEFAULT_WIDTH_PX = 200;
     ClrTreeViewModule,
   ],
 })
-export class EnumGroupFilterComponent<T, E>
+export class EnumGroupedValueFilterComponent<T, E>
 implements ClrDatagridFilterInterface<T, FilterState<E[]>>, OnChanges, OnDestroy, OnInit {
   @Input() heightPx: number = DEFAULT_MAX_HEIGHT_PX;
   @Input() widthPx: number = DEFAULT_WIDTH_PX;
