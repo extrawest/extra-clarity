@@ -1,5 +1,5 @@
 <div [style.width.px]="widthPx">
-  <ng-container *ngIf="!configErrors; else wrongConfig">
+  <ng-container *ngIf="!configErrors.length; else wrongConfig">
 
     <ng-container *ngIf="!loading; else loadingOptions">
       <div class="filter-title" *ngIf="title">
@@ -7,10 +7,10 @@
       </div>
 
       <div class="filter-selected-amount" *ngIf="showSelectedAmount">
-        Selected: {{ getSelectedAmountTotal() }}
+        Selected: {{ getTotalSelectedAmountLabel() }}
       </div>
 
-      <div class="filter-options" [style.max-height.px]="heightPx">
+      <div class="filter-options" [style.max-height.px]="maxHeightPx">
         <clr-tree>
           <clr-tree-node
             *ngFor="let group of options; index as i"
@@ -20,7 +20,7 @@
             <span class="filter-group-label">
               {{ group.label }}
               <ng-container *ngIf="showSelectedAmount">
-                ({{ getSelectedAmountInGroup(group) }})
+                ({{ getGroupSelectedAmountLabel(group) }})
               </ng-container>
             </span>
             <clr-tree-node

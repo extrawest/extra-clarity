@@ -9,8 +9,8 @@ export interface EnumFilterOption<E> {
   selectedByDefault?: boolean;
 }
 
-export interface EnumGroupFilterOption<T> {
+export interface EnumGroupFilterOption<E> {
   label: string;
-  items: readonly EnumFilterOption<T>[];
+  items: readonly EnumFilterOption<E>[];
   expandedByDefault?: boolean;
 }

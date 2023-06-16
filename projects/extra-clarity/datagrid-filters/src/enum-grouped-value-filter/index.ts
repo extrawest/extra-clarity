@@ -1,1 +1,1 @@
-export * from './enum-grouped-filter.component';
+export * from './enum-grouped-value-filter.component';
