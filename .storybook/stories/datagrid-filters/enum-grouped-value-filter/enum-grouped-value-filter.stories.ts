@@ -209,7 +209,6 @@ export const DocsExampleStory: Story = {
   decorators: WithinDatagridStory.decorators,
   render: (args) => ({
     props: { users: USERS_DATA, ...args },
-    // TODO: Adapt options
     template: wrapFilterWithinDatagrid(`
       <ec-enum-grouped-value-filter
         [options]="[
