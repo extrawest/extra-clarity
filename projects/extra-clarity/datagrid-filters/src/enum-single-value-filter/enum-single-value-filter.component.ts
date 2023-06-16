@@ -36,10 +36,13 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
 export class EnumSingleValueFilterComponent<E, T extends object = {}>
 implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDestroy, OnInit {
   /**
-   * TemplateRef for a template to use as a custom option label.
+   * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
    *
-   * The entire `option` object is passed to this template as the $implicit context parameter.
+   * The entire `option: EnumFilterOption<E>` object is passed to this template
+   * as the `$implicit` context parameter.
+   *
+   * `TemplateRef<unknown>`
    */
   @Input()
   public customLabelTpl?: TemplateRef<unknown>;
@@ -114,7 +117,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
   public title?: string;
 
   /**
-   * A value to be set as the actual filter's value on this input change or on `[options]` change.
+   * A value `E | null` to be set as the actual filter's value on this input change or on `[options]` change.
    *
    * If the provided value is not included in the values within the option list,
    * the filter will be reset to the default state.
@@ -122,7 +125,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
    * Providing `null` will clear the current selection, and `undefined` will be ignored.
    * */
   @Input()
-  public value: E | null | undefined;
+  public value?: E | null;
 
   /**
    * Width in pixels of the filter's container
@@ -240,7 +243,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
   }
 
   /**
-   * Set a new value as the actual filter's value.
+   * Set the actual filter's value as `E | null.
    *
    * If the provided value is not included in the values within the option list,
    * the filter will be reset to the default state.

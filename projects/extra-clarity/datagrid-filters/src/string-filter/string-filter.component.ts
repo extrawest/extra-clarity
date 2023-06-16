@@ -168,7 +168,7 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
    * If the provided string is invalid, the actual filter's value will be reset to the default state (an empty string).
    * */
   @Input()
-  public value: string | undefined;
+  public value?: string;
 
   /**
    * Width in pixels of the filter's container
@@ -340,7 +340,14 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   }
 
   /**
-   * Set a new value as the actual filter's value.
+   * Reset the filter to the default state (an empty string)
+   * */
+  resetToDefault(): void {
+    this.updateFormControlValue('');
+  }
+
+  /**
+   * Set the actual filter's value.
    *
    * If the provided value is invalid, the filter value will be reset to default (an empty string).
    * */
@@ -348,13 +355,6 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
     if (this.propertyKey) {
       this.updateFormControlValue(value);
     }
-  }
-
-  /**
-   * Reset the filter to the default state (an empty string)
-   * */
-  resetToDefault(): void {
-    this.updateFormControlValue('');
   }
 
   protected onReset(): void {

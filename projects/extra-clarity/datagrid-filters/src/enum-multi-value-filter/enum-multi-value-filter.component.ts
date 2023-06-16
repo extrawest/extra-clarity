@@ -37,10 +37,13 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
 export class EnumMultiValueFilterComponent<E, T extends object = {}>
 implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, OnDestroy, OnInit {
   /**
-   * TemplateRef for a template to use as a custom option label.
+   * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
    *
-   * The entire `option` object is passed to this template as the $implicit context parameter.
+   * The entire `option: EnumFilterOption<E>` object is passed to this template
+   * as the `$implicit` context parameter.
+   *
+   * `TemplateRef<unknown>`
    */
   @Input()
   public customLabelTpl?: TemplateRef<unknown>;
@@ -125,7 +128,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
   public title?: string;
 
   /**
-   * A value to be set as the actual filter's value on this input change or on `[options]` change.
+   * A value `E[] | null` to be set as the actual filter's value on this input change or on `[options]` change.
    *
    * If any of the provided values is not included in the values within the option list,
    * the filter will be reset to the default state.
@@ -133,7 +136,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
    * Providing `null` will clear the current selection, and `undefined` will be ignored.
    * */
   @Input()
-  public value: E[] | null | undefined;
+  public value: E[] | null;
 
   /**
    * Width (in pixels) of the filter's container
@@ -219,20 +222,19 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
       return false;
     }
 
-    const selectedValues = Array.from(this.selectedValues);
-
     if (!isArray) {
-      return selectedValues.includes(propertyValue as E);
+      return this.selectedValues.has(propertyValue as E);
     }
 
     if (this.matchSelected === 'exact') {
       return areSetsEqual(new Set(propertyValue), this.selectedValues, { ignoreOrder: true });
     }
 
+    const selectedValues = Array.from(this.selectedValues);
+
     if (this.matchSelected === 'all') {
       return selectedValues.every(selectedValue => propertyValue.includes(selectedValue));
     }
-
     return selectedValues.some(selectedValue => propertyValue.includes(selectedValue));
   }
 
@@ -276,7 +278,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
   }
 
   /**
-   * Set a new value as the actual filter's value.
+   * Set the actual filter's value as `E[] | null`.
    *
    * If any of the provided values is not included in the values within the option list,
    *   the filter will be reset to the default state.
@@ -317,9 +319,12 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
   }
 
   private areAllValuesAllowed(filterValues: E[]): boolean {
-    return filterValues.length > 0
-      ? filterValues.every(value => this.options.some(option => option.value === value))
-      : true;
+    if (filterValues.length === 0) {
+      return true;
+    }
+    return filterValues.every(value => {
+      return this.options.some(option => option.value === value);
+    });
   }
 
   private checkIfStateIsDefault(): boolean {
@@ -343,12 +348,10 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
       this.setValue(this.value);
       return;
     }
-
     if (this.selectedValues.size === 0) {
       this.resetToDefault();
       return;
     }
-
     this.setValue(Array.from(this.selectedValues));
   }
 
