@@ -42,8 +42,6 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
    *
    * The entire `option: EnumGroupFilterOption<E>` object is passed to this template
    * as the `$implicit` context parameter.
-   *
-   * `TemplateRef<unknown>`
    */
   @Input()
   public customLabelTpl?: TemplateRef<unknown>;
@@ -52,7 +50,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
    * Whether to expand all groups automatically on [options] change
    */
   @Input()
-  public expandedAll?: boolean;
+  public expandedAll = false;
 
   /**
    * Show a placeholder 'Loading, please wait...' to inform users
@@ -103,7 +101,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
    * @required
    */
   @Input()
-  public options: readonly EnumGroupFilterOption<E>[] = [];
+  public options: EnumGroupFilterOption<E>[] = [];
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
