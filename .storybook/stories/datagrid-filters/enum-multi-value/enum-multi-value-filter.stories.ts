@@ -223,6 +223,5 @@ export const DocsExampleStory: Story = {
     ...hideAllControlRows(MetaStory.argTypes),
   },
   args: {
-    options: colorEnumOptions,
   },
 };
