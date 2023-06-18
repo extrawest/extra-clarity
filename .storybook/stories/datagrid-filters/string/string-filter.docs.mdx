@@ -12,7 +12,7 @@ import { docsStylePatch } from '../../../helpers';
   name="Overview"
 />
 
-## String Filter
+# String Filter
 
 <div className="table-of-contents">
 - [Quick Start](#quick-start)
@@ -27,7 +27,7 @@ import { docsStylePatch } from '../../../helpers';
 - [API](#api)
 </div>
 
-### Quick Start
+## Quick Start
 
 > **Standalone component**: yes
 
@@ -52,18 +52,18 @@ import { StringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters
 </clr-datagrid>
 ```
 
-### Example
+## Example
 
 In this example, the filter is attached to the 'Name' column:
 
 <Canvas of={FilterStories.DocsExampleStory} />
 
-### Stories
+## Stories
 
 * [A filter within a client-driven datagrid](/story/components-datagrid-filters-string-filter--within-datagrid-story)
 * [A filter in isolation](/story/components-datagrid-filters-string-filter--filter-itself-story)
 
-### Description
+## Description
 
 This component is designed for filtering datagrids with a string value.
 It utilizes the `ClrInput` component for editing the value.
@@ -71,7 +71,7 @@ It utilizes the `ClrInput` component for editing the value.
 The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
 datagrids. By the way, the provided API allows to use the component outside of datagrids as well.
 
-#### Configuration
+### Configuration
 
 To configure the component you need to provide the following inputs:
 
@@ -89,11 +89,11 @@ For client-driven datagrids you can also configure the filtering algorithm by se
 
 Please refer to the [API](#api) section below for more details about all the component's inputs.
 
-#### Default State
+### Default State
 
 The default (inactive) filter's state is an empty string (nothing to filter).
 
-#### Output State
+### Output State
 
 The component's output `(filterValueChanged)` emits an object with the actual filter state every time when the filter
 gets a new valid value via the input field or programmatically.
@@ -112,7 +112,7 @@ actual string to filter with:
 }
 ```
 
-#### Read/Write the State
+### Read/Write the State
 
 The actual state of the filter can be read by the public getter `state` as `FilterState<string>`:
 
@@ -138,13 +138,13 @@ the [API](#api) section below for more details.
 
 The public method `resetToDefault()` resets the filter to the default state.
 
-#### Additional Info
+### Additional Info
 
 The component uses `ClrPopoverToggleService` internally (as an optional injector provided by the `<clr-dg-column>` parent
 component) to react to opening the filter: to focus the input field and reset an invalid entered value to the last
 valid value. That's why we recommend to use the filter as nested in the `<clr-dg-column>` component (see code examples
 on this page).
 
-### API
+## API
 
 <ArgTypes sort="requiredFirst" />

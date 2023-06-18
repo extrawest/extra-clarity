@@ -1,4 +1,10 @@
 export const docsStylePatch = `
+  h2 {
+    margin: 36px 0 12px !important;
+    font-size: 24px !important;
+    line-height: 24px !important;
+  }
+
   h3 {
     margin: 36px 0 12px !important;
     font-size: 20px !important;

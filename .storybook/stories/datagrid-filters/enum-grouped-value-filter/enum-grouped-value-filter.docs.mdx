@@ -12,7 +12,7 @@ import { docsStylePatch } from '../../../helpers';
   name="Overview"
 />
 
-## Enumerated Grouped-Value Filter
+# Enumerated Grouped-Value Filter
 
 <div className="table-of-contents">
 - [Quick Start](#quick-start)
@@ -27,7 +27,7 @@ import { docsStylePatch } from '../../../helpers';
 - [API](#api)
 </div>
 
-### Quick Start
+## Quick Start
 
 > **Standalone component**: yes
 
@@ -53,18 +53,18 @@ import { EnumGroupedValueFilterComponent } from '@extrawest/extra-clarity/datagr
 </clr-datagrid>
 ```
 
-### Example
+## Example
 
 In this example, the filter is attached to the 'Favorite color' column:
 
 <Canvas of={FilterStories.DocsExampleStory} />
 
-### Stories
+## Stories
 
 * [A filter within a client-driven datagrid](/story/components-datagrid-filters-enum-grouped-value-filter--within-datagrid-story)
 * [A filter in isolation](/story/components-datagrid-filters-enum-grouped-value-filter--filter-itself-story)
 
-### Description
+## Description
 
 This component is designed for filtering datagrids with multiple values selectable from an enumerated list of options
 grouped within expandable categories/groups. It utilizes the `ClrTree` component for interacting with the list.
@@ -72,7 +72,7 @@ grouped within expandable categories/groups. It utilizes the `ClrTree` component
 The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
 datagrids. By the way, the provided API allows to use the component outside of datagrids as well.
 
-#### Configuration
+### Configuration
 
 To configure the component you need to provide the following inputs:
 
@@ -87,7 +87,7 @@ To configure the component you need to provide the following inputs:
 3. `[options]` An array of grouped options `EnumValueFilterOptionGroup<E>` to select from.
     See the following [section](#option-list) for more details.
 
-#### Option List
+### Option List
 
 To set the options to select from, you should put an array of `EnumValueFilterOptionGroup<E>` to
 the `[options]` input. Each item of this array contains the configuration for a group of options:
@@ -168,7 +168,7 @@ The entire option object `EnumValueFilterOption<E>` is passed to this template a
 
 Please refer to the [API](#api) section below for more details about all the component's inputs.
 
-#### Default State
+### Default State
 
 If not modified by the option list, the default filter's state is 'Show all' (nothing selected),
 which corresponds to the filter's value of `null`.
@@ -178,7 +178,7 @@ But please note, that the parent `<clr-datagrid>` component treats the default f
 and ignores the selected filter's value in that case. So, if you set a custom default value, you will need
 to provide additional logic for the datagrid's `(clrDgRefresh)` handler to perform proper filtering.
 
-#### Output State
+### Output State
 
 The component's output `(filterValueChanged)` emits a new filter state on every selection change.
 
@@ -196,7 +196,7 @@ actual value to filter with:
 }
 ```
 
-#### Read/Write the State
+### Read/Write the State
 
 The actual state of the filter can be read by the public getter `state` as `FilterState<E[] | null>`:
 
@@ -220,6 +220,6 @@ the filter will be reset to the default state. Providing `null` will clear the c
 The public method `resetToDefault()` resets the filter to the default state, and
 `unselectAll()` resets the filter to the empty state (nothing selected).
 
-### API
+## API
 
 <ArgTypes sort="requiredFirst" />
