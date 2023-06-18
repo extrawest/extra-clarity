@@ -73,14 +73,14 @@ Otherwise, filtering is processed by the filter's `accepts()` method.
         on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
 3. `[options]` An array of options to select from. Each option is an object that contains the following fields:
     ```typescript
-    export interface EnumFilterOption<E> {
+    export interface EnumValueFilterOption<E> {
         value: E;
         label?: string;
         selectedByDefault?: boolean;
     }
     ```
     * `value`
-        A required field, of any type (generic `E` from `EnumFilterOption<E>`) to be used as a new filter value
+        A required field, of any type (generic `E` from `EnumValueFilterOption<E>`) to be used as a new filter value
         on selecting this option; values must be unique among all options. Usually, it's a string.
     * `label`
         An optional string label for the option.
@@ -92,14 +92,14 @@ Otherwise, filtering is processed by the filter's `accepts()` method.
 
 The simplest option list may be formed in this way:
 ```typescript
-const options: EnumFilterOption<string>[] = ['red','green','blue'].map(value => ({ value }));
+const options: EnumValueFilterOption<string>[] = ['red','green','blue'].map(value => ({ value }));
 ```
 
 If you need to format or map option labels separately from underlying values,
 you should provide a string within the `label` field for such options.
 
 If you need more advanced labels (e.g. with icons) you may utilize the `[customLabelTpl]` input of the filter component.
-The entire option object `EnumFilterOption<E>` is passed to this template as the `$implicit` context parameter:
+The entire option object `EnumValueFilterOption<E>` is passed to this template as the `$implicit` context parameter:
 
 ```html
 <ec-enum-multi-value-filter
