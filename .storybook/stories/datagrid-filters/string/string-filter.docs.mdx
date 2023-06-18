@@ -1,6 +1,6 @@
 import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
 
-import * as StringFilterStories from './string-filter.stories';
+import * as FilterStories from './string-filter.stories';
 import { docsStylePatch } from '../../../helpers';
 
 <style>
@@ -8,23 +8,23 @@ import { docsStylePatch } from '../../../helpers';
 </style>
 
 <Meta
-  of={StringFilterStories}
+  of={FilterStories}
   name="Overview"
 />
 
 ## String Filter
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Description](#description)
-      * [Configuration](#configuration)
-      * [Default State](#default-state)
-      * [Output State](#output-state)
-      * [Read/Write the state](#readwrite-the-state)
-      * [Additional info](#additional-info)
-  - [Example](#example)
-  - [Stories](#stories)
-  - [API](#api)
+- [Quick Start](#quick-start)
+- [Example](#example)
+- [Stories](#stories)
+- [Description](#description)
+  * [Configuration](#configuration)
+  * [Default State](#default-state)
+  * [Output State](#output-state)
+  * [Read/Write the State](#readwrite-the-state)
+  * [Additional Info](#additional-info)
+- [API](#api)
 </div>
 
 ### Quick Start
@@ -52,9 +52,21 @@ import { StringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters
 </clr-datagrid>
 ```
 
+### Example
+
+In this example, the filter is attached to the 'Name' column:
+
+<Canvas of={FilterStories.DocsExampleStory} />
+
+### Stories
+
+* [A filter within a client-driven datagrid](/story/components-datagrid-filters-string-filter--within-datagrid-story)
+* [A filter in isolation](/story/components-datagrid-filters-string-filter--filter-itself-story)
+
 ### Description
 
 This component is designed for filtering datagrids with a string value.
+It utilizes the `ClrInput` component for editing the value.
 
 The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
 datagrids. By the way, the provided API allows to use the component outside of datagrids as well.
@@ -64,8 +76,8 @@ datagrids. By the way, the provided API allows to use the component outside of d
 To configure the component you need to provide the following inputs:
 
 1. `[serverDriven]`  A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
-If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
-Otherwise, filtering is processed by the filter's `accepts()` method.
+    If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
+    Otherwise, filtering is processed by the filter's `accepts()` method.
 2. `[propertyKey]`
     * For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
         as the `property` value in the output state to help identify the filter's state amidst another filters.
@@ -77,11 +89,11 @@ For client-driven datagrids you can also configure the filtering algorithm by se
 
 Please refer to the [API](#api) section below for more details about all the component's inputs.
 
-#### Default state
+#### Default State
 
 The default (inactive) filter's state is an empty string (nothing to filter).
 
-#### Output state
+#### Output State
 
 The component's output `(filterValueChanged)` emits an object with the actual filter state every time when the filter
 gets a new valid value via the input field or programmatically.
@@ -91,6 +103,7 @@ non-default filter state.
 
 The output state is an object with two fields: `property` as the name of a field to filter by, and `value` as the
 actual string to filter with:
+
 ```typescript
 // interface FilterState<string>
 {
@@ -99,7 +112,7 @@ actual string to filter with:
 }
 ```
 
-#### Read/Write the state
+#### Read/Write the State
 
 The actual state of the filter can be read by the public getter `state` as `FilterState<string>`:
 
@@ -125,21 +138,12 @@ the [API](#api) section below for more details.
 
 The public method `resetToDefault()` resets the filter to the default state.
 
-#### Additional info
+#### Additional Info
 
 The component uses `ClrPopoverToggleService` internally (as an optional injector provided by the `<clr-dg-column>` parent
 component) to react to opening the filter: to focus the input field and reset an invalid entered value to the last
 valid value. That's why we recommend to use the filter as nested in the `<clr-dg-column>` component (see code examples
 on this page).
-
-### Example
-
-<Canvas of={StringFilterStories.DocsExampleStory} />
-
-### Stories
-
-* [A filter within a client-driven datagrid](/story/components-datagrid-filters-string-filter--within-datagrid-story)
-* [A filter in isolation](/story/components-datagrid-filters-string-filter--filter-itself-story)
 
 ### API
 

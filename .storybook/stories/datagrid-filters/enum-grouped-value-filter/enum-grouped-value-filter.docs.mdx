@@ -16,13 +16,14 @@ import { docsStylePatch } from '../../../helpers';
 
 <div className="table-of-contents">
 - [Quick Start](#quick-start)
-- [Description](#description)
-  * [Configuration](#configuration)
-  * [Default State](#default-state)
-  * [Output State](#output-state)
-  * [Read/Write the state](#readwrite-the-state)
 - [Example](#example)
 - [Stories](#stories)
+- [Description](#description)
+  * [Configuration](#configuration)
+  * [Option List](#option-list)
+  * [Default State](#default-state)
+  * [Output State](#output-state)
+  * [Read/Write the State](#readwrite-the-state)
 - [API](#api)
 </div>
 
@@ -51,10 +52,22 @@ import { EnumGroupedValueFilterComponent } from '@extrawest/extra-clarity/datagr
   ...
 </clr-datagrid>
 ```
+
+### Example
+
+In this example, the filter is attached to the 'Favorite color' column:
+
+<Canvas of={FilterStories.DocsExampleStory} />
+
+### Stories
+
+* [A filter within a client-driven datagrid](/story/components-datagrid-filters-enum-grouped-value-filter--within-datagrid-story)
+* [A filter in isolation](/story/components-datagrid-filters-enum-grouped-value-filter--filter-itself-story)
+
 ### Description
 
 This component is designed for filtering datagrids with multiple values selectable from an enumerated list of options
-grouped within expandable categories/groups.
+grouped within expandable categories/groups. It utilizes the `ClrTree` component for interacting with the list.
 
 The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
 datagrids. By the way, the provided API allows to use the component outside of datagrids as well.
@@ -64,50 +77,57 @@ datagrids. By the way, the provided API allows to use the component outside of d
 To configure the component you need to provide the following inputs:
 
 1. `[serverDriven]`  A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
-If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
-Otherwise, filtering is processed by the filter's `accepts()` method.
+    If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
+    Otherwise, filtering is processed by the filter's `accepts()` method.
 2. `[propertyKey]`
     * For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
-as the `property` value in the output state to help identify the filter's state amidst another filters.
+        as the `property` value in the output state to help identify the filter's state amidst another filters.
     * For client-driven datagrids it must be equal to the name of a field in the object passed to the `[clrDgItem]` input
-on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
-3. `[options]` An array of grouped options to select from.
-    Each group is an object that contains the following fields:
-    ```typescript
-    export interface EnumGroupedValueFilterOption<E> {
-        label: string;
-        items: readonly EnumValueFilterOption<E>[];
-        expandedByDefault?: boolean;
-    }
-    ```
-    * `label`
-    A required string to be shown as the group name in the filter's body.
-    * `expandedByDefault`
-    An optional boolean flag to mark groups which should be expanded on the component's `[options]` input change;
-    this flag has lower priority than the component's [expandedAll] input.
-    *  `items`
-    A required array of options to select from. Each option is an object that contains the following fields:
-    ```typescript
-    export interface EnumValueFilterOption<E> {
+        on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+3. `[options]` An array of grouped options `EnumValueFilterOptionGroup<E>` to select from.
+    See the following [section](#option-list) for more details.
+
+#### Option List
+
+To set the options to select from, you should put an array of `EnumValueFilterOptionGroup<E>` to
+the `[options]` input. Each item of this array contains the configuration for a group of options:
+
+```typescript
+interface EnumValueFilterOptionGroup<E> {
+    label: string;
+    expandedByDefault?: boolean;
+    // items: Array<EnumValueFilterOption<E>>
+    items: Array<{
         value: E;
         label?: string;
         selectedByDefault?: boolean;
-    }
-    ```
-    * `value`
-        A required field, of any type (generic `E` from `EnumValueFilterOption<E>`) to be used as a new filter value
-        on selecting this option; values must be unique among all options. Usually, it's a string.
-    * `label`
-        An optional string label for the option.
-        If not provided, then the stringified `value` is shown as the label.
-    * `selectedByDefault`
-        An optional boolean flag to mark the option to be selected by default,
-        i.e. to define a custom default state for the filter.
-        When not provided for any option, the default state is empty (null)
+    }>;
+}
+```
 
-A simple example of an option list:
+with the following properties:
+* `label`
+    A required string to be shown as the group name in the filter's body.
+* `expandedByDefault`
+    An optional boolean flag to mark groups which should be expanded on the component's `[options]`
+    input change; this flag has lower priority than the component's [expandedAll] input.
+* `items`
+    A required array of options to select from. Each option is an object that contains the following fields:
+    * `value`
+      A required field, of any type (generic `<E>`, usually a `string`), to be added to/removed from the filter value
+      on selecting/unselecting this option. All **values must be unique** among all groups and options in the filter.
+    * `label`
+      An optional string label for the option.
+      If not provided, then the stringified `value` is shown as the label.
+    * `selectedByDefault`
+      An optional boolean flag to mark the option to be selected by default,
+      i.e. to define a custom default state for the filter.
+      When not provided for any option, the default state is empty (`null`).
+
+An example of the option list:
+
 ```typescript
-const options: EnumGroupedValueFilterOption<string>[] = [
+const options: EnumValueFilterOptionGroup<string>[] = [
   {
     label: 'Grayscale'
     items: [
@@ -148,7 +168,7 @@ The entire option object `EnumValueFilterOption<E>` is passed to this template a
 
 Please refer to the [API](#api) section below for more details about all the component's inputs.
 
-#### Default state
+#### Default State
 
 If not modified by the option list, the default filter's state is 'Show all' (nothing selected),
 which corresponds to the filter's value of `null`.
@@ -158,7 +178,7 @@ But please note, that the parent `<clr-datagrid>` component treats the default f
 and ignores the selected filter's value in that case. So, if you set a custom default value, you will need
 to provide additional logic for the datagrid's `(clrDgRefresh)` handler to perform proper filtering.
 
-#### Output state
+#### Output State
 
 The component's output `(filterValueChanged)` emits a new filter state on every selection change.
 
@@ -167,6 +187,7 @@ non-default filter state.
 
 The output state is an object with two fields: `property` as the name of a field to filter by, and `value` as the
 actual value to filter with:
+
 ```typescript
 // interface FilterState<E[] | null>
 {
@@ -175,7 +196,7 @@ actual value to filter with:
 }
 ```
 
-#### Read/Write the state
+#### Read/Write the State
 
 The actual state of the filter can be read by the public getter `state` as `FilterState<E[] | null>`:
 
@@ -198,15 +219,6 @@ the filter will be reset to the default state. Providing `null` will clear the c
 
 The public method `resetToDefault()` resets the filter to the default state, and
 `unselectAll()` resets the filter to the empty state (nothing selected).
-
-### Example
-
-<Canvas of={FilterStories.DocsExampleStory} />
-
-### Stories
-
-* [A filter within a client-driven datagrid](/story/components-datagrid-filters-enum-grouped-value-filter--within-datagrid-story)
-* [A filter in isolation](/story/components-datagrid-filters-enum-grouped-value-filter--filter-itself-story)
 
 ### API
 
