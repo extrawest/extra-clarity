@@ -1,6 +1,6 @@
 import {
-  type EnumGroupedValueFilterOption,
   type EnumValueFilterOption,
+  type EnumValueFilterOptionGroup,
 } from '../../projects/extra-clarity/datagrid-filters';
 
 export const colorEnumOptions: EnumValueFilterOption<string>[] = [
@@ -10,7 +10,7 @@ export const colorEnumOptions: EnumValueFilterOption<string>[] = [
   { value: 'green', label: 'Green' },
 ];
 
-export const colorGroupedEnumOptions: EnumGroupedValueFilterOption<string>[] = [
+export const colorGroupedEnumOptions: EnumValueFilterOptionGroup<string>[] = [
   {
     label: 'Grayscale',
     items: [
