@@ -3,6 +3,13 @@ import {
   type EnumValueFilterOptionGroup,
 } from '../../projects/extra-clarity/datagrid-filters';
 
+export const linksToClrDatagridDocs = `
+> You also may find useful to refer to the original documentation on
+[Clarity datagrids](https://clarity.design/documentation/datagrid/custom-filtering) in general,
+[server-driven datagrids](https://clarity.design/documentation/datagrid/server-driven),
+and [custom filtering](https://clarity.design/documentation/datagrid/custom-filtering).
+`;
+
 export const colorEnumOptions: EnumValueFilterOption<string>[] = [
   { value: 'black', label: 'Black' },
   { value: 'blue', label: 'Blue' },

@@ -1,7 +1,8 @@
-import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
+
+import { docsStylePatch, linksToClrDatagridDocs } from '../../../helpers';
 
 import * as FilterStories from './enum-single-value-filter.stories';
-import { docsStylePatch } from '../../../helpers';
 
 <style>
   { docsStylePatch }
@@ -68,6 +69,8 @@ In this example, the filter is attached to the 'Favorite color' column:
 
 This component is designed for filtering datagrids with a single value selectable from an enumerated list of options.
 It utilizes the `ClrRadio` component for interacting with the list.
+
+<Markdown>{linksToClrDatagridDocs}</Markdown>
 
 The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
 datagrids. By the way, the provided API allows to use the component outside of datagrids as well.

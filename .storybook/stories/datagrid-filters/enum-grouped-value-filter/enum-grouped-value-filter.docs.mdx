@@ -1,7 +1,8 @@
-import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
+
+import { docsStylePatch, linksToClrDatagridDocs } from '../../../helpers';
 
 import * as FilterStories from './enum-grouped-value-filter.stories';
-import { docsStylePatch } from '../../../helpers';
 
 <style>
   { docsStylePatch }
@@ -69,6 +70,8 @@ In this example, the filter is attached to the 'Favorite color' column:
 This component is designed for filtering datagrids with multiple values selectable from an enumerated list of options
 grouped within expandable categories/groups. It utilizes the `ClrTree` component for interacting with the list.
 
+<Markdown>{linksToClrDatagridDocs}</Markdown>
+
 The component implements the `ClrDatagridFilterInterface` and can be used with both server-driven and client-driven
 datagrids. By the way, the provided API allows to use the component outside of datagrids as well.
 
@@ -82,8 +85,8 @@ To configure the component you need to provide the following inputs:
 2. `[propertyKey]`
     * For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
         as the `property` value in the output state to help identify the filter's state amidst another filters.
-    * For client-driven datagrids it must be equal to the name of a field in the object passed to the `[clrDgItem]` input
-        on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+    * For client-driven datagrids it must be equal to the name of a field in the object passed to the `[clrDgItem]`
+        input on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
 3. `[options]` An array of grouped options `EnumValueFilterOptionGroup<E>` to select from.
     See the following [section](#option-list) for more details.
 
