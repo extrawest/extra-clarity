@@ -15,7 +15,7 @@ import {
 import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
 import { Subject } from 'rxjs';
 
-import { EnumFilterOption, FilterState } from '../interfaces/filter-state.interface';
+import { EnumValueFilterOption, FilterState } from '../interfaces/filter-state.interface';
 
 export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   maxHeightPx: 300,
@@ -39,7 +39,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
    *
-   * The entire `option: EnumFilterOption<E>` object is passed to this template
+   * The entire `option: EnumValueFilterOption<E>` object is passed to this template
    * as the `$implicit` context parameter.
    *
    * `TemplateRef<unknown>`
@@ -79,7 +79,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
    * @required
    */
   @Input()
-  public options: EnumFilterOption<E>[] = [];
+  public options: EnumValueFilterOption<E>[] = [];
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -269,7 +269,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
     this.setValue(inputValue);
   }
 
-  protected trackByValue(index: number, option: EnumFilterOption<E>): E {
+  protected trackByValue(index: number, option: EnumValueFilterOption<E>): E {
     return option.value;
   }
 

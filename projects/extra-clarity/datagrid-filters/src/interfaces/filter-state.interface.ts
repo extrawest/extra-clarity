@@ -1,16 +1,16 @@
 export interface FilterState<T> {
   property: string | number;
-  value: T | undefined;
+  value: T;
 }
 
-export interface EnumFilterOption<E> {
+export interface EnumValueFilterOption<E> {
   value: E;
   label?: string;
   selectedByDefault?: boolean;
 }
 
-export interface EnumGroupFilterOption<E> {
+export interface EnumGroupedValueFilterOption<E> {
   label: string;
-  items: readonly EnumFilterOption<E>[];
+  items: readonly EnumValueFilterOption<E>[];
   expandedByDefault?: boolean;
 }

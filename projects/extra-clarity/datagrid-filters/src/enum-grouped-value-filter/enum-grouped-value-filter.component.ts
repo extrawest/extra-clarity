@@ -16,7 +16,7 @@ import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrTreeViewModule } from
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject } from 'rxjs';
 
-import { EnumFilterOption, EnumGroupFilterOption, FilterState } from '../interfaces/filter-state.interface';
+import { EnumGroupedValueFilterOption, EnumValueFilterOption, FilterState } from '../interfaces/filter-state.interface';
 
 export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   maxHeightPx: 300,
@@ -40,7 +40,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
    *
-   * The entire `option: EnumGroupFilterOption<E>` object is passed to this template
+   * The entire `option: EnumGroupedValueFilterOption<E>` object is passed to this template
    * as the `$implicit` context parameter.
    */
   @Input()
@@ -83,7 +83,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
    * * `expandedByDefault`: an optional boolean flag to mark groups which should be expanded
    *     on the component's `[options]` input change; this flag has lower priority than
    *     the component's [expandedAll] input;
-   * * `items`: an array of options to select from `EnumFilterOption<E>[]`.
+   * * `items`: an array of options to select from `EnumValueFilterOption<E>[]`.
    *
    * Each option in the `items` sub-array contains:
    * * `value`: a value of any type `<E>` to be added to the cumulative filter value on selecting this option;
@@ -101,7 +101,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
    * @required
    */
   @Input()
-  public options: EnumGroupFilterOption<E>[] = [];
+  public options: EnumGroupedValueFilterOption<E>[] = [];
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -241,7 +241,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
     return selectedValues.some(selectedValue => propertyValue.includes(selectedValue));
   }
 
-  protected getGroupSelectedAmountLabel(group: EnumGroupFilterOption<E>): string {
+  protected getGroupSelectedAmountLabel(group: EnumGroupedValueFilterOption<E>): string {
     const selected = group.items.filter(item => this.selectedValues.has(item.value)).length;
     const total = group.items.length;
     return `${selected}/${total}`;
@@ -352,7 +352,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
     this.updateSelectedValues(newSelectedValues);
   }
 
-  protected trackByValue(index: number, option: EnumFilterOption<E>): E {
+  protected trackByValue(index: number, option: EnumValueFilterOption<E>): E {
     return option.value;
   }
 
