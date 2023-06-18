@@ -7,6 +7,23 @@ setCompodocJson(docJson);
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        includeNames: true,
+        order: [
+          '*',
+          [
+            '*',
+            [
+              'String Filter',
+              'Enum Single-Value Filter',
+              'Enum Multi-Value Filter',
+              'Enum Grouped-Value Filter',
+            ],
+          ],
+        ],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
