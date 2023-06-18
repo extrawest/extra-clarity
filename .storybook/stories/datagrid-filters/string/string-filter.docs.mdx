@@ -1,6 +1,6 @@
 import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
 
-import { docsStylePatch, linksToClrDatagridDocs } from '../../../helpers';
+import { docsStylePatch, extraClarityGithubSrc, linksToClrDatagridDocs } from '../../../helpers';
 
 import * as FilterStories from './string-filter.stories';
 
@@ -16,16 +16,17 @@ import * as FilterStories from './string-filter.stories';
 # String Filter
 
 <div className="table-of-contents">
-- [Quick Start](#quick-start)
-- [Example](#example)
-- [Stories](#stories)
-- [Description](#description)
-  * [Configuration](#configuration)
-  * [Default State](#default-state)
-  * [Output State](#output-state)
-  * [Read/Write the State](#readwrite-the-state)
-  * [Additional Info](#additional-info)
-- [API](#api)
+  - [Quick Start](#quick-start)
+  - [Example](#example)
+  - [Stories](#stories)
+  - [Description](#description)
+    * [Configuration](#configuration)
+    * [Default State](#default-state)
+    * [Output State](#output-state)
+    * [Read/Write the State](#readwrite-the-state)
+    * [Additional Info](#additional-info)
+  - [API](#api)
+  - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -151,3 +152,9 @@ on this page).
 ## API
 
 <ArgTypes sort="requiredFirst" />
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/datagrid-filters/src/string-filter)`}
+</Markdown>

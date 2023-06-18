@@ -1,6 +1,6 @@
 import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
 
-import { docsStylePatch, linksToClrDatagridDocs } from '../../../helpers';
+import { docsStylePatch, extraClarityGithubSrc, linksToClrDatagridDocs } from '../../../helpers';
 
 import * as FilterStories from './enum-single-value-filter.stories';
 
@@ -16,16 +16,17 @@ import * as FilterStories from './enum-single-value-filter.stories';
 # Enumerated Single-Value Filter
 
 <div className="table-of-contents">
-- [Quick Start](#quick-start)
-- [Example](#example)
-- [Stories](#stories)
-- [Description](#description)
-  * [Configuration](#configuration)
-  * [Option List](#option-list)
-  * [Default State](#default-state)
-  * [Output State](#output-state)
-  * [Read/Write the State](#readwrite-the-state)
-- [API](#api)
+  - [Quick Start](#quick-start)
+  - [Example](#example)
+  - [Stories](#stories)
+  - [Description](#description)
+    * [Configuration](#configuration)
+    * [Option List](#option-list)
+    * [Default State](#default-state)
+    * [Output State](#output-state)
+    * [Read/Write the State](#readwrite-the-state)
+  - [API](#api)
+  - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -204,3 +205,9 @@ The public method `resetToDefault()` resets the filter to the default state, and
 ## API
 
 <ArgTypes sort="requiredFirst" />
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/datagrid-filters/src/enum-single-value-filter)`}
+</Markdown>
