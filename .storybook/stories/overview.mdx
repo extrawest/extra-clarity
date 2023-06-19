@@ -1,0 +1,97 @@
+import { Meta } from '@storybook/blocks';
+import { docsStylePatch } from '../helpers';
+
+<style>
+  { docsStylePatch }
+</style>
+
+<Meta title="Overview/Getting Started" />
+
+# Extra Clarity Docs
+
+Extra Clarity is a library that contains multiple [Angular components](#available-components) built on the top of the
+[Clarity Design System](https://clarity.design), which we use in our internal projects in
+[extrawest.com](https://extrawest.com).
+
+Supported Angular versions: 15.2.0 and later.
+
+The library is under development. Any suggestions would be highly appreciated.
+
+## Source Code
+
+For the source code, either to report an issue, please refer to our
+[GitHub repository](https://github.com/extrawest/extra-clarity).
+
+## Documentation
+
+This site is Storybook-based and contains the details about the [available components](#available-components)
+and some live examples.
+
+We are working on adding more information to it.
+
+## Installation
+
+The library is available as a [npm-package](https://www.npmjs.com/package/@extrawest/extra-clarity).
+You can add the package to your project with `npm install` or `yarn add`:
+
+```shell
+npm i @extrawest/extra-clarity
+```
+```shell
+yarn add @extrawest/extra-clarity
+```
+
+To work with the library, you also need to add the Clarity packages:
+
+```shell
+npm i @cds/angular @clr/angular @clr/ui
+```
+```shell
+yarn add @cds/angular @clr/angular @clr/ui
+```
+
+And then add the global Clarity styles to your `angular.json` config:
+
+```json
+"styles": [
+  "node_modules/@clr/ui/clr-ui.min.css",
+  ... any other styles
+]
+```
+
+Please refer to the [Clarity docs](https://clarity.design/documentation/get-started)
+for more details on 'Adding Clarity to an Angular project'.
+
+## Available Components
+
+* [Auto refresh toggle](/story/components-auto-refresh--auto-refresh-story)
+* [Auto refresh toggle with manual refresh button](/story/components-auto-refresh-group--auto-refresh-group-story)
+* [Card with configurable sections](/docs/components-card-overview--docs)
+* [Copy-to-clipboard button]*
+* [Confirmation dialog](/story/components-confirmation-dialog--confirmation-dialog-story)
+* [Dialog (reactive)](/docs/components-dialog-overview--docs)
+* Datagrid filters:
+  * [with editable string value](
+      /docs/components-datagrid-filters-string-filter--overview)
+  * [with enumerated value from single selection (radio buttons)](
+      /docs/components-datagrid-filters-enum-single-value-filter--overview)
+  * [with enumerated value from multiple selection (checkboxes)](
+      /docs/components-datagrid-filters-enum-multi-value-filter--overview)
+  * [with enumerated value from multiple selection within grouped options (tree-view with checkboxes)](
+      /docs/components-datagrid-filters-enum-grouped-value-filter--overview)
+* [Floating notifications](/story/components-notification--notification-story)
+* [Numeric field](/story/components-numeric-field--numeric-field-story)
+* [Progress spinner](/story/components-progress-spinner--progress-spinner-story)
+* [Sidebar navigation]*
+* Wrappers:
+  * [for optional router-links]*
+  * [for datagrid & table cells - with truncation, break-line-on-overflow, and copy-to-clipboard button]*
+* etc.
+
+\* the components awaiting for their docs & stories to be add here -- in progress
+
+## Useful Links
+
+Some of our components may include code from these third-party libraries:
+* [Clarity (MIT License)](https://clarity.design)
+* [Clarity Addons (MIT License)](https://porscheinformatik.github.io/clarity-addons/documentation/latest/get-started)

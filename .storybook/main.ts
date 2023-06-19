@@ -2,6 +2,8 @@ import type { StorybookConfig } from '@storybook/angular';
 
 const config: StorybookConfig = {
   stories: [
+    // put 'overview.mdx' to the top of this list to open it by default on opening the site without any url parameters
+    './stories/overview.mdx',
     './stories/**/*.mdx',
     './stories/**/*.stories.@(js|jsx|ts|tsx)',
   ],
