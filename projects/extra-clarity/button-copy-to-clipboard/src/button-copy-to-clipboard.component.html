@@ -1,31 +1,41 @@
 <button
-  type="button"
-  class="btn btn-icon fixed-width"
-  [ngClass]="{
-    'btn-sm': small,
-    'no-border': !withBorder,
-    'no-vertical-margins': noVerticalMargins,
-  }"
-  [title]="title ?? 'Copy to Clipboard'"
-  [disabled]="disabled || !textToCopy"
-  (click)="copy()"
+  [@.disabled]="!withAnimation"
   @parent
+  type="button"
+  class="btn"
+  [ngClass]="{ 'no-border': !withBorder }"
+  [ngStyle]="{
+    'height.px': heightPx ?? sizePx,
+    'width.px': widthPx ?? sizePx,
+    'line-height.px': iconSizePx,
+  }"
+  [disabled]="disabled || !textToCopy"
+  [title]="title"
+  (click)="copy()"
 >
   <!-- Imitating button[clrLoading], but without the initial animation (i.e. w/o 'fade in' for the DEFAULT state) -->
   <ng-container [ngSwitch]="btnLoadingState">
     <span *ngSwitchCase="clrLoadingState.LOADING">
-      <span @spinner class="spinner spinner-inline"></span>
+      <span
+        @spinner
+        class="spinner spinner-inline"
+        [ngStyle]="spinnerStylePatch"
+      ></span>
     </span>
 
     <span *ngSwitchCase="clrLoadingState.SUCCESS">
       <span
         @validated (@validated.done)="resetToDefaultState()"
         class="spinner spinner-inline spinner-check"
+        [ngStyle]="spinnerStylePatch"
       ></span>
     </span>
 
-    <span *ngSwitchCase="clrLoadingState.DEFAULT">
-      <cds-icon @defaultButton shape="copy" />
+    <span *ngSwitchCase="clrLoadingState.DEFAULT" @defaultButton>
+      <cds-icon shape="copy" [size]="iconSizePx.toString()" />
+      <span *ngIf="label" [ngStyle]="{ 'font-size.px': labelFontSizePx }">
+        {{ label }}
+      </span>
     </span>
   </ng-container>
 </button>

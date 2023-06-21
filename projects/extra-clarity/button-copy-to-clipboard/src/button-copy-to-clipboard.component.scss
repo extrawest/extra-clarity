@@ -1,24 +1,15 @@
 :host {
   .btn {
     margin: 0;
+    padding: 0;
+    min-width: 1.2rem;
 
     &.no-border {
-      border-color: transparent;
+      border: none;
     }
 
     &:active {
       box-shadow: none;
     }
-  }
-
-  .fixed-width {
-    padding: 0;
-    /* clrLoading sets inline-styled "width: 42px" during animation; !important is used here to bypass it */
-    width: 1.2rem !important;
-  }
-
-  .no-vertical-margins {
-    margin-top: -0.65rem;
-    margin-bottom: -0.55rem;
   }
 }
