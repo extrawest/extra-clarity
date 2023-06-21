@@ -1,7 +1,8 @@
 <ng-container *ngIf="withCopyBtn; else cellContent">
   <div [ngClass]="[
-    !btnInline || truncate ? 'flex-layout' : 'inline-layout',
-    !btnInline ? 'with-btn-right-aligned' : '',
+    'with-btn',
+    btnInline ? 'with-btn-inline' : 'with-btn-right-aligned',
+    truncate ? 'with-btn-trunc' : 'with-btn-break',
   ]">
     <ng-container *ngTemplateOutlet="cellContent" />
     <ec-button-copy-to-clipboard
@@ -14,7 +15,10 @@
 </ng-container>
 
 <ng-template #cellContent>
-  <div [ngClass]="['cell-content', truncate ? 'trunc-overflow' : 'break-overflow']">
+  <div [ngClass]="[
+    'cell-content',
+    truncate ? 'trunc-overflow' : 'break-overflow',
+  ]">
     <ng-content />
   </div>
 </ng-template>

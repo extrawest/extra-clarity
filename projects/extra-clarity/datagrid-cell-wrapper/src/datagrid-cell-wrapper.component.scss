@@ -1,20 +1,20 @@
-.flex-layout {
+.with-btn {
   display: flex;
-}
 
-.inline-layout {
-  .cell-content,
+  &.with-btn-right-aligned {
+    justify-content: space-between;
+  }
+  &.with-btn-inline {
+    justify-content: flex-start;
+  }
   .copy-button {
-    display: inline;
+    flex: 0 0;
+    margin: -0.25rem 0;
   }
 }
 
-.flex-layout.with-btn-right-aligned {
-  justify-content: space-between;
-}
-
-.flex-layout .copy-button {
-  flex: 0 0;
+.with-btn-break .copy-button {
+  margin-left: .25rem;
 }
 
 .trunc-overflow {
