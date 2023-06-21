@@ -1,0 +1,71 @@
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
+
+import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
+
+import * as ButtonStories from './button-copy-to-clipboard.stories';
+
+<style>
+  { docsStylePatch }
+</style>
+
+<Meta
+  of={ButtonStories}
+  name="Overview"
+/>
+
+# Button Copy-to-Clipboard
+
+<div className="table-of-contents">
+  - [Quick Start](#quick-start)
+  - [Example](#example)
+  - [Stories](#stories)
+  - [Description](#description)
+    * [Configuration](#configuration)
+  - [API](#api)
+  - [Source Code](#source-code)
+</div>
+
+## Quick Start
+
+> **Standalone component**: yes
+
+```typescript
+import { ButtonCopyToClipboardComponent } from '@extrawest/extra-clarity/button-copy-to-clipboard';
+```
+```html
+<ec-button-copy-to-clipboard [textToCopy]="Hello World!" />
+```
+
+## Example
+
+<Canvas of={ButtonStories.DocsExampleStory} />
+
+## Stories
+
+* [A button in isolation](/story/components-button-copy-to-clipboard--button-itself-story)
+
+## Description
+
+This component was designed to simplify copying string values to the clipboard.
+
+### Configuration
+
+There are multiple inputs to configure the component.
+
+The only one required is `[textToCopy]` containing the actual string to be copied when the button is pressed.
+If the value is nullish or not provided at all, the button is disabled.
+
+When the value is copied, the `(copied)` output emits an event,
+which may be used for providing an external notification about successful copying.
+
+Please refer to the [API](#api) section below for more details about the inputs and outputs of this component.
+
+## API
+
+<ArgTypes sort="requiredFirst" />
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/button-copy-to-clipboard/src)`}
+</Markdown>
