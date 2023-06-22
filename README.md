@@ -35,7 +35,7 @@ And then add the global Clarity styles to your `angular.json` config:
 ```json
 "styles": [
   "node_modules/@clr/ui/clr-ui.min.css",
-  ... any other styles
+  .. any other styles
 ]
 ```
 
@@ -55,11 +55,14 @@ We are working on adding more information to it.
   https://extra-clarity-docs.web.app/?path=/story/components-auto-refresh--auto-refresh-story)
 * [Auto refresh toggle with manual refresh button](
   https://extra-clarity-docs.web.app/?path=/story/components-auto-refresh-group--auto-refresh-group-story)
-* Copy-to-clipboard button
+* [Copy-to-clipboard button](
+  https://extra-clarity-docs.web.app/?path=/docs/components-button-copy-to-clipboard--overview)
 * [Confirmation dialog](
   https://extra-clarity-docs.web.app/?path=/story/components-confirmation-dialog--confirmation-dialog-story)
 * [Dialog (reactive)](
   https://extra-clarity-docs.web.app/?path=/docs/components-dialog-overview--docs)
+* [Datagrid cell wrapper (with truncation and the copy-to-clipboard button](
+  https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-cell-wrapper--overview)
 * Datagrid filters:
   * [with editable string value](
     https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-string-filter--overview)
@@ -73,10 +76,10 @@ We are working on adding more information to it.
   https://extra-clarity-docs.web.app/?path=/story/components-notification--notification-story)
 * [Progress spinner](
   https://extra-clarity-docs.web.app/?path=/story/components-progress-spinner--progress-spinner-story)
-* Sidebar navigation
-* Wrappers:
-  * for optional router-links
-  * for datagrid & table cells -- with truncation, break-line-on-overflow, and copy-to-clipboard button
+* [Router link wrapper](
+  https://extra-clarity-docs.web.app/?path=/docs/components-router-link-wrapper--overview)
+* [Sidebar navigation](
+  https://extra-clarity-docs.web.app/?path=/docs/components-sidebar-navigation--overview)
 * etc.
 
 ## Useful Links & License Information
