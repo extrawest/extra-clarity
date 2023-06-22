@@ -1,0 +1,250 @@
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
+
+import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
+
+import * as Stories from './sidebar-nav.stories';
+
+<style>
+  { docsStylePatch }
+</style>
+
+<Meta
+  of={Stories}
+  name="Overview"
+/>
+
+# Sidebar Navigation
+
+<div className="table-of-contents">
+  - [Quick Start](#quick-start)
+  - [Example](#example)
+  - [Stories](#stories)
+  - [Description](#description)
+    * [Configuration](#configuration)
+    * [Helpers](#helpers)
+    * [Icons in Labels](#icons-in-labels)
+    * [Custom Template](#custom-template)
+  - [API](#api)
+  - [Source Code](#source-code)
+</div>
+
+## Quick Start
+
+> **Standalone component**: yes
+
+```typescript
+import { SidebarNavComponent } from '@extrawest/extra-clarity/button-copy-to-clipboard';
+```
+```html
+<ec-sidebar-nav [navList]="[]" />
+```
+```html
+<clr-vertical-nav>
+    <ec-sidebar-nav [navList]="[
+        {
+          "type": "router-link",
+          "label": "Router Link #1",
+          "link": "/router-link-1",
+        },
+        {
+          "type": "router-link",
+          "label": "Router Link #2",
+          "link": "/router-link-2",
+        },
+        {
+          "type": "divider",
+        },
+        {
+          "type": "href",
+          "label": "Send Email",
+          "link": "mailto:user@example.com",
+        },
+    ]" />
+</clr-vertical-nav>
+```
+
+NOTE: In a template, the component must be nested into the `ClrVerticalNav` component
+from the `ClrVerticalNavModule` imported from `@clr/angular`.
+
+
+## Example
+
+<Canvas of={Stories.DocsExampleStory} />
+
+## Stories
+
+* [The component in isolation](/story/components-sidebar-navigation--component-itself-story)
+
+## Description
+
+This component was designed to simplify configuration of the main sidebar navigation,
+and slightly improve the original navigation component:
+handle auto expanding groups, disabling active items to prevent loosing url query params, etc.
+
+You may find useful these topics from the original Clarity docs about the app layout and navigation:
+* [Vertical Nav](https://clarity.design/documentation/vertical-nav/)
+* [Navigation](https://clarity.design/documentation/navigation)
+* [Application Layout](https://clarity.design/documentation/app-layout)
+
+### Configuration
+
+The only required input is `[navList]` containing the actual list (array) of navigational items `NavListItem[]`.
+
+Each navigational item can be one of the following types:
+
+1.`NavItemLink` - a router link or a regular href-link:
+```typescript
+interface NavItemLink {
+  type: 'router-link' | 'href';
+  label: string;
+  link: string;
+  icon?: string;
+  data?: unknown;
+}
+```
+`router-link` should be used for the internal (in-app) navigation,
+when `href` links may be useful for the `mailto:` kind of links or any external reference.
+
+2.`NavItemDivider` - a horizontal separator between items:
+```typescript
+interface NavItemDivider {
+  type: 'divider',
+}
+```
+
+3.`NavItemGroup` - an expandable group of nested items:
+```typescript
+interface NavItemGroup {
+  type: 'group';
+  label: string;
+  children: (NavItemLink | NavItemDivider)[];
+  expanded?: boolean;
+  icon?: string;
+  data?: unknown;
+}
+```
+
+Groups support only one level of nesting, i.e. their child items can not be a group in their turn,
+but only a link item or a separator.
+
+### Helpers
+
+To simplify creating of a nav list, there are helper functions and constants:
+
+```typescript
+import { createGroup, createHrefLink, createRouterLink, divider } from '@extrawest/extra-clarity/sidebar-nav';
+```
+
+1.`createRouterLink(label: string, link: string, icon?: string): NavItemLink`:
+```typescript
+const navRouterLink = createRouterLink(
+  'Dashboard',
+  '/dashboard',
+);
+
+// which is equivalent to:
+const navRouterLink: NavItemLink = {
+  type: 'router-link',
+  label: 'Dashboard',
+  link: '/dashboard',
+};
+```
+
+2.`createHrefLink(label: string, link: string, icon?: string): NavItemLink`:
+```typescript
+const navHrefLink = createHrefLink(
+  'Send Feedback',
+  'mailto:support@example.com'
+);
+
+// which is equivalent to:
+const navHrefLink: NavItemLink = {
+  type: 'href',
+  label: 'Send Feedback',
+  link: 'mailto:support@example.com',
+};
+```
+
+3.`createGroup(label: string, children: (NavItemLink | NavItemDivider)[], icon?: string): NavItemGroup`:
+```typescript
+const navGroup = createGroup('Group Label', [
+  createRouterLink('Nested Item #1', '/nested-link-1'),
+  createRouterLink('Nested Item #2', '/nested-link-2'),
+]);
+
+// which is equivalent to:
+const navGroup: NavItemGroup = {
+  type: 'Group Label',
+  children: [
+    {
+      type: 'router-link',
+      label: 'Nested Item #1',
+      link: '/nested-link-1',
+    },
+    {
+      type: 'router-link',
+      label: 'Nested Item #2',
+      link: '/nested-link-2',
+    },
+  ],
+};
+```
+
+4.`divider` is a constant to substitute `{ type: 'divider' }`:
+```typescript
+const navList: NavListItem[] = [
+  createRouterLink('Router Link #1', '/router-link-1'),
+  createRouterLink('Router Link #1', '/router-link-1'),
+  divider,
+  createHrefLink('Send Feedback', 'mailto:support@example.com')
+];
+```
+
+### Icons in Labels
+
+You can provide an svg icon to a nav item label using
+[icons from the Clarity Core pack](https://core.clarity.design/foundation/icons/shapes/)
+
+To do this, you should put the `shape` property of the selected icon
+into the `icon` property of the nav item's configuration object:
+
+```typescript
+const navHrefLink: NavItemLink = {
+  type: 'href',
+  label: 'Send Feedback',
+  link: 'mailto:support@example.com',
+  icon: 'envelope',    // <<---
+};
+
+// this item will show an icon next to its label equivalent to
+// <cds-icon shape="envelope" />
+```
+
+Please make sure that you have registered all the used shapes in your app
+as it's described in the [Clarity icons docs](https://core.clarity.design/foundation/icons/):
+
+```typescript
+import { ClarityIcons, envelopeIcon } from '@cds/core/icon';
+
+ClarityIcons.addIcons(envelopeIcon);
+```
+
+### Custom Template
+
+If you need more advanced labels you may pass a `TemplateRef` to the `[customLabelTpl]` input.
+
+The entire config object `navItem: NavItemLink | NavItemGroup` will be passed to the template
+as the `$implicit` context parameter.
+
+Please note, that you may provide any additional data to the template
+by passing it through the `data: unknown` property in the nav item config.
+
+## API
+
+<ArgTypes sort="requiredFirst" />
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/sidebar-nav/src)`}
+</Markdown>
