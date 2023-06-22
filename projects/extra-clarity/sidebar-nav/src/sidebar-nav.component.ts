@@ -23,8 +23,22 @@ import { SidebarNavService } from './sidebar-nav.service';
   ],
 })
 export class SidebarNavComponent implements OnInit {
-  @Input() navList: readonly NavListItem[] = [];
-  @Input() customLabelTpl?: TemplateRef<unknown> | undefined;
+  /**
+   * Array of nav items' configurations
+   *
+   * @required
+   */
+  @Input()
+  public navList: readonly NavListItem[] = [];
+
+  /**
+   * Optional `TemplateRef` for a template to use as a custom label for all nav items.
+   *
+   * The entire `navItem: NavItemLink | NavItemGroup` object is passed
+   * to the template as the `$implicit` context parameter.
+   */
+  @Input()
+  public customLabelTpl?: TemplateRef<unknown>;
 
   protected readonly NavItemTypeEnum = NAV_ITEM_TYPE;
 

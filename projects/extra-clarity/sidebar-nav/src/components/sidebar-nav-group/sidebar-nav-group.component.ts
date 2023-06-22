@@ -7,6 +7,7 @@ import { NAV_ITEM_TYPE, NavItemGroup } from '../../sidebar-nav.models';
 import { SidebarNavService } from '../../sidebar-nav.service';
 import { SidebarNavItemComponent } from '../sidebar-nav-item';
 import { SidebarNavLabelComponent } from '../sidebar-nav-label';
+import { CdsIconModule } from '@cds/angular';
 
 @Component({
   selector: 'ec-sidebar-nav-group',
@@ -15,6 +16,7 @@ import { SidebarNavLabelComponent } from '../sidebar-nav-label';
   standalone: true,
   imports: [
     CommonModule,
+    CdsIconModule,
     ClrVerticalNavModule,
     SidebarNavItemComponent,
     SidebarNavLabelComponent,
