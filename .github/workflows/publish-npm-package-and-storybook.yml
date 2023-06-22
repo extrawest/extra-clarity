@@ -95,6 +95,10 @@ jobs:
           key: node-modules-${{ runner.os }}-${{ hashFiles(env.MAIN_PACKAGE_LOCK_JSON) }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST_PATH }}
       - name: Build storybook
         run: npm run ${{ env.SCRIPT_BUILD_STORYBOOK }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
