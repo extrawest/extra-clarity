@@ -19,8 +19,7 @@ const MetaStory = {
     applicationConfig({
       providers: [
         provideRouter([
-          { path: 'home', canActivate: [() => false], component: RouterLinkWrapperComponent },
-          { path: '**', redirectTo: '' },
+          { path: '**', children: [], canActivate: [() => false] },
         ]),
       ],
     }),
