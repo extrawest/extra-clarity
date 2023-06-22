@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { groupBy, toPairs } from 'lodash';
+import { groupBy, toPairs } from 'lodash-es';
 import { BehaviorSubject, map } from 'rxjs';
 
 import { NOTIFICATION_DEFAULT_CONFIG } from '../../constants';
