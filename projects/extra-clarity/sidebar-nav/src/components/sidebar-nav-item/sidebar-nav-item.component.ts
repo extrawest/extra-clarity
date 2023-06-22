@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CdsIconModule } from '@cds/angular';
 import { ClrVerticalNavModule } from '@clr/angular';
 
 import { NAV_ITEM_TYPE, NavListItem } from '../../sidebar-nav.models';
 import { SidebarNavService } from '../../sidebar-nav.service';
 import { SidebarNavLabelComponent } from '../sidebar-nav-label';
-import { CdsIconModule } from '@cds/angular';
 
 @Component({
   selector: 'ec-sidebar-nav-item',
@@ -14,14 +14,14 @@ import { CdsIconModule } from '@cds/angular';
   styleUrls: ['./sidebar-nav-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-    imports: [
-        CommonModule,
-        RouterLink,
-        RouterLinkActive,
-        ClrVerticalNavModule,
-        SidebarNavLabelComponent,
-        CdsIconModule,
-    ],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    ClrVerticalNavModule,
+    SidebarNavLabelComponent,
+    CdsIconModule,
+  ],
 })
 export class SidebarNavItemComponent implements OnInit {
   @Input() navItem?: NavListItem;

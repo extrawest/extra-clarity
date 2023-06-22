@@ -23,13 +23,13 @@ import { StorybookDialogContentComponent } from './dialog-content.component';
 })
 export class StorybookDialogCallerComponent {
   @Input()
-  size?: 'sm' | 'md' | 'lg' | 'xl' = 'md';
+  public size?: 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
   @Input()
-  closable?: boolean;
+  public closable?: boolean;
 
   @Input()
-  closableBackdrop?: boolean;
+  public closableBackdrop?: boolean;
 
   private readonly dialogService = inject(DialogService);
 

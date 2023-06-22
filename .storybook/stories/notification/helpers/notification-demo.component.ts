@@ -17,26 +17,26 @@ import {
 })
 export class NotificationDemoComponent {
   @Input()
-  type: 'warning' | 'danger' | 'info' | 'success';
+  public type: 'warning' | 'danger' | 'info' | 'success';
 
   @Input()
-  message: string;
+  public message: string;
 
   /** Duration in ms */
   @Input()
-  duration: number;
+  public duration: number;
 
   @Input()
-  closable?: boolean;
+  public closable?: boolean;
 
   @Input()
-  pauseOnHover?: boolean;
+  public pauseOnHover?: boolean;
 
   @Input()
-  autoClose?: boolean;
+  public autoClose?: boolean;
 
   @Input()
-  position?: 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight';
+  public position?: 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight';
 
   private readonly notificationService = inject(NotificationService);
 

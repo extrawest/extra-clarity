@@ -19,7 +19,7 @@ export class ProgressSpinnerComponent implements OnDestroy {
 
   private static readonly MINIMUM_VISIBLE_DURATION = 200;
   private startTimestamp?: number;
-  private hideTimeout: any;
+  private hideTimeout?: number;
 
   @Input()
   set showSpinner(value: boolean) {
@@ -43,7 +43,7 @@ export class ProgressSpinnerComponent implements OnDestroy {
   }
 
   private hide(): void {
-    this.hideTimeout = setTimeout(() => {
+    this.hideTimeout = window.setTimeout(() => {
       this.startTimestamp = undefined;
       this._showSpinner = false;
       this.changeDetectorRef.markForCheck();

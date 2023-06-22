@@ -21,41 +21,41 @@ import { type DialogButtonConfig, DialogModule, DialogService } from '../../../.
 })
 export class StorybookConfirmationDialogComponent {
   @Input()
-  type?: 'confirm' | 'info' | 'success' | 'warning' | 'danger';
+  public type?: 'confirm' | 'info' | 'success' | 'warning' | 'danger';
 
   @Input()
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  public size?: 'sm' | 'md' | 'lg' | 'xl';
 
   @Input()
-  title: string;
+  public title: string;
 
   @Input()
-  message?: string;
+  public message?: string;
 
   @Input()
-  closable?: boolean;
+  public closable?: boolean;
 
   @Input()
-  closableBackdrop?: boolean;
+  public closableBackdrop?: boolean;
 
   @Input()
-  rejectBtnHidden?: boolean;
+  public rejectBtnHidden?: boolean;
 
   @Input()
-  rejectBtnLabel?: string;
+  public rejectBtnLabel?: string;
 
   @Input()
-  acceptBtnLabel?: string;
+  public acceptBtnLabel?: string;
 
   @Input()
-  acceptBtn?: DialogButtonConfig;
+  public acceptBtn?: DialogButtonConfig;
 
   @Input()
-  rejectBtn?: DialogButtonConfig;
+  public rejectBtn?: DialogButtonConfig;
 
   /** `TemplateRef<any>` */
   @Input()
-  template?: TemplateRef<unknown>;
+  public template?: TemplateRef<unknown>;
 
   private readonly dialogService = inject(DialogService);
 
