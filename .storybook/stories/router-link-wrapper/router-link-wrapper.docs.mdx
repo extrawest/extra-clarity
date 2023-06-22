@@ -1,0 +1,80 @@
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
+
+import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
+
+import * as Stories from './router-link-wrapper.stories';
+
+<style>
+  { docsStylePatch }
+</style>
+
+<Meta
+  of={Stories}
+  name="Overview"
+/>
+
+# Router Link Wrapper
+
+<div className="table-of-contents">
+  - [Quick Start](#quick-start)
+  - [Example](#example)
+  - [Stories](#stories)
+  - [Description](#description)
+    * [Configuration](#configuration)
+  - [API](#api)
+  - [Source Code](#source-code)
+</div>
+
+## Quick Start
+
+> **Standalone component**: yes
+
+```typescript
+import { RouterLinkWrapperComponent } from '@extrawest/extra-clarity/router-link-wrapper';
+```
+```html
+<ec-router-link
+  [enabled]="driverId && tenantId"
+  [fwdRouterLink]="['/drivers', driverId, tenantId]"
+>
+  {{ driverId }}
+<ec/>
+```
+
+## Example
+
+<Canvas of={Stories.DocsExampleStory} />
+
+## Stories
+
+* [An isolated component](/story/components-router-link-wrapper--wrapper-itself-story)
+
+## Description
+
+This component was designed to prevent showing and clicking on router links broken due to missed parts of their urls,
+leading to non-existent pages.
+
+It uses `<a [routerLink]>` internally when the `[enabled]` input is `true`, and passes its own content into that `<a>`
+element. Otherwise, it shows the content as it is without any wrappers.
+
+Although broken links could be disabled by passing `null` or `undefined` to the original `[routerLink]`:
+```html
+<a [routerLink]="driverId && tenantId ? ['/drivers', driverId, tenantId] : null">
+```
+it may look cumbersome and does not prevent the `<a [routerLink]>` element from being shown as a link on hovering and
+clicking, due to the applied global styles (see the last line in the example above).
+If this behavior seems like intended for you, then you should go with the plain `<a [routerLink]>`.
+
+### Configuration
+
+Please refer to the [API](#api) section below for more details about the inputs of this component.
+
+## API
+
+<ArgTypes sort="requiredFirst" />
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/router-link-wrapper/src)`}
+</Markdown>
