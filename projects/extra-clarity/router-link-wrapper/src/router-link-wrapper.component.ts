@@ -30,7 +30,7 @@ export class RouterLinkWrapperComponent {
    * When `false`, disables the link, and shows the content directly without any wrappers.
    * */
   @Input()
-  public enabled: boolean = false;
+  public enabled = false;
 
   /** Router link to be forwarded to the internal `<a [routerLink]>` */
   @Input()
