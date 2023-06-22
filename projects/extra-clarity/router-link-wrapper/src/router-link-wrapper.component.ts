@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Params, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'ec-router-link-wrapper',
+  selector: 'ec-router-link',
   template: `
-    <a [routerLink]="fwdRouterLink" *ngIf="enabled; else content">
+    <a
+      *ngIf="enabled; else content"
+      [routerLink]="fwdRouterLink"
+      [queryParams]="queryParams ?? null"
+    >
       <ng-container *ngTemplateOutlet="content" />
     </a>
     <ng-template #content>
@@ -19,7 +23,20 @@ import { RouterLink } from '@angular/router';
     RouterLink,
   ],
 })
-export class LinkWrapperComponent {
-  @Input() enabled: unknown = false;
-  @Input() fwdRouterLink: unknown[] | string | null | undefined;
+export class RouterLinkWrapperComponent {
+  /**
+   * When `true`, enables the link (including styling), by wrapping the content with `<a [routerLink]>` internally.
+   *
+   * When `false`, disables the link, and shows the content directly without any wrappers.
+   * */
+  @Input()
+  public enabled: boolean = false;
+
+  /** Router link to be forwarded to the internal `<a [routerLink]>` */
+  @Input()
+  public fwdRouterLink: unknown[] | string | null | undefined;
+
+  /** Query params to be forwarded to the internal `<a [routerLink] [queryParams]>` */
+  @Input()
+  public queryParams?: Params | null;
 }
