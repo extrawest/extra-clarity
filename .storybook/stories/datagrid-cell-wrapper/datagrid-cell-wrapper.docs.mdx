@@ -80,12 +80,15 @@ The `[truncate]` input sets how to handle overflowing content.
 
 The `[withCopyBtn]` input enables a copy-to-clipboard button.
 
-The `[textToCopy]` input sets a value to copy to the clipboard when the button is pressed.
-
 The `[btnInline]` input sets the button's position when the cell content length is less than the cell width.
+
+The `[textToCopy]` input sets a value to copy to the clipboard when the button is pressed.
 
 When the `textToCopy` value is copied into the clipboard, the `(copied)` output emits an event,
 which may be used for providing an external notification about successful copying.
+
+There are multiple inputs prefixed with `btn` for adjusting the button's appearance, including dimensions, sizes,
+a label, and the vertical offsets (which may be useful for vertical alignment in non-datagrid use cases).
 
 Please refer to the [API](#api) section below for more details about the inputs and outputs of this component.
 

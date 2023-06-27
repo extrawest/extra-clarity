@@ -7,7 +7,11 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 
-import { DatagridCellWrapperComponent } from '../../../projects/extra-clarity/datagrid-cell-wrapper';
+import { BUTTON_DEFAULTS } from '../../../projects/extra-clarity/button-copy-to-clipboard';
+import {
+  CELL_WRAPPER_DEFAULTS,
+  DatagridCellWrapperComponent,
+} from '../../../projects/extra-clarity/datagrid-cell-wrapper';
 import { hideAllControlRows, wrapWrapperWithinDatagrid } from '../../helpers';
 
 type Story = StoryObj<DatagridCellWrapperComponent>;
@@ -37,7 +41,69 @@ const MetaStory = {
       },
     },
     // INPUTS
+    btnDisabled: {
+    },
+    btnHeightPx: {
+      table: {
+        defaultValue: {
+          summary: null,
+        },
+      },
+    },
+    btnIconSizePx: {
+      table: {
+        // set default value explicitly as compodoc shows only a constant name
+        defaultValue: {
+          summary: BUTTON_DEFAULTS.iconSizePx,
+        },
+      },
+    },
     btnInline: {
+    },
+    btnLabel: {
+      type: 'string',
+    },
+    btnLabelFontSizePx: {
+      table: {
+        defaultValue: {
+          summary: null,
+        },
+      },
+    },
+    btnSizePx: {
+      table: {
+        // set default value explicitly as compodoc shows only a constant name
+        defaultValue: {
+          summary: BUTTON_DEFAULTS.buttonSizePx,
+        },
+      },
+    },
+    btnTitle: {
+      table: {
+        // set default value explicitly as compodoc shows only a constant name
+        defaultValue: {
+          summary: BUTTON_DEFAULTS.title,
+        },
+      },
+    },
+    btnVerticalMargin: {
+      table: {
+        // set default value explicitly as compodoc shows only a constant name
+        defaultValue: {
+          summary: CELL_WRAPPER_DEFAULTS.verticalMarginRem,
+        },
+      },
+    },
+    btnWidthPx: {
+      table: {
+        defaultValue: {
+          summary: null,
+        },
+      },
+    },
+    btnWithAnimation: {
+    },
+    btnWithBorder: {
     },
     textToCopy: {
       type: {
@@ -68,7 +134,18 @@ const MetaStory = {
   },
   args: {
     cellContent: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+    btnDisabled: false,
+    // btnHeightPx: 24,
+    btnIconSizePx: BUTTON_DEFAULTS.iconSizePx,
     btnInline: false,
+    btnLabel: undefined,
+    // btnLabelFontSizePx: 12,
+    btnSizePx: BUTTON_DEFAULTS.buttonSizePx,
+    btnTitle: BUTTON_DEFAULTS.title,
+    btnVerticalMargin: CELL_WRAPPER_DEFAULTS.verticalMarginRem,
+    // btnWidthPx: 24,
+    btnWithAnimation: true,
+    btnWithBorder: false,
     truncate: true,
     textToCopy: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
     withCopyBtn: true,
@@ -94,9 +171,20 @@ export const WithinDatagridStory: Story = {
     template: wrapWrapperWithinDatagrid(`
       <ec-dg-cell-wrapper
         [btnInline]="btnInline"
+        [btnVerticalMargin]="btnVerticalMargin"
         [textToCopy]="textToCopy"
         [truncate]="truncate"
         [withCopyBtn]="withCopyBtn"
+        [btnDisabled]="btnDisabled"
+        [btnHeightPx]="btnHeightPx"
+        [btnIconSizePx]="btnIconSizePx"
+        [btnLabel]="btnLabel"
+        [btnLabelFontSizePx]="btnLabelFontSizePx"
+        [btnSizePx]="btnSizePx"
+        [btnTitle]="btnTitle"
+        [btnWidthPx]="btnWidthPx"
+        [btnWithAnimation]="btnWithAnimation"
+        [btnWithBorder]="btnWithBorder"
         (copied)="copied($event)"
         (failed)="failed($event)"
       >
