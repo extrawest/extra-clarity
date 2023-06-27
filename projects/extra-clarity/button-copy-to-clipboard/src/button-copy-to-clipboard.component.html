@@ -7,7 +7,6 @@
   [ngStyle]="{
     'height.px': heightPx ?? sizePx,
     'width.px': widthPx ?? sizePx,
-    'line-height.px': iconSizePx,
   }"
   [disabled]="disabled || !textToCopy"
   [title]="title"
@@ -15,27 +14,27 @@
 >
   <!-- Imitating button[clrLoading], but without the initial animation (i.e. w/o 'fade in' for the DEFAULT state) -->
   <ng-container [ngSwitch]="btnLoadingState">
-    <span *ngSwitchCase="clrLoadingState.LOADING">
+    <div *ngSwitchCase="clrLoadingState.LOADING" class="button-inner-box">
       <span
         @spinner
         class="spinner spinner-inline"
         [ngStyle]="spinnerStylePatch"
       ></span>
-    </span>
+    </div>
 
-    <span *ngSwitchCase="clrLoadingState.SUCCESS">
+    <div *ngSwitchCase="clrLoadingState.SUCCESS" class="button-inner-box">
       <span
         @validated (@validated.done)="resetToDefaultState()"
         class="spinner spinner-inline spinner-check"
         [ngStyle]="spinnerStylePatch"
       ></span>
-    </span>
+    </div>
 
-    <span *ngSwitchCase="clrLoadingState.DEFAULT" @defaultButton>
-      <cds-icon shape="copy" [size]="iconSizePx.toString()" />
+    <div *ngSwitchCase="clrLoadingState.DEFAULT" @defaultButton class="button-inner-box">
+      <cds-icon shape="copy" [size]="iconSizeAsString" />
       <span *ngIf="label" [ngStyle]="{ 'font-size.px': labelFontSizePx }">
         {{ label }}
       </span>
-    </span>
+    </div>
   </ng-container>
 </button>

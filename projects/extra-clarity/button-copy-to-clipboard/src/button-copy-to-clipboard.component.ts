@@ -114,6 +114,10 @@ export class ButtonCopyToClipboardComponent {
     ClarityIcons.addIcons(copyIcon);
   }
 
+  protected get iconSizeAsString(): string {
+    return this.iconSizePx.toString();
+  }
+
   protected get spinnerStylePatch(): Record<string, unknown> {
     return {
       'height.px': this.iconSizePx,
