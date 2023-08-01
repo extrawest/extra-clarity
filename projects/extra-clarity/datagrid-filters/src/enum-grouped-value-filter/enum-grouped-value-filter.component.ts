@@ -17,7 +17,12 @@ import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrTreeViewModule } from
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject } from 'rxjs';
 
-import { EnumValueFilterOption, EnumValueFilterOptionGroup, FilterState } from '../interfaces/filter-state.interface';
+import {
+  EnumValueFilterOption,
+  EnumValueFilterOptionGroup,
+  FilterState,
+  ResettableFilter,
+} from '../interfaces/filter-state.interface';
 
 export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   maxHeightPx: 300,
@@ -36,7 +41,8 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   ],
 })
 export class EnumGroupedValueFilterComponent<E, T extends object = {}>
-implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, OnDestroy, OnInit {
+implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFilter,
+  OnChanges, OnDestroy, OnInit {
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.

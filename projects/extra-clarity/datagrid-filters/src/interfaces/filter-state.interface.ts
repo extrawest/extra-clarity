@@ -14,3 +14,7 @@ export interface EnumValueFilterOptionGroup<E> {
   expandedByDefault?: boolean;
   items: readonly EnumValueFilterOption<E>[];
 }
+
+export interface ResettableFilter {
+  resetToDefault: () => void;
+}
