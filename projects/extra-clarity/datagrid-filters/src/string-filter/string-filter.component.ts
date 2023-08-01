@@ -208,7 +208,7 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
   private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
   private readonly clrPopoverToggleService = inject(ClrPopoverToggleService, { optional: true });
 
-  constructor() {
+  constructor(readonly changeDetectorRef: ChangeDetectorRef) {
     this.clrDatagridFilterContainer?.setFilter(this);
   }
 
@@ -441,6 +441,7 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, AfterViewInit, On
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
+    this.changeDetectorRef.markForCheck();
   }
 
   private updateFormControlValue(newValue: string): void {

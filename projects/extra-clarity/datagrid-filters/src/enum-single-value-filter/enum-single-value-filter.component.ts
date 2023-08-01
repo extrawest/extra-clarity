@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   inject,
@@ -158,7 +159,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
 
   private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
 
-  constructor() {
+  constructor(readonly changeDetectorRef: ChangeDetectorRef) {
     this.clrDatagridFilterContainer?.setFilter(this);
   }
 
@@ -313,5 +314,6 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, OnChanges, OnDe
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
+    this.changeDetectorRef.markForCheck();
   }
 }
