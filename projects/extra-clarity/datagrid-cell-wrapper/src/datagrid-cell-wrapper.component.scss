@@ -1,12 +1,10 @@
 .with-btn {
   display: flex;
 
-  &.with-btn-right-aligned {
-    justify-content: space-between;
+  &.with-btn-right-aligned .cell-content {
+    flex: 1;
   }
-  &.with-btn-inline {
-    justify-content: flex-start;
-  }
+
   .copy-button {
     flex: 0 0;
     margin: 0;
@@ -24,7 +22,7 @@
 }
 
 .break-overflow {
-  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .cell-content {
