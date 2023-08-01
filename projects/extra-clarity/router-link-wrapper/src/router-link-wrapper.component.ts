@@ -25,12 +25,12 @@ import { Params, RouterLink } from '@angular/router';
 })
 export class RouterLinkWrapperComponent {
   /**
-   * When `true`, enables the link (including styling), by wrapping the content with `<a [routerLink]>` internally.
+   * When `true`-ish, enables the link (including styling), by wrapping the content with `<a [routerLink]>` internally.
    *
-   * When `false`, disables the link, and shows the content directly without any wrappers.
+   * When `false`-ish, disables the link, and shows the content directly without any wrappers.
    * */
   @Input()
-  public enabled = false;
+  public enabled: unknown = false;
 
   /** Router link to be forwarded to the internal `<a [routerLink]>` */
   @Input()

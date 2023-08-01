@@ -32,6 +32,12 @@ const MetaStory = {
         name: 'boolean',
         required: true,
       },
+      // override auto generated control type
+      table: {
+        type: {
+          summary: 'unknown',
+        },
+      },
     },
     fwdRouterLink: {
       type: {
