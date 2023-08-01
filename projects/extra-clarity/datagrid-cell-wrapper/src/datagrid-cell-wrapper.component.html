@@ -5,26 +5,28 @@
     truncate ? 'with-btn-trunc' : 'with-btn-break',
   ]">
     <ng-container *ngTemplateOutlet="cellContent" />
-    <ec-button-copy-to-clipboard
-      class="copy-button"
-      [ngStyle]="{
-        'margin-top.rem': btnVerticalMargin,
-        'margin-bottom.rem': btnVerticalMargin,
-      }"
-      [disabled]="btnDisabled"
-      [heightPx]="btnHeightPx ?? btnSizePx"
-      [iconSizePx]="btnIconSizePx"
-      [label]="btnLabel"
-      [labelFontSizePx]="btnLabelFontSizePx"
-      [sizePx]="btnSizePx"
-      [textToCopy]="textToCopy"
-      [title]="btnTitle"
-      [widthPx]="btnWidthPx ?? btnSizePx"
-      [withAnimation]="btnWithAnimation"
-      [withBorder]="btnWithBorder"
-      (copied)="copied.emit($event)"
-      (failed)="failed.emit($event)"
-    />
+    <div
+      class="copy-btn-container"
+      [ngStyle]="{ 'width.px': btnWidthPx ?? btnSizePx }"
+    >
+      <ec-button-copy-to-clipboard
+        class="copy-btn"
+        [ngStyle]="{ 'top.rem': btnTopOffsetRem }"
+        [disabled]="btnDisabled"
+        [heightPx]="btnHeightPx ?? btnSizePx"
+        [iconSizePx]="btnIconSizePx"
+        [label]="btnLabel"
+        [labelFontSizePx]="btnLabelFontSizePx"
+        [sizePx]="btnSizePx"
+        [textToCopy]="textToCopy"
+        [title]="btnTitle"
+        [widthPx]="btnWidthPx ?? btnSizePx"
+        [withAnimation]="btnWithAnimation"
+        [withBorder]="btnWithBorder"
+        (copied)="copied.emit($event)"
+        (failed)="failed.emit($event)"
+      />
+    </div>
   </div>
 </ng-container>
 

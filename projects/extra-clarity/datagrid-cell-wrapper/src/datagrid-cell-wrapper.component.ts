@@ -1,9 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { BUTTON_DEFAULTS, ButtonCopyToClipboardComponent } from '@extrawest/extra-clarity/button-copy-to-clipboard';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import {
+  BUTTON_DEFAULTS,
+  ButtonCopyToClipboardComponent,
+} from '@extrawest/extra-clarity/button-copy-to-clipboard';
 
 export const CELL_WRAPPER_DEFAULTS = {
-  verticalMarginRem: -0.25,
+  btnTopOffsetRem: -0.25,
 } as const;
 
 @Component({
@@ -30,11 +39,11 @@ export class DatagridCellWrapperComponent {
   public btnInline = false;
 
   /**
-   * Vertical offset (margin in `rem`) applied to the copy-to-clipboard button
+   * Vertical offset (in `rem`) from the top of the first line, applied to the copy-to-clipboard button
    * to adjust how it fits within elements with line-height different from the default datagrid line-height.
    */
   @Input()
-  public btnVerticalMargin: number = CELL_WRAPPER_DEFAULTS.verticalMarginRem;
+  public btnTopOffsetRem: number = CELL_WRAPPER_DEFAULTS.btnTopOffsetRem;
 
   /**
    * A string to copy into the clipboard on pressing the copy-to-clipboard button.

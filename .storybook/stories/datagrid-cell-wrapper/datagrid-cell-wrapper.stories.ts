@@ -86,11 +86,11 @@ const MetaStory = {
         },
       },
     },
-    btnVerticalMargin: {
+    btnTopOffsetRem: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
         defaultValue: {
-          summary: CELL_WRAPPER_DEFAULTS.verticalMarginRem,
+          summary: CELL_WRAPPER_DEFAULTS.btnTopOffsetRem,
         },
       },
     },
@@ -142,7 +142,7 @@ const MetaStory = {
     // btnLabelFontSizePx: 12,
     btnSizePx: BUTTON_DEFAULTS.buttonSizePx,
     btnTitle: BUTTON_DEFAULTS.title,
-    btnVerticalMargin: CELL_WRAPPER_DEFAULTS.verticalMarginRem,
+    btnTopOffsetRem: CELL_WRAPPER_DEFAULTS.btnTopOffsetRem,
     // btnWidthPx: 24,
     btnWithAnimation: true,
     btnWithBorder: false,
@@ -171,7 +171,7 @@ export const WithinDatagridStory: Story = {
     template: wrapWrapperWithinDatagrid(`
       <ec-dg-cell-wrapper
         [btnInline]="btnInline"
-        [btnVerticalMargin]="btnVerticalMargin"
+        [btnTopOffsetRem]="btnTopOffsetRem"
         [textToCopy]="textToCopy"
         [truncate]="truncate"
         [withCopyBtn]="withCopyBtn"
