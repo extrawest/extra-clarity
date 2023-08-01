@@ -73,6 +73,8 @@ const MetaStory = {
     },
     showSelectedAmount: {
     },
+    stretchLabels: {
+    },
     title: {
       // set type: 'text' explicitly to show an empty input field without double quotes
       control: { type: 'text' },
@@ -134,6 +136,7 @@ const MetaStory = {
     propertyKey: '',
     serverDriven: true,
     showSelectedAmount: false,
+    stretchLabels: false,
     title: '',
     value: undefined,
     widthPx: ENUM_MULTI_VALUE_FILTER_DEFAULTS.widthPx,
@@ -185,6 +188,7 @@ export const WithinDatagridStory: Story = {
         [maxHeightPx]="maxHeightPx"
         [serverDriven]="serverDriven"
         [showSelectedValue]="showSelectedValue"
+        [stretchLabels]="stretchLabels"
         [title]="title"
         [value]="value"
         [widthPx]="widthPx"

@@ -11,7 +11,10 @@
       </div>
 
       <div class="filter-options" [style.max-height.px]="maxHeightPx">
-        <clr-checkbox-container class="checkbox-container">
+        <clr-checkbox-container
+          class="checkbox-container"
+          [ngClass]="{ 'stretch-labels': stretchLabels }"
+        >
           <clr-checkbox-wrapper *ngFor="let option of options; trackBy: trackByValue">
             <input
               type="checkbox"

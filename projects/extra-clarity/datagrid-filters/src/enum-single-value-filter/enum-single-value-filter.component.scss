@@ -11,8 +11,15 @@
   }
 }
 
-.radio-container {
+:host ::ng-deep .radio-container {
   margin-top: 0;
+
+  &.stretch-labels {
+    .clr-control-container,
+    .clr-control-label {
+      width: 100%;
+    }
+  }
 }
 
 .filter-title,

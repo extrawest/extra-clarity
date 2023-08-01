@@ -11,7 +11,10 @@
       </div>
 
       <div class="filter-options" [style.max-height.px]="maxHeightPx">
-        <clr-radio-container class="radio-container">
+        <clr-radio-container
+          class="radio-container"
+          [ngClass]="{ 'stretch-labels': stretchLabels }"
+        >
           <clr-radio-wrapper *ngFor="let option of options; trackBy: trackByValue">
             <input
               type="radio"

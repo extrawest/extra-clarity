@@ -134,6 +134,12 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, OnChanges, On
   public showSelectedAmount = false;
 
   /**
+   * Whether to stretch all label containers to the full width of the filter container
+   */
+  @Input()
+  public stretchLabels = false;
+
+  /**
    * Optional label to show above the option list
    */
   @Input()

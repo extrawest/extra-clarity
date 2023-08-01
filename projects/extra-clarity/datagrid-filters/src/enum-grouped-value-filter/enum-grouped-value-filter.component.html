@@ -27,6 +27,7 @@
               *ngFor="let option of group.items; trackBy: trackByValue"
               [clrSelected]="selectedValues.has(option.value)"
               (change)="onItemSelectedChange($event, option.value)"
+              [ngClass]="{ 'stretch-labels': stretchLabels }"
             >
               <ng-container
                 [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"

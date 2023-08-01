@@ -51,3 +51,9 @@ $title-padding-left: .2rem;
   font-size: .65rem;
   line-height: 1.5;
 }
+
+:host ::ng-deep .stretch-labels {
+  .clr-checkbox-wrapper.clr-treenode-checkbox {
+    width: 100%;
+  }
+}
