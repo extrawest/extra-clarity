@@ -86,8 +86,8 @@ To configure the component you need to provide the following inputs:
 2. `[propertyKey]`
     * For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
         as the `property` value in the output state to help identify the filter's state amidst another filters.
-    * For client-driven datagrids it must be equal to the name of a field in the object passed to the `[clrDgItem]`
-        input on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+    * For client-driven datagrids it must be equal to the name of a field in the object passed to the `*clrDgItems`
+        directive on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
 3. `[options]` An array of grouped options `EnumValueFilterOptionGroup<E>` to select from.
     See the following [section](#option-list) for more details.
 

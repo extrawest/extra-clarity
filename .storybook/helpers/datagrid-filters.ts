@@ -76,7 +76,7 @@ export const wrapFilterWithinDatagrid = (
       ${getColumnTemplate('createdAt', 'Creation date')}
       ${getColumnTemplate('color', 'Favorite color')}
 
-      <clr-dg-row *clrDgItems="let user of users" [clrDgItem]="user">
+      <clr-dg-row *clrDgItems="let user of users">
         <clr-dg-cell>{{ user.id }}</clr-dg-cell>
         <clr-dg-cell>{{ user.name }}</clr-dg-cell>
         <clr-dg-cell>{{ user.createdAt | date }}</clr-dg-cell>

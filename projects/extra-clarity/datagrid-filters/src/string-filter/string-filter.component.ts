@@ -133,8 +133,8 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, ResettableFilter,
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
    * in the output state to help identify the filter's state amidst another filters;
    *
-   * When `[serverDriven]="false"`, it must be equal to the name of a field in the object passed to the `[clrDgItem]`
-   * input on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+   * When `[serverDriven]="false"`, it must be equal to the name of a field in the object passed to the `*clrDgItems`
+   * directive on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
    *
    * @required
    */
