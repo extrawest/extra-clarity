@@ -14,17 +14,16 @@ export default {
       },
     },
     // hide editable controls for outputs (actions)
-    // hide default type `EventEmitter` (without generic type)
     refresh: {
       control: false,
       table: {
-        type: { summary: null },
+        type: { summary: 'EventEmitter<void>' },
       },
     },
     toggle: {
       control: false,
       table: {
-        type: { summary: null },
+        type: { summary: 'EventEmitter<boolean>' },
       },
     },
   },

@@ -7,20 +7,15 @@
     class="form-control"
   >
   <label class="p5 text-label">
-    <ng-container *ngIf="!toggleControl.value; else timer">
-      Auto refresh disabled
+    <ng-container *ngIf="toggleControl.value && _period > 0; else disabled">
+      {{
+        refreshing
+          ? 'Refreshing...'
+          : 'Auto refresh in ' + secondsRemaining + ' sec'
+      }}
     </ng-container>
-
-    <ng-template #timer>
-      <ng-container *ngIf="!refreshing; else refresh">
-        <ng-container *ngIf="{ value: timer$ | async } as timer">
-          Auto refresh in {{ timer.value }} sec
-        </ng-container>
-      </ng-container>
-
-      <ng-template #refresh>
-        Refreshing...
-      </ng-template>
+    <ng-template #disabled>
+      Auto refresh disabled
     </ng-template>
   </label>
 </clr-toggle-wrapper>
