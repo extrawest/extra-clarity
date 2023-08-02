@@ -72,11 +72,11 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, ResettableFilter,
   public debounceTimeMs: number = STRING_FILTER_DEFAULTS.debounceTimeMs;
 
   /**
-   * Comparison type for the filtering algorithm:
+   * Comparison type for the filtering algorithm of client-driven filters:
    * * `false` = search for partial and full matches;
    * * `true` = search for a full match only.
    *
-   * NOTE: Affects only client-driven filters, i.e. requires another input `[serverDriven]="false"`.
+   * For server-driven, this input affects only the helper hint under the input field.
    * */
   @Input()
   public fullMatch = false;
