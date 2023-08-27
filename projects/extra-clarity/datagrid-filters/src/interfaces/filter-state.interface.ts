@@ -5,7 +5,7 @@ export interface FilterState<T> {
 
 export interface EnumValueFilterOption<E> {
   value: E;
-  label?: string;
+  label: string;
   selectedByDefault?: boolean;
 }
 
@@ -15,6 +15,6 @@ export interface EnumValueFilterOptionGroup<E> {
   items: readonly EnumValueFilterOption<E>[];
 }
 
-export interface ResettableFilter {
-  resetToDefault: () => void;
+export abstract class ResettableFilter {
+  abstract resetToDefault: () => void;
 }
