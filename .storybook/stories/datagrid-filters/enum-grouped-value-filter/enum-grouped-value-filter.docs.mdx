@@ -103,7 +103,7 @@ interface EnumValueFilterOptionGroup<E> {
     // items: Array<EnumValueFilterOption<E>>
     items: Array<{
         value: E;
-        label?: string;
+        label: string;
         selectedByDefault?: boolean;
     }>;
 }
@@ -112,6 +112,7 @@ interface EnumValueFilterOptionGroup<E> {
 with the following properties:
 * `label`
     A required string to be shown as the group name in the filter's body.
+    We recommend to assign <strong>a unique label</strong> for each option group.
 * `expandedByDefault`
     An optional boolean flag to mark groups which should be expanded on the component's `[options]`
     input change; this flag has lower priority than the component's [expandedAll] input.
@@ -121,8 +122,9 @@ with the following properties:
       A required field, of any type (generic `<E>`, usually a `string`), to be added to/removed from the filter value
       on selecting/unselecting this option. All **values must be unique** among all groups and options in the filter.
     * `label`
-      An optional string label for the option.
-      If not provided, then the stringified `value` is shown as the label.
+      A required string label to be shown in the filter's body next to the checkbox for this option.
+      This value is also used for internal filtering via the search bar (activated by the `[withSearchBar]` input),
+      even when a custom label template is provided by the `[customLabelTpl]` input.
     * `selectedByDefault`
       An optional boolean flag to mark the option to be selected by default,
       i.e. to define a custom default state for the filter.
@@ -143,16 +145,13 @@ const options: EnumValueFilterOptionGroup<string>[] = [
   {
     label: 'RGB'
     items: [
-      { value: 'red' },
-      { value: 'green' },
-      { value: 'blue' },
+      { value: 'red', label: 'Red' },
+      { value: 'green', label: 'Green' },
+      { value: 'blue', label: 'Blue' },
     ],
   },
 ];
 ```
-
-If you need to format or map option labels separately from underlying values,
-you should provide a string within the `label` field for such options.
 
 If you need more advanced labels (e.g. with icons) you may utilize the `[customLabelTpl]` input of the filter component.
 The entire option object `EnumValueFilterOption<E>` is passed to this template as the `$implicit` context parameter:
@@ -165,7 +164,7 @@ The entire option object `EnumValueFilterOption<E>` is passed to this template a
 />
 ...
 <ng-template #customColorLabel let-option>
-  <span>{{ option.label ?? option.value }}</span>
+  <span>{{ option.label }}</span>
   <cds-icon shape="mapOptionToCdsIconShape(option)" />
 </ng-template>
 ```

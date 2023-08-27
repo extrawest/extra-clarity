@@ -57,3 +57,58 @@ $title-padding-left: .2rem;
     width: 100%;
   }
 }
+
+.filter-search-bar {
+  position: relative;
+  margin: 0 0.25rem 0.65rem;
+
+  &:not(:first-child) {
+    margin-top: .25rem;
+  }
+
+  :host ::ng-deep & {
+    .clr-form-control {
+      margin-top: 0;
+    }
+
+    .clr-control-container {
+      width: 100%;
+    }
+
+    .clr-input {
+      width: 100%;
+      padding-left: 1.25rem !important;
+    }
+  }
+}
+
+.search-bar-icon {
+  position: absolute;
+  left: 0.15rem;
+  top: 0.2rem;
+}
+
+.search-bar-clear {
+  border: none;
+  position: absolute;
+  right: 0;
+  top: 0.1rem;
+  margin: 0;
+  padding: 0;
+  width: 1rem;
+  height: 1rem;
+
+  cds-icon {
+    margin-top: -0.15rem;
+  }
+}
+
+.no-options {
+  display: flex;
+  font-size: 0.65rem;
+  line-height: 0.8rem;
+
+  cds-icon {
+    margin: 0 0.3rem 0 0.1rem;
+  }
+}

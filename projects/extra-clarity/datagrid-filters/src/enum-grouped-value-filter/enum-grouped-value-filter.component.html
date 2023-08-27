@@ -10,11 +10,32 @@
         Selected: {{ getTotalSelectedAmountLabel() }}
       </div>
 
+      <div class="filter-search-bar" *ngIf="withSearchBar">
+        <cds-icon shape="search" status="info" class="search-bar-icon" />
+        <clr-input-container>
+          <input
+            #searchInputRef
+            type="text"
+            clrInput
+            placeholder="Type to filter the options"
+            [formControl]="searchInput"
+          >
+        </clr-input-container>
+        <button
+          class="btn btn-sm btn-icon search-bar-clear"
+          *ngIf="searchInput.value"
+          (click)="clearSearchBar()"
+        >
+          <cds-icon shape="filter-off" status="info" />
+        </button>
+      </div>
+
       <div class="filter-options" [style.max-height.px]="maxHeightPx">
-        <clr-tree>
+        <clr-tree *ngIf="visibleOptions.length; else noVisibleOptions">
           <clr-tree-node
-            *ngFor="let group of options; index as i"
-            [(clrExpanded)]="isGroupExpanded[i]"
+            *ngFor="let group of visibleOptions; index as i"
+            [clrExpanded]="isGroupExpanded[i] || !!searchInput.value"
+            (clrExpandedChange)="onGroupExpandedChange(i, $event)"
             (change)="onGroupSelectedChange($event, i)"
           >
             <span class="filter-group-label">
@@ -27,18 +48,37 @@
               *ngFor="let option of group.items; trackBy: trackByValue"
               [clrSelected]="selectedValues.has(option.value)"
               (change)="onItemSelectedChange($event, option.value)"
-              [ngClass]="{ 'stretch-labels': stretchLabels }"
+              [class.stretch-labels]="stretchLabels"
             >
               <ng-container
                 [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
-                [ngTemplateOutletContext]="{ $implicit: option }"
+                [ngTemplateOutletContext]="{ $implicit: option, marked: searchInput.value }"
               />
               <ng-template #defaultLabelTpl>
-                {{ option.label ?? option.value }}
+                <span
+                  *ngIf="searchInput.value; else unmarkedLabel"
+                  [innerHtml]="option.label | markMatched:searchInput.value"
+                ></span>
+                <ng-template #unmarkedLabel>
+                  {{ option.label }}
+                </ng-template>
               </ng-template>
             </clr-tree-node>
           </clr-tree-node>
         </clr-tree>
+
+        <ng-template #noVisibleOptions>
+          <div class="no-options">
+            <ng-container *ngIf="options.length; else noOptionsAtAll">
+              <cds-icon shape="warning-standard" status="warning" solid />
+              No options found for the entered search-term
+            </ng-container>
+            <ng-template #noOptionsAtAll>
+              <cds-icon shape="info-standard" status="info" solid />
+              No options available
+            </ng-template>
+          </div>
+        </ng-template>
       </div>
 
       <div class="filter-buttons">
@@ -48,7 +88,7 @@
           (click)="unselectAll()"
           [disabled]="!selectedValues.size"
         >
-          Clear All
+          Show All
         </button>
         <button
           *ngIf="hasCustomDefaultState"

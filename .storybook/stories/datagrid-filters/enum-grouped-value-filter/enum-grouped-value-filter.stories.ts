@@ -92,6 +92,8 @@ const MetaStory = {
         },
       },
     },
+    withSearchBar: {
+    },
     // OUTPUTS
     filterValueChanged: {
       control: false,
@@ -143,6 +145,7 @@ const MetaStory = {
     title: '',
     value: undefined,
     widthPx: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.widthPx,
+    withSearchBar: false,
   },
 } as Meta<EnumGroupedValueFilterComponent<unknown>>;
 
@@ -191,11 +194,12 @@ export const WithinDatagridStory: Story = {
         [matchSelected]="matchSelected"
         [maxHeightPx]="maxHeightPx"
         [serverDriven]="serverDriven"
-        [showSelectedValue]="showSelectedValue"
+        [showSelectedAmount]="showSelectedAmount"
         [stretchLabels]="stretchLabels"
         [title]="title"
         [value]="value"
         [widthPx]="widthPx"
+        [withSearchBar]="withSearchBar"
         (filterValueChanged)="filterValueChanged($event)"
       />
     `, 'color'),
