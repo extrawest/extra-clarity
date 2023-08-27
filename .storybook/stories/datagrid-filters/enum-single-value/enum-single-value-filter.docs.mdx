@@ -109,7 +109,9 @@ with the following properties:
     A required field, of any type (generic `<E>`, usually a `string`), to be used as a new filter value
     on selecting this option. All **values must be unique** among all options in the filter.
 * `label`
-    A required string label for this option to be shown in the filter's body.
+    A required string label to be shown in the filter's body next to the radio button for this option.
+    This value is also used for internal filtering via the search bar (activated by the `[withSearchBar]` input),
+    even when a custom label template is provided by the `[customLabelTpl]` input.
 * `selectedByDefault`
     An optional boolean flag to mark the option to be selected by default,
     i.e. to define a custom default state for the filter.
