@@ -65,6 +65,12 @@ export class EnumSingleValueFilterComponent<E, T extends object = {}>
 implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilter,
   AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
+   * When `true`, the filter will be closed on selecting any new value or on resetting/clearing
+   * */
+  @Input()
+  public closeOnChange = false;
+
+  /**
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
    *
@@ -307,6 +313,10 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
       this.defaultValue = null;
     }
     this.setValue(this.defaultValue);
+
+    if (this.closeOnChange) {
+      this.hideFilter();
+    }
   }
 
   /**
@@ -330,6 +340,10 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
    * */
   unselectAll(): void {
     this.setValue(null);
+
+    if (this.closeOnChange) {
+      this.hideFilter();
+    }
   }
 
   protected clearSearchBar(): void {
@@ -337,20 +351,16 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
     this.focusSearchBar();
   }
 
-  protected focusSearchBar(): void {
-    this.searchInputRef?.nativeElement.focus();
-  }
-
   protected onInputChange(inputValue: E): void {
     this.setValue(inputValue);
+
+    if (this.closeOnChange) {
+      this.hideFilter();
+    }
   }
 
   protected trackByValue(index: number, option: EnumValueFilterOption<E>): E {
     return option.value;
-  }
-
-  private isValueAllowed(value: E | null): boolean {
-    return this.options.some(option => option.value === value);
   }
 
   private checkInputsValidity(): string[] {
@@ -358,6 +368,20 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
       return [];
     }
     return ['[propertyKey] is required'];
+  }
+
+  private focusSearchBar(): void {
+    this.searchInputRef?.nativeElement.focus();
+  }
+
+  private hideFilter(): void {
+    if (this.clrPopoverToggleService?.open) {
+      this.clrPopoverToggleService.open = false;
+    }
+  }
+
+  private isValueAllowed(value: E | null): boolean {
+    return this.options.some(option => option.value === value);
   }
 
   private onOptionsChange(): void {

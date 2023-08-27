@@ -35,6 +35,8 @@ const MetaStory = {
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
     // INPUTS
+    closeOnChange: {
+    },
     customLabelTpl: {
       control: false,
       table: {
@@ -128,6 +130,7 @@ const MetaStory = {
     },
   },
   args: {
+    closeOnChange: false,
     loading: false,
     maxHeightPx: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.maxHeightPx,
     options: [],
@@ -181,6 +184,7 @@ export const WithinDatagridStory: Story = {
       <ec-enum-single-value-filter
         [options]="options"
         [propertyKey]="propertyKey"
+        [closeOnChange]="closeOnChange"
         [customLabelTpl]="customLabelTpl"
         [loading]="loading"
         [maxHeightPx]="maxHeightPx"
