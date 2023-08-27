@@ -87,6 +87,8 @@ const MetaStory = {
         },
       },
     },
+    withSearchBar: {
+    },
     // OUTPUTS
     filterValueChanged: {
       control: false,
@@ -136,6 +138,7 @@ const MetaStory = {
     title: '',
     value: undefined,
     widthPx: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx,
+    withSearchBar: false,
   },
 } as Meta<EnumSingleValueFilterComponent<unknown>>;
 
@@ -187,6 +190,7 @@ export const WithinDatagridStory: Story = {
         [title]="title"
         [value]="value"
         [widthPx]="widthPx"
+        [withSearchBar]="withSearchBar"
         (filterValueChanged)="filterValueChanged($event)"
       />
     `, 'color'),

@@ -10,12 +10,33 @@
         Selected: {{ selectedValueLabel }}
       </div>
 
+      <div class="filter-search-bar" *ngIf="withSearchBar">
+        <cds-icon shape="search" status="info" class="search-bar-icon" />
+        <clr-input-container>
+          <input
+            #searchInputRef
+            type="text"
+            clrInput
+            placeholder="Type to filter the options"
+            [formControl]="searchInput"
+          >
+        </clr-input-container>
+        <button
+          class="btn btn-sm btn-icon search-bar-clear"
+          *ngIf="searchInput.value"
+          (click)="clearSearchBar()"
+        >
+          <cds-icon shape="filter-off" status="info" />
+        </button>
+      </div>
+
       <div class="filter-options" [style.max-height.px]="maxHeightPx">
         <clr-radio-container
+          *ngIf="visibleOptions.length; else noVisibleOptions"
           class="radio-container"
-          [ngClass]="{ 'stretch-labels': stretchLabels }"
+          [class.stretch-labels]="stretchLabels"
         >
-          <clr-radio-wrapper *ngFor="let option of options; trackBy: trackByValue">
+          <clr-radio-wrapper *ngFor="let option of visibleOptions; trackBy: trackByValue">
             <input
               type="radio"
               clrRadio
@@ -26,14 +47,33 @@
             <label>
               <ng-container
                 [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
-                [ngTemplateOutletContext]="{ $implicit: option }"
+                [ngTemplateOutletContext]="{ $implicit: option, marked: searchInput.value }"
               />
               <ng-template #defaultLabelTpl>
-                {{ option.label ?? option.value }}
+                <span
+                  *ngIf="searchInput.value; else unmarkedLabel"
+                  [innerHtml]="option.label | markMatched:searchInput.value"
+                ></span>
+                <ng-template #unmarkedLabel>
+                  {{ option.label }}
+                </ng-template>
               </ng-template>
             </label>
           </clr-radio-wrapper>
         </clr-radio-container>
+
+        <ng-template #noVisibleOptions>
+          <div class="no-options">
+            <ng-container *ngIf="options.length; else noOptionsAtAll">
+              <cds-icon shape="warning-standard" status="warning" solid />
+              No options found for the entered search-term
+            </ng-container>
+            <ng-template #noOptionsAtAll>
+              <cds-icon shape="info-standard" status="info" solid />
+              No options available
+            </ng-template>
+          </div>
+        </ng-template>
       </div>
 
       <div class="filter-buttons">

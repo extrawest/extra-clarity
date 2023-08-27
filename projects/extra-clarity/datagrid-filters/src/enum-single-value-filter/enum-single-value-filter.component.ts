@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   inject,
   Input,
@@ -12,9 +14,26 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
+  ViewChild,
 } from '@angular/core';
-import { ClrDatagridFilter, ClrDatagridFilterInterface, ClrRadioModule } from '@clr/angular';
-import { Subject } from 'rxjs';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CdsIconModule } from '@cds/angular';
+import {
+  ClarityIcons,
+  filterOffIcon,
+  infoStandardIcon,
+  searchIcon,
+  warningStandardIcon,
+} from '@cds/core/icon';
+import {
+  ClrDatagridFilter,
+  ClrDatagridFilterInterface,
+  ClrInputModule,
+  ClrPopoverToggleService,
+  ClrRadioModule,
+} from '@clr/angular';
+import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
+import { Subject, takeUntil } from 'rxjs';
 
 import {
   EnumValueFilterOption,
@@ -35,18 +54,24 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    CdsIconModule,
+    ClrInputModule,
     ClrRadioModule,
+    MarkMatchedStringPipe,
   ],
 })
 export class EnumSingleValueFilterComponent<E, T extends object = {}>
 implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilter,
-  OnChanges, OnDestroy, OnInit {
+  AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
    *
    * The entire `option: EnumValueFilterOption<E>` object is passed to this template
    * as the `$implicit` context parameter.
+   *
+   * Also the substring entered into the internal search bar is passed to the context as `marked`.
    *
    * `TemplateRef<unknown>`
    */
@@ -146,6 +171,12 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
   public widthPx: number = ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx;
 
   /**
+   * Whether to show a search bar above the option list to filter options
+   * */
+  @Input()
+  public withSearchBar = false;
+
+  /**
    * Emits the filter's state object on every change of the internal filter value.
    * The state object contains the name of a `property` to filter by, defined by the `[propertyKey]` input,
    * and the actual filter `value`.
@@ -163,15 +194,25 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
   protected filterValue: E | null = null;
   protected hasCustomDefaultState = false;
 
+  protected visibleOptions: EnumValueFilterOption<E>[] = [];
+  protected searchInput = new FormControl<string>('', { nonNullable: true });
+
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   readonly changes = new Subject<void>();
 
   private readonly destroy$ = new Subject<void>();
 
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
+  private readonly clrPopoverToggleService = inject(ClrPopoverToggleService, { optional: true });
 
-  constructor(readonly changeDetectorRef: ChangeDetectorRef) {
+  @ViewChild('searchInputRef')
+  private searchInputRef?: ElementRef<HTMLInputElement>;
+
+  constructor() {
     this.clrDatagridFilterContainer?.setFilter(this);
+
+    ClarityIcons.addIcons(filterOffIcon, infoStandardIcon, searchIcon, warningStandardIcon);
   }
 
   /**
@@ -224,6 +265,16 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
     return !!this.propertyKey && !this.isStateDefault;
   }
 
+  ngAfterViewInit(): void {
+    this.clrPopoverToggleService?.openChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isOpen: boolean) => {
+        if (isOpen) {
+          setTimeout(() => this.focusSearchBar());
+        }
+      });
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['options']) {
       this.onOptionsChange();
@@ -242,6 +293,10 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
 
   ngOnInit(): void {
     this.configErrors = this.checkInputsValidity();
+
+    this.searchInput.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateVisibleOptions());
   }
 
   /**
@@ -277,6 +332,15 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
     this.setValue(null);
   }
 
+  protected clearSearchBar(): void {
+    this.searchInput.reset();
+    this.focusSearchBar();
+  }
+
+  protected focusSearchBar(): void {
+    this.searchInputRef?.nativeElement.focus();
+  }
+
   protected onInputChange(inputValue: E): void {
     this.setValue(inputValue);
   }
@@ -297,6 +361,8 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
   }
 
   private onOptionsChange(): void {
+    this.updateVisibleOptions();
+
     const optionsSelectedByDefault = this.options.filter(option => option.selectedByDefault);
 
     this.defaultValue = optionsSelectedByDefault.length === 1
@@ -326,5 +392,18 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
       this.changes.next();
     }
     this.changeDetectorRef.markForCheck();
+  }
+
+  private updateVisibleOptions(): void {
+    const searchTerm = this.searchInput.value.toLowerCase();
+
+    if (!searchTerm) {
+      this.visibleOptions = [...this.options];
+    }
+
+    // TODO: re-think how to filter options with a custom label template
+    this.visibleOptions = this.options.filter(option => {
+      return option.label.toLowerCase().includes(searchTerm);
+    });
   }
 }
