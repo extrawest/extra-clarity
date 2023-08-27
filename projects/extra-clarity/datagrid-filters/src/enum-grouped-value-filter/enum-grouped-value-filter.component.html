@@ -10,31 +10,17 @@
         Selected: {{ getTotalSelectedAmountLabel() }}
       </div>
 
-      <div class="filter-search-bar" *ngIf="withSearchBar">
-        <cds-icon shape="search" status="info" class="search-bar-icon" />
-        <clr-input-container>
-          <input
-            #searchInputRef
-            type="text"
-            clrInput
-            placeholder="Type to filter the options"
-            [formControl]="searchInput"
-          >
-        </clr-input-container>
-        <button
-          class="btn btn-sm btn-icon search-bar-clear"
-          *ngIf="searchInput.value"
-          (click)="clearSearchBar()"
-        >
-          <cds-icon shape="filter-off" status="info" />
-        </button>
-      </div>
+      <ec-filter-search-bar
+        class="filter-search-bar"
+        *ngIf="withSearchBar"
+        (valueChange)="onSearchTermChange($event)"
+      />
 
       <div class="filter-options" [style.max-height.px]="maxHeightPx">
         <clr-tree *ngIf="visibleOptions.length; else noVisibleOptions">
           <clr-tree-node
             *ngFor="let group of visibleOptions; index as i"
-            [clrExpanded]="isGroupExpanded[i] || !!searchInput.value"
+            [clrExpanded]="isGroupExpanded[i] || !!searchTerm"
             (clrExpandedChange)="onGroupExpandedChange(i, $event)"
             (change)="onGroupSelectedChange($event, i)"
           >
@@ -52,12 +38,12 @@
             >
               <ng-container
                 [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
-                [ngTemplateOutletContext]="{ $implicit: option, marked: searchInput.value }"
+                [ngTemplateOutletContext]="{ $implicit: option, marked: searchTerm }"
               />
               <ng-template #defaultLabelTpl>
                 <span
-                  *ngIf="searchInput.value; else unmarkedLabel"
-                  [innerHtml]="option.label | markMatched:searchInput.value"
+                  *ngIf="searchTerm; else unmarkedLabel"
+                  [innerHtml]="option.label | markMatched:searchTerm"
                 ></span>
                 <ng-template #unmarkedLabel>
                   {{ option.label }}

@@ -4,7 +4,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   inject,
   Input,
@@ -16,19 +15,11 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CdsIconModule } from '@cds/angular';
-import {
-  ClarityIcons,
-  filterOffIcon,
-  infoStandardIcon,
-  searchIcon,
-  warningStandardIcon,
-} from '@cds/core/icon';
+import { ClarityIcons, infoStandardIcon, warningStandardIcon } from '@cds/core/icon';
 import {
   ClrDatagridFilter,
   ClrDatagridFilterInterface,
-  ClrInputModule,
   ClrPopoverToggleService,
   ClrTreeViewModule,
 } from '@clr/angular';
@@ -36,6 +27,7 @@ import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
 
+import { FilterSearchBarComponent } from '../components/filter-search-bar';
 import {
   EnumValueFilterOption,
   EnumValueFilterOptionGroup,
@@ -56,11 +48,10 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     CdsIconModule,
     ClrTreeViewModule,
-    ClrInputModule,
     MarkMatchedStringPipe,
+    FilterSearchBarComponent,
   ],
 })
 export class EnumGroupedValueFilterComponent<E, T extends object = {}>
@@ -218,8 +209,8 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFil
   protected isStateDefault = true;
   protected selectedValues = new Set<E>();
 
+  protected searchTerm = '';
   protected visibleOptions: EnumValueFilterOptionGroup<E>[] = [];
-  protected searchInput = new FormControl<string>('', { nonNullable: true });
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   readonly changes = new Subject<void>();
@@ -230,13 +221,13 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFil
   private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
   private readonly clrPopoverToggleService = inject(ClrPopoverToggleService, { optional: true });
 
-  @ViewChild('searchInputRef')
-  private searchInputRef?: ElementRef<HTMLInputElement>;
+  @ViewChild(FilterSearchBarComponent)
+  private searchBar?: FilterSearchBarComponent;
 
   constructor() {
     this.clrDatagridFilterContainer?.setFilter(this);
 
-    ClarityIcons.addIcons(filterOffIcon, infoStandardIcon, searchIcon, warningStandardIcon);
+    ClarityIcons.addIcons(infoStandardIcon, warningStandardIcon);
   }
 
   /**
@@ -255,6 +246,34 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFil
       property: this.propertyKey,
       value: filterValue,
     };
+  }
+
+  ngAfterViewInit(): void {
+    this.clrPopoverToggleService?.openChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isOpen: boolean) => {
+        if (isOpen) {
+          setTimeout(() => this.searchBar?.focusSearchBar());
+        }
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['options']) {
+      this.onOptionsChange();
+      return;
+    }
+    if (changes['value'] && this.value !== undefined) {
+      this.setValue(this.value);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
+
+  ngOnInit(): void {
+    this.configErrors = this.checkInputsValidity();
   }
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
@@ -304,39 +323,6 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFil
     return !!this.propertyKey && !this.isStateDefault;
   }
 
-  ngAfterViewInit(): void {
-    this.clrPopoverToggleService?.openChange
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isOpen: boolean) => {
-        if (isOpen) {
-          setTimeout(() => this.focusSearchBar());
-        }
-      });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['options']) {
-      this.onOptionsChange();
-      return;
-    }
-    if (changes['value'] && this.value !== undefined) {
-      this.setValue(this.value);
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  ngOnInit(): void {
-    this.configErrors = this.checkInputsValidity();
-
-    this.searchInput.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.updateVisibleOptions());
-  }
-
   /**
    * Reset the filter to the default state
    * */
@@ -371,15 +357,6 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFil
    * */
   unselectAll(): void {
     this.updateSelectedValues(new Set());
-  }
-
-  protected clearSearchBar(): void {
-    this.searchInput.reset();
-    this.focusSearchBar();
-  }
-
-  protected focusSearchBar(): void {
-    this.searchInputRef?.nativeElement.focus();
   }
 
   protected getGroupSelectedAmountLabel(group: EnumValueFilterOptionGroup<E>): string {
@@ -442,6 +419,11 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFil
       : newSelectedValues.delete(inputValue);
 
     this.updateSelectedValues(newSelectedValues);
+  }
+
+  protected onSearchTermChange(value: string): void {
+    this.searchTerm = value.toLowerCase();
+    this.updateVisibleOptions();
   }
 
   protected trackByValue(index: number, option: EnumValueFilterOption<E>): E {
@@ -510,9 +492,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFil
   }
 
   private updateVisibleOptions(): void {
-    const searchTerm = this.searchInput.value.toLowerCase();
-
-    if (!searchTerm) {
+    if (!this.searchTerm) {
       this.visibleOptions = [...this.options];
     }
 
@@ -520,7 +500,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFil
     this.visibleOptions = this.options
       .map(group => ({
         ...group,
-        items: group.items.filter(item => item.label.toLowerCase().includes(searchTerm)),
+        items: group.items.filter(item => item.label.toLowerCase().includes(this.searchTerm)),
       }))
       .filter(group => group.items.length > 0);
   }
