@@ -92,6 +92,20 @@
     },
     "@angular-eslint/schematics:library": {
       "setParserOptionsProject": true
+    },
+    "@schematics/angular:component": {
+      "standalone": true,
+      "skipTests": true,
+      "style": "scss",
+      "changeDetection": "OnPush"
+    },
+    "@schematics/angular:pipe": {
+      "standalone": true,
+      "skipTests": true
+    },
+    "@schematics/angular:directive": {
+      "standalone": true,
+      "skipTests": true
     }
   }
 }
