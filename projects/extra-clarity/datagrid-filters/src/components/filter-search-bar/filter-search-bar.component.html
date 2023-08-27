@@ -1,0 +1,19 @@
+<cds-icon shape="search" status="info" class="search-bar-icon" />
+
+<clr-input-container>
+  <input
+    #searchInputRef
+    type="text"
+    clrInput
+    placeholder="Type to filter the options"
+    [formControl]="searchInput"
+  >
+</clr-input-container>
+
+<button
+  class="btn btn-sm btn-icon search-bar-clear"
+  *ngIf="searchInput.value"
+  (click)="clearSearchBar()"
+>
+  <cds-icon shape="filter-off" status="info" />
+</button>

@@ -4,7 +4,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   inject,
   Input,
@@ -16,25 +15,18 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CdsIconModule } from '@cds/angular';
-import {
-  ClarityIcons,
-  filterOffIcon,
-  infoStandardIcon,
-  searchIcon,
-  warningStandardIcon,
-} from '@cds/core/icon';
+import { ClarityIcons, infoStandardIcon, warningStandardIcon } from '@cds/core/icon';
 import {
   ClrDatagridFilter,
   ClrDatagridFilterInterface,
-  ClrInputModule,
   ClrPopoverToggleService,
   ClrRadioModule,
 } from '@clr/angular';
 import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { Subject, takeUntil } from 'rxjs';
 
+import { FilterSearchBarComponent } from '../components/filter-search-bar';
 import {
   EnumValueFilterOption,
   FilterState,
@@ -54,11 +46,10 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     CdsIconModule,
-    ClrInputModule,
     ClrRadioModule,
     MarkMatchedStringPipe,
+    FilterSearchBarComponent,
   ],
 })
 export class EnumSingleValueFilterComponent<E, T extends object = {}>
@@ -200,8 +191,8 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
   protected filterValue: E | null = null;
   protected hasCustomDefaultState = false;
 
+  protected searchTerm = '';
   protected visibleOptions: EnumValueFilterOption<E>[] = [];
-  protected searchInput = new FormControl<string>('', { nonNullable: true });
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   readonly changes = new Subject<void>();
@@ -212,13 +203,13 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
   private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
   private readonly clrPopoverToggleService = inject(ClrPopoverToggleService, { optional: true });
 
-  @ViewChild('searchInputRef')
-  private searchInputRef?: ElementRef<HTMLInputElement>;
+  @ViewChild(FilterSearchBarComponent)
+  private searchBar?: FilterSearchBarComponent;
 
   constructor() {
     this.clrDatagridFilterContainer?.setFilter(this);
 
-    ClarityIcons.addIcons(filterOffIcon, infoStandardIcon, searchIcon, warningStandardIcon);
+    ClarityIcons.addIcons(infoStandardIcon, warningStandardIcon);
   }
 
   /**
@@ -247,6 +238,35 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
     return selectedOption?.label || String(this.filterValue);
   }
 
+  ngAfterViewInit(): void {
+    this.clrPopoverToggleService?.openChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isOpen: boolean) => {
+        if (isOpen) {
+          setTimeout(() => this.searchBar?.focusSearchBar());
+        }
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['options']) {
+      this.onOptionsChange();
+      return;
+    }
+
+    if (changes['value'] && this.value !== undefined) {
+      this.setValue(this.value);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
+
+  ngOnInit(): void {
+    this.configErrors = this.checkInputsValidity();
+  }
+
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   accepts(item: T): boolean {
     if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
@@ -269,40 +289,6 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
    * */
   isActive(): boolean {
     return !!this.propertyKey && !this.isStateDefault;
-  }
-
-  ngAfterViewInit(): void {
-    this.clrPopoverToggleService?.openChange
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isOpen: boolean) => {
-        if (isOpen) {
-          setTimeout(() => this.focusSearchBar());
-        }
-      });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['options']) {
-      this.onOptionsChange();
-      return;
-    }
-
-    if (changes['value'] && this.value !== undefined) {
-      this.setValue(this.value);
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  ngOnInit(): void {
-    this.configErrors = this.checkInputsValidity();
-
-    this.searchInput.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.updateVisibleOptions());
   }
 
   /**
@@ -346,17 +332,17 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
     }
   }
 
-  protected clearSearchBar(): void {
-    this.searchInput.reset();
-    this.focusSearchBar();
-  }
-
   protected onInputChange(inputValue: E): void {
     this.setValue(inputValue);
 
     if (this.closeOnChange) {
       this.hideFilter();
     }
+  }
+
+  protected onSearchTermChange(value: string): void {
+    this.searchTerm = value.toLowerCase();
+    this.updateVisibleOptions();
   }
 
   protected trackByValue(index: number, option: EnumValueFilterOption<E>): E {
@@ -368,10 +354,6 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
       return [];
     }
     return ['[propertyKey] is required'];
-  }
-
-  private focusSearchBar(): void {
-    this.searchInputRef?.nativeElement.focus();
   }
 
   private hideFilter(): void {
@@ -419,15 +401,13 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
   }
 
   private updateVisibleOptions(): void {
-    const searchTerm = this.searchInput.value.toLowerCase();
-
-    if (!searchTerm) {
+    if (!this.searchTerm) {
       this.visibleOptions = [...this.options];
     }
 
     // TODO: re-think how to filter options with a custom label template
     this.visibleOptions = this.options.filter(option => {
-      return option.label.toLowerCase().includes(searchTerm);
+      return option.label.toLowerCase().includes(this.searchTerm);
     });
   }
 }
