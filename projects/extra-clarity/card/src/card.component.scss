@@ -3,22 +3,18 @@
   &.has-error,
   &.loading:not(.empty) {
     .card-block {
-      min-height: 200px;
+      min-height: 10rem;
     }
   }
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
 
+  .card-header,
   .card-header-actions {
     display: flex;
     align-items: center;
-
-    & > * {
-      margin-left: .6rem;
-    }
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 0.6rem;
+    column-gap: 1.2rem;
   }
 
   .card-placeholder {
@@ -36,4 +32,7 @@
     position: relative;
   }
 
+  .error-reload-button {
+    margin-top: 1rem;
+  }
 }
