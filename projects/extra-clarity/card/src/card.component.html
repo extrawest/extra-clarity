@@ -25,21 +25,43 @@
     </ng-container>
 
     <ng-template #errorOrNoData>
-      <div class="card-placeholder" *ngIf="!loading">
+      <div class="card-placeholder text-center" *ngIf="!loading">
         <ng-container *ngIf="error; else noData">
-          <div class="text-center">
-            Something went wrong.<br>
-            Try to reload data.
+          <cds-icon shape="error-standard" status="danger" class="error-icon" />
+
+          <div> An error occurred </div>
+
+          <div class="error-message">
+            {{ errorMessage }}
           </div>
-          <button (click)="onReload()" class="btn btn-sm error-reload-button">
+
+          <div class="error-details" *ngIf="error.httpError && !error.noDetails">
+            <button
+              class="btn btn-sm btn-link error-details-toggle"
+              (click)="toggleErrorDetailsVisibility()"
+            >
+              {{ showErrorDetails ? 'Hide' : 'Show' }} error details
+            </button>
+            <div class="error-details-json" *ngIf="showErrorDetails">
+              {{ error.httpError | json }}
+            </div>
+          </div>
+
+          <div class="error-hint">
+            {{ error.hint || 'Please, try to reload the data a bit later' }}
+          </div>
+
+          <button
+            *ngIf="!error.noRetryBtn"
+            (click)="onReload()"
+            class="btn btn-sm error-reload-button"
+          >
             Reload
           </button>
         </ng-container>
 
         <ng-template #noData>
-          <div class="text-center">
-            No data
-          </div>
+          <div> No data found </div>
         </ng-template>
       </div>
     </ng-template>

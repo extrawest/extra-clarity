@@ -1,5 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
+
+import { EcCardError } from './interfaces';
+
+const UNKNOWN_ERROR = 'Unknown Error';
 
 @Component({
   selector: 'ec-card',
@@ -18,13 +22,44 @@ export class CardComponent {
   public loading: boolean;
 
   @Input()
-  public error: HttpErrorResponse | null;
+  public error: EcCardError | null;
 
   /** `EventEmitter<void>` */
   @Output()
   public reload = new EventEmitter<void>();
 
+  protected showErrorDetails = false;
+
+  protected get errorMessage(): string {
+    if (!this.error) {
+      return UNKNOWN_ERROR;
+    }
+    if (this.error.message) {
+      return this.error.message;
+    }
+    if (!this.error.httpError) {
+      return UNKNOWN_ERROR;
+    }
+    if (!this.error.httpError.error) {
+      const { status, statusText } = this.error.httpError;
+      return `[${status}] ${statusText}`;
+    }
+    if (typeof this.error.httpError.error === 'object') {
+      return JSON.stringify(this.error.httpError.error, undefined, ' ');
+    }
+    return this.error.httpError.error;
+  }
+
+  constructor() {
+    ClarityIcons.addIcons(errorStandardIcon);
+  }
+
   protected onReload(): void {
     this.reload.emit();
+    this.showErrorDetails = false;
+  }
+
+  protected toggleErrorDetailsVisibility(): void {
+    this.showErrorDetails = !this.showErrorDetails;
   }
 }

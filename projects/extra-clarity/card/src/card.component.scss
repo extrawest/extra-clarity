@@ -17,26 +17,67 @@
     column-gap: 1.2rem;
   }
 
-  .simple-title:not(:only-child) {
-    display: none;
-  }
-
-  .card-placeholder {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
   .card-block {
     display: flex;
     flex-direction: column;
     position: relative;
   }
+}
 
-  .error-reload-button {
-    margin-top: 1rem;
+.simple-title:not(:only-child) {
+  display: none;
+}
+
+.card-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  max-width: 35rem;
+  margin: 0.6rem auto;
+}
+
+.error-icon {
+  margin: 0.3rem 0;
+}
+
+.error-message {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.error-hint {
+  margin-top: 1.2rem;
+}
+
+.error-reload-button {
+  margin: 0.3rem 0 0 !important;
+}
+
+.error-details {
+  max-width: 100%;
+
+  .error-details-toggle {
+    margin: 0 !important;
+    height: 0.7rem;
+    line-height: 0.7rem;
+  }
+
+  .error-details-json {
+    white-space: pre;
+    overflow: auto;
+    text-align: left;
+    margin-top: 0.3rem;
+    padding: 0.3rem;
+    max-height: 10rem;
+    border: 1px solid var(--clr-card-border-color, #dedede);
+    border-radius: var(--clr-card-border-radius, 0.05rem);
+    background-color: var(--clr-color-danger-50, #fff2f0);
+    font-family: ui-monospace, 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+    font-size: 0.6rem;
+    line-height: 1.25;
   }
 }
