@@ -17,6 +17,10 @@
     column-gap: 1.2rem;
   }
 
+  .simple-title:not(:only-child) {
+    display: none;
+  }
+
   .card-placeholder {
     flex: 1;
     display: flex;

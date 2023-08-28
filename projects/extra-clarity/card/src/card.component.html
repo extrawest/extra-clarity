@@ -6,7 +6,10 @@
 >
   <ec-card-header *ngIf="title">
     <div class="card-header-title">
-      {{ title }}
+      <ng-content select="[card-header-title]" />
+      <span class="simple-title">
+        {{ title }}
+      </span>
     </div>
 
     <div class="card-header-actions">
