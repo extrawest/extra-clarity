@@ -4,7 +4,7 @@ import { ClrVerticalNavModule } from '@clr/angular';
 
 import { SidebarNavGroupComponent } from './components/sidebar-nav-group';
 import { SidebarNavItemComponent } from './components/sidebar-nav-item';
-import { NAV_ITEM_TYPE, NavListItem } from './sidebar-nav.models';
+import { NAV_ITEM_TYPE, NavList } from './sidebar-nav.models';
 import { SidebarNavService } from './sidebar-nav.service';
 
 @Component({
@@ -24,12 +24,12 @@ import { SidebarNavService } from './sidebar-nav.service';
 })
 export class SidebarNavComponent implements OnInit {
   /**
-   * Array of nav items' configurations
+   * Array of nav items configurations
    *
    * @required
    */
   @Input()
-  public navList: readonly NavListItem[] = [];
+  public navList: NavList = [];
 
   /**
    * Optional `TemplateRef` for a template to use as a custom label for all nav items.

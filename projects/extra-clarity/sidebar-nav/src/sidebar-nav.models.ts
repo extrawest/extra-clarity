@@ -28,3 +28,5 @@ export interface NavItemGroup {
 
 export type NavListItem = NavItemLink | NavItemGroup | NavItemDivider;
 export type NavListSingleItem = Exclude<NavListItem, NavItemGroup>;
+
+export type NavList = readonly NavListItem[];
