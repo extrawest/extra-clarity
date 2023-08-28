@@ -5,6 +5,7 @@ import { Directive } from '@angular/core';
   host: {
     class: 'card-block',
   },
+  standalone: true,
 })
-export class CardBlockDirective {
+export class EcCardBlockDirective {
 }

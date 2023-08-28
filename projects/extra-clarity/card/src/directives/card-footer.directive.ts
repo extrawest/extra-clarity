@@ -6,6 +6,7 @@ import { Directive } from '@angular/core';
     class: 'card-footer',
     style: 'display: block',
   },
+  standalone: true,
 })
-export class CardFooterDirective {
+export class EcCardFooterDirective {
 }

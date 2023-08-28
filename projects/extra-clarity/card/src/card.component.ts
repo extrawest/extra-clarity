@@ -1,6 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
+import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
 
+import {
+  EcCardBlockDirective,
+  EcCardFooterDirective,
+  EcCardHeaderDirective,
+  EcCardTitleDirective,
+} from './directives';
 import { EcCardError } from './interfaces';
 
 const UNKNOWN_ERROR = 'Unknown Error';
@@ -10,8 +19,18 @@ const UNKNOWN_ERROR = 'Unknown Error';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    CdsIconModule,
+    ProgressSpinnerComponent,
+    EcCardBlockDirective,
+    EcCardFooterDirective,
+    EcCardHeaderDirective,
+    EcCardTitleDirective,
+  ],
 })
-export class CardComponent {
+export class EcCardComponent {
   @Input()
   public title: string;
 

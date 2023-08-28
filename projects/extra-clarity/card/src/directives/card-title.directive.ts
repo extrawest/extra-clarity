@@ -5,6 +5,7 @@ import { Directive } from '@angular/core';
   host: {
     class: 'card-title',
   },
+  standalone: true,
 })
-export class CardTitleDirective {
+export class EcCardTitleDirective {
 }

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { type HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ClrDatagridModule } from '@clr/angular';
 
 import { USERS_MOCK } from './card-content.mocks';
@@ -16,10 +15,5 @@ import { USERS_MOCK } from './card-content.mocks';
   ],
 })
 export class CardContentComponent {
-  @Input() title: string;
-  @Input() empty: boolean;
-  @Input() loading: boolean;
-  @Input() error: HttpErrorResponse | null;
-
   protected readonly users = USERS_MOCK;
 }

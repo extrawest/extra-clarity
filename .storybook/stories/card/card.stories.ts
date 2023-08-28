@@ -1,15 +1,15 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { applicationConfig, type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
-import { CardComponent, CardModule } from '../../../projects/extra-clarity/card';
+import { EcCardComponent, EcCardModule } from '../../../projects/extra-clarity/card';
 
 import { CardContentComponent } from './helpers/card-content.component';
 
-type Story = StoryObj<CardComponent>;
+type Story = StoryObj<EcCardComponent>;
 
 export default {
   title: 'Components/Card',
-  component: CardComponent,
+  component: EcCardComponent,
   argTypes: {
     // hide editable controls for outputs (actions)
     // hide default type `EventEmitter` (without generic type)
@@ -30,7 +30,7 @@ export default {
       declarations: [],
       imports: [
         CardContentComponent,
-        CardModule,
+        EcCardModule,
       ],
     }),
   ],
@@ -50,7 +50,7 @@ export default {
       </ec-card>
     `,
   }),
-} as Meta<CardComponent>;
+} as Meta<EcCardComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const CardStory: Story = {
