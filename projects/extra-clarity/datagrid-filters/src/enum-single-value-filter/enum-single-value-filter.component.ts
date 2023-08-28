@@ -17,20 +17,15 @@ import {
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, infoStandardIcon, warningStandardIcon } from '@cds/core/icon';
-import {
-  ClrDatagridFilter,
-  ClrDatagridFilterInterface,
-  ClrPopoverToggleService,
-  ClrRadioModule,
-} from '@clr/angular';
+import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr/angular';
 import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { Subject, takeUntil } from 'rxjs';
 
 import { FilterSearchBarComponent } from '../components/filter-search-bar';
 import {
+  EcDatagridFilter,
   EnumValueFilterOption,
   FilterState,
-  ResettableFilter,
 } from '../interfaces/filter-state.interface';
 
 export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
@@ -53,8 +48,8 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   ],
 })
 export class EnumSingleValueFilterComponent<E, T extends object = {}>
-implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilter,
-  AfterViewInit, OnChanges, OnDestroy, OnInit {
+  extends EcDatagridFilter<T, E | null>
+  implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * When `true`, the filter will be closed on selecting any new value or on resetting/clearing
    * */
@@ -207,6 +202,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E | null>>, ResettableFilte
   private searchBar?: FilterSearchBarComponent;
 
   constructor() {
+    super();
     this.clrDatagridFilterContainer?.setFilter(this);
 
     ClarityIcons.addIcons(infoStandardIcon, warningStandardIcon);

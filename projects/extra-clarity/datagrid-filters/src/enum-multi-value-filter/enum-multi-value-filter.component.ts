@@ -17,21 +17,16 @@ import {
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, infoStandardIcon, warningStandardIcon } from '@cds/core/icon';
-import {
-  ClrCheckboxModule,
-  ClrDatagridFilter,
-  ClrDatagridFilterInterface,
-  ClrPopoverToggleService,
-} from '@clr/angular';
+import { ClrCheckboxModule, ClrDatagridFilter, ClrPopoverToggleService } from '@clr/angular';
 import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 import { FilterSearchBarComponent } from '../components/filter-search-bar';
 import {
+  EcDatagridFilter,
   EnumValueFilterOption,
   FilterState,
-  ResettableFilter,
 } from '../interfaces/filter-state.interface';
 
 export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
@@ -54,8 +49,8 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
   ],
 })
 export class EnumMultiValueFilterComponent<E, T extends object = {}>
-implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFilter,
-  AfterViewInit, OnChanges, OnDestroy, OnInit {
+  extends EcDatagridFilter<T, E[] | null>
+  implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
@@ -212,6 +207,7 @@ implements ClrDatagridFilterInterface<T, FilterState<E[] | null>>, ResettableFil
   private searchBar?: FilterSearchBarComponent;
 
   constructor() {
+    super();
     this.clrDatagridFilterContainer?.setFilter(this);
 
     ClarityIcons.addIcons(infoStandardIcon, warningStandardIcon);

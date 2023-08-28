@@ -16,16 +16,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-  ClrDatagridFilter,
-  ClrDatagridFilterInterface,
-  ClrInput,
-  ClrInputModule,
-  ClrPopoverToggleService,
-} from '@clr/angular';
+import { ClrDatagridFilter, ClrInput, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
-import { FilterState, ResettableFilter } from '../interfaces/filter-state.interface';
+import { EcDatagridFilter, FilterState } from '../interfaces/filter-state.interface';
 
 import { StringValidatorEnum, uuidValidator, ValidationErrorEnum } from './string-filter.utils';
 
@@ -50,8 +44,8 @@ export const STRING_FILTER_DEFAULTS = {
   ],
 })
 export class StringFilterComponent<T extends object = {}>
-implements ClrDatagridFilterInterface<T, FilterState<string>>, ResettableFilter,
-  AfterViewInit, OnChanges, OnDestroy, OnInit {
+  extends EcDatagridFilter<T, string>
+  implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * Comparison type for the filtering algorithm:
    * * `false` = case-insensitive, when both filter value and cell content value are transformed to lower case
@@ -210,6 +204,7 @@ implements ClrDatagridFilterInterface<T, FilterState<string>>, ResettableFilter,
   private readonly clrPopoverToggleService = inject(ClrPopoverToggleService, { optional: true });
 
   constructor(readonly changeDetectorRef: ChangeDetectorRef) {
+    super();
     this.clrDatagridFilterContainer?.setFilter(this);
   }
 
