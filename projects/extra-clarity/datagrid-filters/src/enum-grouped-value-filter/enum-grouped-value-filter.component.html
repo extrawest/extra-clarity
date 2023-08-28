@@ -33,7 +33,7 @@
             <clr-tree-node
               *ngFor="let option of group.items; trackBy: trackByValue"
               [clrSelected]="selectedValues.has(option.value)"
-              (change)="onItemSelectedChange($event, option.value)"
+              (change)="onItemSelectedChange($event, option.value, i)"
               [class.stretch-labels]="stretchLabels"
             >
               <ng-container

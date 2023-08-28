@@ -401,7 +401,7 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
     this.updateSelectedValues(newSelectedValues);
   }
 
-  protected onItemSelectedChange(event: Event, inputValue: E): void {
+  protected onItemSelectedChange(event: Event, inputValue: E, groupIndex: number): void {
     event.stopPropagation();
 
     if (!event.target) {
@@ -409,12 +409,18 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
     }
 
     const newSelectedValues = new Set(this.selectedValues);
+    const isChecked = (event.target as HTMLInputElement).checked;
 
-    (event.target as HTMLInputElement).checked
+    isChecked
       ? newSelectedValues.add(inputValue)
       : newSelectedValues.delete(inputValue);
 
     this.updateSelectedValues(newSelectedValues);
+
+    // keep the group expanded if item was selected while the internal filter is active
+    if (isChecked && this.visibleOptions.length !== this.options.length) {
+      this.onGroupExpandedChange(groupIndex, true);
+    }
   }
 
   protected onSearchTermChange(value: string): void {
