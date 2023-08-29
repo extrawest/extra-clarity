@@ -43,6 +43,7 @@ export const STRING_FILTER_DEFAULTS = {
     ClrInputModule,
   ],
   providers: [
+    // make StringFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
       useExisting: StringFilterComponent,

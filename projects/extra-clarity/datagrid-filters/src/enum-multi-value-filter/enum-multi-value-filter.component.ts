@@ -48,6 +48,7 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
     FilterSearchBarComponent,
   ],
   providers: [
+    // make EnumMultiValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
       useExisting: EnumMultiValueFilterComponent,

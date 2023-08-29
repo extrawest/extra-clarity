@@ -49,6 +49,7 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
     FilterSearchBarComponent,
   ],
   providers: [
+    // make EnumGroupedValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
       useExisting: EnumGroupedValueFilterComponent,

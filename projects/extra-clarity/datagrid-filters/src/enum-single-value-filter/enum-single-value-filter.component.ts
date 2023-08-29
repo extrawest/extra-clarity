@@ -47,6 +47,7 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
     FilterSearchBarComponent,
   ],
   providers: [
+    // make EnumSingleValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
       useExisting: EnumSingleValueFilterComponent,
