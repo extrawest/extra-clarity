@@ -46,9 +46,15 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
     MarkMatchedStringPipe,
     FilterSearchBarComponent,
   ],
+  providers: [
+    {
+      provide: EcDatagridFilter,
+      useExisting: EnumSingleValueFilterComponent,
+    },
+  ],
 })
 export class EnumSingleValueFilterComponent<E, T extends object = {}>
-  extends EcDatagridFilter<T, E | null>
+  extends EcDatagridFilter<E | null, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * When `true`, the filter will be closed on selecting any new value or on resetting/clearing

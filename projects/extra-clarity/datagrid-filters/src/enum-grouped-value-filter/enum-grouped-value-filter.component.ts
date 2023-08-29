@@ -48,9 +48,15 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
     MarkMatchedStringPipe,
     FilterSearchBarComponent,
   ],
+  providers: [
+    {
+      provide: EcDatagridFilter,
+      useExisting: EnumGroupedValueFilterComponent,
+    },
+  ],
 })
 export class EnumGroupedValueFilterComponent<E, T extends object = {}>
-  extends EcDatagridFilter<T, E[] | null>
+  extends EcDatagridFilter<E[] | null, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.

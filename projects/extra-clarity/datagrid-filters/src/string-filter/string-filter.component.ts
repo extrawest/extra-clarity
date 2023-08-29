@@ -42,9 +42,15 @@ export const STRING_FILTER_DEFAULTS = {
     ReactiveFormsModule,
     ClrInputModule,
   ],
+  providers: [
+    {
+      provide: EcDatagridFilter,
+      useExisting: StringFilterComponent,
+    },
+  ],
 })
 export class StringFilterComponent<T extends object = {}>
-  extends EcDatagridFilter<T, string>
+  extends EcDatagridFilter<string, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * Comparison type for the filtering algorithm:

@@ -1,3 +1,4 @@
+import { Directive } from '@angular/core';
 import { ClrDatagridFilterInterface } from '@clr/angular';
 import { Observable } from 'rxjs';
 
@@ -18,8 +19,13 @@ export interface EnumValueFilterOptionGroup<E> {
   items: readonly EnumValueFilterOption<E>[];
 }
 
-export abstract class EcDatagridFilter<T extends object, S>
-implements ClrDatagridFilterInterface<T, FilterState<S>> {
+export interface ResettableFilter {
+  resetToDefault: () => void;
+}
+
+@Directive()
+export abstract class EcDatagridFilter<S = unknown, T extends object = {}>
+implements ClrDatagridFilterInterface<T, FilterState<S>>, ResettableFilter {
   abstract accepts(item: T): boolean;
   abstract isActive(): boolean;
   abstract changes: Observable<unknown>;
