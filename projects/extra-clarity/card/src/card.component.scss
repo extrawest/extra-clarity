@@ -1,4 +1,6 @@
-.card {
+:host {
+  display: block;
+
   &.empty,
   &.has-error,
   &.loading:not(.empty) {
@@ -7,13 +9,7 @@
     }
   }
 
-  .card-header:empty,
-  .card-footer:empty {
-    display: none !important;
-  }
-
-  .card-header,
-  .card-header-actions {
+  .card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -23,23 +19,15 @@
   }
 
   .card-block {
-    display: flex;
-    flex-direction: column;
     position: relative;
   }
 }
 
-.simple-title:not(:only-child) {
-  display: none;
-}
-
 .card-placeholder {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
 
   max-width: 35rem;
   margin: 0.6rem auto;
@@ -77,7 +65,7 @@
     text-align: left;
     margin-top: 0.3rem;
     padding: 0.3rem;
-    max-height: 10rem;
+    max-height: 15rem;
     border: 1px solid var(--clr-card-border-color, #dedede);
     border-radius: var(--clr-card-border-radius, 0.05rem);
     background-color: var(--clr-color-danger-50, #fff2f0);

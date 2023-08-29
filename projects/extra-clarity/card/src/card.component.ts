@@ -29,11 +29,17 @@ const UNKNOWN_ERROR = 'Unknown Error';
   imports: [
     CommonModule,
     CdsIconModule,
-    ProgressSpinnerComponent,
     EcCardFooterDirective,
     EcCardHeaderActionsDirective,
     EcCardHeaderTitleDirective,
+    ProgressSpinnerComponent,
   ],
+  host: {
+    class: 'card',
+    '[class.empty]': '!empty',
+    '[class.loading]': 'loading',
+    '[class.has-error]': 'error',
+  },
 })
 export class EcCardComponent {
   @Input()
@@ -53,13 +59,13 @@ export class EcCardComponent {
   public reload = new EventEmitter<void>();
 
   @ContentChild(EcCardFooterDirective)
-  protected cardFooterContent?: EcCardFooterDirective;
+  protected footerContent?: EcCardFooterDirective;
 
   @ContentChild(EcCardHeaderActionsDirective)
-  protected cardHeaderActionsContent?: EcCardHeaderActionsDirective;
+  protected headerActionsContent?: EcCardHeaderActionsDirective;
 
   @ContentChild(EcCardHeaderTitleDirective)
-  protected cardHeaderTitleContent?: EcCardHeaderTitleDirective;
+  protected headerTitleContent?: EcCardHeaderTitleDirective;
 
   protected showErrorDetails = false;
 

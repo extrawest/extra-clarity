@@ -1,73 +1,72 @@
-<div
-  class="card"
-  [class.loading]="loading"
-  [class.empty]="empty"
-  [class.has-error]="error"
->
-  <div class="card-header">
-    <div class="card-header-title" *ngIf="title || cardHeaderTitleContent">
-      <ng-content select="ec-card-header-title, [ecCardHeaderTitle]" />
-      <!-- The simple title shown here (by CSS :only-child) only if no title projected above -->
-      <span class="simple-title">
-        {{ title }}
-      </span>
-    </div>
-    <div class="card-header-actions" *ngIf="cardHeaderActionsContent">
-      <ng-content select="ec-card-header-actions, [ecCardHeaderActions]" />
-    </div>
-  </div>
+<!-- Card Header (Optional) -->
 
-  <div class="card-block">
-    <ec-progress-spinner [showSpinner]="loading" />
+<div class="card-header" *ngIf="title || headerTitleContent || headerActionsContent">
+  <ng-container *ngIf="!headerTitleContent && title">
+    <span> {{ title }} </span>
+  </ng-container>
+  <ng-container *ngIf="headerTitleContent">
+    <ng-content select="ec-card-header-title" />
+  </ng-container>
 
-    <ng-container *ngIf="!empty && !error; else errorOrNoData">
-      <ng-content />
-    </ng-container>
+  <ng-container *ngIf="headerActionsContent">
+    <ng-content select="ec-card-header-actions" />
+  </ng-container>
+</div>
 
-    <ng-template #errorOrNoData>
-      <div class="card-placeholder text-center" *ngIf="!loading">
-        <ng-container *ngIf="error; else noData">
-          <cds-icon shape="error-standard" status="danger" class="error-icon" />
+<!-- Card Block (Body) -->
 
-          <div> An error occurred </div>
+<div class="card-block">
+  <ec-progress-spinner [showSpinner]="loading" />
 
-          <div class="error-message">
-            {{ errorMessage }}
-          </div>
+  <ng-container *ngIf="!empty && !error; else errorOrNoData">
+    <ng-content />
+  </ng-container>
 
-          <div class="error-details" *ngIf="error.httpError && !error.noDetails">
-            <button
-              class="btn btn-sm btn-link error-details-toggle"
-              (click)="toggleErrorDetailsVisibility()"
-            >
-              {{ showErrorDetails ? 'Hide' : 'Show' }} error details
-            </button>
-            <div class="error-details-json" *ngIf="showErrorDetails">
-              {{ error.httpError | json }}
-            </div>
-          </div>
+  <ng-template #errorOrNoData>
+    <div class="card-placeholder text-center" *ngIf="!loading">
+      <ng-container *ngIf="error; else noData">
+        <cds-icon shape="error-standard" status="danger" class="error-icon" />
 
-          <div class="error-hint">
-            {{ error.hint || 'Please, try to reload the data a bit later' }}
-          </div>
+        <div> An error occurred </div>
 
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <div class="error-details" *ngIf="error.httpError && !error.noDetails">
           <button
-            *ngIf="!error.noRetryBtn"
-            (click)="onReload()"
-            class="btn btn-sm error-reload-button"
+            class="btn btn-sm btn-link error-details-toggle"
+            (click)="toggleErrorDetailsVisibility()"
           >
-            Reload
+            {{ showErrorDetails ? 'Hide' : 'Show' }} error details
           </button>
-        </ng-container>
+          <div class="error-details-json" *ngIf="showErrorDetails">
+            {{ error.httpError | json }}
+          </div>
+        </div>
 
-        <ng-template #noData>
-          <div> No data found </div>
-        </ng-template>
-      </div>
-    </ng-template>
-  </div>
+        <div class="error-hint">
+          {{ error.hint || 'Please, try to reload the data a bit later' }}
+        </div>
 
-  <div class="card-footer">
-    <ng-content select="ec-card-footer, [ecCardFooter]" />
-  </div>
+        <button
+          *ngIf="!error.noRetryBtn"
+          (click)="onReload()"
+          class="btn btn-sm error-reload-button"
+        >
+          Reload
+        </button>
+      </ng-container>
+
+      <ng-template #noData>
+        <div> No data found </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Card Footer (Optional) -->
+
+<div class="card-footer" *ngIf="footerContent">
+  <ng-content select="ec-card-footer" />
 </div>
