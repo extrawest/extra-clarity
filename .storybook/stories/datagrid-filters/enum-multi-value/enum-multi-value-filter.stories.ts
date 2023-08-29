@@ -102,6 +102,9 @@ const MetaStory = {
       },
     },
     // METHODS
+    clearSelection: {
+      control: { type: null },
+    },
     isActive: {
       control: { type: null },
     },
@@ -109,9 +112,6 @@ const MetaStory = {
       control: { type: null },
     },
     setValue: {
-      control: { type: null },
-    },
-    unselectAll: {
       control: { type: null },
     },
     // GETTERS

@@ -260,40 +260,6 @@ export class StringFilterComponent<T extends object = {}>
     return 'The entered value is invalid';
   }
 
-  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
-  accepts(item: T): boolean {
-    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
-      return false;
-    }
-
-    const propertyValue = (item as Record<string | number, unknown>)[this.propertyKey];
-
-    if (typeof propertyValue !== 'string') {
-      return false;
-    }
-
-    const propertyValueToCompare = this.caseSensitive
-      ? propertyValue
-      : propertyValue.toLowerCase();
-
-    const filterValueToCompare = this.caseSensitive
-      ? this.filterValue
-      : this.filterValue.toLowerCase();
-
-    return this.fullMatch
-      ? propertyValueToCompare === filterValueToCompare
-      : propertyValueToCompare.includes(filterValueToCompare);
-  }
-
-  /**
-   * Indicate whether the filter is active, i.e. has a non-default value selected.
-   *
-   * Implements the `ClrDatagridFilterInterface` interface.
-   * */
-  isActive(): boolean {
-    return !!this.propertyKey && !this.isStateDefault;
-  }
-
   ngAfterViewInit(): void {
     this.clrPopoverToggleService?.openChange
       .pipe(takeUntil(this.destroy$))
@@ -333,6 +299,47 @@ export class StringFilterComponent<T extends object = {}>
     this.observeInputChanges();
 
     this.formControl.markAsTouched();
+  }
+
+  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
+  accepts(item: T): boolean {
+    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
+      return false;
+    }
+
+    const propertyValue = (item as Record<string | number, unknown>)[this.propertyKey];
+
+    if (typeof propertyValue !== 'string') {
+      return false;
+    }
+
+    const propertyValueToCompare = this.caseSensitive
+      ? propertyValue
+      : propertyValue.toLowerCase();
+
+    const filterValueToCompare = this.caseSensitive
+      ? this.filterValue
+      : this.filterValue.toLowerCase();
+
+    return this.fullMatch
+      ? propertyValueToCompare === filterValueToCompare
+      : propertyValueToCompare.includes(filterValueToCompare);
+  }
+
+  /**
+   * Reset the filter to the clean state (an empty string).
+   * */
+  clearSelection(): void {
+    this.updateFormControlValue('');
+  }
+
+  /**
+   * Indicate whether the filter is active, i.e. has a non-default value selected.
+   *
+   * Implements the `ClrDatagridFilterInterface` interface.
+   * */
+  isActive(): boolean {
+    return !!this.propertyKey && !this.isStateDefault;
   }
 
   /**

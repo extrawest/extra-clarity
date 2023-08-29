@@ -307,6 +307,13 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
   }
 
   /**
+   * Reset the filter to the empty state
+   * */
+  clearSelection(): void {
+    this.updateSelectedValues(new Set());
+  }
+
+  /**
    * Indicate whether the filter is active, i.e. has a non-default value selected.
    *
    * Implements the `ClrDatagridFilterInterface` interface.
@@ -332,7 +339,7 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    * If any of the provided values is not included in the values within the option list,
    *   the filter will be reset to the default state.
    *
-   * Providing `null` will clear the current selection, which is equivalent to calling `unselectAll()`.
+   * Providing `null` will clear the current selection, which is equivalent to calling `clearSelection()`.
    * */
   setValue(values: E[] | null): void {
     if (!values || !this.areAllValuesAllowed(values)) {
@@ -340,13 +347,6 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
       return;
     }
     this.updateSelectedValues(new Set(values));
-  }
-
-  /**
-   * Reset the filter to the empty state
-   * */
-  unselectAll(): void {
-    this.updateSelectedValues(new Set());
   }
 
   protected onInputChange(event: Event, inputValue: E): void {

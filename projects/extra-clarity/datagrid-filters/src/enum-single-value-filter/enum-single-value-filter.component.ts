@@ -279,6 +279,17 @@ export class EnumSingleValueFilterComponent<E, T extends object = {}>
   }
 
   /**
+   * Reset the filter to the empty state
+   * */
+  clearSelection(): void {
+    this.setValue(null);
+
+    if (this.closeOnChange) {
+      this.hideFilter();
+    }
+  }
+
+  /**
    * Indicate whether the filter is active, i.e. has a non-default value selected.
    *
    * Implements the `ClrDatagridFilterInterface` interface.
@@ -307,7 +318,7 @@ export class EnumSingleValueFilterComponent<E, T extends object = {}>
    * If the provided value is not included in the values within the option list,
    * the filter will be reset to the default state.
    *
-   * Providing `null` will clear the current selection, which is equivalent to calling `unselectAll()`.
+   * Providing `null` will clear the current selection, which is equivalent to calling `clearSelection()`.
    * */
   setValue(value: E | null): void {
     if (value !== null && !this.isValueAllowed(value)) {
@@ -315,17 +326,6 @@ export class EnumSingleValueFilterComponent<E, T extends object = {}>
       return;
     }
     this.updateFilterValue(value);
-  }
-
-  /**
-   * Reset the filter to the empty state
-   * */
-  unselectAll(): void {
-    this.setValue(null);
-
-    if (this.closeOnChange) {
-      this.hideFilter();
-    }
   }
 
   protected onInputChange(inputValue: E): void {

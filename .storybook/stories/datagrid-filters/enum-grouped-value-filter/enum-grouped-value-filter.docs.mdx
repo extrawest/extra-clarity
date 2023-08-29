@@ -232,7 +232,10 @@ If any of the provided values is not included in the values within the option li
 the filter will be reset to the default state. Providing `null` will clear the current selection.
 
 The public method `resetToDefault()` resets the filter to the default state, and
-`unselectAll()` resets the filter to the empty state (nothing selected).
+`clearSelection()` resets the filter to the empty state (nothing selected).
+
+The component extends the abstract `EcDatagridFilter` class containing all the mentioned methods.
+Therefore you can query the filter's instance via `@ViewChild(EcDatagridFilter)` and call the methods.
 
 ## API
 

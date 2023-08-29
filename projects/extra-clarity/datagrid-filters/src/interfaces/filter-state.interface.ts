@@ -25,5 +25,7 @@ implements ClrDatagridFilterInterface<T, FilterState<S>> {
   abstract changes: Observable<unknown>;
   abstract readonly state: FilterState<S>;
 
+  abstract clearSelection(): void;
   abstract resetToDefault(): void;
+  abstract setValue(value: S): void;
 }

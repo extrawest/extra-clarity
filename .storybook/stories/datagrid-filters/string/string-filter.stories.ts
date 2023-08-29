@@ -120,6 +120,9 @@ const MetaStory = {
       },
     },
     // METHODS
+    clearSelection: {
+      control: { type: null },
+    },
     isActive: {
       control: { type: null },
     },
@@ -229,7 +232,7 @@ export const DocsExampleStory: Story = {
   name: 'Story: Example for docs',
   decorators: WithinDatagridStory.decorators,
   render: (args) => ({
-    props: { users: USERS_DATA },
+    props: { users: USERS_DATA, ...args },
     template: wrapFilterWithinDatagrid(`
       <ec-string-filter
         [propertyKey]="'name'"
