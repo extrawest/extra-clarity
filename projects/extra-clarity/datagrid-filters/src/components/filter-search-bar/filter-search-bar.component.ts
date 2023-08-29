@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CdsIconModule } from '@cds/angular';
-import { ClarityIcons, filterOffIcon, searchIcon } from '@cds/core/icon';
+import { ClarityIcons, searchIcon, windowCloseIcon } from '@cds/core/icon';
 import { ClrInputModule } from '@clr/angular';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -40,7 +40,7 @@ export class FilterSearchBarComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
 
   constructor() {
-    ClarityIcons.addIcons(filterOffIcon, searchIcon);
+    ClarityIcons.addIcons(searchIcon, windowCloseIcon);
   }
 
   ngOnDestroy(): void {
