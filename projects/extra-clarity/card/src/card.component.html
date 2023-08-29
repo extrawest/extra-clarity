@@ -5,11 +5,11 @@
     <span> {{ title }} </span>
   </ng-container>
   <ng-container *ngIf="headerTitleContent">
-    <ng-content select="ec-card-header-title" />
+    <ng-content select="ec-card-header-title, [ecCardHeaderTitle]" />
   </ng-container>
 
   <ng-container *ngIf="headerActionsContent">
-    <ng-content select="ec-card-header-actions" />
+    <ng-content select="ec-card-header-actions, [ecCardHeaderActions]" />
   </ng-container>
 </div>
 
@@ -68,5 +68,5 @@
 <!-- Card Footer (Optional) -->
 
 <div class="card-footer" *ngIf="footerContent">
-  <ng-content select="ec-card-footer" />
+  <ng-content select="ec-card-footer, [ecCardFooter]" />
 </div>
