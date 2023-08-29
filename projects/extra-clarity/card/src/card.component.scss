@@ -7,6 +7,11 @@
     }
   }
 
+  .card-header:empty,
+  .card-footer:empty {
+    display: none !important;
+  }
+
   .card-header,
   .card-header-actions {
     display: flex;

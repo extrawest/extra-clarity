@@ -4,20 +4,20 @@
   [class.empty]="empty"
   [class.has-error]="error"
 >
-  <ec-card-header *ngIf="title">
-    <div class="card-header-title">
-      <ng-content select="[card-header-title]" />
+  <div class="card-header">
+    <div class="card-header-title" *ngIf="title || cardHeaderTitleContent">
+      <ng-content select="ec-card-header-title, [ecCardHeaderTitle]" />
+      <!-- The simple title shown here (by CSS :only-child) only if no title projected above -->
       <span class="simple-title">
         {{ title }}
       </span>
     </div>
-
-    <div class="card-header-actions">
-      <ng-content select="[card-header-actions]" />
+    <div class="card-header-actions" *ngIf="cardHeaderActionsContent">
+      <ng-content select="ec-card-header-actions, [ecCardHeaderActions]" />
     </div>
-  </ec-card-header>
+  </div>
 
-  <ec-card-block>
+  <div class="card-block">
     <ec-progress-spinner [showSpinner]="loading" />
 
     <ng-container *ngIf="!empty && !error; else errorOrNoData">
@@ -65,7 +65,9 @@
         </ng-template>
       </div>
     </ng-template>
-  </ec-card-block>
+  </div>
 
-  <ng-content select="ec-card-footer, [ecCardFooter]" />
+  <div class="card-footer">
+    <ng-content select="ec-card-footer, [ecCardFooter]" />
+  </div>
 </div>

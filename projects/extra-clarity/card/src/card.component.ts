@@ -1,14 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
 import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
 
 import {
-  EcCardBlockDirective,
   EcCardFooterDirective,
-  EcCardHeaderDirective,
-  EcCardTitleDirective,
+  EcCardHeaderActionsDirective,
+  EcCardHeaderTitleDirective,
 } from './directives';
 import { EcCardError } from './interfaces';
 
@@ -24,10 +30,9 @@ const UNKNOWN_ERROR = 'Unknown Error';
     CommonModule,
     CdsIconModule,
     ProgressSpinnerComponent,
-    EcCardBlockDirective,
     EcCardFooterDirective,
-    EcCardHeaderDirective,
-    EcCardTitleDirective,
+    EcCardHeaderActionsDirective,
+    EcCardHeaderTitleDirective,
   ],
 })
 export class EcCardComponent {
@@ -46,6 +51,15 @@ export class EcCardComponent {
   /** `EventEmitter<void>` */
   @Output()
   public reload = new EventEmitter<void>();
+
+  @ContentChild(EcCardFooterDirective)
+  protected cardFooterContent?: EcCardFooterDirective;
+
+  @ContentChild(EcCardHeaderActionsDirective)
+  protected cardHeaderActionsContent?: EcCardHeaderActionsDirective;
+
+  @ContentChild(EcCardHeaderTitleDirective)
+  protected cardHeaderTitleContent?: EcCardHeaderTitleDirective;
 
   protected showErrorDetails = false;
 
