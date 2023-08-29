@@ -15,7 +15,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { ClrDatagridFilter, ClrInput, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
@@ -203,6 +203,8 @@ export class StringFilterComponent<T extends object = {}>
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   readonly changes = new Subject<void>();
+
+  private minLengthValidatorFn?: ValidatorFn;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -437,6 +439,8 @@ export class StringFilterComponent<T extends object = {}>
     }
 
     this.formControl.updateValueAndValidity({ emitEvent: false });
+
+    this.minLengthValidatorFn = Validators.minLength(this.minLength);
   }
 
   private updateFilterValue(
@@ -451,6 +455,7 @@ export class StringFilterComponent<T extends object = {}>
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
+    this.updateMinLengthValidator();
     this.changeDetectorRef.markForCheck();
   }
 
@@ -467,5 +472,25 @@ export class StringFilterComponent<T extends object = {}>
     }
 
     this.updateFilterValue(newValue);
+  }
+
+  private updateMinLengthValidator(): void {
+    // MinLength Validator is active for showing an error only when there is a filter value stored.
+    // If there is no valid filter value yet, min-length warning is shown as a hint, not an error.
+
+    if (!this.minLengthValidatorFn) return;
+
+    const hasValidator = this.formControl.hasValidator(this.minLengthValidatorFn);
+
+    if (hasValidator && !this.filterValue) {
+      this.formControl.removeValidators(this.minLengthValidatorFn);
+      this.formControl.updateValueAndValidity({ emitEvent: false });
+      return;
+    }
+
+    if (!hasValidator && this.filterValue) {
+      this.formControl.addValidators(this.minLengthValidatorFn);
+      this.formControl.updateValueAndValidity({ emitEvent: false });
+    }
   }
 }
