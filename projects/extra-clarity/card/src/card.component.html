@@ -16,7 +16,11 @@
 <!-- Card Block (Body) -->
 
 <div class="card-block">
-  <ec-progress-spinner [showSpinner]="loading" />
+  <ec-progress-spinner [showSpinner]="loading">
+    <span *ngIf="error || empty">
+      Loading... Please wait
+    </span>
+  </ec-progress-spinner>
 
   <ng-container *ngIf="!empty && !error; else errorOrNoData">
     <ng-content />

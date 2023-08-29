@@ -36,7 +36,7 @@ const UNKNOWN_ERROR = 'Unknown Error';
   ],
   host: {
     class: 'card',
-    '[class.empty]': '!empty',
+    '[class.empty]': 'empty',
     '[class.loading]': 'loading',
     '[class.has-error]': 'error',
   },

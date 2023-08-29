@@ -2,8 +2,7 @@
   display: block;
 
   &.empty,
-  &.has-error,
-  &.loading:not(.empty) {
+  &.has-error {
     .card-block {
       min-height: 10rem;
     }
@@ -20,6 +19,9 @@
 
   .card-block {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 
