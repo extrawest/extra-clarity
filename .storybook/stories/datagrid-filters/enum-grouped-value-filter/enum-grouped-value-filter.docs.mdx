@@ -169,6 +169,17 @@ The entire option object `EnumValueFilterOption<E>` is passed to this template a
 </ng-template>
 ```
 
+In your custom template, you can also implement highlighting of the sub-strings matched to
+the search term from the searchbar (activated by the `[withSearchBar]` input).
+The entered string is passed to the template as the `marked` context property.
+You may use the `MarkMatchedStringPipe` for that:
+
+```html
+<ng-template #customLabel let-option let-marked="marked">
+  <span [innerHtml]="option.label | markMatched:marked"></span>
+</ng-template>
+```
+
 Please refer to the [API](#api) section below for more details about all the component's inputs.
 
 ### Default State
