@@ -16,7 +16,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
-import { ClarityIcons, infoStandardIcon, warningStandardIcon } from '@cds/core/icon';
+import {
+  ClarityIcons,
+  filterIcon,
+  filterOffIcon,
+  infoStandardIcon,
+  warningStandardIcon,
+} from '@cds/core/icon';
 import { ClrDatagridFilter, ClrPopoverToggleService, ClrTreeViewModule } from '@clr/angular';
 import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
@@ -230,7 +236,7 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
 
-    ClarityIcons.addIcons(infoStandardIcon, warningStandardIcon);
+    ClarityIcons.addIcons(filterIcon, filterOffIcon, infoStandardIcon, warningStandardIcon);
   }
 
   /**

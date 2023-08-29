@@ -16,6 +16,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { CdsIconModule } from '@cds/angular';
+import { ClarityIcons, filterOffIcon } from '@cds/core/icon';
 import { ClrDatagridFilter, ClrInput, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
@@ -40,6 +42,7 @@ export const STRING_FILTER_DEFAULTS = {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    CdsIconModule,
     ClrInputModule,
   ],
   providers: [
@@ -215,6 +218,8 @@ export class StringFilterComponent<T extends object = {}>
   constructor(readonly changeDetectorRef: ChangeDetectorRef) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
+
+    ClarityIcons.addIcons(filterOffIcon);
   }
 
   /**

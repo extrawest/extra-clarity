@@ -74,6 +74,7 @@
           (click)="clearSelection()"
           [disabled]="!selectedValues.size"
         >
+          <cds-icon shape="filter-off" />
           Show All
         </button>
         <button
@@ -83,6 +84,7 @@
           (click)="resetToDefault()"
           [disabled]="isStateDefault"
         >
+          <cds-icon shape="filter" />
           Reset to Default
         </button>
       </div>
