@@ -29,6 +29,7 @@ import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 import { FilterSearchBarComponent } from '../components/filter-search-bar';
+import { ShowSelected } from '../enums/show-selected.enum';
 import {
   EcDatagridFilter,
   EnumValueFilterOption,
@@ -39,6 +40,7 @@ import {
 export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   maxHeightPx: 300,
   widthPx: 200,
+  searchBarForAmount: 10,
 } as const;
 
 @Component({
@@ -147,6 +149,12 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
   public propertyKey = '';
 
   /**
+   * Minimal amount of options to show a search bar above the option list to filter the list
+   * */
+  @Input()
+  public searchBarForAmount: number = ENUM_GROUPED_VALUE_FILTER_DEFAULTS.searchBarForAmount;
+
+  /**
    * Whether the filter and the datagrid are server-driven:
    * * `true` = filtering is processed externally (e.g. by a backend), not by the filter.
    * * `false` = filtering is processed by the filter's `accepts()` method.
@@ -159,9 +167,13 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
   /**
    * Whether to show a label with amount of selected items above the option list.
    * May be useful for a long list of options.
+   *
+   * * `ShowSelected.WithSearchbar` = show only when the searchbar is visible (default)
+   * * `ShowSelected.Always` = show always
+   * * `ShowSelected.Never` = don't show
    */
   @Input()
-  public showSelectedAmount = false;
+  public showSelectedAmount: ShowSelected = ShowSelected.WithSearchbar;
 
   /**
    * Whether to stretch all label containers to the full width of the filter container
@@ -193,12 +205,6 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
   public widthPx: number = ENUM_GROUPED_VALUE_FILTER_DEFAULTS.widthPx;
 
   /**
-   * Whether to show a search bar above the option list to filter options
-   * */
-  @Input()
-  public withSearchBar = false;
-
-  /**
    * Emits the filter's state object on every change of the internal filter value.
    * The state object contains the name of a `property` to filter by, defined by the `[propertyKey]` input,
    * and the actual filter `value`.
@@ -218,7 +224,10 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
   protected selectedValues = new Set<E>();
 
   protected searchTerm = '';
+  protected totalOptionItems = 0;
   protected visibleOptions: EnumValueFilterOptionGroup<E>[] = [];
+
+  protected readonly ShowSelected = ShowSelected;
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   readonly changes = new Subject<void>();
@@ -255,6 +264,18 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
       property: this.propertyKey,
       value: filterValue,
     };
+  }
+
+  protected get totalSelectedAmountLabel(): string {
+    const selected = this.selectedValues.size;
+    if (selected === 0) {
+      return 'none';
+    }
+    return `${selected} out of ${this.totalOptionItems}`;
+  }
+
+  protected get showSearchBar(): boolean {
+    return this.totalOptionItems >= this.searchBarForAmount;
   }
 
   ngAfterViewInit(): void {
@@ -374,15 +395,6 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
     return `${selected}/${total}`;
   }
 
-  protected getTotalSelectedAmountLabel(): string {
-    const selected = this.selectedValues.size;
-    if (selected === 0) {
-      return 'none';
-    }
-    const total = this.options.reduce((sum, group) => sum + group.items.length, 0);
-    return `${selected} out of ${total}`;
-  }
-
   protected onGroupExpandedChange(index: number, isExpanded: boolean): void {
     if (this.visibleOptions.length === this.options.length) {
       this.isGroupExpanded[index] = isExpanded;
@@ -471,6 +483,8 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
 
   private onOptionsChange(): void {
     this.updateVisibleOptions();
+
+    this.totalOptionItems = this.options.reduce((total, group) => total + group.items.length, 0);
 
     this.isStateDefault = this.checkIfStateIsDefault();
     this.hasCustomDefaultState = this.options.some(group => {

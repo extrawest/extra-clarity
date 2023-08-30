@@ -29,6 +29,7 @@ import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 import { FilterSearchBarComponent } from '../components/filter-search-bar';
+import { ShowSelected } from '../enums/show-selected.enum';
 import {
   EcDatagridFilter,
   EnumValueFilterOption,
@@ -38,6 +39,7 @@ import {
 export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
   maxHeightPx: 300,
   widthPx: 200,
+  searchBarForAmount: 10,
 } as const;
 
 @Component({
@@ -135,6 +137,12 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
   public propertyKey = '';
 
   /**
+   * Minimal amount of options to show a search bar above the option list to filter the list
+   * */
+  @Input()
+  public searchBarForAmount: number = ENUM_MULTI_VALUE_FILTER_DEFAULTS.searchBarForAmount;
+
+  /**
    * Whether the filter and the datagrid are server-driven:
    * * `true` = filtering is processed externally (e.g. by a backend), not by the filter.
    * * `false` = filtering is processed by the filter's `accepts()` method.
@@ -147,9 +155,13 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
   /**
    * Whether to show a label with amount of selected items above the option list.
    * May be useful for a long list of options.
+   *
+   * * `ShowSelected.WithSearchbar` = show only when the searchbar is visible (default)
+   * * `ShowSelected.Always` = show always
+   * * `ShowSelected.Never` = don't show
    */
   @Input()
-  public showSelectedAmount = false;
+  public showSelectedAmount: ShowSelected = ShowSelected.WithSearchbar;
 
   /**
    * Whether to stretch all label containers to the full width of the filter container
@@ -181,12 +193,6 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
   public widthPx: number = ENUM_MULTI_VALUE_FILTER_DEFAULTS.widthPx;
 
   /**
-   * Whether to show a search bar above the option list to filter options
-   * */
-  @Input()
-  public withSearchBar = false;
-
-  /**
    * Emits the filter's state object on every change of the internal filter value.
    * The state object contains the name of a `property` to filter by, defined by the `[propertyKey]` input,
    * and the actual filter `value`.
@@ -206,6 +212,8 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
 
   protected searchTerm = '';
   protected visibleOptions: EnumValueFilterOption<E>[] = [];
+
+  protected readonly ShowSelected = ShowSelected;
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   readonly changes = new Subject<void>();
@@ -251,6 +259,10 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
     }
     const total = this.options.length;
     return `${selected} out of ${total}`;
+  }
+
+  protected get showSearchBar(): boolean {
+    return this.options.length >= this.searchBarForAmount;
   }
 
   ngAfterViewInit(): void {

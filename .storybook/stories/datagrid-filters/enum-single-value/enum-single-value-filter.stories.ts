@@ -4,13 +4,15 @@ import { ClrDatagridModule } from '@clr/angular';
 import {
   applicationConfig,
   componentWrapperDecorator,
-  type Meta, moduleMetadata,
+  type Meta,
+  moduleMetadata,
   type StoryObj,
 } from '@storybook/angular';
 
 import {
   ENUM_SINGLE_VALUE_FILTER_DEFAULTS,
   EnumSingleValueFilterComponent,
+  ShowSelected,
 } from '../../../../projects/extra-clarity/datagrid-filters';
 import {
   colorEnumOptions,
@@ -68,9 +70,22 @@ const MetaStory = {
         required: true,
       },
     },
+    searchBarForAmount: {
+      table: {
+        // set default value explicitly as compodoc shows only a constant name
+        defaultValue: {
+          summary: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount,
+        },
+      },
+    },
     serverDriven: {
     },
     showSelectedValue: {
+      control: {
+        type: 'radio',
+        labels: ['Never', 'Always', 'WithSearchbar'],
+      },
+      options: [ShowSelected.Never, ShowSelected.Always, ShowSelected.WithSearchbar],
     },
     stretchLabels: {
     },
@@ -88,8 +103,6 @@ const MetaStory = {
           summary: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx,
         },
       },
-    },
-    withSearchBar: {
     },
     // OUTPUTS
     filterValueChanged: {
@@ -135,13 +148,13 @@ const MetaStory = {
     maxHeightPx: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.maxHeightPx,
     options: [],
     propertyKey: '',
+    searchBarForAmount: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount,
     serverDriven: true,
-    showSelectedValue: false,
+    showSelectedValue: ShowSelected.WithSearchbar,
     stretchLabels: false,
     title: '',
     value: undefined,
     widthPx: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx,
-    withSearchBar: false,
   },
 } as Meta<EnumSingleValueFilterComponent<unknown>>;
 
@@ -188,13 +201,13 @@ export const WithinDatagridStory: Story = {
         [customLabelTpl]="customLabelTpl"
         [loading]="loading"
         [maxHeightPx]="maxHeightPx"
+        [searchBarForAmount]="searchBarForAmount"
         [serverDriven]="serverDriven"
         [showSelectedValue]="showSelectedValue"
         [stretchLabels]="stretchLabels"
         [title]="title"
         [value]="value"
         [widthPx]="widthPx"
-        [withSearchBar]="withSearchBar"
         (filterValueChanged)="filterValueChanged($event)"
       />
     `, 'color'),

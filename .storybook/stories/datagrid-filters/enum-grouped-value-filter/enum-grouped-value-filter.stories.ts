@@ -12,6 +12,7 @@ import {
 import {
   ENUM_GROUPED_VALUE_FILTER_DEFAULTS,
   EnumGroupedValueFilterComponent,
+  ShowSelected,
 } from '../../../../projects/extra-clarity/datagrid-filters';
 import {
   colorGroupedEnumOptions,
@@ -71,9 +72,22 @@ const MetaStory = {
         required: true,
       },
     },
+    searchBarForAmount: {
+      table: {
+        // set default value explicitly as compodoc shows only a constant name
+        defaultValue: {
+          summary: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.searchBarForAmount,
+        },
+      },
+    },
     serverDriven: {
     },
     showSelectedAmount: {
+      control: {
+        type: 'radio',
+        labels: ['Never', 'Always', 'WithSearchbar'],
+      },
+      options: [ShowSelected.Never, ShowSelected.Always, ShowSelected.WithSearchbar],
     },
     stretchLabels: {
     },
@@ -91,8 +105,6 @@ const MetaStory = {
           summary: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.widthPx,
         },
       },
-    },
-    withSearchBar: {
     },
     // OUTPUTS
     filterValueChanged: {
@@ -139,13 +151,13 @@ const MetaStory = {
     maxHeightPx: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.maxHeightPx,
     options: [],
     propertyKey: '',
+    searchBarForAmount: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.searchBarForAmount,
     serverDriven: true,
-    showSelectedAmount: false,
+    showSelectedAmount: ShowSelected.WithSearchbar,
     stretchLabels: false,
     title: '',
     value: undefined,
     widthPx: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.widthPx,
-    withSearchBar: false,
   },
 } as Meta<EnumGroupedValueFilterComponent<unknown>>;
 
@@ -193,13 +205,13 @@ export const WithinDatagridStory: Story = {
         [loading]="loading"
         [matchSelected]="matchSelected"
         [maxHeightPx]="maxHeightPx"
+        [searchBarForAmount]="searchBarForAmount"
         [serverDriven]="serverDriven"
         [showSelectedAmount]="showSelectedAmount"
         [stretchLabels]="stretchLabels"
         [title]="title"
         [value]="value"
         [widthPx]="widthPx"
-        [withSearchBar]="withSearchBar"
         (filterValueChanged)="filterValueChanged($event)"
       />
     `, 'color'),

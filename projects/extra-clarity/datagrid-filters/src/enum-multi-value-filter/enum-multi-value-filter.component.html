@@ -6,13 +6,16 @@
         {{ title }}
       </div>
 
-      <div class="filter-selected-amount" *ngIf="showSelectedAmount">
+      <div class="filter-selected-amount" *ngIf="
+        showSelectedAmount === ShowSelected.Always ||
+        showSelectedAmount === ShowSelected.WithSearchbar && showSearchBar
+      ">
         Selected: {{ selectedAmountLabel }}
       </div>
 
       <ec-filter-search-bar
         class="filter-search-bar"
-        *ngIf="withSearchBar"
+        *ngIf="showSearchBar"
         (valueChange)="onSearchTermChange($event)"
       />
 
