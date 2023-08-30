@@ -109,8 +109,9 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    * List of options to select from. Each option contains:
    * * `value`: a value of any type `<E>` to be added to the cumulative filter value on selecting this option;
    *   values must be unique among all options
-   * * `label`: an optional string label for the option;
-   *   if not provided, then the stringified `value` is shown as a label
+   * * `label`: a required string label to be shown in the filter's body next to the checkbox for this option;
+   *   this value is also used for internal filtering via the search bar (activated by the `[withSearchBar]` input),
+   *   even when a custom label template is provided by the `[customLabelTpl]` input.
    * * `selectedByDefault`: an optional boolean flag to mark the options selected by default,
    *   i.e. to define a custom default state of the filter;
    *   when not provided for any option, the default state is empty (null).

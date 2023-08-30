@@ -103,8 +103,9 @@ export class EnumSingleValueFilterComponent<E, T extends object = {}>
    * List of options to select from. Each option contains:
    * * `value`: a value of any type `<E>` to be used as a new filter value on selecting this option;
    *   values must be unique among all options
-   * * `label`: an optional string label for the option;
-   *   if not provided, then the stringified `value` is shown as a label
+   * * `label`: a required string label to be shown in the filter's body next to the radio button for this option;
+   *   this value is also used for internal filtering via the search bar (activated by the `[withSearchBar]` input),
+   *   even when a custom label template is provided by the `[customLabelTpl]` input.
    * * `selectedByDefault`: an optional boolean flag to mark the option selected by default,
    *   i.e. to define a custom default state of the filter;
    *   when provided for multiple options or not provided at all,
