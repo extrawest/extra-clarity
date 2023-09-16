@@ -21,7 +21,8 @@ import { ClarityIcons, filterOffIcon } from '@cds/core/icon';
 import { ClrDatagridFilter, ClrInput, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
-import { EcDatagridFilter, FilterState } from '../interfaces/filter-state.interface';
+import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
+import { FilterState } from '../common/interfaces/filter-state.interface';
 
 import { StringValidatorEnum, uuidValidator, ValidationErrorEnum } from './string-filter.utils';
 

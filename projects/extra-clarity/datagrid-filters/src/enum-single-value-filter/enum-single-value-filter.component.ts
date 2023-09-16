@@ -27,13 +27,13 @@ import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr
 import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { Subject, takeUntil } from 'rxjs';
 
-import { FilterSearchBarComponent } from '../components/filter-search-bar';
-import { ShowSelected } from '../enums/show-selected.enum';
+import { FilterSearchBarComponent } from '../common/components/filter-search-bar';
+import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
+import { ShowSelected } from '../common/enums/show-selected.enum';
 import {
-  EcDatagridFilter,
   EnumValueFilterOption,
   FilterState,
-} from '../interfaces/filter-state.interface';
+} from '../common/interfaces/filter-state.interface';
 
 export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   maxHeightPx: 300,

@@ -2,26 +2,7 @@ import { Directive } from '@angular/core';
 import { ClrDatagridFilterInterface } from '@clr/angular';
 import { Observable } from 'rxjs';
 
-export interface FilterState<T> {
-  property: string | number;
-  value: T;
-}
-
-export interface EnumValueFilterOption<E> {
-  value: E;
-  label: string;
-  selectedByDefault?: boolean;
-}
-
-export interface EnumValueFilterOptionGroup<E> {
-  label: string;
-  expandedByDefault?: boolean;
-  items: readonly EnumValueFilterOption<E>[];
-}
-
-export interface ResettableFilter {
-  resetToDefault: () => void;
-}
+import { FilterState, ResettableFilter } from '../interfaces/filter-state.interface';
 
 @Directive()
 export abstract class EcDatagridFilter<S = unknown, T extends object = {}>
