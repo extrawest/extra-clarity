@@ -1,0 +1,15 @@
+.button-trigger {
+  margin: 0;
+}
+
+.ec-popover-content {
+  margin-top: 0.24rem;
+  padding: 0.9rem;
+  background-color: var(--clr-datagrid-popover-bg-color, #fff);
+  border-width: var(--clr-global-borderwidth, 0.05rem);
+  border-style: solid;
+  border-color: var(--clr-datagrid-popover-border-color, #ccc);
+  border-radius: var(--clr-global-borderradius, 0.15rem);
+  box-shadow: 0 .05rem .15rem var(--clr-datagrid-popovers-box-shadow-color, rgba(140, 140, 140, 0.25));
+  font-weight: 400;
+}

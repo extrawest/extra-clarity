@@ -1,0 +1,32 @@
+<button
+  type="button"
+  class="btn btn-sm btn-outline button-trigger"
+  [class.custom-label]="!!labelTmplRef"
+  [attr.aria-expanded]="isOpen"
+  [attr.aria-controls]="popoverId"
+  [attr.aria-owns]="popoverId"
+  clrPopoverAnchor
+  clrPopoverOpenCloseButton
+  #anchor
+>
+  <ng-container *ngIf="labelTmplRef; else labelTextRef">
+    <ng-container *ngTemplateOutlet="labelTmplRef" />
+  </ng-container>
+  <ng-template #labelTextRef>
+    {{ labelText }}
+  </ng-template>
+</button>
+
+<div
+  [id]="popoverId"
+  cdkTrapFocus
+  *clrPopoverContent="
+    isOpen;
+    at: popoverPosition;
+    outsideClickToClose: closeOnClickOutside;
+    scrollToClose: closeOnScroll;
+  "
+  class="ec-popover-content"
+>
+  <ng-content />
+</div>
