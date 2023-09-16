@@ -1,0 +1,53 @@
+$host-width: 10rem;
+$input-width: 8.5rem;
+
+:host {
+  display: block;
+  width: $host-width;
+  max-width: $host-width;
+}
+
+:host ::ng-deep {
+  .clr-form-control {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+
+    .clr-input {
+      width: $input-width;
+    }
+
+    &.active .clr-input {
+      background-color: var(--clr-color-action-50, #e3f5fc);
+    }
+
+    .clr-input.ng-invalid {
+      background-color: var(--clr-color-danger-50, #fff2f0);
+    }
+  }
+}
+
+.timestamp-label {
+  $label-height: 0.8rem;
+
+  height: $label-height;
+  max-height: $label-height;
+  line-height: $label-height;
+
+  width: $input-width;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .label-text {
+    font-weight: 500;
+  }
+
+  .btn-clear-input {
+    min-width: unset;
+    height: unset;
+    line-height: $label-height;
+    padding: 0;
+    margin: 0;
+  }
+}

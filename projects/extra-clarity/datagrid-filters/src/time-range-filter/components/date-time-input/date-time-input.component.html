@@ -1,0 +1,33 @@
+<clr-input-container
+  class="timestamp-row"
+  [class.active]="isInputDirty(formControl)"
+>
+  <label *ngIf="label" class="timestamp-label">
+    <span class="label-text">
+      {{ label }}
+    </span>
+    <button
+      *ngIf="isInputDirty(formControl)"
+      type="button"
+      class="btn btn-sm btn-link btn-clear-input"
+      (click)="formControl.reset()"
+    >
+      Clear
+    </button>
+  </label>
+
+  <input
+    type="datetime-local"
+    clrInput
+    #datetimeInput
+    class="timestamp-input"
+    min="1970-01-01T00:00"
+    max="2070-01-01T00:00"
+    [formControl]="formControl"
+    (blur)="validateOnBlur()"
+  />
+
+  <clr-control-error>
+    Wrong input
+  </clr-control-error>
+</clr-input-container>

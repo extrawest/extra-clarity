@@ -1,0 +1,18 @@
+.config-errors {
+  font-size: .65rem;
+  line-height: 1.5;
+}
+
+.presets-container {
+  margin-top: 0;
+
+  & + .custom-range-input {
+    margin-left: 1.1rem;
+    margin-top: 0.3rem;
+  }
+
+  .label-selected {
+    font-weight: 600;
+    color: var(--clr-color-action-800, #00567a);
+  }
+}
