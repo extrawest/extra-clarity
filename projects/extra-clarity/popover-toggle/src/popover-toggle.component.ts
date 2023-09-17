@@ -47,7 +47,7 @@ import { PopoverAlign } from './types';
     ClrPopoverToggleService,
   ],
 })
-export class PopOverToggleComponent implements OnChanges, OnDestroy {
+export class PopoverToggleComponent implements OnChanges, OnDestroy {
   @Input()
   public anchorToContentAlign: AnchorToContentAlign = AnchorToContentAlign.StartToStart;
 
