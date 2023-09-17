@@ -1,4 +1,4 @@
-import { PresetLabel } from '../enums';
+import { TimeRangePresetLabel as PresetLabel } from '../enums';
 import { CustomTimeRange, TimeRangePreset } from '../interfaces';
 
 const MS_IN_ONE_HOUR = 1000 * 60 * 60;

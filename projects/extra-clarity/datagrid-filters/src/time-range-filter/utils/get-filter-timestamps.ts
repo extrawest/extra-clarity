@@ -1,5 +1,9 @@
 import { ALL_TIME } from '../constants';
-import { CustomTimeRange, FilterValue, TimeRangePreset } from '../interfaces';
+import {
+  CustomTimeRange,
+  TimeRangeFilterValue as FilterValue,
+  TimeRangePreset,
+} from '../interfaces';
 
 import { getDefaultPreset } from './get-default-preset';
 

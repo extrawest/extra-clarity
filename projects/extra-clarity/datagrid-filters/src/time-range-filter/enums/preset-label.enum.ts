@@ -1,4 +1,4 @@
-export enum PresetLabel {
+export enum TimeRangePresetLabel {
   PastHour = 'Past Hour',
   Past24Hours = 'Past 24 Hours',
   Past7Days = 'Past 7 Days',

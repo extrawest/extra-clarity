@@ -22,7 +22,11 @@ import { FilterState } from '../common/interfaces/filter-state.interface';
 
 import { DateTimeGroupComponent } from './components/date-time-group';
 import { ALL_TIME } from './constants';
-import { CustomTimeRange, FilterValue, TimeRangePreset } from './interfaces';
+import {
+  CustomTimeRange,
+  TimeRangeFilterValue as FilterValue,
+  TimeRangePreset,
+} from './interfaces';
 import { containsAllTimePreset, getDefaultPreset, getFilterTimestamps } from './utils';
 
 const TIMERANGE_FILTER_DEFAULTS = {
