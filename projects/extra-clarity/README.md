@@ -9,7 +9,9 @@ which we use in our internal projects in [extrawest.com](https://extrawest.com).
 
 The library is under development. Any suggestions would be highly appreciated.
 
-Supported Angular versions: 15.0 or later.
+Supported Angular versions: 16.2 or later.
+
+The latest version with support of Angular 15: 0.15.22.
 
 ## Installation
 
