@@ -105,6 +105,10 @@ export class SearchBarComponent implements OnChanges, OnDestroy, OnInit {
 
   public clearInput(): void {
     this.formControl.reset();
+    this.focusSearchBar();
+  }
+
+  public focusSearchBar(): void {
     this.inputRef?.nativeElement.focus();
   }
 }
