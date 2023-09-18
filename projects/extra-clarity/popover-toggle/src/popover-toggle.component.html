@@ -1,7 +1,7 @@
 <button
   type="button"
-  class="btn btn-sm btn-outline button-trigger"
-  [class.custom-label]="!!labelTmplRef"
+  [class]="buttonClasses"
+  [disabled]="btnDisabled"
   [attr.aria-expanded]="isOpen"
   [attr.aria-controls]="popoverId"
   [attr.aria-owns]="popoverId"
@@ -9,11 +9,23 @@
   clrPopoverOpenCloseButton
   #anchor
 >
-  <ng-container *ngIf="labelTmplRef; else labelTextRef">
+  <ng-container *ngIf="labelTmplRef; else labelTextTmpl">
     <ng-container *ngTemplateOutlet="labelTmplRef" />
   </ng-container>
-  <ng-template #labelTextRef>
-    {{ labelText }}
+  <ng-template #labelTextTmpl>
+    <ng-container *ngIf="withDropdownIcon; else withoutDropdownIconTmpl">
+      <ng-container *ngIf="dropdownIconPosition === DropdownIconPosition.Right; else leftIconTmpl">
+        {{ labelText }}
+        <cds-icon shape="angle" size="10" [direction]="dropdownIconDirection" />
+      </ng-container>
+      <ng-template #leftIconTmpl>
+        <cds-icon shape="angle" size="10" [direction]="dropdownIconDirection" />
+        {{ labelText }}
+      </ng-template>
+    </ng-container>
+    <ng-template #withoutDropdownIconTmpl>
+      {{ labelText }}  
+    </ng-template>
   </ng-template>
 </button>
 

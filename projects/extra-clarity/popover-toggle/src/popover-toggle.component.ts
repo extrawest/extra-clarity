@@ -1,4 +1,4 @@
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,6 +12,9 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { CdsIconModule } from '@cds/angular';
+import { angleIcon, ClarityIcons } from '@cds/core/icon';
+import { Directions } from '@cds/core/internal';
 import {
   ClrAxis,
   ClrPopoverEventsService,
@@ -26,7 +29,8 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { clrAlignmentMap } from './constants';
 import { CdkTrapFocusDirective } from './directives';
-import { AnchorToContentAlign, ContentPosition } from './enums';
+import { AnchorToContentAlign, ContentPosition, PopoverToggleButtonStatus, PopoverToggleButtonStyle } from './enums';
+import { DropdownIconPosition } from './enums/dropdown-icon-position.enum';
 import { PopoverAlign } from './types';
 
 @Component({
@@ -36,9 +40,11 @@ import { PopoverAlign } from './types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    NgClass,
     NgIf,
     NgTemplateOutlet,
     CdkTrapFocusDirective,
+    CdsIconModule,
     ClrPopoverModuleNext,
   ],
   providers: [
@@ -55,6 +61,18 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
   public contentPosition: ContentPosition = ContentPosition.Bottom;
 
   @Input()
+  public btnDisabled: boolean = false;
+
+  @Input()
+  public btnSmall: boolean = true;
+
+  @Input()
+  public btnStatus: PopoverToggleButtonStatus = PopoverToggleButtonStatus.Primary;
+
+  @Input()
+  public btnStyle: PopoverToggleButtonStyle = PopoverToggleButtonStyle.Outline;
+
+  @Input()
   public closeOnClickOutside: boolean = true;
 
   @Input()
@@ -66,20 +84,35 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
   @Input()
   public labelTmplRef?: TemplateRef<unknown>;
 
+  @Input()
+  public withDropdownIcon: boolean = false;
+
+  @Input()
+  public dropdownIconDirection: Directions = 'down';
+
+  @Input()
+  public dropdownIconPosition: DropdownIconPosition = DropdownIconPosition.Right;
+
   @Output()
   public openChange: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('anchor', { static: true })
   protected anchor?: ElementRef<HTMLButtonElement>;
 
-  protected readonly popoverId = uniqueIdFactory();
   protected isOpen = false;
+
+  protected buttonClasses: string[];
   protected popoverPosition: ClrPopoverPosition;
+
+  protected readonly popoverId = uniqueIdFactory();
+
+  protected readonly DropdownIconPosition = DropdownIconPosition;
 
   private readonly destroy$ = new Subject<void>();
 
   constructor(private clrPopoverToggleService: ClrPopoverToggleService) {
     this.popoverPosition = this.getPopoverPosition();
+    this.buttonClasses = this.getButtonClasses();
 
     this.clrPopoverToggleService.openChange
       .pipe(takeUntil(this.destroy$))
@@ -92,11 +125,22 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
         this.openChange.emit(isOpen);
         this.isOpen = isOpen;
       });
+
+    ClarityIcons.addIcons(angleIcon);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contentPosition'] || changes['anchorToContentAlign']) {
       this.popoverPosition = this.getPopoverPosition();
+    }
+
+    if (
+      changes['btnStatus'] ||
+      changes['btnStyle'] ||
+      changes['btnSmall'] ||
+      changes['labelTmplRef']
+    ) {
+      this.buttonClasses = this.getButtonClasses();
     }
   }
 
@@ -104,11 +148,33 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
     this.destroy$.next();
   }
 
-  private getPopoverPosition(): ClrPopoverPosition {
-    return {
-      ...this.getClrPopoverAxisAndSide(this.contentPosition),
-      ...this.getClrPopoverAnchorAndContent(this.anchorToContentAlign),
-    };
+  private getButtonClasses(): string[] {
+    const classes = [
+      'btn',
+      'ec-button-trigger',
+      this.getButtonStyleClass(),
+    ];
+
+    if (this.btnSmall) {
+      classes.push('btn-sm');
+    }
+    if (this.labelTmplRef) {
+      classes.push('ec-custom-label');
+    }
+    return classes;
+  }
+
+  private getButtonStyleClass(): string {
+    if (this.btnStyle === PopoverToggleButtonStyle.Flat) {
+      return 'btn-link';
+    }
+    if (this.btnStyle === PopoverToggleButtonStyle.Solid) {
+      return this.btnStatus;
+    }
+    if (this.btnStatus !== PopoverToggleButtonStatus.Primary) {
+      return this.btnStatus + '-outline';
+    }
+    return 'btn-outline';
   }
 
   private getClrPopoverAnchorAndContent(
@@ -134,5 +200,12 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
       : ClrSide.BEFORE;
 
     return { axis, side };
+  }
+
+  private getPopoverPosition(): ClrPopoverPosition {
+    return {
+      ...this.getClrPopoverAxisAndSide(this.contentPosition),
+      ...this.getClrPopoverAnchorAndContent(this.anchorToContentAlign),
+    };
   }
 }
