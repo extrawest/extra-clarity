@@ -25,10 +25,10 @@ import {
 } from '@cds/core/icon';
 import { ClrDatagridFilter, ClrPopoverToggleService, ClrTreeViewModule } from '@clr/angular';
 import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
+import { SearchBarComponent } from '@extrawest/extra-clarity/search-bar';
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
 
-import { FilterSearchBarComponent } from '../common/components/filter-search-bar';
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { ShowSelected } from '../common/enums/show-selected.enum';
 import {
@@ -54,7 +54,7 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
     CdsIconModule,
     ClrTreeViewModule,
     MarkMatchedStringPipe,
-    FilterSearchBarComponent,
+    SearchBarComponent,
   ],
   providers: [
     // make EnumGroupedValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
@@ -239,8 +239,8 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
   private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
   private readonly clrPopoverToggleService = inject(ClrPopoverToggleService, { optional: true });
 
-  @ViewChild(FilterSearchBarComponent)
-  private searchBar?: FilterSearchBarComponent;
+  @ViewChild(SearchBarComponent)
+  private searchBar?: SearchBarComponent;
 
   constructor() {
     super();

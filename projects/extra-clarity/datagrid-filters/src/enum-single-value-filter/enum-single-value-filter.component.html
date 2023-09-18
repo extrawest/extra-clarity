@@ -13,10 +13,13 @@
         Selected: {{ selectedValueLabel }}
       </div>
 
-      <ec-filter-search-bar
+      <ec-search-bar
         class="filter-search-bar"
         *ngIf="showSearchBar"
         (valueChange)="onSearchTermChange($event)"
+        [debounceMs]="0"
+        [highlightActive]="false"
+        placeholder="Filter the options..."
       />
 
       <div class="filter-options" [style.max-height.px]="maxHeightPx">
