@@ -33,6 +33,17 @@ const TIMERANGE_FILTER_DEFAULTS = {
   widthPx: 225,
 };
 
+/*
+ * TODO: possible adjustments in future versions:
+ * - skip setting a value via 'setValue' or 'value' if it's not valid
+ * - add ability to configure any custom range as the default filter value (not only ALL_TIME)
+ * - add seconds as optional (configurable) precision of the date-time inputs
+ * - add configurable switch between the 'date only' and 'date-time' modes
+ * - ignore duplicated or empty (no-label) presets before applying them to the filter
+ * - on preset-list update - keep the filter value if it is allowed in the updated list as well (when this.defaultPreset !== null)
+ * - maybe highlight not 'non-empty' inputs but 'modified' (i.e. different from applied values)
+*/
+
 @Component({
   selector: 'ec-time-range-filter',
   templateUrl: './time-range-filter.component.html',
