@@ -1,0 +1,30 @@
+<label *ngIf="label" [for]="inputId" class="clr-control-label ec-search-bar-label">
+  {{ label }}
+</label>
+
+<div class="ec-input-wrapper">
+  <cds-icon
+    class="ec-search-bar-icon"
+    status="info"
+    [shape]="iconOnFill && formControl.value ? iconOnFill : 'search'"
+  />
+  <clr-input-container>
+    <input
+      type="text"
+      [class.active]="highlightActive && formControl.value"
+      #searchInputRef
+      clrInput
+      [id]="inputId"
+      [placeholder]="placeholder"
+      [formControl]="formControl"
+    />
+  </clr-input-container>
+  <button
+    *ngIf="formControl.value"
+    type="button"
+    class="btn btn-sm btn-icon ec-search-bar-clear"
+    (click)="clearInput()"
+  >
+    <cds-icon shape="window-close" />
+  </button>
+</div>
