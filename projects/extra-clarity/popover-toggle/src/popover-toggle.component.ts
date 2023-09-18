@@ -2,6 +2,7 @@ import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ContentChild,
   ElementRef,
   EventEmitter,
   Input,
@@ -9,7 +10,6 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
-  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
@@ -28,8 +28,16 @@ import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 import { clrAlignmentMap } from './constants';
-import { CdkTrapFocusDirective } from './directives';
-import { AnchorToContentAlign, ContentPosition, PopoverToggleButtonStatus, PopoverToggleButtonStyle } from './enums';
+import {
+  CdkTrapFocusDirective,
+  EcPopoverToggleLabelDirective,
+} from './directives';
+import {
+  AnchorToContentAlign,
+  ContentPosition,
+  PopoverToggleButtonStatus,
+  PopoverToggleButtonStyle,
+} from './enums';
 import { DropdownIconPosition } from './enums/dropdown-icon-position.enum';
 import { PopoverAlign } from './types';
 
@@ -82,9 +90,6 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
   public labelText: string = '';
 
   @Input()
-  public labelTmplRef?: TemplateRef<unknown>;
-
-  @Input()
   public withDropdownIcon: boolean = false;
 
   @Input()
@@ -98,6 +103,9 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
 
   @ViewChild('anchor', { static: true })
   protected anchor?: ElementRef<HTMLButtonElement>;
+
+  @ContentChild(EcPopoverToggleLabelDirective)
+  protected customLabelContent?: EcPopoverToggleLabelDirective;
 
   protected isOpen = false;
 
@@ -134,12 +142,7 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
       this.popoverPosition = this.getPopoverPosition();
     }
 
-    if (
-      changes['btnStatus'] ||
-      changes['btnStyle'] ||
-      changes['btnSmall'] ||
-      changes['labelTmplRef']
-    ) {
+    if (changes['btnStatus'] || changes['btnStyle'] || changes['btnSmall']) {
       this.buttonClasses = this.getButtonClasses();
     }
   }
@@ -158,9 +161,7 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
     if (this.btnSmall) {
       classes.push('btn-sm');
     }
-    if (this.labelTmplRef) {
-      classes.push('ec-custom-label');
-    }
+
     return classes;
   }
 

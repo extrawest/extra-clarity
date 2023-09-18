@@ -9,8 +9,8 @@
   clrPopoverOpenCloseButton
   #anchor
 >
-  <ng-container *ngIf="labelTmplRef; else labelTextTmpl">
-    <ng-container *ngTemplateOutlet="labelTmplRef" />
+  <ng-container *ngIf="customLabelContent; else labelTextTmpl">
+    <ng-content select="ec-popover-toggle-label, [ecPopoverToggleLabel]" />
   </ng-container>
   <ng-template #labelTextTmpl>
     <ng-container *ngIf="withDropdownIcon; else withoutDropdownIconTmpl">
