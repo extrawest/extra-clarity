@@ -19,6 +19,11 @@ import { ClrInputModule } from '@clr/angular';
 import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
+export const SEARCH_BAR_DEFAULTS = {
+  debounceTimeMs: 0,
+  placeholder: 'Type to search...',
+};
+
 @Component({
   selector: 'ec-search-bar',
   templateUrl: './search-bar.component.html',
@@ -34,26 +39,54 @@ import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
   ],
 })
 export class SearchBarComponent implements OnChanges, OnDestroy, OnInit {
+  /**
+   * Debounce delay for the input field in milliseconds, i.e. a delay between entering the last
+   * character and emitting the entered value to the `valueChange` output.
+   * Ignored on clearing the input field.
+   */
   @Input()
-  public debounceMs: number = 0;
+  public debounceMs: number = SEARCH_BAR_DEFAULTS.debounceTimeMs;
 
+  /**
+   * Whether to set background-color to light-blue when any value is entered
+   */
   @Input()
   public highlightActive: boolean = false;
 
+  /**
+   * Shape of an alternative `cds-icon` to show in place of the default search-icon
+   * when any value is entered.
+   *
+   * This icon must be registered within the project using `ClarityIcons.addIcon()`.
+   */
   @Input()
   public iconOnFill?: string;
 
+  /**
+   * An optional text label to show before the search bar
+   */
   @Input()
   public label?: string;
 
+  /**
+   * Placeholder for the empty input field
+   */
   @Input()
-  public placeholder: string = 'Type to search...';
+  public placeholder: string = SEARCH_BAR_DEFAULTS.placeholder;
 
+  /**
+   * A value to be set as the entered value on this input change. `undefined` will be ignored.
+   */
   @Input()
   public value?: string | null;
 
+  /**
+   * Emits the entered value on every change after the `debounceMs` delay if configured.
+   *
+   * `EventEmitter<string>`
+   */
   @Output()
-  public valueChange: EventEmitter<string> = new EventEmitter();
+  public valueChange = new EventEmitter<string>();
 
   @ViewChild('searchInputRef', { static: true })
   protected inputRef?: ElementRef<HTMLInputElement>;
@@ -61,6 +94,7 @@ export class SearchBarComponent implements OnChanges, OnDestroy, OnInit {
   protected readonly formControl = new FormControl<string>('', { nonNullable: true });
   protected readonly inputId = uniqueIdFactory();
 
+  private readonly unobserve$ = new Subject<void>();
   private readonly destroy$ = new Subject<void>();
 
   constructor() {
@@ -68,6 +102,11 @@ export class SearchBarComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    const debounceMsChange = changes['debounceMs'];
+    if (debounceMsChange && !debounceMsChange.isFirstChange()) {
+      this.observeValueChanges();
+    }
+
     const valueChange = changes['value'];
     if (!valueChange || this.value === undefined) {
       return;
@@ -85,17 +124,7 @@ export class SearchBarComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.formControl.valueChanges
-      .pipe(
-        tap(value => !value && this.valueChange.emit('')),
-        debounceTime(this.debounceMs),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(value => {
-        if (value && value === this.formControl.value) {
-          this.valueChange.emit(value);
-        }
-      });
+    this.observeValueChanges();
 
     // TODO: check if this is really needed (why not use the initial ngOnChanges for that?)
     if (this.value) {
@@ -103,12 +132,35 @@ export class SearchBarComponent implements OnChanges, OnDestroy, OnInit {
     }
   }
 
+  /**
+   * Clean up the input to an empty string, and focus it.
+   */
   public clearInput(): void {
     this.formControl.reset();
     this.focusSearchBar();
   }
 
+  /**
+   * Focus the input element (put the cursor into it).
+   */
   public focusSearchBar(): void {
     this.inputRef?.nativeElement.focus();
+  }
+
+  private observeValueChanges(): void {
+    this.unobserve$.next();
+
+    this.formControl.valueChanges
+      .pipe(
+        tap(value => !value && this.valueChange.emit('')),
+        debounceTime(this.debounceMs),
+        takeUntil(this.unobserve$),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(value => {
+        if (value && value === this.formControl.value) {
+          this.valueChange.emit(value);
+        }
+      });
   }
 }

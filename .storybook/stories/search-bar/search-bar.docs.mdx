@@ -1,0 +1,48 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+
+import { docsStylePatch, extraClarityGithubSrc, linksToClrDatagridDocs } from '../../helpers';
+
+import * as ComponentStories from './search-bar.stories.ts';
+
+<style>
+ { docsStylePatch }
+</style>
+
+<Meta
+  of={ComponentStories}
+  name="Overview"
+/>
+
+# Search Bar
+
+<div className="table-of-contents">
+  - [Quick Start](#quick-start)
+  - [Stories](#stories)
+  - [API](#api)
+  - [Source Code](#source-code)
+</div>
+
+## Quick Start
+
+> **Standalone component**: yes
+
+```typescript
+import { SearchBarComponent } from '@extrawest/extra-clarity/search-bar'
+```
+```html
+<ec-search-bar />
+```
+
+## Stories
+
+* [The component in isolation](/story/components-search-bar--component-itself-story)
+
+## API
+
+<ArgTypes sort="requiredFirst" />
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/search-bar/src)`}
+</Markdown>
