@@ -62,44 +62,98 @@ import { PopoverAlign } from './types';
   ],
 })
 export class PopoverToggleComponent implements OnChanges, OnDestroy {
+  /**
+   * Configure the linking point of the toggle-button and content-body.
+   * The first half defines the point on the anchor (button), and second one is for the content body.
+   *
+   * When `contentPosition` is horizontal (Left, Right):
+   * * `start` corresponds to the top corner of the button or content body
+   * * `center` = the middle point
+   * * `end` = the bottom corner
+   *
+   * When `contentPosition` is vertical (Top, Bottom):
+   * * `start` corresponds to the left corner of the button or content body
+   * * `center` = the middle point
+   * * `end` = the right corner
+   */
   @Input()
   public anchorToContentAlign: AnchorToContentAlign = AnchorToContentAlign.StartToStart;
 
+  /**
+   * The content body position relative to the anchor (toggle button).
+   */
   @Input()
   public contentPosition: ContentPosition = ContentPosition.Bottom;
 
+  /** Whether the toggle button is disabled */
   @Input()
   public btnDisabled: boolean = false;
 
+  /** Whether the toggle button is smaller (with the Clarity 'btn-sm' class) */
   @Input()
   public btnSmall: boolean = true;
 
+  /** Status-color of the toggle button according to the Clarity button statuses */
   @Input()
   public btnStatus: PopoverToggleButtonStatus = PopoverToggleButtonStatus.Primary;
 
+  /** Style of the toggle button according to Clarity button styles (flat, solid, outline) */
   @Input()
   public btnStyle: PopoverToggleButtonStyle = PopoverToggleButtonStyle.Outline;
 
+  /** Whether to hide the content body on clicking outside of the component */
   @Input()
   public closeOnClickOutside: boolean = true;
 
+  /** Whether to hide the content body on scrolling outside of the component */
   @Input()
   public closeOnScroll: boolean = true;
 
+  /**
+   * Text label to show inside of the toggle button. Ignored when a custom label is projected
+   * into the component using the `EcPopoverToggleLabelDirective` directive.
+   */
   @Input()
   public labelText: string = '';
 
+  /**
+   * Show the 'angle' cds-icon next to the text label. Ignored when a custom label is projected
+   * into the component using the `EcPopoverToggleLabelDirective` directive.
+   */
   @Input()
   public withDropdownIcon: boolean = false;
 
+  /**
+   * Direction of the 'angle' cds-icon (when `withDropdownIcon` is set to `true`). Ignored when
+   * a custom label is projected into the component using the `EcPopoverToggleLabelDirective` directive.
+   *
+   * `down | up | left | right`
+   */
   @Input()
   public dropdownIconDirection: Directions = 'down';
 
+  /**
+   * Position of the 'angle' cds-icon (when `withDropdownIcon` is set to `true`) relatively to the text label.
+   * Ignored when a custom label is projected into the component using the `EcPopoverToggleLabelDirective` directive.
+   */
   @Input()
   public dropdownIconPosition: DropdownIconPosition = DropdownIconPosition.Right;
 
+  /** Show/hide the content body on change of this input:
+   *
+   * `true` = show
+   * `false` = hide
+   */
+  @Input()
+  public open?: boolean = false;
+
+  /** Emit a boolean on showing/hiding the content body with a new state:
+   *
+   * `true` = open
+   * `false` = closed
+   */
   @Output()
-  public openChange: EventEmitter<boolean> = new EventEmitter();
+  public openChange = new EventEmitter<boolean>();
 
   @ViewChild('anchor', { static: true })
   protected anchor?: ElementRef<HTMLButtonElement>;
@@ -145,10 +199,33 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
     if (changes['btnStatus'] || changes['btnStyle'] || changes['btnSmall']) {
       this.buttonClasses = this.getButtonClasses();
     }
+
+    if (changes['open']) {
+      this.toggleOpen(changes['open'].currentValue as boolean | undefined);
+    }
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
+  }
+
+  /**
+   * Toggle the content body visibility, if no arguments provided.
+   *
+   * Show the content body when `open` is true, and hide when it is `false`.
+   */
+  public toggleOpen(open?: boolean): void {
+    if (typeof open !== 'boolean') {
+      this.clrPopoverToggleService.open = !this.clrPopoverToggleService.open;
+      return;
+    }
+    if (open && !this.clrPopoverToggleService.open) {
+      this.clrPopoverToggleService.open = true;
+      return;
+    }
+    if (!open && this.clrPopoverToggleService.open) {
+      this.clrPopoverToggleService.open = false;
+    }
   }
 
   private getButtonClasses(): string[] {
