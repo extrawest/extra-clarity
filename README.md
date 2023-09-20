@@ -74,12 +74,18 @@ We are working on adding more information to it.
     https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-enum-multi-value-filter--overview)
   * [with enumerated value from multiple selection within grouped options (tree-view with checkboxes)](
     https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-enum-grouped-value-filter--overview)
+  * [with time range selection (from presets or manually with date-time pickers)](
+    https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-time-range-filter--overview)
 * [Floating notifications](
   https://extra-clarity-docs.web.app/?path=/story/components-notification--notification-story)
+* [Popover toggle](
+  https://extra-clarity-docs.web.app/?path=/docs/components-popover-toggle--overview)
 * [Progress spinner](
   https://extra-clarity-docs.web.app/?path=/story/components-progress-spinner--progress-spinner-story)
 * [Router link wrapper](
   https://extra-clarity-docs.web.app/?path=/docs/components-router-link-wrapper--overview)
+* [Search bar](
+  https://extra-clarity-docs.web.app/?path=/docs/components-search-bar--overview)
 * [Sidebar navigation](
   https://extra-clarity-docs.web.app/?path=/docs/components-sidebar-navigation--overview)
 * etc.
