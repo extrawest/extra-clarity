@@ -1,8 +1,8 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   applicationConfig,
-  moduleMetadata,
   type Meta,
+  moduleMetadata,
   type StoryObj,
 } from '@storybook/angular';
 
@@ -44,7 +44,7 @@ const MetaStory = {
           [AnchorToContentAlign.EndToStart]: 'EndToStart',
           [AnchorToContentAlign.EndToCenter]: 'EndToCenter',
           [AnchorToContentAlign.EndToEnd]: 'EndToEnd',
-        }
+        },
       },
       options: [
         AnchorToContentAlign.StartToStart,
@@ -66,7 +66,7 @@ const MetaStory = {
           [ContentPosition.Top]: 'Top',
           [ContentPosition.Left]: 'Left',
           [ContentPosition.Right]: 'Right',
-        }
+        },
       },
       options: [
         ContentPosition.Bottom,
@@ -103,13 +103,13 @@ const MetaStory = {
           [PopoverToggleButtonStyle.Flat]: 'Flat',
           [PopoverToggleButtonStyle.Solid]: 'Solid',
           [PopoverToggleButtonStyle.Outline]: 'Outline',
-        }
+        },
       },
       options: [
         PopoverToggleButtonStyle.Flat,
         PopoverToggleButtonStyle.Solid,
         PopoverToggleButtonStyle.Outline,
-      ]
+      ],
     },
     closeOnClickOutside: {},
     closeOnScroll: {},
@@ -208,7 +208,7 @@ export const ComponentItselfStory: Story = {
           </div>
         </ec-popover-toggle>
       </div>
-    `
+    `,
   }),
   args: {
   },

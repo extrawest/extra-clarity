@@ -46,7 +46,7 @@ const MetaStory = {
         },
       },
     },
-    value: {      
+    value: {
     },
     // OUTPUTS
     valueChange: {
