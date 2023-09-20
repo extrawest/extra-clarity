@@ -6,11 +6,11 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  inject,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
   SimpleChanges,
   ViewChild,
@@ -206,17 +206,17 @@ export class StringFilterComponent<T extends object = {}>
   protected readonly formControl = new FormControl<string>('', { nonNullable: true });
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
-  readonly changes = new Subject<void>();
+  override readonly changes = new Subject<void>();
 
   private minLengthValidatorFn?: ValidatorFn;
 
   private readonly destroy$ = new Subject<void>();
 
-  private readonly changeDetectionRef = inject(ChangeDetectorRef);
-  private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
-  private readonly clrPopoverToggleService = inject(ClrPopoverToggleService, { optional: true });
-
-  constructor(readonly changeDetectorRef: ChangeDetectorRef) {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
+    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
+  ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
 
@@ -230,7 +230,7 @@ export class StringFilterComponent<T extends object = {}>
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
-  get state(): FilterState<string> {
+  override get state(): FilterState<string> {
     return {
       property: this.propertyKey,
       value: this.filterValue,
@@ -285,7 +285,7 @@ export class StringFilterComponent<T extends object = {}>
         if (this.formControl.value !== this.filterValue) {
           this.updateFormControlValue(this.filterValue);
           this.clrInputRef?.triggerValidation();
-          this.changeDetectionRef.markForCheck();
+          this.changeDetectorRef.markForCheck();
         }
         setTimeout(() => this.focusInputElement());
       });
@@ -317,7 +317,7 @@ export class StringFilterComponent<T extends object = {}>
   }
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
-  accepts(item: T): boolean {
+  override accepts(item: T): boolean {
     if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
       return false;
     }
@@ -344,7 +344,7 @@ export class StringFilterComponent<T extends object = {}>
   /**
    * Reset the filter to the clean state (an empty string).
    * */
-  clearSelection(): void {
+  override clearSelection(): void {
     this.updateFormControlValue('');
   }
 
@@ -353,14 +353,14 @@ export class StringFilterComponent<T extends object = {}>
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
-  isActive(): boolean {
+  override isActive(): boolean {
     return !!this.propertyKey && !this.isStateDefault;
   }
 
   /**
    * Reset the filter to the default state (an empty string)
    * */
-  resetToDefault(): void {
+  override resetToDefault(): void {
     this.updateFormControlValue('');
   }
 
@@ -369,7 +369,7 @@ export class StringFilterComponent<T extends object = {}>
    *
    * If the provided value is invalid, the filter value will be reset to default (an empty string).
    * */
-  setValue(value: string): void {
+  override setValue(value: string): void {
     if (this.propertyKey) {
       this.updateFormControlValue(value);
     }

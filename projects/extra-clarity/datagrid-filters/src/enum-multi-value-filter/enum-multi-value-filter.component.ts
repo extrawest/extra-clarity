@@ -5,11 +5,11 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  inject,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
   SimpleChanges,
   TemplateRef,
@@ -217,18 +217,18 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
   protected readonly ShowSelected = ShowSelected;
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
-  readonly changes = new Subject<void>();
+  override readonly changes = new Subject<void>();
 
   private readonly destroy$ = new Subject<void>();
-
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
-  private readonly clrDatagridFilterContainer = inject(ClrDatagridFilter, { optional: true });
-  private readonly clrPopoverToggleService = inject(ClrPopoverToggleService, { optional: true });
 
   @ViewChild(SearchBarComponent)
   private searchBar?: SearchBarComponent;
 
-  constructor() {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
+    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
+  ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
 
@@ -242,7 +242,7 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
-  get state(): FilterState<E[] | null> {
+  override get state(): FilterState<E[] | null> {
     const filterValue = this.selectedValues.size > 0
       ? Array.from(this.selectedValues)
       : null;
@@ -295,7 +295,7 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
   }
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
-  accepts(item: T): boolean {
+  override accepts(item: T): boolean {
     if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
       return false;
     }
@@ -335,7 +335,7 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
   /**
    * Reset the filter to the empty state
    * */
-  clearSelection(): void {
+  override clearSelection(): void {
     this.updateSelectedValues(new Set());
   }
 
@@ -344,14 +344,14 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
-  isActive(): boolean {
+  override isActive(): boolean {
     return !!this.propertyKey && !this.isStateDefault;
   }
 
   /**
    * Reset the filter to the default state
    * */
-  resetToDefault(): void {
+  override resetToDefault(): void {
     this.updateSelectedValues(new Set(
       this.options
         .filter(option => option.selectedByDefault)
@@ -367,7 +367,7 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    *
    * Providing `null` will clear the current selection, which is equivalent to calling `clearSelection()`.
    * */
-  setValue(values: E[] | null): void {
+  override setValue(values: E[] | null): void {
     if (!values || !this.areAllValuesAllowed(values)) {
       this.resetToDefault();
       return;
