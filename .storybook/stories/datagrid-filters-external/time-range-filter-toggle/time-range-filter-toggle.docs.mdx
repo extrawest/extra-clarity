@@ -1,0 +1,63 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+
+import { docsStylePatch, extraClarityGithubSrc } from '../../../helpers';
+
+import * as ComponentStories from './time-range-filter-toggle.stories.ts';
+
+<style>
+ { docsStylePatch }
+</style>
+
+<Meta
+  of={ComponentStories}
+  name="Overview"
+/>
+
+# Time Range Filter with External Toggle
+
+<div className="table-of-contents">
+  - [Quick Start](#quick-start)
+  - [Stories](#stories)
+  - [Description](#description)
+    * [Configuration](#configuration)
+  - [API](#api)
+  - [Source Code](#source-code)
+</div>
+
+## Quick Start
+
+> **Standalone component**: yes
+
+```typescript
+import { TimeRangeFilterToggleComponent } from '@extrawest/extra-clarity/time-range-filter-toggle';
+```
+```html
+<ec-time-range-filter-toggle
+  [propertyKey]="'timestamps'"
+  [presets]="timeRangePresets"
+  [withCustomRange]="true"
+/>
+```
+
+## Stories
+
+* [The component itself](/story/components-time-range-filter-toggle--component-itself-story)
+
+## Description
+
+This component combines the PopoverToggleComponent as an outer wrapper and
+the TimeRangeFilterComponent as a projected content.
+
+For more details, please refer to the API section below and the docs pages of the nested components:
+* [Time Range Filter](/docs/components-datagrid-filters-time-range-filter--overview)
+* [Popover Toggle](/docs/components-popover-toggle--overview)
+
+## API
+
+<ArgTypes sort="requiredFirst" />
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/time-range-filter-toggle/src)`}
+</Markdown>
