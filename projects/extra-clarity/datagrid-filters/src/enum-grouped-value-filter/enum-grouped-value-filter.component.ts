@@ -146,7 +146,7 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
    *
    * @required
    */
-  @Input()
+  @Input({ required: true })
   public propertyKey = '';
 
   /**

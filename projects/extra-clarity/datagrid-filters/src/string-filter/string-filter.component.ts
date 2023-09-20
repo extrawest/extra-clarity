@@ -143,7 +143,7 @@ export class StringFilterComponent<T extends object = {}>
    *
    * @required
    */
-  @Input()
+  @Input({ required: true })
   public propertyKey = '';
 
   /**

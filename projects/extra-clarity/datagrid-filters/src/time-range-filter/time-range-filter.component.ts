@@ -65,8 +65,7 @@ const TIMERANGE_FILTER_DEFAULTS = {
 })
 export class TimeRangeFilterComponent extends EcDatagridFilter<FilterValue>
   implements OnChanges, OnDestroy, OnInit {
-  // TODO: add { required: true } after upgrading to Angular 16
-  @Input()
+  @Input({ required: true })
   public propertyKey!: string;
 
   @Input()

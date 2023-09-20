@@ -134,7 +134,7 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    *
    * @required
    */
-  @Input()
+  @Input({ required: true })
   public propertyKey = '';
 
   /**
