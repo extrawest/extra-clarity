@@ -87,6 +87,14 @@ export class DateTimeGroupComponent implements OnChanges {
   }
 
   protected onDiscard(): void {
+    // Force restoring a valid input state when the 'value' was not actually changed,
+    // but something invalid/incomplete was entered
+    if (this.visualRange.start === this.storedRange.start) {
+      this.inputStart?.restoreInputValue();
+    }
+    if (this.visualRange.end === this.storedRange.end) {
+      this.inputEnd?.restoreInputValue();
+    }
     this.visualRange = { ...this.storedRange };
     this.discard.emit();
   }

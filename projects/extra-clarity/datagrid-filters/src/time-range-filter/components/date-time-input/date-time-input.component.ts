@@ -85,6 +85,12 @@ export class DateTimeInputComponent implements AfterViewInit, OnChanges, OnDestr
     this.destroy$.next();
   }
 
+  restoreInputValue(): void {
+    // This method should be called outside of this component to clean up an invalid entered value
+    this.formControl.setValue(this.formControl.value, { emitEvent: false });
+    this.formControl.updateValueAndValidity();
+  }
+
   protected isInputDirty(formControl: FormControl): boolean {
     return !this.disabled && (formControl.value || formControl.invalid);
   }
