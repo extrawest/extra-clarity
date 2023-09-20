@@ -1,70 +1,59 @@
 <div [style.width.px]="widthPx">
   <ng-container *ngIf="!configErrors.length; else wrongConfig">
-    <ng-container *ngIf="presets.length; else noPresets">
-      <clr-radio-container class="presets-container">
-        <clr-radio-wrapper *ngFor="let preset of presets">
-          <input
-            type="radio"
-            clrRadio
-            [formControl]="radioControl"
-            [value]="preset.label"
-            [name]="propertyKey"
-          />
-          <label [class.label-selected]="filterValue.preset === preset.label">
-            {{ preset.label }}
-          </label>
-        </clr-radio-wrapper>
+    <clr-radio-container *ngIf="presets.length" class="presets-container">
+      <clr-radio-wrapper *ngFor="let preset of presets">
+        <input
+          type="radio"
+          clrRadio
+          [formControl]="radioControl"
+          [value]="preset.label"
+          [name]="propertyKey"
+        />
+        <label [class.label-selected]="filterValue.preset === preset.label">
+          {{ preset.label }}
+        </label>
+      </clr-radio-wrapper>
 
-        <clr-radio-wrapper *ngIf="withCustomRange" class="custom-range-radio">
-          <input
-            type="radio"
-            clrRadio
-            [formControl]="radioControl"
-            [value]="null"
-            [name]="propertyKey"
-          />
-          <label [class.label-selected]="filterValue.preset === null">
-            Custom Period
-          </label>
-        </clr-radio-wrapper>
-      </clr-radio-container>
+      <clr-radio-wrapper *ngIf="withCustomRange" class="custom-range-radio">
+        <input
+          type="radio"
+          clrRadio
+          [formControl]="radioControl"
+          [value]="null"
+          [name]="propertyKey"
+        />
+        <label [class.label-selected]="filterValue.preset === null">
+          Custom Period
+        </label>
+      </clr-radio-wrapper>
+    </clr-radio-container>
 
-      <ng-container *ngIf="withCustomRange">
-        <ng-container *ngTemplateOutlet="customRangeInput" />
-      </ng-container>
+    <ec-date-time-group
+      *ngIf="withCustomRange"
+      class="custom-range-input"
+      [value]="visualCustomRange"
+      [disabled]="radioControl.value !== null"
+      [forceEnabledButtons]="radioControl.value !== filterValue.preset"
+      (apply)="onCustomRangeApply($event)"
+      (discard)="onCustomRangeDiscard()"
+    />
 
-      <button
-        *ngIf="!hasAllTimePreset && !withCustomRange && !defaultPreset"
-        class="btn btn-sm btn-block"
-        [disabled]="filterValue.preset === null"
-        (click)="resetToDefault()"
-      >
-        Show 'All Time'
-      </button>
-    </ng-container>
+    <button
+      *ngIf="presets.length && !hasAllTimePreset && !withCustomRange && !defaultPreset"
+      class="btn btn-sm btn-block"
+      [disabled]="filterValue.preset === null"
+      (click)="resetToDefault()"
+    >
+      Show 'All Time'
+    </button>
   </ng-container>
+
+  <ng-template #wrongConfig>
+    <div class="config-errors">
+      There are some issues with the component's inputs:
+      <ul>
+        <li *ngFor="let error of configErrors">{{ error }}</li>
+      </ul>
+    </div>
+  </ng-template>
 </div>
-
-<ng-template #noPresets>
-  <ng-container *ngTemplateOutlet="customRangeInput" />
-</ng-template>
-
-<ng-template #customRangeInput>
-  <ec-date-time-group
-    class="custom-range-input"
-    [value]="visualCustomRange"
-    [disabled]="radioControl.value !== null"
-    [forceEnabledButtons]="radioControl.value !== filterValue.preset"
-    (apply)="onCustomRangeApply($event)"
-    (discard)="onCustomRangeDiscard()"
-  />
-</ng-template>
-
-<ng-template #wrongConfig>
-  <div class="config-errors">
-    There are some issues with the component's inputs:
-    <ul>
-      <li *ngFor="let error of configErrors">{{ error }}</li>
-    </ul>
-  </div>
-</ng-template>

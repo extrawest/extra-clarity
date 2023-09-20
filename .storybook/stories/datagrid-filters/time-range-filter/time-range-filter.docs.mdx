@@ -1,0 +1,85 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+
+import { docsStylePatch, extraClarityGithubSrc } from '../../../helpers';
+
+import * as ComponentStories from './time-range-filter.stories.ts';
+
+<style>
+ { docsStylePatch }
+</style>
+
+<Meta
+  of={ComponentStories}
+  name="Overview"
+/>
+
+# Time Range Filter
+
+<div className="table-of-contents">
+  - [Quick Start](#quick-start)
+  - [Stories](#stories)
+  - [Description](#description)
+    * [Configuration](#configuration)
+    * [Output State](#output-state)
+  - [API](#api)
+  - [Source Code](#source-code)
+</div>
+
+## Quick Start
+
+> **Standalone component**: yes
+
+```typescript
+import { TimeRangeFilterComponent } from '@extrawest/extra-clarity/datagrid-filters/time-range-filter';
+```
+```html
+<ec-time-range-filter />
+```
+```html
+<clr-datagrid>
+  ...
+  <clr-dg-column>
+    Timestamp
+    <clr-dg-filter>
+      <ec-time-range-filter
+        [propertyKey]="'timestamps'"
+        [presets]="timeRangePresets"
+        [withCustomRange]="true"
+      />
+    </clr-dg-filter>
+  </clr-dg-column>
+  ...
+</clr-datagrid>
+```
+
+## Stories
+
+* [The filter in isolation](/story/components-datagrid-filters-time-range-filter--filter-itself-story)
+
+## Description
+
+### Configuration
+
+There are a few pre-defined time-range presets collected within the `TIME_RANGE_PRESETS` object
+(see the **constants** sub-folder in the source code on [GitHub](#source-code)), with some
+time-range functions alongside as well.
+
+You may use those examples as a reference to provide your own presets to configure the filter
+for your specific use-cases.
+
+### Output state
+
+To evaluate the actual `start` and `end` timestamps from the selected filter value, you can use the
+`getFilterTimestamps()` function (see the **utils** sub-folder in the source code on
+[GitHub](#source-code)). This function requires a couple of arguments: the current filter value
+(as `TimeRangeFilterValue`) and the list of presets used by the filter (as `TimeRangePreset[]`).
+
+## API
+
+<ArgTypes sort="requiredFirst" />
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/datagrid-filters/src/time-range-filter)`}
+</Markdown>

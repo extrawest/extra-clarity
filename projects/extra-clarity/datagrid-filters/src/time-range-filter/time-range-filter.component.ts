@@ -29,7 +29,7 @@ import {
 } from './interfaces';
 import { containsAllTimePreset, getDefaultPreset, getFilterTimestamps } from './utils';
 
-const TIMERANGE_FILTER_DEFAULTS = {
+export const TIMERANGE_FILTER_DEFAULTS = {
   widthPx: 225,
 };
 
@@ -63,30 +63,87 @@ const TIMERANGE_FILTER_DEFAULTS = {
     },
   ],
 })
-export class TimeRangeFilterComponent extends EcDatagridFilter<FilterValue>
+export class TimeRangeFilterComponent<T extends object = {}>
+  extends EcDatagridFilter<FilterValue, T>
   implements OnChanges, OnDestroy, OnInit {
-  @Input({ required: true })
-  public propertyKey!: string;
-
+  /**
+   * When `true`, the filter will be closed via ClrPopoverToggleService
+   * on selecting any new value or on resetting/clearing.
+   *
+   * To work as described, the filter component should be placed inside of a parent component that
+   * provides ClrPopoverToggleService, i.e. in a datagrid column or a <ec-popover-toggle> component.
+   */
   @Input()
-  public closeOnChange: boolean = true;
+  public closeOnChange: boolean = false;
 
+  /**
+   * List of time-range presets to select from. Each option contains:
+   * * `label`: a required non-empty string to be shown in the filter's body next to the radio button
+   *   for this option; must be unique within the filter to identify the preset among others;
+   * * `timeRangeFn`: a required function which must return a time range object containing
+   *   the timestamps for `start` and `end` of the period related to the preset;
+   *   this function should be used outside of the component to get the actual `start` and `end`
+   *   timestamps for a selected preset;
+   * * `default`: an optional boolean to mark the preset selected by default,
+   *   i.e. to define a custom default state of the filter;
+   *   when provided for multiple options or not provided at all, then the default state is 'custom range'.
+   *
+   * NOTE: The parent `<clr-datagrid>` component treats the default filter's state as inactive
+   * and ignores the selected filter's value in that case. So, if you set a custom default value,
+   * you have to provide additional logic for the datagrid's `(clrDgRefresh)` handler to perform proper filtering.
+   */
   @Input()
   public presets: TimeRangePreset[] = [];
 
+  /**
+   * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
+   * in the output state to help identify the filter's state amidst another filters;
+   *
+   * When `[serverDriven]="false"`, it must be equal to the name of a field in the object passed to the `*clrDgItems`
+   * directive on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+   *
+   * @required
+   */
+  @Input({ required: true })
+  public propertyKey!: string;
+
+  /**
+   * Whether the filter and the datagrid are server-driven:
+   * * `true` = filtering is processed externally (e.g. by a backend), not by the filter.
+   * * `false` = filtering is processed by the filter's `accepts()` method.
+   *
+   * @required
+   */
+  @Input()
+  public serverDriven = true;
+
+  /**
+   * A value to be set as the actual filter's value on this input change or on `[presets]` change.
+   * `undefined` will be ignored.
+   */
   @Input()
   public value?: FilterValue;
 
+  /** Width in pixels of the filter's container */
   @Input()
   public widthPx: number = TIMERANGE_FILTER_DEFAULTS.widthPx;
 
+  /** Whether to show input controls for picking a custom date-time range */
   @Input()
   public withCustomRange: boolean = false;
 
+  /**
+   * Emits the filter's state object on every change of the internal filter value.
+   * The state object contains the name of a `property` to filter by, defined by the `[propertyKey]` input,
+   * and the actual filter `value`.
+   *
+   * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
+   * for all non-default filter values.
+   *
+   * `EventEmitter<FilterState<TimeRangeFilterValue>>`
+   */
   @Output()
-  public filterValueChanged: EventEmitter<FilterState<FilterValue>> = new EventEmitter();
-
-  // TODO: Add possibility to set any custom range (not only ALL_TIME) as the default filter value
+  public filterValueChanged = new EventEmitter<FilterState<FilterValue>>();
 
   protected readonly radioControl = new FormControl<string | null>(null);
 
@@ -100,14 +157,8 @@ export class TimeRangeFilterComponent extends EcDatagridFilter<FilterValue>
   protected visualCustomRange: CustomTimeRange = ALL_TIME;
   protected hasAllTimePreset = false;
 
-  public override readonly changes = new Subject<void>();
-
-  public override get state(): FilterState<FilterValue> {
-    return {
-      property: this.propertyKey,
-      value: this.filterValue,
-    };
-  }
+  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
+  override readonly changes = new Subject<void>();
 
   private readonly destroy$ = new Subject<void>();
 
@@ -118,6 +169,20 @@ export class TimeRangeFilterComponent extends EcDatagridFilter<FilterValue>
   ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
+  }
+
+  /**
+   * Get the actual filter state in the same shape as it's emitted to the parent datagrid.
+   *
+   * @see {@link filterValueChanged} for more details
+   *
+   * Implements the `ClrDatagridFilterInterface` interface.
+   */
+  override get state(): FilterState<FilterValue> {
+    return {
+      property: this.propertyKey,
+      value: this.filterValue,
+    };
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -159,15 +224,55 @@ export class TimeRangeFilterComponent extends EcDatagridFilter<FilterValue>
       });
   }
 
-  public override accepts(): boolean {
-    return false;
+  /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
+  override accepts(item: T): boolean {
+    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
+      return false;
+    }
+
+    const { start, end } = getFilterTimestamps(this.filterValue, this.presets);
+
+    if (!start && !end) {
+      return true;
+    }
+
+    // It's assumed that the item contains a timestamp
+    // as a number of ms since 1970.01.01 or as a standard Date string
+
+    const valueInItem = (item as Record<string | number, unknown>)[this.propertyKey];
+
+    if (!valueInItem || typeof valueInItem !== 'string' || typeof valueInItem !== 'number') {
+      return false;
+    }
+
+    const itemTimestamp = typeof valueInItem === 'string'
+      ? new Date(valueInItem).getTime()
+      : valueInItem;
+
+    if (isNaN(itemTimestamp)) {
+      return false;
+    }
+
+    return (
+      (!start || itemTimestamp >= start) &&
+      (!end || itemTimestamp <= end)
+    );
   }
 
-  public override clearSelection(): void {
+  /** Reset the filter to the default state */
+  override clearSelection(): void {
+    // TODO: select 'ALL_TIME' from presets if it is present there,
+    // or select an empty custom range if the filter uses the custom range selector,
+    // or ...
     this.resetToDefault();
   }
 
-  public override isActive(): boolean {
+  /**
+   * Indicate whether the filter is active, i.e. has a non-default value selected.
+   *
+   * Implements the `ClrDatagridFilterInterface` interface.
+   */
+  override isActive(): boolean {
     return (
       this.filterValue.preset !== this.defaultPreset ||
       this.filterValue.preset === null && (
@@ -176,7 +281,8 @@ export class TimeRangeFilterComponent extends EcDatagridFilter<FilterValue>
     );
   }
 
-  public override resetToDefault(): void {
+  /** Reset the filter to the default state */
+  override resetToDefault(): void {
     if (this.defaultPreset !== null) {
       this.onPresetSelected(this.defaultPreset);
       return;
@@ -192,7 +298,10 @@ export class TimeRangeFilterComponent extends EcDatagridFilter<FilterValue>
     }
   }
 
-  public override setValue(value: FilterValue): void {
+  /**
+   * Set the actual filter's value as a `TimeRangeFilterValue` object.
+   */
+  override setValue(value: FilterValue): void {
     this.updateFilterValue(value);
     this.updateVisualCustomRange();
 
