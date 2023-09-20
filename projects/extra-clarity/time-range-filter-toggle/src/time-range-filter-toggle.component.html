@@ -1,0 +1,28 @@
+<ec-popover-toggle
+  [anchorToContentAlign]="anchorToContentAlign"
+  [contentPosition]="contentPosition"
+  [btnDisabled]="btnDisabled"
+  [btnSmall]="btnSmall"
+  [btnStatus]="btnStatus"
+  [btnStyle]="btnStyle"
+  [closeOnClickOutside]="closeOnClickOutside"
+  [closeOnScroll]="closeOnScroll"
+  [open]="open"
+  (openChange)="openChange.emit($event)"
+>
+  <ec-popover-toggle-label>
+    <cds-icon shape="calendar" class="toggle-calendar-icon" />
+    {{ selectedRangeLabel }}
+    <cds-icon shape="angle" direction="down" size="10" />
+  </ec-popover-toggle-label>
+
+  <ec-time-range-filter
+    [propertyKey]="propertyKey"
+    [presets]="presets"
+    [withCustomRange]="withCustomRange"
+    [closeOnChange]="closeOnChange"
+    [widthPx]="widthPx"
+    [value]="value"
+    (filterValueChanged)="onTimeRangeChange($event)"
+  />
+</ec-popover-toggle>
