@@ -27,7 +27,7 @@ const SUBCATEGORY_TOGGLE = 'Passed to EcPopoverToggle';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
-  title: 'Components/Time Range Filter Toggle',
+  title: 'Components/Datagrid Filters/Time Range Filter (External)',
   component: EcTimeRangeFilterToggleComponent,
   decorators: [
     applicationConfig({

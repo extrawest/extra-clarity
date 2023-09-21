@@ -19,6 +19,8 @@ const preview: Preview = {
               'Enum Single-Value Filter',
               'Enum Multi-Value Filter',
               'Enum Grouped-Value Filter',
+              'Time Range Filter',
+              'Time Range Filter (External)',
             ],
           ],
         ],
