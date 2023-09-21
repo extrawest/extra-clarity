@@ -6,7 +6,10 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 
-import { SEARCH_BAR_DEFAULTS, EcSearchBarComponent } from '../../../projects/extra-clarity/search-bar';
+import {
+  EcSearchBarComponent,
+  SEARCH_BAR_DEFAULTS,
+} from '../../../projects/extra-clarity/search-bar';
 
 type Story = StoryObj<EcSearchBarComponent>;
 

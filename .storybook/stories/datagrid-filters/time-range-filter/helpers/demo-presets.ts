@@ -1,6 +1,6 @@
 import {
-  TIME_RANGE_PRESETS,
   type EcTimeRangePreset,
+  TIME_RANGE_PRESETS,
 } from '../../../../../projects/extra-clarity/datagrid-filters';
 
 export const demoPresets: EcTimeRangePreset[] = [

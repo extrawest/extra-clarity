@@ -9,8 +9,15 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 
-import { STRING_FILTER_DEFAULTS, EcStringFilterComponent } from '../../../../projects/extra-clarity/datagrid-filters';
-import { hideAllControlRows, USERS_DATA, wrapFilterWithinDatagrid } from '../../../helpers';
+import {
+  EcStringFilterComponent,
+  STRING_FILTER_DEFAULTS,
+} from '../../../../projects/extra-clarity/datagrid-filters';
+import {
+  hideAllControlRows,
+  USERS_DATA,
+  wrapFilterWithinDatagrid,
+} from '../../../helpers';
 
 type Story = StoryObj<EcStringFilterComponent>;
 

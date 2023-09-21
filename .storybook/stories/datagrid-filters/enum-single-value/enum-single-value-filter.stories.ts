@@ -10,9 +10,9 @@ import {
 } from '@storybook/angular';
 
 import {
-  ENUM_SINGLE_VALUE_FILTER_DEFAULTS,
   EcEnumSingleValueFilterComponent,
   EcShowSelected,
+  ENUM_SINGLE_VALUE_FILTER_DEFAULTS,
 } from '../../../../projects/extra-clarity/datagrid-filters';
 import {
   colorEnumOptions,
