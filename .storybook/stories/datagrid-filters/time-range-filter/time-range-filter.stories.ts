@@ -8,17 +8,17 @@ import {
 
 import {
   TIMERANGE_FILTER_DEFAULTS,
-  TimeRangeFilterComponent,
+  EcTimeRangeFilterComponent,
 } from '../../../../projects/extra-clarity/datagrid-filters';
 
 import { demoPresets } from './helpers/demo-presets';
 
-type Story = StoryObj<TimeRangeFilterComponent>;
+type Story = StoryObj<EcTimeRangeFilterComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Datagrid Filters/Time Range Filter',
-  component: TimeRangeFilterComponent,
+  component: EcTimeRangeFilterComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -84,7 +84,7 @@ const MetaStory = {
       control: false,
       table: {
         category: 'Getters',
-        type: { summary: 'FilterState<TimeRangeFilterValue>' },
+        type: { summary: 'EcFilterState<EcTimeRangeFilterValue>' },
         defaultValue: {
         },
       },
@@ -96,7 +96,7 @@ const MetaStory = {
     value: undefined,
     widthPx: TIMERANGE_FILTER_DEFAULTS.widthPx,
   },
-} as Meta<TimeRangeFilterComponent>;
+} as Meta<EcTimeRangeFilterComponent>;
 
 export default MetaStory;
 

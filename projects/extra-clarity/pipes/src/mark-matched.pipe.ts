@@ -5,7 +5,7 @@ import { escapeRegExp } from '@extrawest/extra-clarity/utils';
   name: 'markMatched',
   standalone: true,
 })
-export class MarkMatchedStringPipe implements PipeTransform {
+export class EcMarkMatchedStringPipe implements PipeTransform {
   transform(
     srcString: string | undefined | null,
     subString: string,

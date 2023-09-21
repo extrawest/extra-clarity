@@ -31,7 +31,7 @@ import { datetimeInputValidator } from './date-time-input.validators';
     ClrInputModule,
   ],
 })
-export class DateTimeInputComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input()
   public disabled: boolean = false;
 

@@ -1,6 +1,6 @@
-import { CustomTimeRange } from './custom-time-range.interface';
+import { EcCustomTimeRange } from './custom-time-range.interface';
 
-export interface TimeRangeFilterValue {
+export interface EcTimeRangeFilterValue {
   preset: string | null;
-  custom: CustomTimeRange;
+  custom: EcCustomTimeRange;
 }

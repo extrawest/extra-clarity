@@ -6,14 +6,14 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 
-import { SEARCH_BAR_DEFAULTS, SearchBarComponent } from '../../../projects/extra-clarity/search-bar';
+import { SEARCH_BAR_DEFAULTS, EcSearchBarComponent } from '../../../projects/extra-clarity/search-bar';
 
-type Story = StoryObj<SearchBarComponent>;
+type Story = StoryObj<EcSearchBarComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Search Bar',
-  component: SearchBarComponent,
+  component: EcSearchBarComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -73,7 +73,7 @@ const MetaStory = {
     placeholder: SEARCH_BAR_DEFAULTS.placeholder,
     value: '',
   },
-} as Meta<SearchBarComponent>;
+} as Meta<EcSearchBarComponent>;
 
 export default MetaStory;
 

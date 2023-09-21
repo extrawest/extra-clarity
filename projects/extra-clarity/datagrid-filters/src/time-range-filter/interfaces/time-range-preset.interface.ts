@@ -1,7 +1,7 @@
-import { CustomTimeRange } from './custom-time-range.interface';
+import { EcCustomTimeRange } from './custom-time-range.interface';
 
-export interface TimeRangePreset {
+export interface EcTimeRangePreset {
   label: string;
-  timeRangeFn: () => CustomTimeRange;
+  timeRangeFn: () => EcCustomTimeRange;
   default?: true;
 }

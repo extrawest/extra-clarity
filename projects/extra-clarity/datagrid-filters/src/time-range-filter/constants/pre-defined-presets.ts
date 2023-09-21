@@ -1,12 +1,12 @@
-import { TimeRangePresetLabel as PresetLabel } from '../enums';
-import { CustomTimeRange, TimeRangePreset } from '../interfaces';
+import { EcTimeRangePresetLabel as PresetLabel } from '../enums';
+import { EcCustomTimeRange, EcTimeRangePreset } from '../interfaces';
 
 const MS_IN_ONE_HOUR = 1000 * 60 * 60;
 const MS_IN_ONE_DAY = MS_IN_ONE_HOUR * 24;
 
-export const ALL_TIME: Readonly<CustomTimeRange> = { start: null, end: null };
+export const ALL_TIME: Readonly<EcCustomTimeRange> = { start: null, end: null };
 
-export const TIME_RANGE_FN: Readonly<Record<PresetLabel, () => CustomTimeRange>> = {
+export const TIME_RANGE_FN: Readonly<Record<PresetLabel, () => EcCustomTimeRange>> = {
   [PresetLabel.AllTime]: timeRangeFnAllTime,
   [PresetLabel.PastHour]: timeRangeFnPastHour,
   [PresetLabel.Past24Hours]: timeRangeFnPast24Hours,
@@ -26,56 +26,56 @@ export const TIME_RANGE_PRESETS = {
   Yesterday: getPresetByLabel(PresetLabel.Yesterday),
 } as const;
 
-export function getPresetByLabel(label: PresetLabel): TimeRangePreset {
+export function getPresetByLabel(label: PresetLabel): EcTimeRangePreset {
   return {
     label,
     timeRangeFn: TIME_RANGE_FN[label],
   };
 }
 
-export function timeRangeFnAllTime(): CustomTimeRange {
+export function timeRangeFnAllTime(): EcCustomTimeRange {
   return {
     start: null,
     end: null,
   };
 }
 
-export function timeRangeFnPastHour(): CustomTimeRange {
+export function timeRangeFnPastHour(): EcCustomTimeRange {
   return {
     start: new Date().getTime() - MS_IN_ONE_HOUR,
     end: null,
   };
 }
 
-function timeRangeFnPast24Hours(): CustomTimeRange {
+function timeRangeFnPast24Hours(): EcCustomTimeRange {
   return {
     start: new Date().getTime() - MS_IN_ONE_DAY,
     end: null,
   };
 }
 
-function timeRangeFnPast7Days(): CustomTimeRange {
+function timeRangeFnPast7Days(): EcCustomTimeRange {
   return {
     start: new Date().getTime() - MS_IN_ONE_DAY * 7,
     end: null,
   };
 }
 
-function timeRangeFnPast28Days(): CustomTimeRange {
+function timeRangeFnPast28Days(): EcCustomTimeRange {
   return {
     start: new Date().getTime() - MS_IN_ONE_DAY * 28,
     end: null,
   };
 }
 
-function timeRangeFnToday(): CustomTimeRange {
+function timeRangeFnToday(): EcCustomTimeRange {
   return {
     start: new Date().setHours(0, 0, 0, 0),
     end: null,
   };
 }
 
-function timeRangeFnYesterday(): CustomTimeRange {
+function timeRangeFnYesterday(): EcCustomTimeRange {
   const todayStart = new Date().setHours(0, 0, 0, 0);
   return {
     start: todayStart - MS_IN_ONE_DAY,

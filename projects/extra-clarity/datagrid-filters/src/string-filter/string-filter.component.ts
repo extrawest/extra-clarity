@@ -22,9 +22,9 @@ import { ClrDatagridFilter, ClrInput, ClrInputModule, ClrPopoverToggleService } 
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
-import { FilterState } from '../common/interfaces/filter-state.interface';
+import { EcFilterState } from '../common/interfaces/filter-state.interface';
 
-import { StringValidatorEnum, uuidValidator, ValidationErrorEnum } from './string-filter.utils';
+import { EcStringValidatorEnum, EcValidationErrorEnum, uuidValidator } from './string-filter.utils';
 
 export const STRING_FILTER_DEFAULTS = {
   debounceTimeMs: 300,
@@ -47,14 +47,14 @@ export const STRING_FILTER_DEFAULTS = {
     ClrInputModule,
   ],
   providers: [
-    // make StringFilterComponent queryable via @ViewChild(EcDatagridFilter)
+    // make EcStringFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
-      useExisting: StringFilterComponent,
+      useExisting: EcStringFilterComponent,
     },
   ],
 })
-export class StringFilterComponent<T extends object = {}>
+export class EcStringFilterComponent<T extends object = {}>
   extends EcDatagridFilter<string, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
@@ -166,7 +166,7 @@ export class StringFilterComponent<T extends object = {}>
    * This input is read only on component initialization.
    */
   @Input()
-  public validator?: StringValidatorEnum;
+  public validator?: EcStringValidatorEnum;
 
   /**
    * A value to be set as the actual filter's value on this input change. `undefined` will be ignored.
@@ -190,10 +190,10 @@ export class StringFilterComponent<T extends object = {}>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<FilterState<string>>`
+   * `EventEmitter<EcFilterState<string>>`
    */
   @Output()
-  public filterValueChanged = new EventEmitter<FilterState<string>>();
+  public filterValueChanged = new EventEmitter<EcFilterState<string>>();
 
   @ViewChild('inputElement')
   protected inputElementRef?: ElementRef<HTMLInputElement>;
@@ -230,7 +230,7 @@ export class StringFilterComponent<T extends object = {}>
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
-  override get state(): FilterState<string> {
+  override get state(): EcFilterState<string> {
     return {
       property: this.propertyKey,
       value: this.filterValue,
@@ -250,25 +250,25 @@ export class StringFilterComponent<T extends object = {}>
       return;
     }
 
-    if (this.formControl.hasError(ValidationErrorEnum.MIN_LENGTH)) {
-      const { requiredLength } = this.formControl.getError(ValidationErrorEnum.MIN_LENGTH);
+    if (this.formControl.hasError(EcValidationErrorEnum.MIN_LENGTH)) {
+      const { requiredLength } = this.formControl.getError(EcValidationErrorEnum.MIN_LENGTH);
       return `Please provide at least ${requiredLength} characters`;
     }
 
-    if (this.formControl.hasError(ValidationErrorEnum.MAX_LENGTH)) {
-      const { requiredLength, actualLength } = this.formControl.getError(ValidationErrorEnum.MAX_LENGTH);
+    if (this.formControl.hasError(EcValidationErrorEnum.MAX_LENGTH)) {
+      const { requiredLength, actualLength } = this.formControl.getError(EcValidationErrorEnum.MAX_LENGTH);
       return `Max length exceeded (${actualLength}/${requiredLength})`;
     }
 
-    if (this.formControl.hasError(ValidationErrorEnum.EMAIL)) {
+    if (this.formControl.hasError(EcValidationErrorEnum.EMAIL)) {
       return `The entered value is not a valid e-mail`;
     }
 
-    if (this.formControl.hasError(ValidationErrorEnum.UUID)) {
+    if (this.formControl.hasError(EcValidationErrorEnum.UUID)) {
       return `The entered value is not a valid uuid`;
     }
 
-    if (this.formControl.hasError(ValidationErrorEnum.PATTERN)) {
+    if (this.formControl.hasError(EcValidationErrorEnum.PATTERN)) {
       return this.patternErrMsg || 'The entered value is invalid';
     }
 
@@ -399,10 +399,10 @@ export class StringFilterComponent<T extends object = {}>
     if (this.maxLength < this.minLength) {
       inputsErrors.push(`[maxLength] must be less than or equal to [minLength] (${this.maxLength} < ${this.minLength})`);
     }
-    if (!this.pattern && this.validator === StringValidatorEnum.PATTERN) {
+    if (!this.pattern && this.validator === EcStringValidatorEnum.PATTERN) {
       inputsErrors.push(`'[pattern] is required when [validator]="'pattern'"`);
     }
-    if (this.pattern && this.validator !== StringValidatorEnum.PATTERN) {
+    if (this.pattern && this.validator !== EcStringValidatorEnum.PATTERN) {
       inputsErrors.push(`[pattern] is provided, but [validator] is not set to 'pattern'`);
     }
 
@@ -434,13 +434,13 @@ export class StringFilterComponent<T extends object = {}>
   private setupValidators(): void {
     this.formControl.addValidators(Validators.maxLength(this.maxLength));
 
-    if (this.validator === StringValidatorEnum.EMAIL) {
+    if (this.validator === EcStringValidatorEnum.EMAIL) {
       this.formControl.addValidators(Validators.email);
     }
-    if (this.validator === StringValidatorEnum.UUID) {
+    if (this.validator === EcStringValidatorEnum.UUID) {
       this.formControl.addValidators(uuidValidator());
     }
-    if (this.validator === StringValidatorEnum.PATTERN && this.pattern) {
+    if (this.validator === EcStringValidatorEnum.PATTERN && this.pattern) {
       this.formControl.addValidators(Validators.pattern(this.pattern));
     }
 

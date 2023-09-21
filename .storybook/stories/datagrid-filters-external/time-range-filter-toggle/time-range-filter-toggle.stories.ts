@@ -1,9 +1,9 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
-  AnchorToContentAlign,
-  ContentPosition,
-  PopoverToggleButtonStatus,
-  PopoverToggleButtonStyle,
+  EcAnchorToContentAlign,
+  EcContentPosition,
+  EcPopoverToggleButtonStatus,
+  EcPopoverToggleButtonStyle,
 } from '@extrawest/extra-clarity/popover-toggle';
 import {
   applicationConfig,
@@ -13,22 +13,22 @@ import {
 } from '@storybook/angular';
 
 import {
+  EcTimeRangeFilterToggleComponent,
   TIMERANGE_FILTER_TOGGLE_DEFAULTS,
-  TimeRangeFilterToggleComponent,
 } from '../../../../projects/extra-clarity/time-range-filter-toggle';
 import PopoverToggleMetaStory from '../../popover-toggle/popover-toggle.stories';
 
 import { demoPresets } from './helpers/demo-presets';
 
-type Story = StoryObj<TimeRangeFilterToggleComponent>;
+type Story = StoryObj<EcTimeRangeFilterToggleComponent>;
 
-const SUBCATEGORY_FILTER = 'Passed to TimeRangeFilter';
-const SUBCATEGORY_TOGGLE = 'Passed to PopoverToggle';
+const SUBCATEGORY_FILTER = 'Passed to EcTimeRangeFilter';
+const SUBCATEGORY_TOGGLE = 'Passed to EcPopoverToggle';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Time Range Filter Toggle',
-  component: TimeRangeFilterToggleComponent,
+  component: EcTimeRangeFilterToggleComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -39,7 +39,7 @@ const MetaStory = {
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
     // INPUTS
-    // Inputs passed to TimeRangeFilterComponent
+    // Inputs passed to EcTimeRangeFilterComponent
     propertyKey: {
       type: {
         name: 'string',
@@ -70,7 +70,7 @@ const MetaStory = {
         subcategory: SUBCATEGORY_FILTER,
       },
     },
-    // Inputs passed to PopoverToggleComponent
+    // Inputs passed to EcPopoverToggleComponent
     anchorToContentAlign: {
       table: { subcategory: SUBCATEGORY_TOGGLE },
       control: PopoverToggleMetaStory.argTypes?.anchorToContentAlign?.['control'],
@@ -111,7 +111,7 @@ const MetaStory = {
       control: { type: null },
       table: {
         type: {
-          summary: `EventEmitter<TimeRangeFilterToggleState>`,
+          summary: `EventEmitter<EcTimeRangeFilterToggleState>`,
         },
       },
     },
@@ -135,7 +135,7 @@ const MetaStory = {
       control: { type: null },
       table: {
         category: 'Getters',
-        type: { summary: '{ isActive: boolean; state: FilterState<TimeRangeFilterValue> }' },
+        type: { summary: '{ isActive: boolean; state: EcFilterState<EcTimeRangeFilterValue> }' },
         defaultValue: {
         },
       },
@@ -148,17 +148,17 @@ const MetaStory = {
     closeOnChange: false,
     value: undefined,
     widthPx: TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx,
-    anchorToContentAlign: AnchorToContentAlign.StartToStart,
-    contentPosition: ContentPosition.Bottom,
+    anchorToContentAlign: EcAnchorToContentAlign.StartToStart,
+    contentPosition: EcContentPosition.Bottom,
     btnDisabled: false,
     btnSmall: true,
-    btnStatus: PopoverToggleButtonStatus.Primary,
-    btnStyle: PopoverToggleButtonStyle.Outline,
+    btnStatus: EcPopoverToggleButtonStatus.Primary,
+    btnStyle: EcPopoverToggleButtonStyle.Outline,
     closeOnClickOutside: true,
     closeOnScroll: true,
     open: false,
   },
-} as Meta<TimeRangeFilterToggleComponent>;
+} as Meta<EcTimeRangeFilterToggleComponent>;
 
 export default MetaStory;
 

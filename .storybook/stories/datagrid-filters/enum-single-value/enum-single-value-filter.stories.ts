@@ -11,8 +11,8 @@ import {
 
 import {
   ENUM_SINGLE_VALUE_FILTER_DEFAULTS,
-  EnumSingleValueFilterComponent,
-  ShowSelected,
+  EcEnumSingleValueFilterComponent,
+  EcShowSelected,
 } from '../../../../projects/extra-clarity/datagrid-filters';
 import {
   colorEnumOptions,
@@ -21,12 +21,12 @@ import {
   wrapFilterWithinDatagrid,
 } from '../../../helpers';
 
-type Story = StoryObj<EnumSingleValueFilterComponent<unknown>>;
+type Story = StoryObj<EcEnumSingleValueFilterComponent<unknown>>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Datagrid Filters/Enum Single-Value Filter',
-  component: EnumSingleValueFilterComponent,
+  component: EcEnumSingleValueFilterComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -85,7 +85,7 @@ const MetaStory = {
         type: 'radio',
         labels: ['Never', 'Always', 'WithSearchbar'],
       },
-      options: [ShowSelected.Never, ShowSelected.Always, ShowSelected.WithSearchbar],
+      options: [EcShowSelected.Never, EcShowSelected.Always, EcShowSelected.WithSearchbar],
     },
     stretchLabels: {
     },
@@ -136,7 +136,7 @@ const MetaStory = {
       control: false,
       table: {
         category: 'Getters',
-        type: { summary: 'FilterState<E | null>' },
+        type: { summary: 'EcFilterState<E | null>' },
         defaultValue: {
         },
       },
@@ -150,13 +150,13 @@ const MetaStory = {
     propertyKey: '',
     searchBarForAmount: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount,
     serverDriven: true,
-    showSelectedValue: ShowSelected.WithSearchbar,
+    showSelectedValue: EcShowSelected.WithSearchbar,
     stretchLabels: false,
     title: '',
     value: undefined,
     widthPx: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx,
   },
-} as Meta<EnumSingleValueFilterComponent<unknown>>;
+} as Meta<EcEnumSingleValueFilterComponent<unknown>>;
 
 export default MetaStory;
 
@@ -187,7 +187,7 @@ export const WithinDatagridStory: Story = {
       imports: [
         ClrDatagridModule,
         CommonModule,
-        EnumSingleValueFilterComponent,
+        EcEnumSingleValueFilterComponent,
       ],
     }),
   ],

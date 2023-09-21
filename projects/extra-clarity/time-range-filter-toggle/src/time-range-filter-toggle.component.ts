@@ -11,24 +11,24 @@ import {
 import { CdsIconModule } from '@cds/angular';
 import { angleIcon, calendarIcon, ClarityIcons } from '@cds/core/icon';
 import {
-  FilterState,
-  ResettableFilter,
+  EcFilterState,
+  EcResettableFilter,
+  EcTimeRangeFilterComponent,
+  EcTimeRangeFilterValue,
+  EcTimeRangePreset,
   TIMERANGE_FILTER_DEFAULTS,
-  TimeRangeFilterComponent,
-  TimeRangeFilterValue,
-  TimeRangePreset,
 } from '@extrawest/extra-clarity/datagrid-filters';
-import { TimestampPipe } from '@extrawest/extra-clarity/pipes';
+import { EcTimestampPipe } from '@extrawest/extra-clarity/pipes';
 import {
-  AnchorToContentAlign,
-  ContentPosition,
+  EcAnchorToContentAlign,
+  EcContentPosition,
+  EcPopoverToggleButtonStatus,
+  EcPopoverToggleButtonStyle,
+  EcPopoverToggleComponent,
   EcPopoverToggleLabelDirective,
-  PopoverToggleButtonStatus,
-  PopoverToggleButtonStyle,
-  PopoverToggleComponent,
 } from '@extrawest/extra-clarity/popover-toggle';
 
-import { TimeRangeFilterToggleState } from './interfaces';
+import { EcTimeRangeFilterToggleState } from './interfaces';
 
 export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   ...TIMERANGE_FILTER_DEFAULTS,
@@ -44,23 +44,23 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
     CommonModule,
     CdsIconModule,
     EcPopoverToggleLabelDirective,
-    PopoverToggleComponent,
-    TimeRangeFilterComponent,
+    EcPopoverToggleComponent,
+    EcTimeRangeFilterComponent,
   ],
   providers: [
-    TimestampPipe,
+    EcTimestampPipe,
   ],
 })
-export class TimeRangeFilterToggleComponent implements ResettableFilter {
-  // Inputs passed to TimeRangeFilterComponent
+export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
+  // Inputs passed to EcTimeRangeFilterComponent
   @Input({ required: true })
   public propertyKey!: string;
 
   @Input()
-  public presets: TimeRangePreset[] = [];
+  public presets: EcTimeRangePreset[] = [];
 
   @Input()
-  public value?: TimeRangeFilterValue;
+  public value?: EcTimeRangeFilterValue;
 
   @Input()
   public withCustomRange: boolean = false;
@@ -71,13 +71,13 @@ export class TimeRangeFilterToggleComponent implements ResettableFilter {
   @Input()
   public widthPx: number = TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx;
 
-  // Inputs passed to PopoverToggleComponent
+  // Inputs passed to EcPopoverToggleComponent
 
   @Input()
-  public anchorToContentAlign: AnchorToContentAlign = AnchorToContentAlign.StartToStart;
+  public anchorToContentAlign: EcAnchorToContentAlign = EcAnchorToContentAlign.StartToStart;
 
   @Input()
-  public contentPosition: ContentPosition = ContentPosition.Bottom;
+  public contentPosition: EcContentPosition = EcContentPosition.Bottom;
 
   @Input()
   public btnDisabled: boolean = false;
@@ -86,10 +86,10 @@ export class TimeRangeFilterToggleComponent implements ResettableFilter {
   public btnSmall: boolean = true;
 
   @Input()
-  public btnStatus: PopoverToggleButtonStatus = PopoverToggleButtonStatus.Primary;
+  public btnStatus: EcPopoverToggleButtonStatus = EcPopoverToggleButtonStatus.Primary;
 
   @Input()
-  public btnStyle: PopoverToggleButtonStyle = PopoverToggleButtonStyle.Outline;
+  public btnStyle: EcPopoverToggleButtonStyle = EcPopoverToggleButtonStyle.Outline;
 
   @Input()
   public closeOnClickOutside: boolean = true;
@@ -104,16 +104,16 @@ export class TimeRangeFilterToggleComponent implements ResettableFilter {
   public openChange = new EventEmitter<boolean>();
 
   @Output()
-  public valueChanged = new EventEmitter<TimeRangeFilterToggleState>();
+  public valueChanged = new EventEmitter<EcTimeRangeFilterToggleState>();
 
-  @ViewChild(TimeRangeFilterComponent, { static: true })
-  protected timeRangeFilter?: TimeRangeFilterComponent;
+  @ViewChild(EcTimeRangeFilterComponent, { static: true })
+  protected timeRangeFilter?: EcTimeRangeFilterComponent;
 
   protected selectedRangeLabel = '';
 
   private initiallyChecked = false;
 
-  get state(): TimeRangeFilterToggleState | null {
+  get state(): EcTimeRangeFilterToggleState | null {
     if (!this.timeRangeFilter) {
       return null;
     }
@@ -125,7 +125,7 @@ export class TimeRangeFilterToggleComponent implements ResettableFilter {
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
-    private timestampPipe: TimestampPipe,
+    private timestampPipe: EcTimestampPipe,
   ) {
     ClarityIcons.addIcons(angleIcon, calendarIcon);
   }
@@ -134,11 +134,11 @@ export class TimeRangeFilterToggleComponent implements ResettableFilter {
     this.timeRangeFilter?.resetToDefault();
   }
 
-  setValue(value: TimeRangeFilterValue): void {
+  setValue(value: EcTimeRangeFilterValue): void {
     this.timeRangeFilter?.setValue(value);
   }
 
-  protected onTimeRangeChange(state: FilterState<TimeRangeFilterValue>): void {
+  protected onTimeRangeChange(state: EcFilterState<EcTimeRangeFilterValue>): void {
     this.updateSelectedRangeLabel();
 
     this.valueChanged.emit({
@@ -147,7 +147,7 @@ export class TimeRangeFilterToggleComponent implements ResettableFilter {
     });
   }
 
-  private getTimeRangeLabel(filterValue: TimeRangeFilterValue | undefined): string {
+  private getTimeRangeLabel(filterValue: EcTimeRangeFilterValue | undefined): string {
     if (!filterValue) {
       return 'Custom Period';
     }

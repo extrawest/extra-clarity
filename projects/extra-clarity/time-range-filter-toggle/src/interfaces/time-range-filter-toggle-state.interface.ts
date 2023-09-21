@@ -1,6 +1,6 @@
-import { FilterState, TimeRangeFilterValue } from '@extrawest/extra-clarity/datagrid-filters';
+import { EcFilterState, EcTimeRangeFilterValue } from '@extrawest/extra-clarity/datagrid-filters';
 
-export interface TimeRangeFilterToggleState {
+export interface EcTimeRangeFilterToggleState {
   isActive: boolean;
-  state: FilterState<TimeRangeFilterValue>;
+  state: EcFilterState<EcTimeRangeFilterValue>;
 }

@@ -1,7 +1,7 @@
-import { TimeRangePreset } from '../interfaces';
+import { EcTimeRangePreset } from '../interfaces';
 
-export function getDefaultPreset(presets: TimeRangePreset[]): TimeRangePreset | null {
-  let defaultPreset: TimeRangePreset | null = null;
+export function getDefaultPreset(presets: EcTimeRangePreset[]): EcTimeRangePreset | null {
+  let defaultPreset: EcTimeRangePreset | null = null;
   for (const preset of presets) {
     if (!preset.default) {
       continue;

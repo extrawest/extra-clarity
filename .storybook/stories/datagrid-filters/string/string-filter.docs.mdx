@@ -34,7 +34,7 @@ import * as FilterStories from './string-filter.stories';
 > **Standalone component**: yes
 
 ```typescript
-import { StringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
+import { EcStringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
 ```
 ```html
 <ec-string-filter />
@@ -109,7 +109,7 @@ The output state is an object with two fields: `property` as the name of a field
 actual string to filter with:
 
 ```typescript
-// interface FilterState<string>
+// interface EcFilterState<string>
 {
   property: string | number;
   value: string;
@@ -118,7 +118,7 @@ actual string to filter with:
 
 ### Read/Write the State
 
-The actual state of the filter can be read by the public getter `state` as `FilterState<string>`:
+The actual state of the filter can be read by the public getter `state` as `EcFilterState<string>`:
 
 ```html
 ...

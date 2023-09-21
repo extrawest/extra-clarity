@@ -1,4 +1,4 @@
-export enum ContentPosition {
+export enum EcContentPosition {
   Top,
   Bottom,
   Left,

@@ -9,17 +9,17 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 
-import { STRING_FILTER_DEFAULTS, StringFilterComponent } from '../../../../projects/extra-clarity/datagrid-filters';
+import { STRING_FILTER_DEFAULTS, EcStringFilterComponent } from '../../../../projects/extra-clarity/datagrid-filters';
 import { hideAllControlRows, USERS_DATA, wrapFilterWithinDatagrid } from '../../../helpers';
 
-type Story = StoryObj<StringFilterComponent>;
+type Story = StoryObj<EcStringFilterComponent>;
 
 const SUBCATEGORY_VALIDATION = 'Validation';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Datagrid Filters/String Filter',
-  component: StringFilterComponent,
+  component: EcStringFilterComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -142,7 +142,7 @@ const MetaStory = {
       control: false,
       table: {
         category: 'Getters',
-        type: { summary: 'FilterState<string>' },
+        type: { summary: 'EcFilterState<string>' },
         defaultValue: {
         },
       },
@@ -164,7 +164,7 @@ const MetaStory = {
     patternErrMsg: '',
     validator: undefined,
   },
-} as Meta<StringFilterComponent>;
+} as Meta<EcStringFilterComponent>;
 
 export default MetaStory;
 
@@ -193,7 +193,7 @@ export const WithinDatagridStory: Story = {
       imports: [
         ClrDatagridModule,
         CommonModule,
-        StringFilterComponent,
+        EcStringFilterComponent,
       ],
     }),
   ],

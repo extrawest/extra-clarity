@@ -1,4 +1,4 @@
-export enum PopoverToggleButtonStatus {
+export enum EcPopoverToggleButtonStatus {
   Danger = 'btn-danger',
   Info = 'btn-info',
   Primary = 'btn-primary',

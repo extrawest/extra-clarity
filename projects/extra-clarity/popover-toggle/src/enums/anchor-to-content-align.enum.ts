@@ -1,5 +1,5 @@
-// String values implement the type `${PopoverAlign}-${PopoverAlign}`
-export enum AnchorToContentAlign {
+// String values implement the type `${EcPopoverAlign}-${EcPopoverAlign}`
+export enum EcAnchorToContentAlign {
   StartToStart = 'start-start',
   StartToCenter = 'start-center',
   StartToEnd = 'start-end',

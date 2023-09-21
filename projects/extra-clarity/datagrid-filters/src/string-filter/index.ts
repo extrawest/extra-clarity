@@ -1,2 +1,2 @@
 export * from './string-filter.component';
-export { StringValidatorEnum } from './string-filter.utils';
+export { EcStringValidatorEnum } from './string-filter.utils';

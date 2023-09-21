@@ -18,14 +18,14 @@ import { isEqual } from 'lodash-es';
 import { Subject, takeUntil } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
-import { FilterState } from '../common/interfaces/filter-state.interface';
+import { EcFilterState } from '../common/interfaces/filter-state.interface';
 
-import { DateTimeGroupComponent } from './components/date-time-group';
+import { EcDateTimeGroupComponent } from './components/date-time-group';
 import { ALL_TIME } from './constants';
 import {
-  CustomTimeRange,
-  TimeRangeFilterValue as FilterValue,
-  TimeRangePreset,
+  EcCustomTimeRange,
+  EcTimeRangePreset,
+  EcTimeRangeFilterValue as FilterValue,
 } from './interfaces';
 import { containsAllTimePreset, getDefaultPreset, getFilterTimestamps } from './utils';
 
@@ -54,16 +54,16 @@ export const TIMERANGE_FILTER_DEFAULTS = {
     CommonModule,
     ReactiveFormsModule,
     ClrRadioModule,
-    DateTimeGroupComponent,
+    EcDateTimeGroupComponent,
   ],
   providers: [
     {
       provide: EcDatagridFilter,
-      useExisting: TimeRangeFilterComponent,
+      useExisting: EcTimeRangeFilterComponent,
     },
   ],
 })
-export class TimeRangeFilterComponent<T extends object = {}>
+export class EcTimeRangeFilterComponent<T extends object = {}>
   extends EcDatagridFilter<FilterValue, T>
   implements OnChanges, OnDestroy, OnInit {
   /**
@@ -93,7 +93,7 @@ export class TimeRangeFilterComponent<T extends object = {}>
    * you have to provide additional logic for the datagrid's `(clrDgRefresh)` handler to perform proper filtering.
    */
   @Input()
-  public presets: TimeRangePreset[] = [];
+  public presets: EcTimeRangePreset[] = [];
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -140,10 +140,10 @@ export class TimeRangeFilterComponent<T extends object = {}>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<FilterState<TimeRangeFilterValue>>`
+   * `EventEmitter<EcFilterState<EcTimeRangeFilterValue>>`
    */
   @Output()
-  public filterValueChanged = new EventEmitter<FilterState<FilterValue>>();
+  public filterValueChanged = new EventEmitter<EcFilterState<FilterValue>>();
 
   protected readonly radioControl = new FormControl<string | null>(null);
 
@@ -154,7 +154,7 @@ export class TimeRangeFilterComponent<T extends object = {}>
     preset: null,
     custom: ALL_TIME,
   };
-  protected visualCustomRange: CustomTimeRange = ALL_TIME;
+  protected visualCustomRange: EcCustomTimeRange = ALL_TIME;
   protected hasAllTimePreset = false;
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
@@ -178,7 +178,7 @@ export class TimeRangeFilterComponent<T extends object = {}>
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    */
-  override get state(): FilterState<FilterValue> {
+  override get state(): EcFilterState<FilterValue> {
     return {
       property: this.propertyKey,
       value: this.filterValue,
@@ -299,7 +299,7 @@ export class TimeRangeFilterComponent<T extends object = {}>
   }
 
   /**
-   * Set the actual filter's value as a `TimeRangeFilterValue` object.
+   * Set the actual filter's value as a `EcTimeRangeFilterValue` object.
    */
   override setValue(value: FilterValue): void {
     this.updateFilterValue(value);
@@ -310,7 +310,7 @@ export class TimeRangeFilterComponent<T extends object = {}>
     }
   }
 
-  protected onCustomRangeApply(range: CustomTimeRange): void {
+  protected onCustomRangeApply(range: EcCustomTimeRange): void {
     this.setValue({
       preset: null,
       custom: range,

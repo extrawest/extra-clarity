@@ -34,7 +34,7 @@ import * as FilterStories from './enum-single-value-filter.stories';
 > **Standalone component**: yes
 
 ```typescript
-import { EnumSingleValueFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
+import { EcEnumSingleValueFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
 ```
 ```html
 <ec-enum-single-value-filter />
@@ -88,16 +88,16 @@ To configure the component you need to provide the following inputs:
         as the `property` value in the output state to help identify the filter's state amidst another filters.
     * For client-driven datagrids it must be equal to the name of a field in the object passed to the `*clrDgItems`
         directive on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
-3. `[options]` An array of options `EnumValueFilterOption<E>` to select from.
+3. `[options]` An array of options `EcEnumValueFilterOption<E>` to select from.
     See the following [section](#option-list) for more details.
 
 ### Option List
 
-To set the options to select from, you should put an array of `EnumValueFilterOption<E>` to the `[options]` input.
+To set the options to select from, you should put an array of `EcEnumValueFilterOption<E>` to the `[options]` input.
 Each item of this array contains the configuration for a filter option:
 
 ```typescript
-export interface EnumValueFilterOption<E> {
+export interface EcEnumValueFilterOption<E> {
     value: E;
     label: string;
     selectedByDefault?: boolean;
@@ -120,10 +120,10 @@ with the following properties:
 The simplest option list may be formed in this way:
 
 ```typescript
-const options: EnumValueFilterOption<string>[] = ['red','green','blue'].map(value => ({ value, label: value }));
+const options: EcEnumValueFilterOption<string>[] = ['red','green','blue'].map(value => ({ value, label: value }));
 
 // or hardcoded:
-const options: EnumValueFilterOption<string>[] = [
+const options: EcEnumValueFilterOption<string>[] = [
   { value: 'red', label: 'Red' },
   { value: 'green', label: 'Green' },
   { value: 'blue', label: 'Blue },
@@ -131,7 +131,7 @@ const options: EnumValueFilterOption<string>[] = [
 ```
 
 If you need more advanced labels (e.g. with icons) you may utilize the `[customLabelTpl]` input of the filter component.
-The entire option object `EnumValueFilterOption<E>` is passed to this template as the `$implicit` context parameter:
+The entire option object `EcEnumValueFilterOption<E>` is passed to this template as the `$implicit` context parameter:
 
 ```html
 <ec-enum-single-value-filter
@@ -149,7 +149,7 @@ The entire option object `EnumValueFilterOption<E>` is passed to this template a
 In your custom template, you can also implement highlighting of the sub-strings matched to
 the search term from the searchbar (activated by the `[withSearchBar]` input).
 The entered string is passed to the template as the `marked` context property.
-You may use the `MarkMatchedStringPipe` for that:
+You may use the `EcMarkMatchedStringPipe` for that:
 
 ```html
 <ng-template #customLabel let-option let-marked="marked">
@@ -180,7 +180,7 @@ The output state is an object with two fields: `property` as the name of a field
 actual value to filter with:
 
 ```typescript
-// interface FilterState<E | null>
+// interface EcFilterState<E | null>
 {
   property: string | number;
   value: E | null;
@@ -189,7 +189,7 @@ actual value to filter with:
 
 ### Read/Write the State
 
-The actual state of the filter can be read by the public getter `state` as `FilterState<E | null>`:
+The actual state of the filter can be read by the public getter `state` as `EcFilterState<E | null>`:
 
 ```html
 ...

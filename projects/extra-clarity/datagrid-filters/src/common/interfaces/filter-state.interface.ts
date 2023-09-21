@@ -1,20 +1,20 @@
-export interface FilterState<T> {
+export interface EcFilterState<T> {
   property: string | number;
   value: T;
 }
 
-export interface EnumValueFilterOption<E> {
+export interface EcEnumValueFilterOption<E> {
   value: E;
   label: string;
   selectedByDefault?: boolean;
 }
 
-export interface EnumValueFilterOptionGroup<E> {
+export interface EcEnumValueFilterOptionGroup<E> {
   label: string;
   expandedByDefault?: boolean;
-  items: readonly EnumValueFilterOption<E>[];
+  items: readonly EcEnumValueFilterOption<E>[];
 }
 
-export interface ResettableFilter {
+export interface EcResettableFilter {
   resetToDefault: () => void;
 }

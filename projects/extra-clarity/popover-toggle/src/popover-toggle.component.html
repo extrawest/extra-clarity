@@ -14,7 +14,7 @@
   </ng-container>
   <ng-template #labelTextTmpl>
     <ng-container *ngIf="withDropdownIcon; else withoutDropdownIconTmpl">
-      <ng-container *ngIf="dropdownIconPosition === DropdownIconPosition.Right; else leftIconTmpl">
+      <ng-container *ngIf="dropdownIconPosition === EcDropdownIconPosition.Right; else leftIconTmpl">
         {{ labelText }}
         <cds-icon shape="angle" size="10" [direction]="dropdownIconDirection" />
       </ng-container>

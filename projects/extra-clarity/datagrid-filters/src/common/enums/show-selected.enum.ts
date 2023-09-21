@@ -1,4 +1,4 @@
-export enum ShowSelected {
+export enum EcShowSelected {
   Never,
   Always,
   WithSearchbar,

@@ -1,6 +1,6 @@
 import {
-  type EnumValueFilterOption,
-  type EnumValueFilterOptionGroup,
+  type EcEnumValueFilterOption,
+  type EcEnumValueFilterOptionGroup,
 } from '../../projects/extra-clarity/datagrid-filters';
 
 export const linksToClrDatagridDocs = `
@@ -10,14 +10,14 @@ export const linksToClrDatagridDocs = `
 and [custom filtering](https://clarity.design/documentation/datagrid/custom-filtering).
 `;
 
-export const colorEnumOptions: EnumValueFilterOption<string>[] = [
+export const colorEnumOptions: EcEnumValueFilterOption<string>[] = [
   { value: 'black', label: 'Black' },
   { value: 'blue', label: 'Blue' },
   { value: 'red', label: 'Red' },
   { value: 'green', label: 'Green' },
 ];
 
-export const colorGroupedEnumOptions: EnumValueFilterOptionGroup<string>[] = [
+export const colorGroupedEnumOptions: EcEnumValueFilterOptionGroup<string>[] = [
   {
     label: 'Grayscale',
     items: [

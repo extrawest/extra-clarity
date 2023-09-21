@@ -1,4 +1,4 @@
-export interface CustomTimeRange {
+export interface EcCustomTimeRange {
   start: number | null;
   end: number | null;
 }

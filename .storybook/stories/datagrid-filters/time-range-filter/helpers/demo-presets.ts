@@ -1,9 +1,9 @@
 import {
   TIME_RANGE_PRESETS,
-  type TimeRangePreset,
+  type EcTimeRangePreset,
 } from '../../../../../projects/extra-clarity/datagrid-filters';
 
-export const demoPresets: TimeRangePreset[] = [
+export const demoPresets: EcTimeRangePreset[] = [
   {
     ...TIME_RANGE_PRESETS.PastHour,
     default: true,

@@ -1,1 +1,1 @@
-export type PopoverAlign = 'start' | 'center' | 'end';
+export type EcPopoverAlign = 'start' | 'center' | 'end';

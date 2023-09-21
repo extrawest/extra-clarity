@@ -1,8 +1,8 @@
 import { ClrAlignment } from '@clr/angular';
 
-import { PopoverAlign } from '../types';
+import { EcPopoverAlign } from '../types';
 
-export const clrAlignmentMap: Record<PopoverAlign, ClrAlignment> = {
+export const clrAlignmentMap: Record<EcPopoverAlign, ClrAlignment> = {
   start: ClrAlignment.START,
   center: ClrAlignment.CENTER,
   end: ClrAlignment.END,

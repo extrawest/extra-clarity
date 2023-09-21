@@ -11,8 +11,8 @@ import {
 
 import {
   ENUM_GROUPED_VALUE_FILTER_DEFAULTS,
-  EnumGroupedValueFilterComponent,
-  ShowSelected,
+  EcEnumGroupedValueFilterComponent,
+  EcShowSelected,
 } from '../../../../projects/extra-clarity/datagrid-filters';
 import {
   colorGroupedEnumOptions,
@@ -21,12 +21,12 @@ import {
   wrapFilterWithinDatagrid,
 } from '../../../helpers';
 
-type Story = StoryObj<EnumGroupedValueFilterComponent<unknown>>;
+type Story = StoryObj<EcEnumGroupedValueFilterComponent<unknown>>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Datagrid Filters/Enum Grouped-Value Filter',
-  component: EnumGroupedValueFilterComponent,
+  component: EcEnumGroupedValueFilterComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -87,7 +87,7 @@ const MetaStory = {
         type: 'radio',
         labels: ['Never', 'Always', 'WithSearchbar'],
       },
-      options: [ShowSelected.Never, ShowSelected.Always, ShowSelected.WithSearchbar],
+      options: [EcShowSelected.Never, EcShowSelected.Always, EcShowSelected.WithSearchbar],
     },
     stretchLabels: {
     },
@@ -138,7 +138,7 @@ const MetaStory = {
       control: false,
       table: {
         category: 'Getters',
-        type: { summary: 'FilterState<E[] | null>' },
+        type: { summary: 'EcFilterState<E[] | null>' },
         defaultValue: {
         },
       },
@@ -153,13 +153,13 @@ const MetaStory = {
     propertyKey: '',
     searchBarForAmount: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.searchBarForAmount,
     serverDriven: true,
-    showSelectedAmount: ShowSelected.WithSearchbar,
+    showSelectedAmount: EcShowSelected.WithSearchbar,
     stretchLabels: false,
     title: '',
     value: undefined,
     widthPx: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.widthPx,
   },
-} as Meta<EnumGroupedValueFilterComponent<unknown>>;
+} as Meta<EcEnumGroupedValueFilterComponent<unknown>>;
 
 export default MetaStory;
 
@@ -190,7 +190,7 @@ export const WithinDatagridStory: Story = {
       imports: [
         ClrDatagridModule,
         CommonModule,
-        EnumGroupedValueFilterComponent,
+        EcEnumGroupedValueFilterComponent,
       ],
     }),
   ],

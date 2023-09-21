@@ -1,6 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export enum ValidationErrorEnum {
+export enum EcValidationErrorEnum {
   EMAIL = 'email',
   MAX_LENGTH = 'maxlength',
   MIN_LENGTH = 'minlength',
@@ -8,7 +8,7 @@ export enum ValidationErrorEnum {
   UUID = 'uuid',
 }
 
-export enum StringValidatorEnum {
+export enum EcStringValidatorEnum {
   EMAIL = 'email',
   PATTERN = 'pattern',
   UUID = 'uuid',
@@ -22,7 +22,7 @@ export function uuidValidator(): ValidatorFn {
       return null;
     }
     return {
-      [ValidationErrorEnum.UUID]: true,
+      [EcValidationErrorEnum.UUID]: true,
     };
   };
 }

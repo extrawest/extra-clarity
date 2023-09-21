@@ -7,20 +7,20 @@ import {
 } from '@storybook/angular';
 
 import {
-  AnchorToContentAlign,
-  ContentPosition,
-  DropdownIconPosition,
-  PopoverToggleButtonStatus,
-  PopoverToggleButtonStyle,
-  PopoverToggleComponent,
+  EcAnchorToContentAlign,
+  EcContentPosition,
+  EcDropdownIconPosition,
+  EcPopoverToggleButtonStatus,
+  EcPopoverToggleButtonStyle,
+  EcPopoverToggleComponent,
 } from '../../../projects/extra-clarity/popover-toggle';
 
-type Story = StoryObj<PopoverToggleComponent>;
+type Story = StoryObj<EcPopoverToggleComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Popover Toggle',
-  component: PopoverToggleComponent,
+  component: EcPopoverToggleComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -35,44 +35,44 @@ const MetaStory = {
       control: {
         type: 'select',
         labels: {
-          [AnchorToContentAlign.StartToStart]: 'StartToStart',
-          [AnchorToContentAlign.StartToCenter]: 'StartToCenter',
-          [AnchorToContentAlign.StartToEnd]: 'StartToEnd',
-          [AnchorToContentAlign.CenterToStart]: 'CenterToStart',
-          [AnchorToContentAlign.CenterToCenter]: 'CenterToCenter',
-          [AnchorToContentAlign.CenterToEnd]: 'CenterToEnd',
-          [AnchorToContentAlign.EndToStart]: 'EndToStart',
-          [AnchorToContentAlign.EndToCenter]: 'EndToCenter',
-          [AnchorToContentAlign.EndToEnd]: 'EndToEnd',
+          [EcAnchorToContentAlign.StartToStart]: 'StartToStart',
+          [EcAnchorToContentAlign.StartToCenter]: 'StartToCenter',
+          [EcAnchorToContentAlign.StartToEnd]: 'StartToEnd',
+          [EcAnchorToContentAlign.CenterToStart]: 'CenterToStart',
+          [EcAnchorToContentAlign.CenterToCenter]: 'CenterToCenter',
+          [EcAnchorToContentAlign.CenterToEnd]: 'CenterToEnd',
+          [EcAnchorToContentAlign.EndToStart]: 'EndToStart',
+          [EcAnchorToContentAlign.EndToCenter]: 'EndToCenter',
+          [EcAnchorToContentAlign.EndToEnd]: 'EndToEnd',
         },
       },
       options: [
-        AnchorToContentAlign.StartToStart,
-        AnchorToContentAlign.StartToCenter,
-        AnchorToContentAlign.StartToEnd,
-        AnchorToContentAlign.CenterToStart,
-        AnchorToContentAlign.CenterToCenter,
-        AnchorToContentAlign.CenterToEnd,
-        AnchorToContentAlign.EndToStart,
-        AnchorToContentAlign.EndToCenter,
-        AnchorToContentAlign.EndToEnd,
+        EcAnchorToContentAlign.StartToStart,
+        EcAnchorToContentAlign.StartToCenter,
+        EcAnchorToContentAlign.StartToEnd,
+        EcAnchorToContentAlign.CenterToStart,
+        EcAnchorToContentAlign.CenterToCenter,
+        EcAnchorToContentAlign.CenterToEnd,
+        EcAnchorToContentAlign.EndToStart,
+        EcAnchorToContentAlign.EndToCenter,
+        EcAnchorToContentAlign.EndToEnd,
       ],
     },
     contentPosition: {
       control: {
         type: 'select',
         labels: {
-          [ContentPosition.Bottom]: 'Bottom',
-          [ContentPosition.Top]: 'Top',
-          [ContentPosition.Left]: 'Left',
-          [ContentPosition.Right]: 'Right',
+          [EcContentPosition.Bottom]: 'Bottom',
+          [EcContentPosition.Top]: 'Top',
+          [EcContentPosition.Left]: 'Left',
+          [EcContentPosition.Right]: 'Right',
         },
       },
       options: [
-        ContentPosition.Bottom,
-        ContentPosition.Top,
-        ContentPosition.Left,
-        ContentPosition.Right,
+        EcContentPosition.Bottom,
+        EcContentPosition.Top,
+        EcContentPosition.Left,
+        EcContentPosition.Right,
       ],
     },
     btnDisabled: {},
@@ -81,34 +81,34 @@ const MetaStory = {
       control: {
         type: 'select',
         labels: {
-          [PopoverToggleButtonStatus.Danger]: 'Danger',
-          [PopoverToggleButtonStatus.Info]: 'Info',
-          [PopoverToggleButtonStatus.Primary]: 'Primary',
-          [PopoverToggleButtonStatus.Success]: 'Success',
-          [PopoverToggleButtonStatus.Warning]: 'Warning',
+          [EcPopoverToggleButtonStatus.Danger]: 'Danger',
+          [EcPopoverToggleButtonStatus.Info]: 'Info',
+          [EcPopoverToggleButtonStatus.Primary]: 'Primary',
+          [EcPopoverToggleButtonStatus.Success]: 'Success',
+          [EcPopoverToggleButtonStatus.Warning]: 'Warning',
         },
       },
       options: [
-        PopoverToggleButtonStatus.Danger,
-        PopoverToggleButtonStatus.Info,
-        PopoverToggleButtonStatus.Primary,
-        PopoverToggleButtonStatus.Success,
-        PopoverToggleButtonStatus.Warning,
+        EcPopoverToggleButtonStatus.Danger,
+        EcPopoverToggleButtonStatus.Info,
+        EcPopoverToggleButtonStatus.Primary,
+        EcPopoverToggleButtonStatus.Success,
+        EcPopoverToggleButtonStatus.Warning,
       ],
     },
     btnStyle: {
       control: {
         type: 'select',
         labels: {
-          [PopoverToggleButtonStyle.Flat]: 'Flat',
-          [PopoverToggleButtonStyle.Solid]: 'Solid',
-          [PopoverToggleButtonStyle.Outline]: 'Outline',
+          [EcPopoverToggleButtonStyle.Flat]: 'Flat',
+          [EcPopoverToggleButtonStyle.Solid]: 'Solid',
+          [EcPopoverToggleButtonStyle.Outline]: 'Outline',
         },
       },
       options: [
-        PopoverToggleButtonStyle.Flat,
-        PopoverToggleButtonStyle.Solid,
-        PopoverToggleButtonStyle.Outline,
+        EcPopoverToggleButtonStyle.Flat,
+        EcPopoverToggleButtonStyle.Solid,
+        EcPopoverToggleButtonStyle.Outline,
       ],
     },
     closeOnClickOutside: {},
@@ -128,13 +128,13 @@ const MetaStory = {
       control: {
         type: 'select',
         labels: {
-          [DropdownIconPosition.Left]: 'Left',
-          [DropdownIconPosition.Right]: 'Right',
+          [EcDropdownIconPosition.Left]: 'Left',
+          [EcDropdownIconPosition.Right]: 'Right',
         },
       },
       options: [
-        DropdownIconPosition.Left,
-        DropdownIconPosition.Right,
+        EcDropdownIconPosition.Left,
+        EcDropdownIconPosition.Right,
       ],
     },
     open: {},
@@ -153,21 +153,21 @@ const MetaStory = {
     },
   },
   args: {
-    anchorToContentAlign: AnchorToContentAlign.StartToStart,
-    contentPosition: ContentPosition.Bottom,
+    anchorToContentAlign: EcAnchorToContentAlign.StartToStart,
+    contentPosition: EcContentPosition.Bottom,
     btnDisabled: false,
     btnSmall: true,
-    btnStatus: PopoverToggleButtonStatus.Primary,
-    btnStyle: PopoverToggleButtonStyle.Outline,
+    btnStatus: EcPopoverToggleButtonStatus.Primary,
+    btnStyle: EcPopoverToggleButtonStyle.Outline,
     closeOnClickOutside: true,
     closeOnScroll: true,
     labelText: 'show/hide',
     withDropdownIcon: true,
     dropdownIconDirection: 'down',
-    dropdownIconPosition: DropdownIconPosition.Right,
+    dropdownIconPosition: EcDropdownIconPosition.Right,
     open: false,
   },
-} as Meta<PopoverToggleComponent>;
+} as Meta<EcPopoverToggleComponent>;
 
 export default MetaStory;
 
@@ -177,7 +177,7 @@ export const ComponentItselfStory: Story = {
   decorators: [
     moduleMetadata({
       imports: [
-        PopoverToggleComponent,
+        EcPopoverToggleComponent,
       ],
     }),
   ],

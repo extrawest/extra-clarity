@@ -1,16 +1,16 @@
 import { ALL_TIME } from '../constants';
 import {
-  CustomTimeRange,
-  TimeRangeFilterValue as FilterValue,
-  TimeRangePreset,
+  EcCustomTimeRange,
+  EcTimeRangePreset,
+  EcTimeRangeFilterValue as FilterValue,
 } from '../interfaces';
 
 import { getDefaultPreset } from './get-default-preset';
 
 export function getFilterTimestamps(
   filterValue: FilterValue | undefined,
-  presets: TimeRangePreset[],
-): CustomTimeRange {
+  presets: EcTimeRangePreset[],
+): EcCustomTimeRange {
   if (filterValue && !filterValue.preset) {
     return { ...filterValue.custom };
   }

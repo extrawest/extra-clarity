@@ -24,17 +24,17 @@ import {
   warningStandardIcon,
 } from '@cds/core/icon';
 import { ClrDatagridFilter, ClrPopoverToggleService, ClrTreeViewModule } from '@clr/angular';
-import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
-import { SearchBarComponent } from '@extrawest/extra-clarity/search-bar';
+import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
+import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
-import { ShowSelected } from '../common/enums/show-selected.enum';
+import { EcShowSelected } from '../common/enums/show-selected.enum';
 import {
-  EnumValueFilterOption,
-  EnumValueFilterOptionGroup,
-  FilterState,
+  EcEnumValueFilterOption,
+  EcEnumValueFilterOptionGroup,
+  EcFilterState,
 } from '../common/interfaces/filter-state.interface';
 
 export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
@@ -53,25 +53,25 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
     CommonModule,
     CdsIconModule,
     ClrTreeViewModule,
-    MarkMatchedStringPipe,
-    SearchBarComponent,
+    EcMarkMatchedStringPipe,
+    EcSearchBarComponent,
   ],
   providers: [
-    // make EnumGroupedValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
+    // make EcEnumGroupedValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
-      useExisting: EnumGroupedValueFilterComponent,
+      useExisting: EcEnumGroupedValueFilterComponent,
     },
   ],
 })
-export class EnumGroupedValueFilterComponent<E, T extends object = {}>
+export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
   extends EcDatagridFilter<E[] | null, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
    *
-   * The entire `option: EnumValueFilterOption<E>` object is passed to this template
+   * The entire `option: EcEnumValueFilterOption<E>` object is passed to this template
    * as the `$implicit` context parameter.
    *
    * Also the substring entered into the internal search bar is passed to the context as `marked`.
@@ -116,7 +116,7 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
    * * `expandedByDefault`: an optional boolean flag to mark groups which should be expanded
    *     on the component's `[options]` input change; this flag has lower priority than
    *     the component's [expandedAll] input;
-   * * `items`: an array of options to select from `EnumValueFilterOption<E>[]`.
+   * * `items`: an array of options to select from `EcEnumValueFilterOption<E>[]`.
    *
    * Each option in the `items` sub-array contains:
    * * `value`: a value of any type `<E>` to be added to the cumulative filter value on selecting this option;
@@ -135,7 +135,7 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
    * @required
    */
   @Input()
-  public options: EnumValueFilterOptionGroup<E>[] = [];
+  public options: EcEnumValueFilterOptionGroup<E>[] = [];
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -169,12 +169,12 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
    * Whether to show a label with amount of selected items above the option list.
    * May be useful for a long list of options.
    *
-   * * `ShowSelected.WithSearchbar` = show only when the searchbar is visible (default)
-   * * `ShowSelected.Always` = show always
-   * * `ShowSelected.Never` = don't show
+   * * `EcShowSelected.WithSearchbar` = show only when the searchbar is visible (default)
+   * * `EcShowSelected.Always` = show always
+   * * `EcShowSelected.Never` = don't show
    */
   @Input()
-  public showSelectedAmount: ShowSelected = ShowSelected.WithSearchbar;
+  public showSelectedAmount: EcShowSelected = EcShowSelected.WithSearchbar;
 
   /**
    * Whether to stretch all label containers to the full width of the filter container
@@ -213,10 +213,10 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<FilterState<E[] | null>>`
+   * `EventEmitter<EcFilterState<E[] | null>>`
    */
   @Output()
-  public filterValueChanged = new EventEmitter<FilterState<E[] | null>>();
+  public filterValueChanged = new EventEmitter<EcFilterState<E[] | null>>();
 
   protected configErrors: string[] = [];
   protected hasCustomDefaultState = false;
@@ -226,17 +226,17 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
 
   protected searchTerm = '';
   protected totalOptionItems = 0;
-  protected visibleOptions: EnumValueFilterOptionGroup<E>[] = [];
+  protected visibleOptions: EcEnumValueFilterOptionGroup<E>[] = [];
 
-  protected readonly ShowSelected = ShowSelected;
+  protected readonly EcShowSelected = EcShowSelected;
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override readonly changes = new Subject<void>();
 
   private readonly destroy$ = new Subject<void>();
 
-  @ViewChild(SearchBarComponent)
-  private searchBar?: SearchBarComponent;
+  @ViewChild(EcSearchBarComponent)
+  private searchBar?: EcSearchBarComponent;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -256,7 +256,7 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
-  override get state(): FilterState<E[] | null> {
+  override get state(): EcFilterState<E[] | null> {
     const filterValue = this.selectedValues.size > 0
       ? Array.from(this.selectedValues)
       : null;
@@ -390,7 +390,7 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
     this.updateSelectedValues(new Set(values));
   }
 
-  protected getGroupSelectedAmountLabel(group: EnumValueFilterOptionGroup<E>): string {
+  protected getGroupSelectedAmountLabel(group: EcEnumValueFilterOptionGroup<E>): string {
     const selected = group.items.filter(item => this.selectedValues.has(item.value)).length;
     const total = group.items.length;
     return `${selected}/${total}`;
@@ -454,7 +454,7 @@ export class EnumGroupedValueFilterComponent<E, T extends object = {}>
     this.updateVisibleOptions();
   }
 
-  protected trackByValue(index: number, option: EnumValueFilterOption<E>): E {
+  protected trackByValue(index: number, option: EcEnumValueFilterOption<E>): E {
     return option.value;
   }
 

@@ -38,7 +38,7 @@ export const SEARCH_BAR_DEFAULTS = {
     ClrInputModule,
   ],
 })
-export class SearchBarComponent implements OnChanges, OnDestroy, OnInit {
+export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   /**
    * Debounce delay for the input field in milliseconds, i.e. a delay between entering the last
    * character and emitting the entered value to the `valueChange` output.

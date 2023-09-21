@@ -4,7 +4,7 @@ import { inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
   name: 'timestamp',
   standalone: true,
 })
-export class TimestampPipe implements PipeTransform {
+export class EcTimestampPipe implements PipeTransform {
   readonly appLocale = inject(LOCALE_ID);
 
   transform(

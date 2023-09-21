@@ -33,13 +33,13 @@ import {
   EcPopoverToggleLabelDirective,
 } from './directives';
 import {
-  AnchorToContentAlign,
-  ContentPosition,
-  PopoverToggleButtonStatus,
-  PopoverToggleButtonStyle,
+  EcAnchorToContentAlign,
+  EcContentPosition,
+  EcPopoverToggleButtonStatus,
+  EcPopoverToggleButtonStyle,
 } from './enums';
-import { DropdownIconPosition } from './enums/dropdown-icon-position.enum';
-import { PopoverAlign } from './types';
+import { EcDropdownIconPosition } from './enums/dropdown-icon-position.enum';
+import { EcPopoverAlign } from './types';
 
 @Component({
   selector: 'ec-popover-toggle',
@@ -61,7 +61,7 @@ import { PopoverAlign } from './types';
     ClrPopoverToggleService,
   ],
 })
-export class PopoverToggleComponent implements OnChanges, OnDestroy {
+export class EcPopoverToggleComponent implements OnChanges, OnDestroy {
   /**
    * Configure the linking point of the toggle-button and content-body.
    * The first half defines the point on the anchor (button), and second one is for the content body.
@@ -77,13 +77,13 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
    * * `end` = the right corner
    */
   @Input()
-  public anchorToContentAlign: AnchorToContentAlign = AnchorToContentAlign.StartToStart;
+  public anchorToContentAlign: EcAnchorToContentAlign = EcAnchorToContentAlign.StartToStart;
 
   /**
    * The content body position relative to the anchor (toggle button).
    */
   @Input()
-  public contentPosition: ContentPosition = ContentPosition.Bottom;
+  public contentPosition: EcContentPosition = EcContentPosition.Bottom;
 
   /** Whether the toggle button is disabled */
   @Input()
@@ -95,11 +95,11 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
 
   /** Status-color of the toggle button according to the Clarity button statuses */
   @Input()
-  public btnStatus: PopoverToggleButtonStatus = PopoverToggleButtonStatus.Primary;
+  public btnStatus: EcPopoverToggleButtonStatus = EcPopoverToggleButtonStatus.Primary;
 
   /** Style of the toggle button according to Clarity button styles (flat, solid, outline) */
   @Input()
-  public btnStyle: PopoverToggleButtonStyle = PopoverToggleButtonStyle.Outline;
+  public btnStyle: EcPopoverToggleButtonStyle = EcPopoverToggleButtonStyle.Outline;
 
   /** Whether to hide the content body on clicking outside of the component */
   @Input()
@@ -137,7 +137,7 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
    * Ignored when a custom label is projected into the component using the `EcPopoverToggleLabelDirective` directive.
    */
   @Input()
-  public dropdownIconPosition: DropdownIconPosition = DropdownIconPosition.Right;
+  public dropdownIconPosition: EcDropdownIconPosition = EcDropdownIconPosition.Right;
 
   /** Show/hide the content body on change of this input:
    *
@@ -168,7 +168,7 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
 
   protected readonly popoverId = uniqueIdFactory();
 
-  protected readonly DropdownIconPosition = DropdownIconPosition;
+  protected readonly EcDropdownIconPosition = EcDropdownIconPosition;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -243,37 +243,37 @@ export class PopoverToggleComponent implements OnChanges, OnDestroy {
   }
 
   private getButtonStyleClass(): string {
-    if (this.btnStyle === PopoverToggleButtonStyle.Flat) {
+    if (this.btnStyle === EcPopoverToggleButtonStyle.Flat) {
       return 'btn-link';
     }
-    if (this.btnStyle === PopoverToggleButtonStyle.Solid) {
+    if (this.btnStyle === EcPopoverToggleButtonStyle.Solid) {
       return this.btnStatus;
     }
-    if (this.btnStatus !== PopoverToggleButtonStatus.Primary) {
+    if (this.btnStatus !== EcPopoverToggleButtonStatus.Primary) {
       return this.btnStatus + '-outline';
     }
     return 'btn-outline';
   }
 
   private getClrPopoverAnchorAndContent(
-    align: AnchorToContentAlign,
+    align: EcAnchorToContentAlign,
   ): Pick<ClrPopoverPosition, 'anchor' | 'content'> {
     const [anchor, content] = align.split('-');
 
     return {
-      anchor: clrAlignmentMap[anchor as PopoverAlign],
-      content: clrAlignmentMap[content as PopoverAlign],
+      anchor: clrAlignmentMap[anchor as EcPopoverAlign],
+      content: clrAlignmentMap[content as EcPopoverAlign],
     };
   }
 
   private getClrPopoverAxisAndSide(
-    position: ContentPosition,
+    position: EcContentPosition,
   ): Pick<ClrPopoverPosition, 'axis' | 'side'> {
-    const axis = (position === ContentPosition.Bottom || position === ContentPosition.Top)
+    const axis = (position === EcContentPosition.Bottom || position === EcContentPosition.Top)
       ? ClrAxis.VERTICAL
       : ClrAxis.HORIZONTAL;
 
-    const side = (position === ContentPosition.Bottom || position === ContentPosition.Right)
+    const side = (position === EcContentPosition.Bottom || position === EcContentPosition.Right)
       ? ClrSide.AFTER
       : ClrSide.BEFORE;
 

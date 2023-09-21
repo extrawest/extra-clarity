@@ -11,8 +11,8 @@ import {
 } from '@angular/core';
 
 import { ALL_TIME } from '../../constants';
-import { CustomTimeRange } from '../../interfaces';
-import { DateTimeInputComponent } from '../date-time-input';
+import { EcCustomTimeRange } from '../../interfaces';
+import { EcDateTimeInputComponent } from '../date-time-input';
 
 @Component({
   selector: 'ec-date-time-group',
@@ -22,10 +22,10 @@ import { DateTimeInputComponent } from '../date-time-input';
   standalone: true,
   imports: [
     CommonModule,
-    DateTimeInputComponent,
+    EcDateTimeInputComponent,
   ],
 })
-export class DateTimeGroupComponent implements OnChanges {
+export class EcDateTimeGroupComponent implements OnChanges {
   @Input()
   public disabled: boolean = false;
 
@@ -33,22 +33,22 @@ export class DateTimeGroupComponent implements OnChanges {
   public forceEnabledButtons: boolean = false;
 
   @Input()
-  public value?: CustomTimeRange;
+  public value?: EcCustomTimeRange;
 
   @Output()
-  public apply: EventEmitter<CustomTimeRange> = new EventEmitter();
+  public apply: EventEmitter<EcCustomTimeRange> = new EventEmitter();
 
   @Output()
   public discard: EventEmitter<void> = new EventEmitter();
 
-  @ViewChild('inputStart', { static: true, read: DateTimeInputComponent })
-  protected inputStart?: DateTimeInputComponent;
+  @ViewChild('inputStart', { static: true, read: EcDateTimeInputComponent })
+  protected inputStart?: EcDateTimeInputComponent;
 
-  @ViewChild('inputEnd', { static: true, read: DateTimeInputComponent })
-  protected inputEnd?: DateTimeInputComponent;
+  @ViewChild('inputEnd', { static: true, read: EcDateTimeInputComponent })
+  protected inputEnd?: EcDateTimeInputComponent;
 
-  protected storedRange: CustomTimeRange = ALL_TIME;
-  protected visualRange: CustomTimeRange = ALL_TIME;
+  protected storedRange: EcCustomTimeRange = ALL_TIME;
+  protected visualRange: EcCustomTimeRange = ALL_TIME;
 
   protected get isAnyInputInvalid(): boolean {
     return (

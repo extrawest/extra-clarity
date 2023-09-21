@@ -24,16 +24,16 @@ import {
   warningStandardIcon,
 } from '@cds/core/icon';
 import { ClrCheckboxModule, ClrDatagridFilter, ClrPopoverToggleService } from '@clr/angular';
-import { MarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
-import { SearchBarComponent } from '@extrawest/extra-clarity/search-bar';
+import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
+import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
-import { ShowSelected } from '../common/enums/show-selected.enum';
+import { EcShowSelected } from '../common/enums/show-selected.enum';
 import {
-  EnumValueFilterOption,
-  FilterState,
+  EcEnumValueFilterOption,
+  EcFilterState,
 } from '../common/interfaces/filter-state.interface';
 
 export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
@@ -52,25 +52,25 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
     CommonModule,
     CdsIconModule,
     ClrCheckboxModule,
-    MarkMatchedStringPipe,
-    SearchBarComponent,
+    EcMarkMatchedStringPipe,
+    EcSearchBarComponent,
   ],
   providers: [
-    // make EnumMultiValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
+    // make EcEnumMultiValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
-      useExisting: EnumMultiValueFilterComponent,
+      useExisting: EcEnumMultiValueFilterComponent,
     },
   ],
 })
-export class EnumMultiValueFilterComponent<E, T extends object = {}>
+export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   extends EcDatagridFilter<E[] | null, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
    *
-   * The entire `option: EnumValueFilterOption<E>` object is passed to this template
+   * The entire `option: EcEnumValueFilterOption<E>` object is passed to this template
    * as the `$implicit` context parameter.
    *
    * Also the substring entered into the internal search bar is passed to the context as `marked`.
@@ -123,7 +123,7 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    * @required
    */
   @Input()
-  public options: EnumValueFilterOption<E>[] = [];
+  public options: EcEnumValueFilterOption<E>[] = [];
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -157,12 +157,12 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    * Whether to show a label with amount of selected items above the option list.
    * May be useful for a long list of options.
    *
-   * * `ShowSelected.WithSearchbar` = show only when the searchbar is visible (default)
-   * * `ShowSelected.Always` = show always
-   * * `ShowSelected.Never` = don't show
+   * * `EcShowSelected.WithSearchbar` = show only when the searchbar is visible (default)
+   * * `EcShowSelected.Always` = show always
+   * * `EcShowSelected.Never` = don't show
    */
   @Input()
-  public showSelectedAmount: ShowSelected = ShowSelected.WithSearchbar;
+  public showSelectedAmount: EcShowSelected = EcShowSelected.WithSearchbar;
 
   /**
    * Whether to stretch all label containers to the full width of the filter container
@@ -201,10 +201,10 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<FilterState<E[] | null>>`
+   * `EventEmitter<EcFilterState<E[] | null>>`
    */
   @Output()
-  public filterValueChanged = new EventEmitter<FilterState<E[] | null>>();
+  public filterValueChanged = new EventEmitter<EcFilterState<E[] | null>>();
 
   protected configErrors: string[] = [];
   protected hasCustomDefaultState = false;
@@ -212,17 +212,17 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
   protected selectedValues = new Set<E>();
 
   protected searchTerm = '';
-  protected visibleOptions: EnumValueFilterOption<E>[] = [];
+  protected visibleOptions: EcEnumValueFilterOption<E>[] = [];
 
-  protected readonly ShowSelected = ShowSelected;
+  protected readonly EcShowSelected = EcShowSelected;
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override readonly changes = new Subject<void>();
 
   private readonly destroy$ = new Subject<void>();
 
-  @ViewChild(SearchBarComponent)
-  private searchBar?: SearchBarComponent;
+  @ViewChild(EcSearchBarComponent)
+  private searchBar?: EcSearchBarComponent;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -242,7 +242,7 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
-  override get state(): FilterState<E[] | null> {
+  override get state(): EcFilterState<E[] | null> {
     const filterValue = this.selectedValues.size > 0
       ? Array.from(this.selectedValues)
       : null;
@@ -394,7 +394,7 @@ export class EnumMultiValueFilterComponent<E, T extends object = {}>
     this.updateVisibleOptions();
   }
 
-  protected trackByValue(index: number, option: EnumValueFilterOption<E>): E {
+  protected trackByValue(index: number, option: EcEnumValueFilterOption<E>): E {
     return option.value;
   }
 
