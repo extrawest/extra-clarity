@@ -53,45 +53,33 @@ We are working on adding more information to it.
 
 ## Available Components
 
-* [Auto refresh toggle](
-  https://extra-clarity-docs.web.app/?path=/story/components-auto-refresh--auto-refresh-story)
-* [Auto refresh toggle with manual refresh button](
-  https://extra-clarity-docs.web.app/?path=/story/components-auto-refresh-group--auto-refresh-group-story)
-* [Copy-to-clipboard button](
-  https://extra-clarity-docs.web.app/?path=/docs/components-button-copy-to-clipboard--overview)
-* [Confirmation dialog](
-  https://extra-clarity-docs.web.app/?path=/story/components-confirmation-dialog--confirmation-dialog-story)
-* [Dialog (reactive)](
-  https://extra-clarity-docs.web.app/?path=/docs/components-dialog-overview--docs)
-* [Datagrid cell wrapper (with truncation and the copy-to-clipboard button](
-  https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-cell-wrapper--overview)
-* Datagrid filters:
-  * [with editable string value](
-    https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-string-filter--overview)
-  * [with enumerated value from single selection (radio buttons)](
-    https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-enum-single-value-filter--overview)
-  * [with enumerated value from multiple selection (checkboxes)](
-    https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-enum-multi-value-filter--overview)
-  * [with enumerated value from multiple selection within grouped options (tree-view with checkboxes)](
-    https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-enum-grouped-value-filter--overview)
-  * [with time range selection (from presets or manually with date-time pickers)](
-    https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-time-range-filter--overview)
-* [Floating notifications](
-  https://extra-clarity-docs.web.app/?path=/story/components-notification--notification-story)
-* [Popover toggle](
-  https://extra-clarity-docs.web.app/?path=/docs/components-popover-toggle--overview)
-* [Progress spinner](
-  https://extra-clarity-docs.web.app/?path=/story/components-progress-spinner--progress-spinner-story)
-* [Router link wrapper](
-  https://extra-clarity-docs.web.app/?path=/docs/components-router-link-wrapper--overview)
-* [Search bar](
-  https://extra-clarity-docs.web.app/?path=/docs/components-search-bar--overview)
-* [Sidebar navigation](
-  https://extra-clarity-docs.web.app/?path=/docs/components-sidebar-navigation--overview)
-* etc.
+- [Auto refresh toggle](https://extra-clarity-docs.web.app/?path=/story/components-auto-refresh--auto-refresh-story)
+- [Auto refresh toggle with manual refresh button](https://extra-clarity-docs.web.app/?path=/story/components-auto-refresh-group--auto-refresh-group-story)
+- [Copy-to-clipboard button](https://extra-clarity-docs.web.app/?path=/docs/components-button-copy-to-clipboard--overview)
+- [Confirmation dialog](https://extra-clarity-docs.web.app/?path=/story/components-confirmation-dialog--confirmation-dialog-story)
+- [Dialog (reactive)](https://extra-clarity-docs.web.app/?path=/docs/components-dialog-overview--docs)
+- [Datagrid cell wrapper (with truncation and the copy-to-clipboard button](https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-cell-wrapper--overview)
+- Datagrid filters:
+  - [with editable string value](https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-string-filter--overview)
+  - [with enumerated value from single selection (radio buttons)](https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-enum-single-value-filter--overview)
+  - [with enumerated value from multiple selection (checkboxes)](https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-enum-multi-value-filter--overview)
+  - [with enumerated value from multiple selection within grouped options (tree-view with checkboxes)](https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-enum-grouped-value-filter--overview)
+  - [with time range selection (from presets or manually with date-time pickers)](https://extra-clarity-docs.web.app/?path=/docs/components-datagrid-filters-time-range-filter--overview)
+- [Floating notifications](https://extra-clarity-docs.web.app/?path=/story/components-notification--notification-story)
+- [Popover toggle](https://extra-clarity-docs.web.app/?path=/docs/components-popover-toggle--overview)
+- [Progress spinner](https://extra-clarity-docs.web.app/?path=/story/components-progress-spinner--progress-spinner-story)
+- [Router link wrapper](https://extra-clarity-docs.web.app/?path=/docs/components-router-link-wrapper--overview)
+- [Search bar](https://extra-clarity-docs.web.app/?path=/docs/components-search-bar--overview)
+- [Sidebar navigation](https://extra-clarity-docs.web.app/?path=/docs/components-sidebar-navigation--overview)
+- etc.
 
-## Useful Links & License Information
+## License
+
+[MIT License](LICENSE)
+
+## Third-party libraries
 
 Some of our components may include code from these third-party libraries:
-* [Clarity (MIT License)](https://github.com/vmware-clarity/ng-clarity)
-* [Clarity Addons (MIT License)](https://github.com/porscheinformatik/clarity-addons)
+
+- [Clarity (MIT License)](https://github.com/vmware-clarity/ng-clarity)
+- [Clarity Addons (MIT License)](https://github.com/porscheinformatik/clarity-addons)
