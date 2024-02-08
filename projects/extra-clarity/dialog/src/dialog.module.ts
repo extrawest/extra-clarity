@@ -10,7 +10,6 @@ import { ConfirmationDialogComponent, DialogContainer } from './containers';
 import {
   DialogCloseDirective,
   DialogContentDirective,
-  DialogEscapeDirective,
   DialogFooterDirective,
   DialogTitleDirective,
 } from './directives';
@@ -21,7 +20,6 @@ const DIRECTIVES = [
   DialogTitleDirective,
   DialogContentDirective,
   DialogFooterDirective,
-  DialogEscapeDirective,
 ];
 
 @NgModule({
