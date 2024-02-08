@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, SubscriptionLike } from 'rxjs';
 
 import { DialogConfig } from '../../dialog-config';
@@ -24,6 +24,13 @@ export class DialogContainer implements OnInit, OnDestroy {
     private readonly location: Location,
     @Inject(DIALOG_CONFIG) public readonly config: DialogConfig,
   ) {}
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleKeyboardEvent(): void {
+    if (this.config.closable ?? this.closable) {
+      this.dialogRef.close();
+    }
+  }
 
   public ngOnInit(): void {
     this.locationSubscription = this.location.subscribe(() => this.onClose());
