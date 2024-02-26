@@ -119,7 +119,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
 
     // Compose a string compatible with 'datetime-local' input element's value: 'YYYY-MM-DDThh:mm'
 
-    const YYYY = date.getFullYear();
+    const YYYY = date.getFullYear().toString().padStart(4, '0');
     const MM = (date.getMonth() + 1).toString().padStart(2, '0');
     const DD = date.getDate().toString().padStart(2, '0');
     const hh = date.getHours().toString().padStart(2, '0');
