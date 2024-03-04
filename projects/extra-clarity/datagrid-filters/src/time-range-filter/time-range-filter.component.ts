@@ -132,6 +132,10 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   @Input()
   public withCustomRange: boolean = false;
 
+  /** Whether the input field should allow selecting a date-time range. */
+  @Input()
+  public withTime: boolean = true;
+
   /**
    * Emits the filter's state object on every change of the internal filter value.
    * The state object contains the name of a `property` to filter by, defined by the `[propertyKey]` input,

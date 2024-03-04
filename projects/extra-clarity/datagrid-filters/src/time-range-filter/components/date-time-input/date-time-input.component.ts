@@ -25,13 +25,11 @@ import { datetimeInputValidator } from './date-time-input.validators';
   styleUrls: ['./date-time-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ClrInputModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, ClrInputModule],
 })
-export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class EcDateTimeInputComponent
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   @Input()
   public disabled: boolean = false;
 
@@ -40,6 +38,9 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
 
   @Input()
   public value: number | null = null;
+
+  @Input()
+  public withTime: boolean = true;
 
   @Output()
   public valueChange: EventEmitter<number | null> = new EventEmitter();
@@ -50,9 +51,17 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
   @ViewChild(ClrInput, { static: true })
   protected clrInputRef?: ClrInput;
 
-  public readonly formControl = new FormControl<string>('', { nonNullable: true });
+  public inputType = this.inputDateType;
+
+  public readonly formControl = new FormControl<string>('', {
+    nonNullable: true,
+  });
 
   private readonly destroy$ = new Subject<void>();
+
+  get inputDateType(): string {
+    return this.withTime ? 'datetime-local' : 'date';
+  }
 
   constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
@@ -78,6 +87,10 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
 
     if (changes['value'] && this.value !== undefined) {
       this.updateFormValue(this.value);
+    }
+
+    if (changes['withTime']) {
+      this.inputType = this.withTime ? 'datetime-local' : 'date';
     }
   }
 
@@ -125,7 +138,9 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
     const hh = date.getHours().toString().padStart(2, '0');
     const mm = date.getMinutes().toString().padStart(2, '0');
 
-    return `${YYYY}-${MM}-${DD}T${hh}:${mm}`;
+    return this.withTime
+      ? `${YYYY}-${MM}-${DD}T${hh}:${mm}`
+      : `${YYYY}-${MM}-${DD}`;
   }
 
   private convertFromFormValue(timestampAsString: string): number | null {

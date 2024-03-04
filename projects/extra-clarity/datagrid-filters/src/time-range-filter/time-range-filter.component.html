@@ -34,6 +34,7 @@
       [value]="visualCustomRange"
       [disabled]="radioControl.value !== null"
       [forceEnabledButtons]="radioControl.value !== filterValue.preset"
+      [withTime]="withTime"
       (apply)="onCustomRangeApply($event)"
       (discard)="onCustomRangeDiscard()"
     />
