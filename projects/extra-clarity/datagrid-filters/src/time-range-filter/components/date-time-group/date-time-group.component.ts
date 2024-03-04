@@ -35,6 +35,9 @@ export class EcDateTimeGroupComponent implements OnChanges {
   @Input()
   public value?: EcCustomTimeRange;
 
+  @Input()
+  public withTime: boolean = true;
+
   @Output()
   public apply: EventEmitter<EcCustomTimeRange> = new EventEmitter();
 

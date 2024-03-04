@@ -66,6 +66,9 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
   public withCustomRange: boolean = false;
 
   @Input()
+  public withTime: boolean = true;
+
+  @Input()
   public closeOnChange: boolean = false;
 
   @Input()
