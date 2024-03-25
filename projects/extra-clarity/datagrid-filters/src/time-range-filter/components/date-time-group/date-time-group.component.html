@@ -1,6 +1,6 @@
 <ec-date-time-input
   #inputStart
-  [label]="commonStrings.keys.datagridFilters.from"
+  [label]="commonStrings.keys.timeRangeFilter.from"
   [disabled]="disabled"
   [withTime]="withTime"
   [(value)]="visualRange.start"
@@ -8,7 +8,7 @@
 
 <ec-date-time-input
   #inputEnd
-  [label]="commonStrings.keys.datagridFilters.to"
+  [label]="commonStrings.keys.timeRangeFilter.to"
   [disabled]="disabled"
   [withTime]="withTime"
   [(value)]="visualRange.end"
@@ -22,7 +22,7 @@
     (click)="onApply()"
   >
     <!-- <cds-icon shape="check" /> -->
-    {{ commonStrings.keys.datagridFilters.apply }}
+    {{ commonStrings.keys.timeRangeFilter.apply }}
   </button>
   <button
     type="button"
@@ -31,6 +31,6 @@
     (click)="onDiscard()"
   >
     <!-- <cds-icon shape="undo" /> -->
-    {{ commonStrings.keys.datagridFilters.discard }}
+    {{ commonStrings.keys.timeRangeFilter.discard }}
   </button>
 </div>

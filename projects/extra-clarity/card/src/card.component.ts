@@ -1,16 +1,20 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChild,
   EventEmitter,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
+import { Subject, takeUntil } from 'rxjs';
 
 import {
   EcCardFooterDirective,
@@ -40,7 +44,7 @@ import { EcCardError } from './interfaces';
     '[class.has-error]': 'error',
   },
 })
-export class EcCardComponent {
+export class EcCardComponent implements OnDestroy, OnInit {
   @Input()
   public title: string;
 
@@ -67,7 +71,9 @@ export class EcCardComponent {
   protected headerTitleContent?: EcCardHeaderTitleDirective;
 
   protected showErrorDetails = false;
-  protected unknownError = this.commonStrings.keys.card.unknownError
+  protected unknownError = this.commonStrings.keys.card.unknownError;
+
+  private readonly destroy$ = new Subject<void>();
 
   protected get errorMessage(): string {
     if (!this.error) {
@@ -89,7 +95,10 @@ export class EcCardComponent {
     return this.error.httpError.error;
   }
 
-  constructor(public readonly commonStrings: EcCommonStringsService) {
+  constructor(
+    public readonly commonStrings: EcCommonStringsService,
+    private readonly changeDetectorRef: ChangeDetectorRef,
+  ) {
     ClarityIcons.addIcons(errorStandardIcon);
   }
 
@@ -100,5 +109,16 @@ export class EcCardComponent {
 
   protected toggleErrorDetailsVisibility(): void {
     this.showErrorDetails = !this.showErrorDetails;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  ngOnInit(): void {
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 }

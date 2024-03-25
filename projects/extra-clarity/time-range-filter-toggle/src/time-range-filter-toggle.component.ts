@@ -5,6 +5,8 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -28,6 +30,7 @@ import {
   EcPopoverToggleComponent,
   EcPopoverToggleLabelDirective,
 } from '@extrawest/extra-clarity/popover-toggle';
+import { Subject, takeUntil } from 'rxjs';
 
 import { EcTimeRangeFilterToggleState } from './interfaces';
 
@@ -52,7 +55,7 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
     EcTimestampPipe,
   ],
 })
-export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
+export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnDestroy, OnInit {
   // Inputs passed to EcTimeRangeFilterComponent
   @Input({ required: true })
   public propertyKey!: string;
@@ -117,6 +120,8 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
 
   private initiallyChecked = false;
 
+  private readonly destroy$ = new Subject<void>();
+
   get state(): EcTimeRangeFilterToggleState | null {
     if (!this.timeRangeFilter) {
       return null;
@@ -133,6 +138,17 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
     private timestampPipe: EcTimestampPipe,
   ) {
     ClarityIcons.addIcons(angleIcon, calendarIcon);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  ngOnInit(): void {
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   resetToDefault(): void {
@@ -168,7 +184,7 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
     const { start, end } = filterValue.custom;
 
     if (!start && !end) {
-      return commonStrings.shared.allTime;
+      return commonStrings.timeRangeToggle.allTime;
     }
     if (!start && end) {
       return this.commonStrings.parse(commonStrings.timeRangeToggle.beforeDateTime, {

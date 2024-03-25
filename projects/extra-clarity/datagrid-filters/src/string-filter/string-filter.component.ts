@@ -125,8 +125,7 @@ export class EcStringFilterComponent<T extends object = {}>
    * Placeholder for the empty input field
    * */
   @Input()
-  public placeholder: string =
-    this.commonStrings.keys.shared.typeToSearch;
+  public placeholder: string;
 
   /**
    * Free-from identifier of a filtering field to be shown in the helper text under the input field.
@@ -356,6 +355,10 @@ export class EcStringFilterComponent<T extends object = {}>
     this.observeInputChanges();
 
     this.formControl.markAsTouched();
+
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */

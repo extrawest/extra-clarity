@@ -1,6 +1,7 @@
 import { NgClass, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -73,8 +74,7 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
    * Placeholder for the empty input field
    */
   @Input()
-  public placeholder: string =
-    this.commonStrings.keys.shared.typeToSearch;
+  public placeholder: string;
 
   /**
    * A value to be set as the entered value on this input change. `undefined` will be ignored.
@@ -101,7 +101,10 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   private readonly unobserve$ = new Subject<void>();
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private commonStrings: EcCommonStringsService) {
+  constructor(
+    private commonStrings: EcCommonStringsService,
+    private changeDetectorRef: ChangeDetectorRef,
+  ) {
     ClarityIcons.addIcons(searchIcon, windowCloseIcon);
   }
 
@@ -125,10 +128,15 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnInit(): void {
     this.observeValueChanges();
+
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
 
     // TODO: check if this is really needed (why not use the initial ngOnChanges for that?)
     if (this.value) {

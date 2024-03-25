@@ -306,10 +306,15 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnInit(): void {
     this.configErrors = this.checkInputsValidity();
+
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */

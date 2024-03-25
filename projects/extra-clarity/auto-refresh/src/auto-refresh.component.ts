@@ -7,6 +7,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -29,7 +30,7 @@ export const DEFAULT_PERIOD_SEC = 60;
     ClrCheckboxModule,
   ],
 })
-export class AutoRefreshComponent implements OnChanges, OnDestroy {
+export class AutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   /**
    * Indicate that refreshing is occurring at the moment.
    * The countdown is stopped and will be re-launched after this input is switched to `false`.
@@ -70,7 +71,7 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy {
 
   protected get timeMessage() {
     return this.commonStrings.parse(
-      this.commonStrings.keys.autoRefresh.autoRefreshMessage,
+      this.commonStrings.keys.autoRefresh.message,
       { SEC: this.secondsRemaining }
     );
   }
@@ -104,6 +105,12 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
     this.abortTimer$.complete();
+  }
+
+  ngOnInit(): void {
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   protected onToggle(): void {

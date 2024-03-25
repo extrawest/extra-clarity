@@ -5,12 +5,13 @@ export interface EcCommonStrings {
   datagridFilters: DatagridFilters;
   dialog: Dialog;
   shared: Shared;
+  timeRangeFilter: TimeRangeFilter;
   timeRangeToggle: TimeRangeToggle;
 }
 
 interface AutoRefresh {
-  autoRefreshDisabled: string;
-  autoRefreshMessage: string;
+  disabled: string;
+  message: string;
   refreshing: string;
 }
 
@@ -19,7 +20,7 @@ interface ButtonCopyToClipboard {
 }
 
 interface Card {
-  errorOccured: string;
+  errorOccurred: string;
   hideError: string;
   loading: string;
   noDataFound: string;
@@ -30,13 +31,10 @@ interface Card {
 }
 
 interface DatagridFilters {
-  apply: string;
   clear: string;
-  discard: string;
   emailNotValid: string;
   enteredValueInvalid: string;
   filterOptions: string;
-  from: string;
   full: string;
   inputIssuesMessage: string;
   loading: string;
@@ -47,10 +45,6 @@ interface DatagridFilters {
   noOptionsAvailable: string;
   noOptionsFound: string;
   partial: string;
-  past24Hours: string;
-  past28Days: string;
-  past7Days: string;
-  pastHour: string;
   patternError: string;
   pleaseWait: string;
   propertyKeyRequired: string;
@@ -62,12 +56,8 @@ interface DatagridFilters {
   selectedNone: string;
   showAll: string;
   showAllTime: string;
-  to: string;
-  today: string;
   uuidNotValid: string;
   validationError: string;
-  wrongInput: string;
-  yesterday: string;
 }
 
 interface Dialog {
@@ -76,13 +66,21 @@ interface Dialog {
 }
 
 interface Shared {
-  allTime: string;
   customPeriod: string;
   typeToSearch: string;
 }
 
+interface TimeRangeFilter {
+  apply: string;
+  discard: string;
+  from: string;
+  to: string;
+  wrongInput: string;
+}
+
 interface TimeRangeToggle {
   afterDateTime: string;
+  allTime: string;
   beforeDateTime: string;
   unnamedPeriod: string;
 }
