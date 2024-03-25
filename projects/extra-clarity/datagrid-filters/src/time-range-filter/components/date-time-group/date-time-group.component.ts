@@ -9,6 +9,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { ALL_TIME } from '../../constants';
 import { EcCustomTimeRange } from '../../interfaces';
@@ -52,6 +53,8 @@ export class EcDateTimeGroupComponent implements OnChanges {
 
   protected storedRange: EcCustomTimeRange = ALL_TIME;
   protected visualRange: EcCustomTimeRange = ALL_TIME;
+
+  constructor(public commonStrings: EcCommonStringsService) {}
 
   protected get isAnyInputInvalid(): boolean {
     return (

@@ -24,6 +24,7 @@ import {
   warningStandardIcon,
 } from '@cds/core/icon';
 import { ClrCheckboxModule, ClrDatagridFilter, ClrPopoverToggleService } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
@@ -225,6 +226,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   private searchBar?: EcSearchBarComponent;
 
   constructor(
+    public commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
@@ -256,10 +258,13 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   protected get selectedAmountLabel(): string {
     const selected = this.selectedValues.size;
     if (selected === 0) {
-      return 'none';
+      return this.commonStrings.keys.datagridFilters.selectedNone;
     }
     const total = this.options.length;
-    return `${selected} out of ${total}`;
+    return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.selectedItems, {
+      SELECTED: selected,
+      TOTAL: total,
+    })
   }
 
   protected get showSearchBar(): boolean {
@@ -417,7 +422,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
     if (this.propertyKey) {
       return [];
     }
-    return ['[propertyKey] is required'];
+    return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
   }
 
   private onOptionsChange(): void {

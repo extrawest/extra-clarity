@@ -18,6 +18,7 @@ import {
   EcTimeRangePreset,
   TIMERANGE_FILTER_DEFAULTS,
 } from '@extrawest/extra-clarity/datagrid-filters';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcTimestampPipe } from '@extrawest/extra-clarity/pipes';
 import {
   EcAnchorToContentAlign,
@@ -127,6 +128,7 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
   }
 
   constructor(
+    public commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     private timestampPipe: EcTimestampPipe,
   ) {
@@ -151,11 +153,13 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
   }
 
   private getTimeRangeLabel(filterValue: EcTimeRangeFilterValue | undefined): string {
+    const commonStrings = this.commonStrings.keys;
+  
     if (!filterValue) {
-      return 'Custom Period';
+      return commonStrings.shared.customPeriod;
     }
     if (filterValue.preset === '') {
-      return 'Unnamed Period';
+      return commonStrings.timeRangeToggle.unnamedPeriod;
     }
     if (filterValue.preset !== null) {
       return filterValue.preset;
@@ -164,15 +168,19 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
     const { start, end } = filterValue.custom;
 
     if (!start && !end) {
-      return 'All Time';
+      return commonStrings.shared.allTime;
     }
     if (!start && end) {
-      return 'Before ' + this.timestampPipe.transform(end, 'min');
+      return this.commonStrings.parse(commonStrings.timeRangeToggle.beforeDateTime, {
+        DATETIME: this.timestampPipe.transform(end, 'min')
+      })
     }
     if (start && !end) {
-      return 'After ' + this.timestampPipe.transform(start, 'min');
+      return this.commonStrings.parse(commonStrings.timeRangeToggle.afterDateTime, {
+        DATETIME: this.timestampPipe.transform(start, 'min')
+      })
     }
-    return 'Custom Period';
+    return commonStrings.shared.customPeriod;
   }
 
   private updateSelectedRangeLabel(): void {

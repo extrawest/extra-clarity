@@ -10,6 +10,7 @@ import {
   BUTTON_DEFAULTS,
   ButtonCopyToClipboardComponent,
 } from '@extrawest/extra-clarity/button-copy-to-clipboard';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 export const CELL_WRAPPER_DEFAULTS = {
   btnTopOffsetRem: -0.25,
@@ -107,7 +108,7 @@ export class DatagridCellWrapperComponent {
 
   /** A string to be shown as a tooltip on hovering the button */
   @Input()
-  public btnTitle: string = BUTTON_DEFAULTS.title;
+  public btnTitle: string = this.commonStrings.keys.buttonCopyToClipboard.title;
 
   /**
    * Width in pixels for the button. Includes the border size if `[btnWithBorder]="true"`.
@@ -139,4 +140,6 @@ export class DatagridCellWrapperComponent {
    */
   @Output()
   public failed = new EventEmitter<unknown>();
+
+  constructor(private readonly commonStrings: EcCommonStringsService) {}
 }

@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrCheckboxModule } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { map, Subject, takeUntil, takeWhile, tap, timer } from 'rxjs';
 
 export const DEFAULT_PERIOD_SEC = 60;
@@ -67,7 +68,17 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy {
   private readonly abortTimer$ = new Subject<void>();
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
+  protected get timeMessage() {
+    return this.commonStrings.parse(
+      this.commonStrings.keys.autoRefresh.autoRefreshMessage,
+      { SEC: this.secondsRemaining }
+    );
+  }
+
+  constructor(
+    public readonly commonStrings: EcCommonStringsService,
+    private readonly changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['period']) {

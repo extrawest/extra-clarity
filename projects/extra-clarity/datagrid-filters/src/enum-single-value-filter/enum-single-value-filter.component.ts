@@ -24,6 +24,7 @@ import {
   warningStandardIcon,
 } from '@cds/core/icon';
 import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
 import { Subject, takeUntil } from 'rxjs';
@@ -136,7 +137,8 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
    * Minimal amount of options to show a search bar above the option list to filter the list
    * */
   @Input()
-  public searchBarForAmount: number = ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount;
+  public searchBarForAmount: number =
+    ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount;
 
   /**
    * Whether the filter and the datagrid are server-driven:
@@ -220,9 +222,10 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
   private searchBar?: EcSearchBarComponent;
 
   constructor(
+    public commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
-    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
+    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService
   ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
@@ -250,10 +253,17 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
 
   protected get selectedValueLabel(): string {
     if (this.filterValue === null) {
-      return 'none';
+      return this.commonStrings.keys.datagridFilters.selectedNone;
     }
-    const selectedOption = this.options.find(option => option.value === this.filterValue);
-    return selectedOption?.label || String(this.filterValue);
+    const selectedOption = this.options.find(
+      (option) => option.value === this.filterValue
+    );
+    return this.commonStrings.parse(
+      this.commonStrings.keys.datagridFilters.selected,
+      {
+        VALUE: selectedOption?.label || String(this.filterValue),
+      }
+    );
   }
 
   protected get showSearchBar(): boolean {
@@ -375,7 +385,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
     if (this.propertyKey) {
       return [];
     }
-    return ['[propertyKey] is required'];
+    return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
   }
 
   private hideFilter(): void {

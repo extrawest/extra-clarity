@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { isEqual } from 'lodash-es';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -167,6 +168,7 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   private readonly destroy$ = new Subject<void>();
 
   constructor(
+    public commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
@@ -341,7 +343,7 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
     if (this.propertyKey) {
       return [];
     }
-    return ['[propertyKey] is required'];
+    return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
   }
 
   private hideFilter(): void {

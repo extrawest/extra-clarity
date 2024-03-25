@@ -23,7 +23,7 @@
           [name]="propertyKey"
         />
         <label [class.label-selected]="filterValue.preset === null">
-          Custom Period
+          {{ commonStrings.keys.shared.customPeriod }}
         </label>
       </clr-radio-wrapper>
     </clr-radio-container>
@@ -40,18 +40,18 @@
     />
 
     <button
-      *ngIf="presets.length && !hasAllTimePreset && !withCustomRange && !defaultPreset"
+    *ngIf="presets.length && !hasAllTimePreset && !withCustomRange && !defaultPreset"
       class="btn btn-sm btn-block"
       [disabled]="filterValue.preset === null"
       (click)="resetToDefault()"
     >
-      Show 'All Time'
+      {{ commonStrings.keys.datagridFilters.showAllTime }}
     </button>
   </ng-container>
 
   <ng-template #wrongConfig>
     <div class="config-errors">
-      There are some issues with the component's inputs:
+      {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
       <ul>
         <li *ngFor="let error of configErrors">{{ error }}</li>
       </ul>

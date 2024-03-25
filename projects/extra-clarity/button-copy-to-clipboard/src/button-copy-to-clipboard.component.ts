@@ -11,6 +11,7 @@ import {
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, copyIcon } from '@cds/core/icon';
 import { ClrLoadingState } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { animations } from './button-copy-to-clipboard.animations';
 
@@ -78,7 +79,7 @@ export class ButtonCopyToClipboardComponent {
 
   /** A string to be shown as a tooltip on hovering the button */
   @Input()
-  public title: string = BUTTON_DEFAULTS.title;
+  public title: string = this.commonStrings.keys.buttonCopyToClipboard.title;
 
   /**
    * Width in pixels for the button. Includes the border size if `[withBorder]="true"`.
@@ -110,7 +111,7 @@ export class ButtonCopyToClipboardComponent {
 
   private changeDetectionRef = inject(ChangeDetectorRef);
 
-  constructor() {
+  constructor(private readonly commonStrings: EcCommonStringsService) {
     ClarityIcons.addIcons(copyIcon);
   }
 

@@ -18,7 +18,7 @@
 <div class="card-block">
   <ec-progress-spinner [showSpinner]="loading">
     <span *ngIf="error || empty">
-      Loading... Please wait
+      {{ commonStrings.keys.card.loading }}
     </span>
   </ec-progress-spinner>
 
@@ -31,7 +31,7 @@
       <ng-container *ngIf="error; else noData">
         <cds-icon shape="error-standard" status="danger" class="error-icon" />
 
-        <div> An error occurred </div>
+        <div>{{ commonStrings.keys.card.errorOccured }}</div>
 
         <div class="error-message">
           {{ errorMessage }}
@@ -42,7 +42,11 @@
             class="btn btn-sm btn-link error-details-toggle"
             (click)="toggleErrorDetailsVisibility()"
           >
-            {{ showErrorDetails ? 'Hide' : 'Show' }} error details
+            {{
+              showErrorDetails
+                ? commonStrings.keys.card.hideError
+                : commonStrings.keys.card.showError
+            }}
           </button>
           <div class="error-details-json" *ngIf="showErrorDetails">
             {{ error.httpError | json }}
@@ -50,7 +54,7 @@
         </div>
 
         <div class="error-hint">
-          {{ error.hint || 'Please, try to reload the data a bit later' }}
+          {{ error.hint || commonStrings.keys.card.reloadDataMessage }}
         </div>
 
         <button
@@ -58,12 +62,12 @@
           (click)="onReload()"
           class="btn btn-sm error-reload-button"
         >
-          Reload
+          {{ commonStrings.keys.card.reload }}
         </button>
       </ng-container>
 
       <ng-template #noData>
-        <div> No data found </div>
+        <div>{{ commonStrings.keys.card.noDataFound }}</div>
       </ng-template>
     </div>
   </ng-template>

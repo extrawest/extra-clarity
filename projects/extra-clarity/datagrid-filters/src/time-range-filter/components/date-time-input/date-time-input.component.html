@@ -12,7 +12,7 @@
       class="btn btn-sm btn-link btn-clear-input"
       (click)="formControl.reset()"
     >
-      Clear
+      {{ commonStrings.keys.datagridFilters.clear }}
     </button>
   </label>
 
@@ -28,6 +28,6 @@
   />
 
   <clr-control-error>
-    Wrong input
+    {{ commonStrings.keys.datagridFilters.wrongInput }}
   </clr-control-error>
 </clr-input-container>

@@ -10,7 +10,7 @@
         showSelectedValue === EcShowSelected.Always ||
         showSelectedValue === EcShowSelected.WithSearchbar && showSearchBar
       ">
-        Selected: {{ selectedValueLabel }}
+        {{ selectedValueLabel }}
       </div>
 
       <ec-search-bar
@@ -19,7 +19,7 @@
         (valueChange)="onSearchTermChange($event)"
         [debounceMs]="0"
         [highlightActive]="false"
-        placeholder="Filter the options..."
+        [placeholder]="commonStrings.keys.datagridFilters.filterOptions"
       />
 
       <div class="filter-options" [style.max-height.px]="maxHeightPx">
@@ -28,7 +28,9 @@
           class="radio-container"
           [class.stretch-labels]="stretchLabels"
         >
-          <clr-radio-wrapper *ngFor="let option of visibleOptions; trackBy: trackByValue">
+          <clr-radio-wrapper
+            *ngFor="let option of visibleOptions; trackBy: trackByValue"
+          >
             <input
               type="radio"
               clrRadio
@@ -39,12 +41,15 @@
             <label>
               <ng-container
                 [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
-                [ngTemplateOutletContext]="{ $implicit: option, marked: searchTerm }"
+                [ngTemplateOutletContext]="{
+                  $implicit: option,
+                  marked: searchTerm
+                }"
               />
               <ng-template #defaultLabelTpl>
                 <span
                   *ngIf="searchTerm; else unmarkedLabel"
-                  [innerHtml]="option.label | markMatched:searchTerm"
+                  [innerHtml]="option.label | markMatched : searchTerm"
                 ></span>
                 <ng-template #unmarkedLabel>
                   {{ option.label }}
@@ -58,11 +63,11 @@
           <div class="no-options">
             <ng-container *ngIf="options.length; else noOptionsAtAll">
               <cds-icon shape="warning-standard" status="warning" solid />
-              No options found for the entered search-term
+              {{ commonStrings.keys.datagridFilters.noOptionsFound }}
             </ng-container>
             <ng-template #noOptionsAtAll>
               <cds-icon shape="info-standard" status="info" solid />
-              No options available
+              {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
             </ng-template>
           </div>
         </ng-template>
@@ -76,7 +81,7 @@
           [disabled]="filterValue === null"
         >
           <cds-icon shape="filter-off" />
-          Show All
+          {{ commonStrings.keys.datagridFilters.showAll }}
         </button>
         <button
           *ngIf="hasCustomDefaultState"
@@ -86,7 +91,7 @@
           [disabled]="isStateDefault"
         >
           <cds-icon shape="filter" />
-          Reset to Default
+          {{ commonStrings.keys.datagridFilters.resetToDefault }}
         </button>
       </div>
     </ng-container>
@@ -96,15 +101,16 @@
 <ng-template #loadingOptions>
   <div class="await-loading">
     <div>
-      Loading... <span class="spinner spinner-inline"></span>
+      {{ commonStrings.keys.datagridFilters.loading }}
+      <span class="spinner spinner-inline"></span>
     </div>
-    <div>Please wait</div>
+    <div>{{ commonStrings.keys.datagridFilters.pleaseWait }}</div>
   </div>
 </ng-template>
 
 <ng-template #wrongConfig>
   <div class="config-errors">
-    There are some issues with the component's inputs:
+    {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
     <ul>
       <li *ngFor="let error of configErrors">{{ error }}</li>
     </ul>

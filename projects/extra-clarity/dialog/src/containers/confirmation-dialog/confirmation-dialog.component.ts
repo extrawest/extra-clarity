@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { ClrLoadingState } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { isPromise } from 'rxjs/internal/util/isPromise';
 
 import { ConfirmDialogConfig } from '../../dialog-config';
@@ -16,6 +17,7 @@ export class ConfirmationDialogComponent {
 
   constructor(
     @Inject(DIALOG_CONFIG) public readonly config: ConfirmDialogConfig,
+    public readonly commonStrings: EcCommonStringsService,
     private readonly dialogRef: DialogRef,
   ) {}
 

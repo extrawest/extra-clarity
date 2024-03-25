@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
 
 import {
@@ -17,8 +18,6 @@ import {
   EcCardHeaderTitleDirective,
 } from './directives';
 import { EcCardError } from './interfaces';
-
-const UNKNOWN_ERROR = 'Unknown Error';
 
 @Component({
   selector: 'ec-card',
@@ -68,16 +67,17 @@ export class EcCardComponent {
   protected headerTitleContent?: EcCardHeaderTitleDirective;
 
   protected showErrorDetails = false;
+  protected unknownError = this.commonStrings.keys.card.unknownError
 
   protected get errorMessage(): string {
     if (!this.error) {
-      return UNKNOWN_ERROR;
+      return this.unknownError;
     }
     if (this.error.message) {
       return this.error.message;
     }
     if (!this.error.httpError) {
-      return UNKNOWN_ERROR;
+      return this.unknownError;
     }
     if (!this.error.httpError.error) {
       const { status, statusText } = this.error.httpError;
@@ -89,7 +89,7 @@ export class EcCardComponent {
     return this.error.httpError.error;
   }
 
-  constructor() {
+  constructor(public readonly commonStrings: EcCommonStringsService) {
     ClarityIcons.addIcons(errorStandardIcon);
   }
 
