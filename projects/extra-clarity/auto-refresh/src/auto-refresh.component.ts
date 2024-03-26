@@ -72,7 +72,7 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   protected get timeMessage(): string {
     return this.commonStrings.parse(
       this.commonStrings.keys.autoRefresh.message,
-      { SEC: this.secondsRemaining },
+      { SEC: this.secondsRemaining.toString() },
     );
   }
 
