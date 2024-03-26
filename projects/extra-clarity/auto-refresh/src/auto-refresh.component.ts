@@ -36,7 +36,7 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
    * The countdown is stopped and will be re-launched after this input is switched to `false`.
    * */
   @Input()
-  public refreshing: boolean;
+  public refreshing?: boolean;
 
   /** Refreshing period in seconds */
   @Input()
@@ -47,11 +47,11 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
    * i.e. the timer is counting and the `refresh` output emits periodically
    * */
   @Input()
-  public enabled: boolean;
+  public enabled?: boolean;
 
   /** Whether the toggle is blocked, i.e. the form control is disabled */
   @Input()
-  public blocked: boolean;
+  public blocked?: boolean;
 
   /** Emits when the countdown timer reaches 0 */
   @Output()

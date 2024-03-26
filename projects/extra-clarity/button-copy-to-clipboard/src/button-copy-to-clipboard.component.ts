@@ -82,7 +82,7 @@ export class ButtonCopyToClipboardComponent implements OnDestroy, OnInit {
 
   /** A string to be shown as a tooltip on hovering the button */
   @Input()
-  public title: string;
+  public title?: string;
 
   /**
    * Width in pixels for the button. Includes the border size if `[withBorder]="true"`.

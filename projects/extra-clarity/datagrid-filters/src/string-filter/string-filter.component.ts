@@ -125,7 +125,7 @@ export class EcStringFilterComponent<T extends object = {}>
    * Placeholder for the empty input field
    * */
   @Input()
-  public placeholder: string;
+  public placeholder?: string;
 
   /**
    * Free-from identifier of a filtering field to be shown in the helper text under the input field.
