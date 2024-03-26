@@ -9,7 +9,7 @@
     'width.px': widthPx ?? sizePx,
   }"
   [disabled]="disabled || !textToCopy"
-  [title]="title || commonStrings.keys.copyToClipboard.title"
+  [title]="title || commonStrings.keys.buttonCopyToClipboard.title"
   (click)="copy()"
 >
   <!-- Imitating button[clrLoading], but without the initial animation (i.e. w/o 'fade in' for the DEFAULT state) -->

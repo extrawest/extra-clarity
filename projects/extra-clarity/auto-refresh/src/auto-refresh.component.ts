@@ -93,11 +93,13 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (changes['enabled'] || changes['period'] && this._period === 0) {
-      this.toggleControl.patchValue(this.enabled && this._period > 0);
+      const isEnabled = this.enabled ?? false;
+      this.toggleControl.patchValue(isEnabled && this._period > 0);
     }
 
     if (changes['enabled'] || changes['refreshing']) {
-      this.resetTimerState(this.enabled && !this.refreshing);
+      const isEnabled = this.enabled ?? false;
+      this.resetTimerState(isEnabled && !this.refreshing);
     }
   }
 

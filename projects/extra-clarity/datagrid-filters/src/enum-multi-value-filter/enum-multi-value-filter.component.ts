@@ -262,8 +262,8 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
     }
     const total = this.options.length;
     return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.selectedItems, {
-      SELECTED: selected,
-      TOTAL: total,
+      SELECTED: selected.toString(),
+      TOTAL: total.toString(),
     });
   }
 

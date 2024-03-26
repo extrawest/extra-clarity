@@ -251,7 +251,7 @@ export class EcStringFilterComponent<T extends object = {}>
     return this.commonStrings.parse(
       this.commonStrings.keys.datagridFilters.minLengthMessage,
       {
-        MIN_LENGTH: this.minLength,
+        MIN_LENGTH: this.minLength.toString(),
       },
     );
   }
@@ -263,7 +263,7 @@ export class EcStringFilterComponent<T extends object = {}>
         TYPE: this.fullMatch
           ? this.commonStrings.keys.datagridFilters.full
           : this.commonStrings.keys.datagridFilters.partial,
-        PROPERTY_NAME: this.propertyDisplayName,
+        PROPERTY_NAME: this.propertyDisplayName ?? '',
       },
     );
   }
@@ -442,7 +442,7 @@ export class EcStringFilterComponent<T extends object = {}>
         this.commonStrings.parse(
           this.commonStrings.keys.datagridFilters.minLengthError,
           {
-            MIN_LENGTH: this.minLength,
+            MIN_LENGTH: this.minLength.toString(),
           },
         ) as string,
       );
@@ -452,7 +452,7 @@ export class EcStringFilterComponent<T extends object = {}>
         this.commonStrings.parse(
           this.commonStrings.keys.datagridFilters.maxLengthError,
           {
-            MAX_LENGTH: this.maxLength,
+            MAX_LENGTH: this.maxLength.toString(),
           },
         ) as string,
       );
@@ -462,8 +462,8 @@ export class EcStringFilterComponent<T extends object = {}>
         this.commonStrings.parse(
           this.commonStrings.keys.datagridFilters.rangeLengthError,
           {
-            MAX_LENGTH: this.maxLength,
-            MIN_LENGTH: this.minLength,
+            MAX_LENGTH: this.maxLength.toString(),
+            MIN_LENGTH: this.minLength.toString(),
           },
         ) as string,
       );
