@@ -264,7 +264,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
     return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.selectedItems, {
       SELECTED: selected,
       TOTAL: total,
-    })
+    });
   }
 
   protected get showSearchBar(): boolean {

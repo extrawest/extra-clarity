@@ -31,7 +31,7 @@ export const CELL_WRAPPER_DEFAULTS = {
     ButtonCopyToClipboardComponent,
   ],
 })
-export class DatagridCellWrapperComponent implements OnDestroy, OnInit  {
+export class DatagridCellWrapperComponent implements OnDestroy, OnInit {
   /**
    * Where to place the copy-to-clipboard button
    * when the content length is less than the cell width:

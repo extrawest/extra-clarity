@@ -68,5 +68,5 @@ export const commonStringsDefault: EcCommonStrings = {
     allTime: 'All Time',
     beforeDateTime: 'Before {DATETIME}',
     unnamedPeriod: 'Unnamed Period',
-  }
+  },
 };

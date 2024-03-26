@@ -8,9 +8,8 @@ import { EcCommonStrings } from './common-strings.interface';
   providedIn: 'root',
 })
 export class EcCommonStringsService {
-  private _strings = commonStringsDefault;
-
   readonly stringsChanged$ = Subject<void>();
+  private _strings = commonStringsDefault;
 
   get keys(): Readonly<EcCommonStrings> {
     return this._strings;

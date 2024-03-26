@@ -69,16 +69,16 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   private readonly abortTimer$ = new Subject<void>();
   private readonly destroy$ = new Subject<void>();
 
-  protected get timeMessage() {
+  protected get timeMessage(): string {
     return this.commonStrings.parse(
       this.commonStrings.keys.autoRefresh.message,
-      { SEC: this.secondsRemaining }
+      { SEC: this.secondsRemaining },
     );
   }
 
   constructor(
     public readonly commonStrings: EcCommonStringsService,
-    private readonly changeDetectorRef: ChangeDetectorRef
+    private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {

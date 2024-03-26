@@ -170,7 +170,6 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnD
 
   private getTimeRangeLabel(filterValue: EcTimeRangeFilterValue | undefined): string {
     const commonStrings = this.commonStrings.keys;
-  
     if (!filterValue) {
       return commonStrings.shared.customPeriod;
     }
@@ -188,13 +187,13 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnD
     }
     if (!start && end) {
       return this.commonStrings.parse(commonStrings.timeRangeToggle.beforeDateTime, {
-        DATETIME: this.timestampPipe.transform(end, 'min')
-      })
+        DATETIME: this.timestampPipe.transform(end, 'min'),
+      });
     }
     if (start && !end) {
       return this.commonStrings.parse(commonStrings.timeRangeToggle.afterDateTime, {
-        DATETIME: this.timestampPipe.transform(start, 'min')
-      })
+        DATETIME: this.timestampPipe.transform(start, 'min'),
+      });
     }
     return commonStrings.shared.customPeriod;
   }

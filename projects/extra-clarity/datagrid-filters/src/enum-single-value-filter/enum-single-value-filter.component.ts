@@ -137,8 +137,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
    * Minimal amount of options to show a search bar above the option list to filter the list
    * */
   @Input()
-  public searchBarForAmount: number =
-    ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount;
+  public searchBarForAmount: number = ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount;
 
   /**
    * Whether the filter and the datagrid are server-driven:
@@ -225,7 +224,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
     public commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
-    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService
+    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
   ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
@@ -256,13 +255,13 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
       return this.commonStrings.keys.datagridFilters.selectedNone;
     }
     const selectedOption = this.options.find(
-      (option) => option.value === this.filterValue
+      (option) => option.value === this.filterValue,
     );
     return this.commonStrings.parse(
       this.commonStrings.keys.datagridFilters.selected,
       {
         VALUE: selectedOption?.label || String(this.filterValue),
-      }
+      },
     );
   }
 

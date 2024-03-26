@@ -9,6 +9,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -28,9 +29,7 @@ import { datetimeInputValidator } from './date-time-input.validators';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClrInputModule],
 })
-export class EcDateTimeInputComponent
-  implements AfterViewInit, OnChanges, OnDestroy
-{
+export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   @Input()
   public disabled: boolean = false;
 
