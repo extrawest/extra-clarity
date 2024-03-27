@@ -8,14 +8,10 @@
   >
   <label class="p5 text-label">
     <ng-container *ngIf="toggleControl.value && _period > 0; else disabled">
-      {{
-        refreshing
-          ? 'Refreshing...'
-          : 'Auto refresh in ' + secondsRemaining + ' sec'
-      }}
+      {{ refreshing ? commonStrings.keys.autoRefresh.refreshing : timeMessage }}
     </ng-container>
     <ng-template #disabled>
-      Auto refresh disabled
+      {{ commonStrings.keys.autoRefresh.disabled }}
     </ng-template>
   </label>
 </clr-toggle-wrapper>

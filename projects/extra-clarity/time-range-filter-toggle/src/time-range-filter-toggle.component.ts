@@ -5,6 +5,8 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -18,6 +20,7 @@ import {
   EcTimeRangePreset,
   TIMERANGE_FILTER_DEFAULTS,
 } from '@extrawest/extra-clarity/datagrid-filters';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcTimestampPipe } from '@extrawest/extra-clarity/pipes';
 import {
   EcAnchorToContentAlign,
@@ -27,6 +30,7 @@ import {
   EcPopoverToggleComponent,
   EcPopoverToggleLabelDirective,
 } from '@extrawest/extra-clarity/popover-toggle';
+import { Subject, takeUntil } from 'rxjs';
 
 import { EcTimeRangeFilterToggleState } from './interfaces';
 
@@ -51,7 +55,7 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
     EcTimestampPipe,
   ],
 })
-export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
+export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnDestroy, OnInit {
   // Inputs passed to EcTimeRangeFilterComponent
   @Input({ required: true })
   public propertyKey!: string;
@@ -116,6 +120,8 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
 
   private initiallyChecked = false;
 
+  private readonly destroy$ = new Subject<void>();
+
   get state(): EcTimeRangeFilterToggleState | null {
     if (!this.timeRangeFilter) {
       return null;
@@ -127,10 +133,22 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
   }
 
   constructor(
+    public commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     private timestampPipe: EcTimestampPipe,
   ) {
     ClarityIcons.addIcons(angleIcon, calendarIcon);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  ngOnInit(): void {
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   resetToDefault(): void {
@@ -151,11 +169,12 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
   }
 
   private getTimeRangeLabel(filterValue: EcTimeRangeFilterValue | undefined): string {
+    const commonStrings = this.commonStrings.keys;
     if (!filterValue) {
-      return 'Custom Period';
+      return commonStrings.shared.customPeriod;
     }
     if (filterValue.preset === '') {
-      return 'Unnamed Period';
+      return commonStrings.timeRangeToggle.unnamedPeriod;
     }
     if (filterValue.preset !== null) {
       return filterValue.preset;
@@ -164,15 +183,19 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter {
     const { start, end } = filterValue.custom;
 
     if (!start && !end) {
-      return 'All Time';
+      return commonStrings.timeRangeToggle.allTime;
     }
     if (!start && end) {
-      return 'Before ' + this.timestampPipe.transform(end, 'min');
+      return this.commonStrings.parse(commonStrings.timeRangeToggle.beforeDateTime, {
+        DATETIME: this.timestampPipe.transform(end, 'min') ?? '',
+      });
     }
     if (start && !end) {
-      return 'After ' + this.timestampPipe.transform(start, 'min');
+      return this.commonStrings.parse(commonStrings.timeRangeToggle.afterDateTime, {
+        DATETIME: this.timestampPipe.transform(start, 'min') ?? '',
+      });
     }
-    return 'Custom Period';
+    return commonStrings.shared.customPeriod;
   }
 
   private updateSelectedRangeLabel(): void {

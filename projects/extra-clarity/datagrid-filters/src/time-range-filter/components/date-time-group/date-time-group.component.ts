@@ -1,14 +1,19 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
+import { Subject, takeUntil } from 'rxjs';
 
 import { ALL_TIME } from '../../constants';
 import { EcCustomTimeRange } from '../../interfaces';
@@ -25,7 +30,7 @@ import { EcDateTimeInputComponent } from '../date-time-input';
     EcDateTimeInputComponent,
   ],
 })
-export class EcDateTimeGroupComponent implements OnChanges {
+export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {
   @Input()
   public disabled: boolean = false;
 
@@ -53,6 +58,13 @@ export class EcDateTimeGroupComponent implements OnChanges {
   protected storedRange: EcCustomTimeRange = ALL_TIME;
   protected visualRange: EcCustomTimeRange = ALL_TIME;
 
+  private readonly destroy$ = new Subject<void>();
+
+  constructor(
+    public commonStrings: EcCommonStringsService,
+    private changeDetectorRef: ChangeDetectorRef,
+  ) {}
+
   protected get isAnyInputInvalid(): boolean {
     return (
       !!this.inputEnd?.formControl.invalid ||
@@ -72,6 +84,17 @@ export class EcDateTimeGroupComponent implements OnChanges {
       this.visualRange = { ...this.value };
       this.storedRange = { ...this.value };
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  ngOnInit(): void {
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   protected onApply(): void {

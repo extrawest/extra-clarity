@@ -1,3 +1,5 @@
+// TODO: Consider extending this code for internationalization (i18n) support.
+
 export enum EcTimeRangePresetLabel {
   PastHour = 'Past Hour',
   Past24Hours = 'Past 24 Hours',

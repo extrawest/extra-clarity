@@ -1,15 +1,20 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
 } from '@angular/core';
 import {
   BUTTON_DEFAULTS,
   ButtonCopyToClipboardComponent,
 } from '@extrawest/extra-clarity/button-copy-to-clipboard';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
+import { Subject, takeUntil } from 'rxjs';
 
 export const CELL_WRAPPER_DEFAULTS = {
   btnTopOffsetRem: -0.25,
@@ -26,7 +31,7 @@ export const CELL_WRAPPER_DEFAULTS = {
     ButtonCopyToClipboardComponent,
   ],
 })
-export class DatagridCellWrapperComponent {
+export class DatagridCellWrapperComponent implements OnDestroy, OnInit {
   /**
    * Where to place the copy-to-clipboard button
    * when the content length is less than the cell width:
@@ -107,7 +112,7 @@ export class DatagridCellWrapperComponent {
 
   /** A string to be shown as a tooltip on hovering the button */
   @Input()
-  public btnTitle: string = BUTTON_DEFAULTS.title;
+  public btnTitle: string;
 
   /**
    * Width in pixels for the button. Includes the border size if `[btnWithBorder]="true"`.
@@ -139,4 +144,22 @@ export class DatagridCellWrapperComponent {
    */
   @Output()
   public failed = new EventEmitter<unknown>();
+
+  private readonly destroy$ = new Subject<void>();
+
+  constructor(
+    public readonly commonStrings: EcCommonStringsService,
+    private readonly changeDetectorRef: ChangeDetectorRef,
+  ) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  ngOnInit(): void {
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
+  }
 }

@@ -1,6 +1,7 @@
 import { NgClass, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -16,6 +17,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, searchIcon, windowCloseIcon } from '@cds/core/icon';
 import { ClrInputModule } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
@@ -72,7 +74,7 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
    * Placeholder for the empty input field
    */
   @Input()
-  public placeholder: string = SEARCH_BAR_DEFAULTS.placeholder;
+  public placeholder: string;
 
   /**
    * A value to be set as the entered value on this input change. `undefined` will be ignored.
@@ -91,13 +93,18 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   @ViewChild('searchInputRef', { static: true })
   protected inputRef?: ElementRef<HTMLInputElement>;
 
-  protected readonly formControl = new FormControl<string>('', { nonNullable: true });
+  protected readonly formControl = new FormControl<string>('', {
+    nonNullable: true,
+  });
   protected readonly inputId = uniqueIdFactory();
 
   private readonly unobserve$ = new Subject<void>();
   private readonly destroy$ = new Subject<void>();
 
-  constructor() {
+  constructor(
+    public commonStrings: EcCommonStringsService,
+    private changeDetectorRef: ChangeDetectorRef,
+  ) {
     ClarityIcons.addIcons(searchIcon, windowCloseIcon);
   }
 
@@ -121,10 +128,15 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnInit(): void {
     this.observeValueChanges();
+
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
 
     // TODO: check if this is really needed (why not use the initial ngOnChanges for that?)
     if (this.value) {

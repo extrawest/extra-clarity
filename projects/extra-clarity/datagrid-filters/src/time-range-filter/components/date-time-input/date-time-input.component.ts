@@ -9,12 +9,14 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrInput, ClrInputModule } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
 
 import { datetimeInputValidator } from './date-time-input.validators';
@@ -27,9 +29,7 @@ import { datetimeInputValidator } from './date-time-input.validators';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClrInputModule],
 })
-export class EcDateTimeInputComponent
-  implements AfterViewInit, OnChanges, OnDestroy
-{
+export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   @Input()
   public disabled: boolean = false;
 
@@ -63,7 +63,10 @@ export class EcDateTimeInputComponent
     return this.withTime ? 'datetime-local' : 'date';
   }
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(
+    public commonStrings: EcCommonStringsService,
+    private changeDetectorRef: ChangeDetectorRef,
+  ) {}
 
   ngAfterViewInit(): void {
     if (this.inputRef) {
@@ -96,6 +99,13 @@ export class EcDateTimeInputComponent
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  ngOnInit(): void {
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   restoreInputValue(): void {

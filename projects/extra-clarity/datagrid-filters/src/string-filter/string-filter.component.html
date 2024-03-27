@@ -5,15 +5,15 @@
         #inputElement
         clrInput
         [formControl]="formControl"
-        [placeholder]="placeholder"
+        [placeholder]="placeholder || commonStrings.keys.shared.typeToSearch"
         type="text"
         autocomplete="off"
       />
       <clr-control-helper *ngIf="isValueTooShort && minLength > 1">
-        Please provide at least {{ minLength }} characters
+        {{ minLengthMessage }}
       </clr-control-helper>
       <clr-control-helper *ngIf="!isValueTooShort">
-        Searching for a {{ fullMatch ? 'full' : 'partial' }} match in '{{ propertyDisplayName }}'
+        {{ searchMessage }}
       </clr-control-helper>
       <clr-control-error>
         {{ validationErrorMessage }}
@@ -27,13 +27,13 @@
       [disabled]="isStateDefault && !formControl.value"
     >
       <cds-icon shape="filter-off" />
-      Clear
+      {{ commonStrings.keys.datagridFilters.clear }}
     </button>
   </ng-container>
 </div>
 
 <ng-template #wrongConfig>
-  There are some issues with the component's inputs:
+  {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
   <ul>
     <li *ngFor="let error of configErrors">{{ error }}</li>
   </ul>

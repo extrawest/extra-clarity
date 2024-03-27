@@ -7,11 +7,13 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrCheckboxModule } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { map, Subject, takeUntil, takeWhile, tap, timer } from 'rxjs';
 
 export const DEFAULT_PERIOD_SEC = 60;
@@ -28,13 +30,13 @@ export const DEFAULT_PERIOD_SEC = 60;
     ClrCheckboxModule,
   ],
 })
-export class AutoRefreshComponent implements OnChanges, OnDestroy {
+export class AutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   /**
    * Indicate that refreshing is occurring at the moment.
    * The countdown is stopped and will be re-launched after this input is switched to `false`.
    * */
   @Input()
-  public refreshing: boolean;
+  public refreshing?: boolean;
 
   /** Refreshing period in seconds */
   @Input()
@@ -45,11 +47,11 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy {
    * i.e. the timer is counting and the `refresh` output emits periodically
    * */
   @Input()
-  public enabled: boolean;
+  public enabled?: boolean;
 
   /** Whether the toggle is blocked, i.e. the form control is disabled */
   @Input()
-  public blocked: boolean;
+  public blocked?: boolean;
 
   /** Emits when the countdown timer reaches 0 */
   @Output()
@@ -67,7 +69,17 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy {
   private readonly abortTimer$ = new Subject<void>();
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
+  protected get timeMessage(): string {
+    return this.commonStrings.parse(
+      this.commonStrings.keys.autoRefresh.message,
+      { SEC: this.secondsRemaining.toString() },
+    );
+  }
+
+  constructor(
+    public readonly commonStrings: EcCommonStringsService,
+    private readonly changeDetectorRef: ChangeDetectorRef,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['period']) {
@@ -81,11 +93,13 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy {
     }
 
     if (changes['enabled'] || changes['period'] && this._period === 0) {
-      this.toggleControl.patchValue(this.enabled && this._period > 0);
+      const isEnabled = this.enabled ?? false;
+      this.toggleControl.patchValue(isEnabled && this._period > 0);
     }
 
     if (changes['enabled'] || changes['refreshing']) {
-      this.resetTimerState(this.enabled && !this.refreshing);
+      const isEnabled = this.enabled ?? false;
+      this.resetTimerState(isEnabled && !this.refreshing);
     }
   }
 
@@ -93,6 +107,12 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
     this.abortTimer$.complete();
+  }
+
+  ngOnInit(): void {
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   protected onToggle(): void {

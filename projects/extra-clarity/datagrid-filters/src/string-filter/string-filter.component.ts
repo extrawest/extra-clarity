@@ -19,6 +19,7 @@ import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angu
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, filterOffIcon } from '@cds/core/icon';
 import { ClrDatagridFilter, ClrInput, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
@@ -124,7 +125,7 @@ export class EcStringFilterComponent<T extends object = {}>
    * Placeholder for the empty input field
    * */
   @Input()
-  public placeholder: string = STRING_FILTER_DEFAULTS.placeholder;
+  public placeholder?: string;
 
   /**
    * Free-from identifier of a filtering field to be shown in the helper text under the input field.
@@ -213,6 +214,7 @@ export class EcStringFilterComponent<T extends object = {}>
   private readonly destroy$ = new Subject<void>();
 
   constructor(
+    public commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
@@ -245,34 +247,73 @@ export class EcStringFilterComponent<T extends object = {}>
     return this.formControl.value.length < this.minLength;
   }
 
+  protected get minLengthMessage(): string {
+    return this.commonStrings.parse(
+      this.commonStrings.keys.datagridFilters.minLengthMessage,
+      {
+        MIN_LENGTH: this.minLength.toString(),
+      },
+    );
+  }
+
+  protected get searchMessage(): string {
+    return this.commonStrings.parse(
+      this.commonStrings.keys.datagridFilters.searchMessage,
+      {
+        TYPE: this.fullMatch
+          ? this.commonStrings.keys.datagridFilters.full
+          : this.commonStrings.keys.datagridFilters.partial,
+        PROPERTY_NAME: this.propertyDisplayName ?? '',
+      },
+    );
+  }
+
   protected get validationErrorMessage(): string | undefined {
     if (this.formControl.valid) {
       return;
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.MIN_LENGTH)) {
-      const { requiredLength } = this.formControl.getError(EcValidationErrorEnum.MIN_LENGTH);
-      return `Please provide at least ${requiredLength} characters`;
+      const { requiredLength } = this.formControl.getError(
+        EcValidationErrorEnum.MIN_LENGTH,
+      );
+      return this.commonStrings.parse(
+        this.commonStrings.keys.datagridFilters.minLengthMessage,
+        {
+          MIN_LENGTH: requiredLength,
+        },
+      );
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.MAX_LENGTH)) {
-      const { requiredLength, actualLength } = this.formControl.getError(EcValidationErrorEnum.MAX_LENGTH);
-      return `Max length exceeded (${actualLength}/${requiredLength})`;
+      const { requiredLength, actualLength } = this.formControl.getError(
+        EcValidationErrorEnum.MAX_LENGTH,
+      );
+      return this.commonStrings.parse(
+        this.commonStrings.keys.datagridFilters.maxLengthMessage,
+        {
+          ACTUAL_LENGTH: actualLength,
+          REQUIRED_LENGTH: requiredLength,
+        },
+      );
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.EMAIL)) {
-      return `The entered value is not a valid e-mail`;
+      return this.commonStrings.keys.datagridFilters.emailNotValid;
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.UUID)) {
-      return `The entered value is not a valid uuid`;
+      return this.commonStrings.keys.datagridFilters.uuidNotValid;
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.PATTERN)) {
-      return this.patternErrMsg || 'The entered value is invalid';
+      return (
+        this.patternErrMsg ||
+        this.commonStrings.keys.datagridFilters.enteredValueInvalid
+      );
     }
 
-    return 'The entered value is invalid';
+    return this.commonStrings.keys.datagridFilters.enteredValueInvalid;
   }
 
   ngAfterViewInit(): void {
@@ -314,6 +355,10 @@ export class EcStringFilterComponent<T extends object = {}>
     this.observeInputChanges();
 
     this.formControl.markAsTouched();
+
+    this.commonStrings.stringsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
@@ -388,22 +433,46 @@ export class EcStringFilterComponent<T extends object = {}>
     const inputsErrors: string[] = [];
 
     if (!this.propertyKey) {
-      inputsErrors.push('[propertyKey] is required');
+      inputsErrors.push(
+        this.commonStrings.keys.datagridFilters.propertyKeyRequired as string,
+      );
     }
     if (this.minLength < 1) {
-      inputsErrors.push(`[minLength] must be positive (current value: ${this.minLength})`);
+      inputsErrors.push(
+        this.commonStrings.parse(
+          this.commonStrings.keys.datagridFilters.minLengthError,
+          {
+            MIN_LENGTH: this.minLength.toString(),
+          },
+        ) as string,
+      );
     }
     if (this.maxLength < 1) {
-      inputsErrors.push(`[maxLength] must be positive (current value: ${this.maxLength})`);
+      inputsErrors.push(
+        this.commonStrings.parse(
+          this.commonStrings.keys.datagridFilters.maxLengthError,
+          {
+            MAX_LENGTH: this.maxLength.toString(),
+          },
+        ) as string,
+      );
     }
     if (this.maxLength < this.minLength) {
-      inputsErrors.push(`[maxLength] must be less than or equal to [minLength] (${this.maxLength} < ${this.minLength})`);
+      inputsErrors.push(
+        this.commonStrings.parse(
+          this.commonStrings.keys.datagridFilters.rangeLengthError,
+          {
+            MAX_LENGTH: this.maxLength.toString(),
+            MIN_LENGTH: this.minLength.toString(),
+          },
+        ) as string,
+      );
     }
     if (!this.pattern && this.validator === EcStringValidatorEnum.PATTERN) {
-      inputsErrors.push(`'[pattern] is required when [validator]="'pattern'"`);
+      inputsErrors.push(this.commonStrings.keys.datagridFilters.patternError as string);
     }
     if (this.pattern && this.validator !== EcStringValidatorEnum.PATTERN) {
-      inputsErrors.push(`[pattern] is provided, but [validator] is not set to 'pattern'`);
+      inputsErrors.push(this.commonStrings.keys.datagridFilters.validationError as string);
     }
 
     return inputsErrors;
