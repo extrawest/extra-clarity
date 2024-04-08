@@ -177,7 +177,7 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnD
       return commonStrings.timeRangeToggle.unnamedPeriod;
     }
     if (filterValue.preset !== null) {
-      return filterValue.preset;
+      return filterValue.label ?? '';
     }
 
     const { start, end } = filterValue.custom;
@@ -200,9 +200,9 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnD
 
   private updateSelectedRangeLabel(): void {
     this.selectedRangeLabel = this.getTimeRangeLabel(this.timeRangeFilter?.state.value);
+    this.changeDetectorRef.detectChanges();
 
     if (!this.initiallyChecked) {
-      this.changeDetectorRef.detectChanges();
       this.initiallyChecked = true;
     }
   }

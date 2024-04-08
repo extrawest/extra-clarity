@@ -157,6 +157,7 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   protected defaultPreset: FilterValue['preset'] = null;
   protected filterValue: FilterValue = {
     preset: null,
+    label: null,
     custom: ALL_TIME,
   };
   protected visualCustomRange: EcCustomTimeRange = ALL_TIME;
@@ -301,6 +302,7 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
 
     this.setValue({
       preset: null,
+      label: null,
       custom: ALL_TIME,
     });
 
@@ -324,6 +326,7 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   protected onCustomRangeApply(range: EcCustomTimeRange): void {
     this.setValue({
       preset: null,
+      label: null,
       custom: range,
     });
 
@@ -358,7 +361,7 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   }
 
   private onPresetsChange(): void {
-    this.defaultPreset = getDefaultPreset(this.presets)?.label ?? null;
+    this.defaultPreset = getDefaultPreset(this.presets)?.key ?? null;
     this.hasAllTimePreset = containsAllTimePreset(this.presets);
 
     if (this.value) {
@@ -375,21 +378,24 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
       return;
     }
 
-    if (this.presets.some(preset => preset.label === this.filterValue.preset)) {
-      this.onPresetSelected(this.filterValue.preset);
+    if (this.presets.some(preset => preset.key === this.filterValue.preset)) {
+      this.onPresetSelected(this.filterValue.preset, this.filterValue.label);
       return;
     }
 
     this.resetToDefault();
   }
 
-  private onPresetSelected(presetLabel: string | null): void {
-    if (presetLabel === null) {
+  private onPresetSelected(presetKey: string | null, label?: string | null): void {
+    if (presetKey === null) {
       return;
     }
 
+    const presetLabel = this.presets.find(preset => preset.key === presetKey)?.label ?? '';
+
     this.setValue({
-      preset: presetLabel,
+      preset: presetKey,
+      label: label ?? `this.commonStrings.keys.timeRangeToggle.${presetLabel}`,
       custom: ALL_TIME,
     });
 

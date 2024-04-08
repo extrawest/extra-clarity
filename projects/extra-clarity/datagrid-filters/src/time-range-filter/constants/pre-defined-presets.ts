@@ -29,6 +29,7 @@ export const TIME_RANGE_PRESETS = {
 export function getPresetByLabel(label: PresetLabel): EcTimeRangePreset {
   return {
     label,
+    key: getTimeRangeKey(label),
     timeRangeFn: TIME_RANGE_FN[label],
   };
 }
@@ -45,6 +46,16 @@ export function timeRangeFnPastHour(): EcCustomTimeRange {
     start: new Date().getTime() - MS_IN_ONE_HOUR,
     end: null,
   };
+}
+
+function getTimeRangeKey(label: PresetLabel): string {
+  const keys = Object.keys(PresetLabel) as (keyof typeof PresetLabel)[];
+  for (const key of keys) {
+    if (PresetLabel[key] === label) {
+      return key;
+    }
+  }
+  return '';
 }
 
 function timeRangeFnPast24Hours(): EcCustomTimeRange {

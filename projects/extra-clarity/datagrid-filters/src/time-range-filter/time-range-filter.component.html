@@ -6,10 +6,10 @@
           type="radio"
           clrRadio
           [formControl]="radioControl"
-          [value]="preset.label"
+          [value]="preset.key"
           [name]="propertyKey"
         />
-        <label [class.label-selected]="filterValue.preset === preset.label">
+        <label [class.label-selected]="filterValue.preset === preset.key">
           {{ preset.label }}
         </label>
       </clr-radio-wrapper>

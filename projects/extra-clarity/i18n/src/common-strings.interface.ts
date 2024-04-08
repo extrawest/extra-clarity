@@ -82,5 +82,11 @@ interface TimeRangeToggle {
   afterDateTime: string;
   allTime: string;
   beforeDateTime: string;
+  pastHour: string;
+  past24Hours: string;
+  past28Days: string;
+  past7Days: string;
+  today: string;
   unnamedPeriod: string;
+  yesterday: string;
 }
