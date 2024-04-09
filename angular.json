@@ -43,15 +43,20 @@
             "port": 6006,
             "compodoc": true,
             "compodocArgs": [
-              "-e", "json",
-              "-d", ".",
-              "-p", "tsconfig.doc.json",
+              "-e",
+              "json",
+              "-d",
+              ".",
+              "-p",
+              "tsconfig.doc.json",
               "--minimal",
               "--disableLifeCycleHooks",
               "--disablePrivate",
               "--disableProtected"
             ],
             "styles": [
+              "node_modules/@cds/core/global.min.css",
+              "node_modules/@cds/core/styles/theme.dark.min.css",
               "node_modules/@clr/ui/clr-ui.min.css"
             ]
           }
@@ -63,9 +68,12 @@
             "browserTarget": "extra-clarity:build",
             "compodoc": true,
             "compodocArgs": [
-              "-e", "json",
-              "-d", ".",
-              "-p", "tsconfig.doc.json",
+              "-e",
+              "json",
+              "-d",
+              ".",
+              "-p",
+              "tsconfig.doc.json",
               "--minimal",
               "--disableLifeCycleHooks",
               "--disablePrivate",
@@ -73,6 +81,8 @@
             ],
             "outputDir": "dist/storybook-static",
             "styles": [
+              "node_modules/@cds/core/global.min.css",
+              "node_modules/@cds/core/styles/theme.dark.min.css",
               "node_modules/@clr/ui/clr-ui.min.css"
             ]
           }
@@ -82,9 +92,7 @@
   },
   "cli": {
     "analytics": false,
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "schematicCollections": ["@angular-eslint/schematics"]
   },
   "schematics": {
     "@angular-eslint/schematics:application": {
