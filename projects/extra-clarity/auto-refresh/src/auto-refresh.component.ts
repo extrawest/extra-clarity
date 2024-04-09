@@ -77,7 +77,7 @@ export class AutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   constructor(
-    public readonly commonStrings: EcCommonStringsService,
+    protected readonly commonStrings: EcCommonStringsService,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 

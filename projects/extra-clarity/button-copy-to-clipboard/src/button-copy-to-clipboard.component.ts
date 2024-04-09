@@ -116,7 +116,7 @@ export class ButtonCopyToClipboardComponent implements OnDestroy, OnInit {
 
   private readonly destroy$ = new Subject<void>();
 
-  constructor(public readonly commonStrings: EcCommonStringsService) {
+  constructor(protected readonly commonStrings: EcCommonStringsService) {
     ClarityIcons.addIcons(copyIcon);
   }
 

@@ -169,7 +169,7 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   private readonly destroy$ = new Subject<void>();
 
   constructor(
-    public commonStrings: EcCommonStringsService,
+    protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,

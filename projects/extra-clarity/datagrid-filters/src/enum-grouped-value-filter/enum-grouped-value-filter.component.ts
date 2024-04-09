@@ -240,7 +240,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
   private searchBar?: EcSearchBarComponent;
 
   constructor(
-    public commonStrings: EcCommonStringsService,
+    protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,

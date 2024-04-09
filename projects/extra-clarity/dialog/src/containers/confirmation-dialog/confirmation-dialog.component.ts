@@ -27,7 +27,7 @@ export class ConfirmationDialogComponent implements OnDestroy, OnInit {
 
   constructor(
     @Inject(DIALOG_CONFIG) public readonly config: ConfirmDialogConfig,
-    public readonly commonStrings: EcCommonStringsService,
+    protected readonly commonStrings: EcCommonStringsService,
     private readonly dialogRef: DialogRef,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}

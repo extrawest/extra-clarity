@@ -135,7 +135,7 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   }
 
   constructor(
-    public commonStrings: EcCommonStringsService,
+    protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     private timestampPipe: EcTimestampPipe,
   ) {
