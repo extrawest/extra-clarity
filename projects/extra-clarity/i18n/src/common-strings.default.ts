@@ -7,7 +7,7 @@ export const commonStringsDefault: EcCommonStrings = {
     refreshing: 'Refreshing...',
   },
   buttonCopyToClipboard: {
-    title: 'Copy to Clipboard',
+    title: 'Copy to clipboard',
   },
   card: {
     errorOccurred: 'An error occurred',
@@ -17,7 +17,7 @@ export const commonStringsDefault: EcCommonStrings = {
     reload: 'Reload',
     reloadDataMessage: 'Please, try to reload the data a bit later',
     showError: 'Show error details',
-    unknownError: 'Unknown Error',
+    unknownError: 'Unknown error',
   },
   datagridFilters: {
     clear: 'Clear',
@@ -41,13 +41,13 @@ export const commonStringsDefault: EcCommonStrings = {
     propertyKeyRequired: '[propertyKey] is required',
     rangeLengthError:
       '[maxLength] must be less than or equal to [minLength] ({MAX_LENGTH} < {MIN_LENGTH})',
-    resetToDefault: 'Reset to Default',
+    resetToDefault: 'Reset to default',
     searchMessage: 'Searching for a {TYPE} match in "{PROPERTY_NAME}"',
     selected: 'Selected: {VALUE}',
     selectedItems: 'Selected {SELECTED} out of {TOTAL}',
     selectedNone: 'Selected none',
-    showAll: 'Show All',
-    showAllTime: 'Show "All Time"',
+    showAll: 'Show all',
+    showAllTime: 'Show "All time"',
     uuidNotValid: 'The entered value is not a valid uuid',
     validationError: `[pattern] is provided, but [validator] is not set to 'pattern'`,
   },
@@ -60,7 +60,7 @@ export const commonStringsDefault: EcCommonStrings = {
   },
   timeRangeFilter: {
     apply: 'Apply',
-    customPeriod: 'Custom Period',
+    customPeriod: 'Custom period',
     discard: 'Discard',
     from: 'From',
     to: 'To',
@@ -68,8 +68,8 @@ export const commonStringsDefault: EcCommonStrings = {
   },
   timeRangeToggle: {
     afterDateTime: 'After {DATETIME}',
-    allTime: 'All Time',
+    allTime: 'All time',
     beforeDateTime: 'Before {DATETIME}',
-    unnamedPeriod: 'Unnamed Period',
+    unnamedPeriod: 'Unnamed period',
   },
 };
