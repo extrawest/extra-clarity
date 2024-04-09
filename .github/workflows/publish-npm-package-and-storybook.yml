@@ -15,7 +15,7 @@ env:
   MAIN_PACKAGE_LOCK_JSON: package-lock.json
   NODE_MODULES_PATH: node_modules
   # settings for publishing the package
-  NODE_VER: 16
+  NODE_VER: 20
   NPM_REGISTRY: https://registry.npmjs.org/
   # firebase settings from '.firebaserc' & 'firebase.json'
   SB_FIREBASE_PROJECT_ID: storybook-deploy
