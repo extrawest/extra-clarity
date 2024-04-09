@@ -79,8 +79,9 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
 
   /**
    * List of time-range presets to select from. Each option contains:
+   * * `id`: a required non-empty string; must be unique within the filter to identify the preset among others;
    * * `label`: a required non-empty string to be shown in the filter's body next to the radio button
-   *   for this option; must be unique within the filter to identify the preset among others;
+   *   for this option;
    * * `timeRangeFn`: a required function which must return a time range object containing
    *   the timestamps for `start` and `end` of the period related to the preset;
    *   this function should be used outside of the component to get the actual `start` and `end`
@@ -154,9 +155,9 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
 
   protected configErrors: string[] = [];
 
-  protected defaultPreset: FilterValue['preset'] = null;
+  protected defaultPresetId: FilterValue['presetId'] = null;
   protected filterValue: FilterValue = {
-    preset: null,
+    presetId: null,
     custom: ALL_TIME,
   };
   protected visualCustomRange: EcCustomTimeRange = ALL_TIME;
@@ -285,8 +286,8 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
    */
   override isActive(): boolean {
     return (
-      this.filterValue.preset !== this.defaultPreset ||
-      this.filterValue.preset === null && (
+      this.filterValue.presetId !== this.defaultPresetId ||
+      this.filterValue.presetId === null && (
         !!this.filterValue.custom.start || !!this.filterValue.custom.end
       )
     );
@@ -294,13 +295,13 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
 
   /** Reset the filter to the default state */
   override resetToDefault(): void {
-    if (this.defaultPreset !== null) {
-      this.onPresetSelected(this.defaultPreset);
+    if (this.defaultPresetId !== null) {
+      this.onPresetSelected(this.defaultPresetId);
       return;
     }
 
     this.setValue({
-      preset: null,
+      presetId: null,
       custom: ALL_TIME,
     });
 
@@ -316,14 +317,14 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
     this.updateFilterValue(value);
     this.updateVisualCustomRange();
 
-    if (this.radioControl.value !== this.filterValue.preset) {
-      this.radioControl.setValue(this.filterValue.preset, { emitEvent: false });
+    if (this.radioControl.value !== this.filterValue.presetId) {
+      this.radioControl.setValue(this.filterValue.presetId, { emitEvent: false });
     }
   }
 
   protected onCustomRangeApply(range: EcCustomTimeRange): void {
     this.setValue({
-      preset: null,
+      presetId: null,
       custom: range,
     });
 
@@ -335,8 +336,8 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   protected onCustomRangeDiscard(): void {
     this.updateVisualCustomRange();
 
-    if (this.filterValue.preset !== null) {
-      this.radioControl.setValue(this.filterValue.preset);
+    if (this.filterValue.presetId !== null) {
+      this.radioControl.setValue(this.filterValue.presetId);
     }
 
     if (this.closeOnChange) {
@@ -358,7 +359,7 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   }
 
   private onPresetsChange(): void {
-    this.defaultPreset = getDefaultPreset(this.presets)?.label ?? null;
+    this.defaultPresetId = getDefaultPreset(this.presets)?.id ?? null;
     this.hasAllTimePreset = containsAllTimePreset(this.presets);
 
     if (this.value) {
@@ -366,32 +367,29 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
       return;
     }
 
-    if (this.defaultPreset !== null) {
+    if (this.defaultPresetId !== null) {
       this.resetToDefault();
       return;
     }
 
-    if (this.filterValue.preset === null) {
+    if (this.filterValue.presetId === null) {
       return;
     }
 
-    if (this.presets.some(preset => preset.label === this.filterValue.preset)) {
-      this.onPresetSelected(this.filterValue.preset);
+    if (this.presets.some(preset => preset.id === this.filterValue.presetId)) {
+      this.onPresetSelected(this.filterValue.presetId);
       return;
     }
 
     this.resetToDefault();
   }
 
-  private onPresetSelected(presetLabel: string | null): void {
-    if (presetLabel === null) {
+  private onPresetSelected(presetId: string | null): void {
+    if (presetId === null) {
       return;
     }
 
-    this.setValue({
-      preset: presetLabel,
-      custom: ALL_TIME,
-    });
+    this.setValue({ presetId, custom: ALL_TIME });
 
     if (this.closeOnChange) {
       this.hideFilter();

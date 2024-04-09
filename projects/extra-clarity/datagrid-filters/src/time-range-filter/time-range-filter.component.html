@@ -6,10 +6,10 @@
           type="radio"
           clrRadio
           [formControl]="radioControl"
-          [value]="preset.label"
+          [value]="preset.id"
           [name]="propertyKey"
         />
-        <label [class.label-selected]="filterValue.preset === preset.label">
+        <label [class.label-selected]="filterValue.presetId === preset.id">
           {{ preset.label }}
         </label>
       </clr-radio-wrapper>
@@ -22,8 +22,8 @@
           [value]="null"
           [name]="propertyKey"
         />
-        <label [class.label-selected]="filterValue.preset === null">
-          {{ commonStrings.keys.shared.customPeriod }}
+        <label [class.label-selected]="filterValue.presetId === null">
+          {{ commonStrings.keys.timeRangeFilter.customPeriod }}
         </label>
       </clr-radio-wrapper>
     </clr-radio-container>
@@ -33,16 +33,16 @@
       class="custom-range-input"
       [value]="visualCustomRange"
       [disabled]="radioControl.value !== null"
-      [forceEnabledButtons]="radioControl.value !== filterValue.preset"
+      [forceEnabledButtons]="radioControl.value !== filterValue.presetId"
       [withTime]="withTime"
       (apply)="onCustomRangeApply($event)"
       (discard)="onCustomRangeDiscard()"
     />
 
     <button
-    *ngIf="presets.length && !hasAllTimePreset && !withCustomRange && !defaultPreset"
+      *ngIf="presets.length && !hasAllTimePreset && !withCustomRange && !defaultPresetId"
       class="btn btn-sm btn-block"
-      [disabled]="filterValue.preset === null"
+      [disabled]="filterValue.presetId === null"
       (click)="resetToDefault()"
     >
       {{ commonStrings.keys.datagridFilters.showAllTime }}

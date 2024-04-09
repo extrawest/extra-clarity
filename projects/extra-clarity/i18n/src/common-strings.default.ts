@@ -27,9 +27,11 @@ export const commonStringsDefault: EcCommonStrings = {
     full: 'full',
     inputIssuesMessage: 'There are some issues with the component"s inputs:',
     loading: 'Loading...',
-    maxLengthError: '[maxLength] must be positive (current value: {MAX_LENGTH})',
+    maxLengthError:
+      '[maxLength] must be positive (current value: {MAX_LENGTH})',
     maxLengthMessage: 'Max length exceeded ({ACTUAL_LENGTH}/{REQUIRED_LENGTH})',
-    minLengthError: '[minLength] must be positive (current value: {MIN_LENGTH})',
+    minLengthError:
+      '[minLength] must be positive (current value: {MIN_LENGTH})',
     minLengthMessage: 'Please provide at least {MIN_LENGTH} characters',
     noOptionsAvailable: 'No options available',
     noOptionsFound: 'No options found for the entered search-term',
@@ -37,7 +39,8 @@ export const commonStringsDefault: EcCommonStrings = {
     patternError: `[pattern] is required when [validator]="'pattern'"`,
     pleaseWait: 'Please wait',
     propertyKeyRequired: '[propertyKey] is required',
-    rangeLengthError: '[maxLength] must be less than or equal to [minLength] ({MAX_LENGTH} < {MIN_LENGTH})',
+    rangeLengthError:
+      '[maxLength] must be less than or equal to [minLength] ({MAX_LENGTH} < {MIN_LENGTH})',
     resetToDefault: 'Reset to Default',
     searchMessage: 'Searching for a {TYPE} match in "{PROPERTY_NAME}"',
     selected: 'Selected: {VALUE}',
@@ -53,13 +56,13 @@ export const commonStringsDefault: EcCommonStrings = {
     ok: 'Ok',
   },
   shared: {
-    customPeriod: 'Custom Period',
     typeToSearch: 'Type to search...',
   },
   timeRangeFilter: {
     apply: 'Apply',
+    customPeriod: 'Custom Period',
     discard: 'Discard',
-    from: 'from',
+    from: 'From',
     to: 'To',
     wrongInput: 'Wrong input',
   },
