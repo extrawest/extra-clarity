@@ -148,7 +148,7 @@ export class DatagridCellWrapperComponent implements OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
 
   constructor(
-    public readonly commonStrings: EcCommonStringsService,
+    protected readonly commonStrings: EcCommonStringsService,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 

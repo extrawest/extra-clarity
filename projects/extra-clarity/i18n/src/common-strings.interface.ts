@@ -66,12 +66,12 @@ interface Dialog {
 }
 
 interface Shared {
-  customPeriod: string;
   typeToSearch: string;
 }
 
 interface TimeRangeFilter {
   apply: string;
+  customPeriod: string;
   discard: string;
   from: string;
   to: string;

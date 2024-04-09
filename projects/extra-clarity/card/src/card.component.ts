@@ -96,7 +96,7 @@ export class EcCardComponent implements OnDestroy, OnInit {
   }
 
   constructor(
-    public readonly commonStrings: EcCommonStringsService,
+    protected readonly commonStrings: EcCommonStringsService,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {
     ClarityIcons.addIcons(errorStandardIcon);

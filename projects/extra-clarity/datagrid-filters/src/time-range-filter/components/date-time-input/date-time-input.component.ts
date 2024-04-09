@@ -64,7 +64,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
   }
 
   constructor(
-    public commonStrings: EcCommonStringsService,
+    protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
   ) {}
 

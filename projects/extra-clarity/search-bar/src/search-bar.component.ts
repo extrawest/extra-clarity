@@ -102,7 +102,7 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
 
   constructor(
-    public commonStrings: EcCommonStringsService,
+    protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
   ) {
     ClarityIcons.addIcons(searchIcon, windowCloseIcon);

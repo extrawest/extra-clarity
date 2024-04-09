@@ -5,9 +5,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
@@ -55,7 +57,7 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
     EcTimestampPipe,
   ],
 })
-export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnDestroy, OnInit {
+export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnChanges, OnDestroy, OnInit {
   // Inputs passed to EcTimeRangeFilterComponent
   @Input({ required: true })
   public propertyKey!: string;
@@ -133,11 +135,17 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnD
   }
 
   constructor(
-    public commonStrings: EcCommonStringsService,
+    protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     private timestampPipe: EcTimestampPipe,
   ) {
     ClarityIcons.addIcons(angleIcon, calendarIcon);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['presets']) {
+      this.updateSelectedRangeLabel();
+    }
   }
 
   ngOnDestroy(): void {
@@ -148,7 +156,10 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnD
   ngOnInit(): void {
     this.commonStrings.stringsChanged$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.changeDetectorRef.markForCheck());
+      .subscribe(() => {
+        this.changeDetectorRef.markForCheck();
+        this.updateSelectedRangeLabel();
+      });
   }
 
   resetToDefault(): void {
@@ -170,14 +181,14 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnD
 
   private getTimeRangeLabel(filterValue: EcTimeRangeFilterValue | undefined): string {
     const commonStrings = this.commonStrings.keys;
+
     if (!filterValue) {
-      return commonStrings.shared.customPeriod;
+      return commonStrings.timeRangeFilter.customPeriod;
     }
-    if (filterValue.preset === '') {
-      return commonStrings.timeRangeToggle.unnamedPeriod;
-    }
-    if (filterValue.preset !== null) {
-      return filterValue.preset;
+
+    const selectedPreset = this.presets.find(preset => preset.id === filterValue.presetId);
+    if (selectedPreset) {
+      return selectedPreset.label || commonStrings.timeRangeToggle.unnamedPeriod;
     }
 
     const { start, end } = filterValue.custom;
@@ -195,13 +206,14 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnD
         DATETIME: this.timestampPipe.transform(start, 'min') ?? '',
       });
     }
-    return commonStrings.shared.customPeriod;
+    return commonStrings.timeRangeFilter.customPeriod;
   }
 
   private updateSelectedRangeLabel(): void {
     this.selectedRangeLabel = this.getTimeRangeLabel(this.timeRangeFilter?.state.value);
 
     if (!this.initiallyChecked) {
+      // TODO: maybe call detectChanges every time when this method is executed?
       this.changeDetectorRef.detectChanges();
       this.initiallyChecked = true;
     }

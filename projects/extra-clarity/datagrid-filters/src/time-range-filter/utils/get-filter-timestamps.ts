@@ -11,20 +11,20 @@ export function getFilterTimestamps(
   filterValue: FilterValue | undefined,
   presets: EcTimeRangePreset[],
 ): EcCustomTimeRange {
-  if (filterValue && !filterValue.preset) {
+  if (filterValue && !filterValue.presetId) {
     return { ...filterValue.custom };
   }
 
-  const selectedPreset =
-    filterValue?.preset ??
-    getDefaultPreset(presets)?.label ??
+  const selectedPresetId =
+    filterValue?.presetId ??
+    getDefaultPreset(presets)?.id ??
     null;
 
-  if (selectedPreset === null) {
+  if (selectedPresetId === null) {
     return ALL_TIME;
   }
 
-  const timeRangeFn = presets.find(preset => preset.label === selectedPreset)?.timeRangeFn;
+  const timeRangeFn = presets.find(preset => preset.id === selectedPresetId)?.timeRangeFn;
 
   return typeof timeRangeFn === 'function'
     ? timeRangeFn()

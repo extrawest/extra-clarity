@@ -7,7 +7,7 @@ export const commonStringsDefault: EcCommonStrings = {
     refreshing: 'Refreshing...',
   },
   buttonCopyToClipboard: {
-    title: 'Copy to Clipboard',
+    title: 'Copy to clipboard',
   },
   card: {
     errorOccurred: 'An error occurred',
@@ -17,7 +17,7 @@ export const commonStringsDefault: EcCommonStrings = {
     reload: 'Reload',
     reloadDataMessage: 'Please, try to reload the data a bit later',
     showError: 'Show error details',
-    unknownError: 'Unknown Error',
+    unknownError: 'Unknown error',
   },
   datagridFilters: {
     clear: 'Clear',
@@ -27,9 +27,11 @@ export const commonStringsDefault: EcCommonStrings = {
     full: 'full',
     inputIssuesMessage: 'There are some issues with the component"s inputs:',
     loading: 'Loading...',
-    maxLengthError: '[maxLength] must be positive (current value: {MAX_LENGTH})',
+    maxLengthError:
+      '[maxLength] must be positive (current value: {MAX_LENGTH})',
     maxLengthMessage: 'Max length exceeded ({ACTUAL_LENGTH}/{REQUIRED_LENGTH})',
-    minLengthError: '[minLength] must be positive (current value: {MIN_LENGTH})',
+    minLengthError:
+      '[minLength] must be positive (current value: {MIN_LENGTH})',
     minLengthMessage: 'Please provide at least {MIN_LENGTH} characters',
     noOptionsAvailable: 'No options available',
     noOptionsFound: 'No options found for the entered search-term',
@@ -37,14 +39,15 @@ export const commonStringsDefault: EcCommonStrings = {
     patternError: `[pattern] is required when [validator]="'pattern'"`,
     pleaseWait: 'Please wait',
     propertyKeyRequired: '[propertyKey] is required',
-    rangeLengthError: '[maxLength] must be less than or equal to [minLength] ({MAX_LENGTH} < {MIN_LENGTH})',
-    resetToDefault: 'Reset to Default',
+    rangeLengthError:
+      '[maxLength] must be less than or equal to [minLength] ({MAX_LENGTH} < {MIN_LENGTH})',
+    resetToDefault: 'Reset to default',
     searchMessage: 'Searching for a {TYPE} match in "{PROPERTY_NAME}"',
     selected: 'Selected: {VALUE}',
     selectedItems: 'Selected {SELECTED} out of {TOTAL}',
     selectedNone: 'Selected none',
-    showAll: 'Show All',
-    showAllTime: 'Show "All Time"',
+    showAll: 'Show all',
+    showAllTime: 'Show "All time"',
     uuidNotValid: 'The entered value is not a valid uuid',
     validationError: `[pattern] is provided, but [validator] is not set to 'pattern'`,
   },
@@ -53,20 +56,20 @@ export const commonStringsDefault: EcCommonStrings = {
     ok: 'Ok',
   },
   shared: {
-    customPeriod: 'Custom Period',
     typeToSearch: 'Type to search...',
   },
   timeRangeFilter: {
     apply: 'Apply',
+    customPeriod: 'Custom period',
     discard: 'Discard',
-    from: 'from',
+    from: 'From',
     to: 'To',
     wrongInput: 'Wrong input',
   },
   timeRangeToggle: {
     afterDateTime: 'After {DATETIME}',
-    allTime: 'All Time',
+    allTime: 'All time',
     beforeDateTime: 'Before {DATETIME}',
-    unnamedPeriod: 'Unnamed Period',
+    unnamedPeriod: 'Unnamed period',
   },
 };
