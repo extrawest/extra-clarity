@@ -64,5 +64,6 @@ export const CardStory: Story = {
     error: null,
     loading: false,
     title: 'Card Title',
+    spinnerSize: 'md',
   },
 };
