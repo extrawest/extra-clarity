@@ -1,40 +1,38 @@
-<div class="container" [ngClass]="{ 'with-auto-refresh': useAutoRefresh }">
-  <ec-auto-refresh
-    *ngIf="useAutoRefresh"
-    [blocked]="autoRefreshBlocked"
-    [enabled]="autoRefreshEnabled"
-    [period]="period"
-    [refreshing]="refreshing"
-    (refresh)="onRefresh()"
-    (toggle)="onAutoRefreshChanged($event)"
-    class="ec-auto-refresh"
-  />
-
-  <div class="refresh-state">
-    <cds-icon
-      *ngIf="failed && !refreshing"
-      shape="error-standard"
-      status="danger"
-      size="18"
+<div class="ec-container" [class.ec-with-auto-refresh]="useAutoRefresh">
+  @if (useAutoRefresh) {
+    <ec-auto-refresh
+      [blocked]="autoRefreshBlocked"
+      [enabled]="autoRefreshEnabled"
+      [period]="period"
+      [refreshing]="refreshing"
+      (refresh)="onRefresh()"
+      (toggle)="onAutoRefreshChanged($event)"
+      class="ec-auto-refresh"
     />
-  </div>
+  }
 
   <button
     type="button"
-    class="btn btn-sm btn-link refresh-btn"
-    [ngClass]="{ 'failed': failed && !refreshing }"
+    class="btn btn-sm btn-link ec-refresh-btn"
+    [class.ec-margin-left-auto]="useAutoRefresh"
     [disabled]="refreshing"
     (click)="onRefresh()"
   >
-    {{ lastFetchTimestamp | date:'mediumTime' }}
-
     <cds-icon
-      *ngIf="!refreshing; else spinner"
-      shape="refresh"
-      [status]="failed ? 'danger': 'info'"
+      shape="error-standard"
+      status="danger"
+      size="18"
+      [class.ec-invisible]="!failed || refreshing"
     />
-    <ng-template #spinner>
+
+    <span [class.ec-text-failed]="failed && !refreshing">
+      {{ lastFetchTimestamp | date: "mediumTime" }}
+    </span>
+
+    @if (refreshing) {
       <span class="spinner spinner-inline"></span>
-    </ng-template>
+    } @else {
+      <cds-icon shape="refresh" [status]="failed ? 'danger' : 'info'" />
+    }
   </button>
 </div>

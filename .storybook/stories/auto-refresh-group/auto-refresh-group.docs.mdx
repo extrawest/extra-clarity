@@ -1,4 +1,10 @@
-import { Meta } from '@storybook/blocks';
+import { Markdown, Meta } from '@storybook/blocks';
+
+import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
+
+<style>
+  { docsStylePatch }
+</style>
 
 <Meta
   title="Components/Auto Refresh Group/Overview"
@@ -6,6 +12,36 @@ import { Meta } from '@storybook/blocks';
 
 # Auto Refresh Group
 
+<div className="table-of-contents">
+  - [Quick Start](#quick-start)
+  - [Stories](#stories)
+  - [Source Code](#source-code)
+</div>
+
+## Quick Start
+
+> **Standalone component**: yes
+
 ```typescript
-import { AutoRefreshGroupModule } from '@extrawest/extra-clarity/auto-refresh-group';
+import { AutoRefreshGroupComponent } from '@extrawest/extra-clarity/auto-refresh-group';
 ```
+```html
+<ec-auto-refresh-group
+  [refreshing]="isPageLoading"
+  [failed]="isPageLoadingFailed"
+  [period]="periodSec"
+  [autoRefreshEnabled]="isAutoRefreshEnabled"
+  (autoRefreshToggled)="onAutoRefreshToggled($event)"
+  (refresh)="refreshPage()"
+/>
+```
+
+## Stories
+
+* [The component in isolation](/story/components-auto-refresh-group--auto-refresh-group-story)
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/auto-refresh-group/src)`}
+</Markdown>
