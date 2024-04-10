@@ -1,7 +1,15 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { applicationConfig, type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import {
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 
-import { EcCardComponent, EcCardModule } from '../../../projects/extra-clarity/card';
+import {
+  EcCardComponent,
+  EcCardModule,
+} from '../../../projects/extra-clarity/card';
 
 import { CardContentComponent } from './helpers/card-content.component';
 
@@ -22,16 +30,11 @@ export default {
   },
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        CardContentComponent,
-        EcCardModule,
-      ],
+      imports: [CardContentComponent, EcCardModule],
     }),
   ],
   render: (args) => ({
@@ -42,6 +45,7 @@ export default {
         [empty]="empty"
         [error]="error"
         [loading]="loading"
+        [spinnerSize]="spinnerSize"
       >
         <ec-storybook-card-content />
         <ec-card-footer>

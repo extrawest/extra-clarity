@@ -57,6 +57,9 @@ export class EcCardComponent implements OnDestroy, OnInit {
   @Input()
   public error: EcCardError | null;
 
+  @Input()
+  public spinnerSize: 'sm' | 'md' | 'lg' = 'sm';
+
   /** `EventEmitter<void>` */
   @Output()
   public reload = new EventEmitter<void>();
