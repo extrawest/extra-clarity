@@ -3,11 +3,9 @@
   @parent
   type="button"
   class="btn"
-  [ngClass]="{ 'no-border': !withBorder }"
-  [ngStyle]="{
-    'height.px': heightPx ?? sizePx,
-    'width.px': widthPx ?? sizePx,
-  }"
+  [class.no-border]="!withBorder"
+  [style.height.px]="heightPx ?? sizePx"
+  [style.width.px]="widthPx ?? sizePx"
   [disabled]="disabled || !textToCopy"
   [title]="title || commonStrings.keys.buttonCopyToClipboard.title"
   (click)="copy()"
@@ -32,7 +30,7 @@
 
     <div *ngSwitchCase="clrLoadingState.DEFAULT" @defaultButton class="button-inner-box">
       <cds-icon shape="copy" [size]="iconSizeAsString" />
-      <span *ngIf="label" [ngStyle]="{ 'font-size.px': labelFontSizePx }">
+      <span *ngIf="label" [style.font-size.px]="labelFontSizePx">
         {{ label }}
       </span>
     </div>

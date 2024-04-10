@@ -25,7 +25,7 @@ export const BUTTON_DEFAULTS = {
 } as const;
 
 @Component({
-  selector: 'ec-button-copy-to-clipboard',
+  selector: 'ec-button-copy-to-clipboard, ec-btn-copy',
   templateUrl: './button-copy-to-clipboard.component.html',
   styleUrls: ['./button-copy-to-clipboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
