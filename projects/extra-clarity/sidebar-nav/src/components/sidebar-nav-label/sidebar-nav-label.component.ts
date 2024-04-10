@@ -22,11 +22,21 @@ import { SidebarNavService } from '../../sidebar-nav.service';
       </ng-template>
     </ng-container>
   `,
+  host: {
+    '[style.font-weight]': `fontWeight`,
+  },
 })
 export class SidebarNavLabelComponent implements OnInit {
   @Input() navItem?: NavItemLink | NavItemGroup;
+  @Input() isBold: boolean = false;
 
   customLabelTpl?: TemplateRef<unknown>;
+
+  get fontWeight(): string {
+    return this.isBold
+      ? 'var(--cds-global-typography-font-weight-semibold, 600)'
+      : 'var(--cds-global-typography-font-weight-regular, 400)';
+  }
 
   constructor(private navService: SidebarNavService) {}
 

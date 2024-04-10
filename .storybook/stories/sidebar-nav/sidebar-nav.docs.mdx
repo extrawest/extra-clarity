@@ -24,6 +24,7 @@ import * as Stories from './sidebar-nav.stories';
     * [Helpers](#helpers)
     * [Icons in Labels](#icons-in-labels)
     * [Custom Template](#custom-template)
+    * [Root-level Bold Items](#root-level-bold-items)
   - [API](#api)
   - [Source Code](#source-code)
 </div>
@@ -40,7 +41,8 @@ import { SidebarNavComponent } from '@extrawest/extra-clarity/button-copy-to-cli
 ```
 ```html
 <clr-vertical-nav>
-    <ec-sidebar-nav [navList]="[
+    <ec-sidebar-nav
+      [navList]="[
         {
           "type": "router-link",
           "label": "Router Link #1",
@@ -59,7 +61,9 @@ import { SidebarNavComponent } from '@extrawest/extra-clarity/button-copy-to-cli
           "label": "Send Email",
           "link": "mailto:user@example.com",
         },
-    ]" />
+      ]"
+      [rootLevelBold]="'all'"
+    />
 </clr-vertical-nav>
 ```
 
@@ -238,6 +242,14 @@ as the `$implicit` context parameter.
 
 Please note, that you may provide any additional data to the template
 by passing it through the `data: unknown` property in the nav item config.
+
+### Root-level Bold Items
+
+By default, only group labels have bolder font-weight. You can modify this behavior via the
+`[rootLevelBold]` input, e.g. to show all root elements (both groups and standalone items) with
+a bolder font (`font-weight: 600` vs `400`).
+
+Please note, that this setting does not affect nested items.
 
 ## API
 

@@ -44,6 +44,10 @@ const MetaStory = {
         type: { summary: '(NavItemLink | NavItemGroup | NavItemDivider)[]' },
       },
     },
+    rootLevelBold: {
+      control: { type: 'radio' },
+      options: ['none', 'all', 'groups', 'items'],
+    }
   },
   args: {
     customLabelTpl: undefined,
@@ -71,6 +75,7 @@ export const ComponentItselfStory: Story = {
       <ec-sidebar-nav
         [navList]="navList"
         [customLabelTpl]="customLabelTpl"
+        [rootLevelBold]="rootLevelBold"
       />
     `,
     styles: [
@@ -78,6 +83,7 @@ export const ComponentItselfStory: Story = {
     ],
   }),
   args: {
+    rootLevelBold: 'groups',
     navList: [
       {
         type: 'router-link',
@@ -131,6 +137,7 @@ export const DocsExampleStory: Story = {
       { type: 'divider' },
       { type: 'href', label: 'Send Email', link: 'mailto:user@example.com' },
     ]"
+    [rootLevelBold]="'groups'"
   />`,
     styles: [
       `.clr-vertical-nav { padding-bottom: .9rem }`,
@@ -139,5 +146,8 @@ export const DocsExampleStory: Story = {
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {
     ...hideAllControlRows(MetaStory.argTypes),
+  },
+  args: {
+    rootLevelBold: 'groups',
   },
 };

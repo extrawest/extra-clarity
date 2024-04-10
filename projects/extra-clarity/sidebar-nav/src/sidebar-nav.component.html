@@ -2,10 +2,12 @@
   <ec-sidebar-nav-group
     *ngIf="navItem.type === NavItemTypeEnum.Group"
     [navItem]="navItem"
+    [isBold]="rootLevelBold === 'all' || rootLevelBold === 'groups'"
   />
   <ec-sidebar-nav-item
     *ngIf="navItem.type !== NavItemTypeEnum.Group"
     [navItem]="navItem"
+    [isBold]="rootLevelBold === 'all' || rootLevelBold === 'items'"
   />
 </ng-container>
 
