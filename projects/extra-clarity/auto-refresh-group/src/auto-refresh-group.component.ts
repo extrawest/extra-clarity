@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, errorStandardIcon, refreshIcon } from '@cds/core/icon';
-import { AutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
+import { EcAutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 
 export const DEFAULT_PERIOD_SEC = 60;
 
@@ -17,10 +17,10 @@ export const DEFAULT_PERIOD_SEC = 60;
   imports: [
     CommonModule,
     CdsIconModule,
-    AutoRefreshComponent,
+    EcAutoRefreshComponent,
   ],
 })
-export class AutoRefreshGroupComponent implements OnChanges {
+export class EcAutoRefreshGroupComponent implements OnChanges {
   @Input()
   public failed = false;
 

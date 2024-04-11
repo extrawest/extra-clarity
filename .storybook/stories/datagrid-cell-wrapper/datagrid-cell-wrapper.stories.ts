@@ -10,16 +10,16 @@ import {
 import { BUTTON_DEFAULTS } from '../../../projects/extra-clarity/button-copy-to-clipboard';
 import {
   CELL_WRAPPER_DEFAULTS,
-  DatagridCellWrapperComponent,
+  EcDatagridCellWrapperComponent,
 } from '../../../projects/extra-clarity/datagrid-cell-wrapper';
 import { hideAllControlRows, wrapWrapperWithinDatagrid } from '../../helpers';
 
-type Story = StoryObj<DatagridCellWrapperComponent>;
+type Story = StoryObj<EcDatagridCellWrapperComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Datagrid Cell Wrapper',
-  component: DatagridCellWrapperComponent,
+  component: EcDatagridCellWrapperComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -150,7 +150,7 @@ const MetaStory = {
     textToCopy: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
     withCopyBtn: true,
   },
-} as Meta<DatagridCellWrapperComponent>;
+} as Meta<EcDatagridCellWrapperComponent>;
 
 export default MetaStory;
 
@@ -162,7 +162,7 @@ export const WithinDatagridStory: Story = {
       imports: [
         ClrAlertModule,
         ClrDatagridModule,
-        DatagridCellWrapperComponent,
+        EcDatagridCellWrapperComponent,
       ],
     }),
   ],

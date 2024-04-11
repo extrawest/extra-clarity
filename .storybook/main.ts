@@ -24,5 +24,12 @@ const config: StorybookConfig = {
     disableTelemetry: true,
     enableCrashReports: false,
   },
+  // add an attribute to the preview's body to allow Clarity work properly
+  previewBody: (body) => `
+    ${body}
+    <script>
+      document.body.onload = () => document.body.setAttribute("cds-theme", "light");
+    </script>
+  `,
 };
 export default config;

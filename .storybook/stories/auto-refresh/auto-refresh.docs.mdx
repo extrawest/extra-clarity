@@ -1,11 +1,44 @@
-import { Meta } from '@storybook/blocks';
+import { Markdown, Meta } from '@storybook/blocks';
 
-<Meta
-  title="Components/Auto Refresh/Overview"
-/>
+import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
+
+<style>
+  { docsStylePatch }
+</style>
+
+<Meta title="Components/Auto Refresh/Overview"  />
 
 # Auto Refresh
 
+<div className="table-of-contents">
+  - [Quick Start](#quick-start)
+  - [Stories](#stories)
+  - [Source Code](#source-code)
+</div>
+
+## Quick Start
+
+> **Standalone component**: yes
+
 ```typescript
-import { AutoRefreshModule } from '@extrawest/extra-clarity/auto-refresh';
+import { EcAutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 ```
+```html
+<ec-auto-refresh
+  [enabled]="isAutoRefreshEnabled"
+  [period]="periodSec"
+  [refreshing]="isRefreshing"
+  (refresh)="onRefresh()"
+  (toggle)="onAutoRefreshChanged($event)"
+/>
+```
+
+## Stories
+
+* [The component in isolation](/story/components-auto-refresh--auto-refresh-story)
+
+## Source Code
+
+<Markdown>
+  {`See at [GitHub](${extraClarityGithubSrc}/auto-refresh/src)`}
+</Markdown>

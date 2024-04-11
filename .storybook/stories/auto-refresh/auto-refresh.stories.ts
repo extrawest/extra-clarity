@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
-import { AutoRefreshComponent, DEFAULT_PERIOD_SEC } from '../../../projects/extra-clarity/auto-refresh';
+import { EcAutoRefreshComponent, DEFAULT_PERIOD_SEC } from '../../../projects/extra-clarity/auto-refresh';
 
-type Story = StoryObj<AutoRefreshComponent>;
+type Story = StoryObj<EcAutoRefreshComponent>;
 
 export default {
   title: 'Components/Auto Refresh',
-  component: AutoRefreshComponent,
+  component: EcAutoRefreshComponent,
   argTypes: {
     period: {
       table: {
@@ -27,7 +27,7 @@ export default {
       },
     },
   },
-} as Meta<AutoRefreshComponent>;
+} as Meta<EcAutoRefreshComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const AutoRefreshStory: Story = {

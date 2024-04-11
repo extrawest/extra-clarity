@@ -30,10 +30,12 @@ import * as ButtonStories from './button-copy-to-clipboard.stories';
 > **Standalone component**: yes
 
 ```typescript
-import { ButtonCopyToClipboardComponent } from '@extrawest/extra-clarity/button-copy-to-clipboard';
+import { EcButtonCopyToClipboardComponent } from '@extrawest/extra-clarity/button-copy-to-clipboard';
 ```
 ```html
 <ec-button-copy-to-clipboard [textToCopy]="Hello World!" />
+<!-- OR -->
+<ec-btn-copy [textToCopy]="Hello World!" />
 ```
 
 ## Example
@@ -55,7 +57,8 @@ For using it within datagrid cells, please take a look at the
 
 There are multiple inputs to configure the component.
 
-The only one required is `[textToCopy]` containing the actual string to be copied when the button is pressed.
+The only one required is `[textToCopy]` containing the actual string (or a number to stringify)
+to be copied to the clipboard when the button is pressed.
 If the value is nullish or not provided at all, the button is disabled.
 
 When the value is copied, the `(copied)` output emits an event,

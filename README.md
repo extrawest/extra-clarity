@@ -9,9 +9,12 @@ which we use in our internal projects in [extrawest.com](https://extrawest.com).
 
 The library is under development. Any suggestions would be highly appreciated.
 
-Supported Angular versions: 16.2 or later.
+Required deps:
 
-The latest version with support of Angular 15: 0.15.22.
+- Angular 17.3.0 or later
+- Clarity: 17.0.0 or later
+
+The latest version with Angular 16 support is 0.17.2 (based on Clarity 15), and for Angular 15 - 0.15.22.
 
 ## Installation
 

@@ -30,7 +30,7 @@ export const DEFAULT_PERIOD_SEC = 60;
     ClrCheckboxModule,
   ],
 })
-export class AutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
+export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   /**
    * Indicate that refreshing is occurring at the moment.
    * The countdown is stopped and will be re-launched after this input is switched to `false`.

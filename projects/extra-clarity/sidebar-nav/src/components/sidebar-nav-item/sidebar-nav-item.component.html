@@ -6,7 +6,7 @@
   <ng-container *ngIf="navItem.type === NavItemTypeEnum.Href">
     <a clrVerticalNavLink [href]="navItem.link">
       <cds-icon *ngIf="navItem.icon" clrVerticalNavIcon [shape]="navItem.icon" />
-      <ec-sidebar-nav-label [navItem]="navItem" />
+      <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
     </a>
   </ng-container>
 
@@ -15,10 +15,10 @@
       clrVerticalNavLink
       routerLinkActive="active"
       [routerLink]="navItem.link"
-      [ngClass]="{ disabled: navService.isPathActive(navItem.link, 'exact') }"
+      [class.disabled]="navService.isPathActive(navItem.link, 'exact')"
     >
       <cds-icon *ngIf="navItem.icon" clrVerticalNavIcon [shape]="navItem.icon" />
-      <ec-sidebar-nav-label [navItem]="navItem" />
+      <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
     </a>
   </ng-container>
 </ng-container>

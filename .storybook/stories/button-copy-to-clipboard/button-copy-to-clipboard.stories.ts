@@ -11,16 +11,16 @@ import {
 
 import {
   BUTTON_DEFAULTS,
-  ButtonCopyToClipboardComponent,
+  EcButtonCopyToClipboardComponent,
 } from '../../../projects/extra-clarity/button-copy-to-clipboard';
 import { hideAllControlRows } from '../../helpers';
 
-type Story = StoryObj<ButtonCopyToClipboardComponent>;
+type Story = StoryObj<EcButtonCopyToClipboardComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Button Copy-to-Clipboard',
-  component: ButtonCopyToClipboardComponent,
+  component: EcButtonCopyToClipboardComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -124,7 +124,7 @@ const MetaStory = {
     withAnimation: true,
     withBorder: false,
   },
-} as Meta<ButtonCopyToClipboardComponent>;
+} as Meta<EcButtonCopyToClipboardComponent>;
 
 export default MetaStory;
 
@@ -143,7 +143,7 @@ export const DocsExampleStory: Story = {
   decorators: [
     moduleMetadata({
       imports: [
-        ButtonCopyToClipboardComponent,
+        EcButtonCopyToClipboardComponent,
         ClrInputModule,
         CommonModule,
         FormsModule,

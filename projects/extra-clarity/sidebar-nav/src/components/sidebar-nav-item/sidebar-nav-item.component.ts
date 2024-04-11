@@ -25,6 +25,7 @@ import { SidebarNavLabelComponent } from '../sidebar-nav-label';
 })
 export class SidebarNavItemComponent implements OnInit {
   @Input() navItem?: NavListItem;
+  @Input() isBold: boolean = false;
 
   readonly NavItemTypeEnum = NAV_ITEM_TYPE;
 

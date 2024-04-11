@@ -34,4 +34,8 @@ export const docsStylePatch = `
   .table-of-contents {
     margin-top: 24px;
   }
+
+  a {
+    font-size: inherit !important;
+  }
 `;

@@ -5,13 +5,14 @@
     [formControl]="toggleControl"
     (change)="onToggle()"
     class="form-control"
-  >
-  <label class="p5 text-label">
-    <ng-container *ngIf="toggleControl.value && _period > 0; else disabled">
-      {{ refreshing ? commonStrings.keys.autoRefresh.refreshing : timeMessage }}
-    </ng-container>
-    <ng-template #disabled>
+  />
+  <label>
+    @if (!toggleControl.value || _period <= 0) {
       {{ commonStrings.keys.autoRefresh.disabled }}
-    </ng-template>
+    } @else if (refreshing) {
+      {{ commonStrings.keys.autoRefresh.refreshing }}
+    } @else {
+      {{ timeMessage }}
+    }
   </label>
 </clr-toggle-wrapper>

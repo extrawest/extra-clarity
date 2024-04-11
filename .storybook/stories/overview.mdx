@@ -1,9 +1,7 @@
-import { Meta } from '@storybook/blocks';
-import { docsStylePatch } from '../helpers';
+import { Meta } from "@storybook/blocks";
+import { docsStylePatch } from "../helpers";
 
-<style>
-  { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
 <Meta title="Overview/Getting Started" />
 
@@ -13,9 +11,12 @@ Extra Clarity is a library that contains [Angular components](#available-compone
 [Clarity Design System](https://clarity.design), which we use in our internal projects in
 [extrawest.com](https://extrawest.com).
 
-Supported Angular versions: 16.2 and later.
+Required deps:
 
-The latest version with support of Angular 15: 0.15.22.
+- Angular 17.3.0 or later
+- Clarity: 17.0.0 or later
+
+The latest version with Angular 16 support is 0.17.2 (based on Clarity 15), and for Angular 15 - 0.15.22.
 
 The library is under development. Any suggestions would be highly appreciated.
 
@@ -39,6 +40,7 @@ You can add the package to your project with `npm install` or `yarn add`:
 ```shell
 npm i @extrawest/extra-clarity
 ```
+
 ```shell
 yarn add @extrawest/extra-clarity
 ```
@@ -46,58 +48,61 @@ yarn add @extrawest/extra-clarity
 To work with the library, you also need to add the Clarity packages:
 
 ```shell
-npm i @cds/angular @clr/angular @clr/ui
+npm i @cds/angular @cds/core @clr/angular @clr/ui
 ```
+
 ```shell
-yarn add @cds/angular @clr/angular @clr/ui
+yarn add @cds/angular @cds/core @clr/angular @clr/ui
 ```
 
 And then add the global Clarity styles to your `angular.json` config:
 
 ```json
 "styles": [
-  "node_modules/@clr/ui/clr-ui.min.css",
+  "node_modules/@cds/core/global.min.css",
+  "node_modules/@cds/core/styles/theme.dark.min.css",
+  "node_modules/@clr/ui/clr-ui.min.css"
   ... any other styles
 ]
 ```
 
-Please refer to the [Clarity docs](https://clarity.design/documentation/get-started)
-for more details on 'Adding Clarity to an Angular project'.
+and add the `cds-theme="light"` attribute to the body element in your main HTML file:
+
+```html
+<body cds-theme="light" />
+```
+Please refer to the [Clarity docs](https://clarity.design/pages/developing#adding-clarity-to-an-existing-angular-application)
+for more details on 'Adding Clarity to an Existing Angular Application'.
 
 ## Available Components
 
-* [Auto refresh toggle](/story/components-auto-refresh--auto-refresh-story)
-* [Auto refresh toggle with manual refresh button](/story/components-auto-refresh-group--auto-refresh-group-story)
-* [Card with configurable sections](/docs/components-card-overview--docs)
-* [Copy-to-clipboard button](/docs/components-button-copy-to-clipboard--overview)
-* [Confirmation dialog](/story/components-confirmation-dialog--confirmation-dialog-story)
-* [Dialog (reactive)](/docs/components-dialog-overview--docs)
-* [Datagrid cell wrapper](/docs/components-datagrid-cell-wrapper--overview)
-* Datagrid filters:
-  * [with editable string value](
-      /docs/components-datagrid-filters-string-filter--overview)
-  * [with enumerated value from single selection (radio buttons)](
-      /docs/components-datagrid-filters-enum-single-value-filter--overview)
-  * [with enumerated value from multiple selection (checkboxes)](
-      /docs/components-datagrid-filters-enum-multi-value-filter--overview)
-  * [with enumerated value from multiple selection within grouped options (tree-view with checkboxes)](
-      /docs/components-datagrid-filters-enum-grouped-value-filter--overview)
-  * [with time range selection (from presets or manually with date-time pickers)](
-      /docs/components-datagrid-filters-time-range-filter--overview)
-* Datagrid filters (external):
-  * [with time range selection (from presets or manually with date-time pickers)](
-      /docs/components-datagrid-filters-time-range-filter-external--overview)
-* [Floating notifications](/story/components-notification--notification-story)
-* [Numeric field](/story/components-numeric-field--numeric-field-story)
-* [Popover toggle](/story/components-popover-toggle--overview)
-* [Progress spinner](/story/components-progress-spinner--progress-spinner-story)
-* [Router link wrapper](/docs/components-router-link-wrapper--overview)
-* [Search bar](/story/components-search-bar--overview)
-* [Sidebar navigation](/docs/components-sidebar-navigation--overview)
-* etc.
+- [Auto refresh toggle](/story/components-auto-refresh--auto-refresh-story)
+- [Auto refresh toggle with manual refresh button](/story/components-auto-refresh-group--auto-refresh-group-story)
+- [Card with configurable sections](/docs/components-card-overview--docs)
+- [Copy-to-clipboard button](/docs/components-button-copy-to-clipboard--overview)
+- [Confirmation dialog](/story/components-confirmation-dialog--confirmation-dialog-story)
+- [Dialog (reactive)](/docs/components-dialog-overview--docs)
+- [Datagrid cell wrapper](/docs/components-datagrid-cell-wrapper--overview)
+- Datagrid filters:
+  - [with editable string value](/docs/components-datagrid-filters-string-filter--overview)
+  - [with enumerated value from single selection (radio buttons)](/docs/components-datagrid-filters-enum-single-value-filter--overview)
+  - [with enumerated value from multiple selection (checkboxes)](/docs/components-datagrid-filters-enum-multi-value-filter--overview)
+  - [with enumerated value from multiple selection within grouped options (tree-view with checkboxes)](/docs/components-datagrid-filters-enum-grouped-value-filter--overview)
+  - [with time range selection (from presets or manually with date-time pickers)](/docs/components-datagrid-filters-time-range-filter--overview)
+- Datagrid filters (external):
+  - [with time range selection (from presets or manually with date-time pickers)](/docs/components-datagrid-filters-time-range-filter-external--overview)
+- [Floating notifications](/story/components-notification--notification-story)
+- [Numeric field](/story/components-numeric-field--numeric-field-story)
+- [Popover toggle](/story/components-popover-toggle--overview)
+- [Progress spinner](/story/components-progress-spinner--progress-spinner-story)
+- [Router link wrapper](/docs/components-router-link-wrapper--overview)
+- [Search bar](/story/components-search-bar--overview)
+- [Sidebar navigation](/docs/components-sidebar-navigation--overview)
+- etc.
 
 ## Useful Links
 
 Some of our components may include code from these third-party libraries:
-* [Clarity (MIT License)](https://clarity.design)
-* [Clarity Addons (MIT License)](https://porscheinformatik.github.io/clarity-addons/documentation/latest/get-started)
+
+- [Clarity (MIT License)](https://clarity.design)
+- [Clarity Addons (MIT License)](https://porscheinformatik.github.io/clarity-addons/documentation/latest/get-started)

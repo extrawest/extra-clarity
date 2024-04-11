@@ -39,6 +39,8 @@ const MetaStory = {
     },
     iconOnFill: {
     },
+    isDisabled: {
+    },
     label: {
     },
     placeholder: {
@@ -72,6 +74,7 @@ const MetaStory = {
     debounceMs: SEARCH_BAR_DEFAULTS.debounceTimeMs,
     highlightActive: false,
     iconOnFill: '',
+    isDisabled: false,
     label: '',
     placeholder: SEARCH_BAR_DEFAULTS.placeholder,
     value: '',

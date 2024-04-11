@@ -24,6 +24,7 @@ import { SidebarNavLabelComponent } from '../sidebar-nav-label';
 })
 export class SidebarNavGroupComponent implements OnDestroy, OnInit {
   @Input() navItem?: NavItemGroup;
+  @Input() isBold: boolean = false;
 
   isExpanded = false;
   hasActiveLink = false;
