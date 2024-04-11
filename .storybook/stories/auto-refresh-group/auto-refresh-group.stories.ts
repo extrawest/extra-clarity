@@ -1,12 +1,12 @@
 import { componentWrapperDecorator, type Meta, type StoryObj } from '@storybook/angular';
 
-import { AutoRefreshGroupComponent, DEFAULT_PERIOD_SEC } from '../../../projects/extra-clarity/auto-refresh-group';
+import { EcAutoRefreshGroupComponent, DEFAULT_PERIOD_SEC } from '../../../projects/extra-clarity/auto-refresh-group';
 
-type Story = StoryObj<AutoRefreshGroupComponent>;
+type Story = StoryObj<EcAutoRefreshGroupComponent>;
 
 export default {
   title: 'Components/Auto Refresh Group',
-  component: AutoRefreshGroupComponent,
+  component: EcAutoRefreshGroupComponent,
   decorators: [
     componentWrapperDecorator(story => `<div style="max-width:380px">${story}</div>`),
   ],
@@ -31,7 +31,7 @@ export default {
       },
     },
   },
-} as Meta<AutoRefreshGroupComponent>;
+} as Meta<EcAutoRefreshGroupComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const AutoRefreshGroupStory: Story = {
