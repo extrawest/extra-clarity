@@ -24,6 +24,7 @@
     type="button"
     class="btn btn-sm btn-icon ec-search-bar-clear"
     (click)="clearInput()"
+    [disabled]="isDisabled"
   >
     <cds-icon shape="window-close" />
   </button>

@@ -64,6 +64,10 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   @Input()
   public iconOnFill?: string;
 
+  /** Whether the input field is disabled (blocked) */
+  @Input()
+  public isDisabled = false;
+
   /**
    * An optional text label to show before the search bar
    */
@@ -80,7 +84,7 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
    * A value to be set as the entered value on this input change. `undefined` will be ignored.
    */
   @Input()
-  public value?: string | null;
+  public value?: string;
 
   /**
    * Emits the entered value on every change after the `debounceMs` delay if configured.
@@ -112,6 +116,12 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
     const debounceMsChange = changes['debounceMs'];
     if (debounceMsChange && !debounceMsChange.isFirstChange()) {
       this.observeValueChanges();
+    }
+
+    if (changes['isDisabled']) {
+      this.isDisabled
+        ? this.formControl.disable({ emitEvent: false })
+        : this.formControl.enable({ emitEvent: false });
     }
 
     const valueChange = changes['value'];
