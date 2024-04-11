@@ -6,7 +6,7 @@
   [class.no-border]="!withBorder"
   [style.height.px]="heightPx ?? sizePx"
   [style.width.px]="widthPx ?? sizePx"
-  [disabled]="disabled || !textToCopy"
+  [disabled]="disabled || !textToCopyAsString"
   [title]="title || commonStrings.keys.buttonCopyToClipboard.title"
   (click)="copy()"
 >

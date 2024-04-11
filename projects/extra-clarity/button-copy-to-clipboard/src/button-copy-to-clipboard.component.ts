@@ -4,11 +4,12 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  inject,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, copyIcon } from '@cds/core/icon';
@@ -36,7 +37,7 @@ export const BUTTON_DEFAULTS = {
   ],
   animations,
 })
-export class EcButtonCopyToClipboardComponent implements OnDestroy, OnInit {
+export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, OnInit {
   /** Whether the button is disabled (blocked) */
   @Input()
   public disabled = false;
@@ -73,12 +74,12 @@ export class EcButtonCopyToClipboardComponent implements OnDestroy, OnInit {
   public sizePx: number = BUTTON_DEFAULTS.buttonSizePx;
 
   /**
-   * A string to be copied to the clipboard when the button is pressed.
+   * A string or a number to be copied to the clipboard when the button is pressed.
    *
    * If not provided (or provided either as `null` or `undefined`), the button will be disabled.
    */
   @Input()
-  public textToCopy?: string | null;
+  public textToCopy?: string | number | null;
 
   /** A string to be shown as a tooltip on hovering the button */
   @Input()
@@ -109,14 +110,16 @@ export class EcButtonCopyToClipboardComponent implements OnDestroy, OnInit {
   public failed = new EventEmitter<unknown>();
 
   protected btnLoadingState: ClrLoadingState = ClrLoadingState.DEFAULT;
+  protected textToCopyAsString: string = '';
 
   protected readonly clrLoadingState = ClrLoadingState;
 
-  private changeDetectionRef = inject(ChangeDetectorRef);
-
   private readonly destroy$ = new Subject<void>();
 
-  constructor(protected readonly commonStrings: EcCommonStringsService) {
+  constructor(
+    protected readonly commonStrings: EcCommonStringsService,
+    private readonly changeDetectionRef:ChangeDetectorRef,
+  ) {
     ClarityIcons.addIcons(copyIcon);
   }
 
@@ -137,14 +140,14 @@ export class EcButtonCopyToClipboardComponent implements OnDestroy, OnInit {
   protected copy(): void {
     if (
       !navigator?.clipboard?.writeText ||
-      !this.textToCopy ||
+      !this.textToCopyAsString ||
       this.btnLoadingState !== ClrLoadingState.DEFAULT
     ) {
       return;
     }
 
     this.btnLoadingState = ClrLoadingState.LOADING;
-    const textToCopy = this.textToCopy;
+    const textToCopy = this.textToCopyAsString;
 
     navigator.clipboard.writeText(textToCopy)
       .then(() => {
@@ -163,6 +166,12 @@ export class EcButtonCopyToClipboardComponent implements OnDestroy, OnInit {
     this.btnLoadingState = ClrLoadingState.DEFAULT;
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['textToCopy']) {
+      this.textToCopyAsString = this.getTextToCopyAsString(this.textToCopy);
+    }
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -172,5 +181,21 @@ export class EcButtonCopyToClipboardComponent implements OnDestroy, OnInit {
     this.commonStrings.stringsChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.changeDetectionRef.markForCheck());
+  }
+
+  private getTextToCopyAsString(text: string | number | null | undefined): string {
+    if (text === 0) {
+      return '0';
+    }
+
+    if (!text) {
+      return '';
+    }
+
+    if (typeof text === 'number') {
+      return text.toString();
+    }
+
+    return text;
   }
 }
