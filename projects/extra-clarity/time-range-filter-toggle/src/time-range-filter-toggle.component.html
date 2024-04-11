@@ -11,9 +11,11 @@
   (openChange)="openChange.emit($event)"
 >
   <ec-popover-toggle-label>
-    <cds-icon shape="calendar" class="toggle-calendar-icon" />
-    {{ selectedRangeLabel }}
-    <cds-icon shape="angle" direction="down" size="10" />
+    <div class="popover-toggle-label">
+      <cds-icon shape="calendar" />
+      {{ selectedRangeLabel }}
+      <cds-icon shape="angle" direction="down" size="10" />
+    </div>
   </ec-popover-toggle-label>
 
   <ec-time-range-filter
