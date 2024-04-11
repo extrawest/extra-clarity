@@ -1,6 +1,6 @@
 {
   "name": "extra-clarity",
-  "version": "0.17.2",
+  "version": "0.17.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
