@@ -36,7 +36,7 @@ export const BUTTON_DEFAULTS = {
   ],
   animations,
 })
-export class ButtonCopyToClipboardComponent implements OnDestroy, OnInit {
+export class EcButtonCopyToClipboardComponent implements OnDestroy, OnInit {
   /** Whether the button is disabled (blocked) */
   @Input()
   public disabled = false;

@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {
   BUTTON_DEFAULTS,
-  ButtonCopyToClipboardComponent,
+  EcButtonCopyToClipboardComponent,
 } from '@extrawest/extra-clarity/button-copy-to-clipboard';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
@@ -28,7 +28,7 @@ export const CELL_WRAPPER_DEFAULTS = {
   standalone: true,
   imports: [
     CommonModule,
-    ButtonCopyToClipboardComponent,
+    EcButtonCopyToClipboardComponent,
   ],
 })
 export class DatagridCellWrapperComponent implements OnDestroy, OnInit {
