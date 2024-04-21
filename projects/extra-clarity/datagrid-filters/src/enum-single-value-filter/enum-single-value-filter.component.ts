@@ -173,7 +173,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
   public title?: string;
 
   /**
-   * A value `E | null` to be set as the actual filter's value on this input change or on `[options]` change.
+   * A value `E | null` to be set as the actual filter's value on this input change.
    *
    * If the provided value is not included in the values within the option list,
    * the filter will be reset to the default state.

@@ -115,7 +115,7 @@ with the following properties:
 * `selectedByDefault`
     An optional boolean flag to mark the option to be selected by default,
     i.e. to define a custom default state for the filter.
-    When not provided for any option, the default state is empty (`null`).
+    When not provided for any option, the default state is an empty array `[]`.
 
 The simplest option list may be formed in this way:
 
@@ -162,7 +162,7 @@ Please refer to the [API](#api) section below for more details about all the com
 ### Default State
 
 If not modified by the option list, the default filter's state is 'Show all' (nothing selected),
-which corresponds to the filter's value of `null`.
+which corresponds to the filter's value of an empty array `[]`.
 
 You can modify the default state by providing `selectedByDefault: true` for any options in the option list.
 But please note, that the parent `<clr-datagrid>` component treats the default filter's state as inactive
@@ -180,16 +180,16 @@ The output state is an object with two fields: `property` as the name of a field
 actual value to filter with:
 
 ```typescript
-// interface EcFilterState<E[] | null>
+// interface EcFilterState<E[]>
 {
   property: string | number;
-  value: E[] | null;
+  value: E[];
 }
 ```
 
 ### Read/Write the State
 
-The actual state of the filter can be read by the public getter `state` as `EcFilterState<E[] | null>`:
+The actual state of the filter can be read by the public getter `state` as `EcFilterState<E[]>`:
 
 ```html
 ...
@@ -202,11 +202,11 @@ The actual state of the filter can be read by the public getter `state` as `EcFi
 To check if the state is default, you can use the `isActive()` method, which returns `false` for the default state.
 
 There are two ways to set a new value programmatically:
-* put a value into the input `[value]` as `E[] | null`
-* pass a value into the method `setValue(value: E[] | null)`
+* put a value into the input `[value]` as `E[]`
+* pass a value into the method `setValue(value: E[])`
 
 If any of the provided values is not included in the values within the option list,
-the filter will be reset to the default state. Providing `null` will clear the current selection.
+the filter will be reset to the default state. Providing an empty array `[]` will clear the current selection.
 
 The public method `resetToDefault()` resets the filter to the default state, and
 `clearSelection()` resets the filter to the empty state (nothing selected).
