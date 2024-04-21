@@ -518,6 +518,7 @@ export class EcStringFilterComponent<T extends object = {}>
     }
 
     this.formControl.setValue(newValue, { emitEvent: false });
+    this.clrInputRef?.triggerValidation();
 
     if (newValue && this.formControl.invalid) {
       this.updateFormControlValue('');
