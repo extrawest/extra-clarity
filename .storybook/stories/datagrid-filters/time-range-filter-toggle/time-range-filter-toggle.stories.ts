@@ -157,6 +157,7 @@ const MetaStory = {
     closeOnClickOutside: true,
     closeOnScroll: true,
     open: false,
+    withTime: true,
   },
 } as Meta<EcTimeRangeFilterToggleComponent>;
 
