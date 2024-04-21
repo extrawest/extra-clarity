@@ -1,5 +1,12 @@
 <div [style.width.px]="widthPx">
-  <ng-container *ngIf="!configErrors.length; else wrongConfig">
+  @if (configErrors.length) {
+    {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
+    <ul>
+      @for (error of configErrors; track error) {
+        <li>{{ error }}</li>
+      }
+    </ul>
+  } @else {
     <clr-input-container>
       <input
         #inputElement
@@ -9,15 +16,20 @@
         type="text"
         autocomplete="off"
       />
-      <clr-control-helper *ngIf="isValueTooShort && minLength > 1">
-        {{ minLengthMessage }}
-      </clr-control-helper>
-      <clr-control-helper *ngIf="!isValueTooShort">
-        {{ searchMessage }}
-      </clr-control-helper>
+
       <clr-control-error>
         {{ validationErrorMessage }}
       </clr-control-error>
+
+      <clr-control-helper>
+        @if (!validationErrorMessage) {
+          @if (formControl.value.length >= minLength) {
+            {{ helperMessage }}
+          } @else if (minLength > 1) {
+            {{ minLengthMessage }}
+          }
+        }
+      </clr-control-helper>
     </clr-input-container>
 
     <button
@@ -29,12 +41,5 @@
       <cds-icon shape="filter-off" />
       {{ commonStrings.keys.datagridFilters.clear }}
     </button>
-  </ng-container>
+  }
 </div>
-
-<ng-template #wrongConfig>
-  {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
-  <ul>
-    <li *ngFor="let error of configErrors">{{ error }}</li>
-  </ul>
-</ng-template>

@@ -49,6 +49,8 @@ const MetaStory = {
     },
     fullMatch: {
     },
+    helperMessage: {
+    },
     placeholder: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
@@ -56,8 +58,6 @@ const MetaStory = {
           summary: STRING_FILTER_DEFAULTS.placeholder,
         },
       },
-    },
-    propertyDisplayName: {
     },
     propertyKey: {
       type: {
@@ -159,8 +159,8 @@ const MetaStory = {
     caseSensitive: false,
     debounceTimeMs: STRING_FILTER_DEFAULTS.debounceTimeMs,
     fullMatch: false,
+    helperMessage: '',
     placeholder: STRING_FILTER_DEFAULTS.placeholder,
-    propertyDisplayName: '',
     propertyKey: '',
     serverDriven: true,
     value: '',
@@ -212,8 +212,8 @@ export const WithinDatagridStory: Story = {
         [caseSensitive]="caseSensitive"
         [debounceTimeMs]="debounceTimeMs"
         [fullMatch]="fullMatch"
+        [helperMessage]="helperMessage"
         [placeholder]="placeholder"
-        [propertyDisplayName]="propertyDisplayName"
         [serverDriven]="serverDriven"
         [value]="value"
         [widthPx]="widthPx"

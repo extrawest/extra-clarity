@@ -35,7 +35,6 @@ interface DatagridFilters {
   emailNotValid: string;
   enteredValueInvalid: string;
   filterOptions: string;
-  full: string;
   inputIssuesMessage: string;
   loading: string;
   maxLengthError: string;
@@ -44,13 +43,11 @@ interface DatagridFilters {
   minLengthMessage: string;
   noOptionsAvailable: string;
   noOptionsFound: string;
-  partial: string;
   patternError: string;
   pleaseWait: string;
   propertyKeyRequired: string;
   rangeLengthError: string;
   resetToDefault: string;
-  searchMessage: string;
   selected: string;
   selectedItems: string;
   selectedNone: string;
