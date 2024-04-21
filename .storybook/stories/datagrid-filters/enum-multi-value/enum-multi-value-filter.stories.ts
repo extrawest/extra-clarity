@@ -136,7 +136,7 @@ const MetaStory = {
       control: false,
       table: {
         category: 'Getters',
-        type: { summary: 'EcFilterState<E[] | null>' },
+        type: { summary: 'EcFilterState<E[]>' },
         defaultValue: {
         },
       },
