@@ -1,90 +1,111 @@
 <div [style.width.px]="widthPx">
-  <ng-container *ngIf="!configErrors.length; else wrongConfig">
+  @if (configErrors.length) {
+    <!-- Config Errors -->
 
-    <ng-container *ngIf="!loading; else loadingOptions">
-      <div class="filter-title" *ngIf="title">
-        {{ title }}
+    <div class="config-errors">
+      {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
+      <ul>
+        @for (error of configErrors; track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+  } @else if (loading) {
+    <!-- Options loading -->
+
+    <div class="await-loading">
+      <div>
+        {{ commonStrings.keys.datagridFilters.loading }}
+        <span class="spinner spinner-inline"></span>
       </div>
+      <div>{{ commonStrings.keys.datagridFilters.pleaseWait }}</div>
+    </div>
+  } @else {
+    <!-- Normal mode -->
 
-      <div class="filter-selected-value" *ngIf="
-        showSelectedValue === EcShowSelected.Always ||
-        showSelectedValue === EcShowSelected.WithSearchbar && showSearchBar
-      ">
-        {{ selectedValueLabel }}
-      </div>
+    @if (title) {
+      <div class="filter-title">{{ title }}</div>
+    }
 
+    @if (
+      showSelectedValue === EcShowSelected.Always ||
+      (showSelectedValue === EcShowSelected.WithSearchbar && showSearchBar)
+    ) {
+      <div class="filter-selected-value">{{ selectedValueLabel }}</div>
+    }
+
+    @if (showSearchBar) {
       <ec-search-bar
         class="filter-search-bar"
-        *ngIf="showSearchBar"
         (valueChange)="onSearchTermChange($event)"
         [debounceMs]="0"
         [highlightActive]="false"
         [placeholder]="commonStrings.keys.datagridFilters.filterOptions"
       />
+    }
 
-      <div class="filter-options" [style.max-height.px]="maxHeightPx">
+    <div class="filter-options" [style.max-height.px]="maxHeightPx">
+      @if (visibleOptions.length) {
         <clr-radio-container
-          *ngIf="visibleOptions.length; else noVisibleOptions"
           class="radio-container"
           [class.stretch-labels]="stretchLabels"
         >
-          <clr-radio-wrapper
-            *ngFor="let option of visibleOptions; trackBy: trackByValue"
-          >
-            <input
-              type="radio"
-              clrRadio
-              [name]="propertyKey"
-              [checked]="option.value === filterValue"
-              (change)="onInputChange(option.value)"
-            />
-            <label>
-              <ng-container
-                [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
-                [ngTemplateOutletContext]="{
-                  $implicit: option,
-                  marked: searchTerm
-                }"
+          @for (option of visibleOptions; track option) {
+            <clr-radio-wrapper>
+              <input
+                type="radio"
+                clrRadio
+                [name]="propertyKey"
+                [checked]="option.value === filterValue"
+                (change)="onInputChange(option.value)"
               />
-              <ng-template #defaultLabelTpl>
-                <span
-                  *ngIf="searchTerm; else unmarkedLabel"
-                  [innerHtml]="option.label | markMatched : searchTerm"
-                ></span>
-                <ng-template #unmarkedLabel>
-                  {{ option.label }}
+              <label>
+                <ng-container
+                  [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
+                  [ngTemplateOutletContext]="{
+                    $implicit: option,
+                    marked: searchTerm
+                  }"
+                />
+                <ng-template #defaultLabelTpl>
+                  @if (searchTerm) {
+                    <span
+                      [innerHtml]="option.label | markMatched: searchTerm"
+                    ></span>
+                  } @else {
+                    {{ option.label }}
+                  }
                 </ng-template>
-              </ng-template>
-            </label>
-          </clr-radio-wrapper>
+              </label>
+            </clr-radio-wrapper>
+          }
         </clr-radio-container>
+      } @else {
+        <div class="no-options">
+          @if (options.length) {
+            <cds-icon shape="warning-standard" status="warning" solid />
+            {{ commonStrings.keys.datagridFilters.noOptionsFound }}
+          } @else {
+            <cds-icon shape="info-standard" status="info" solid />
+            {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
+          }
+        </div>
+      }
+    </div>
 
-        <ng-template #noVisibleOptions>
-          <div class="no-options">
-            <ng-container *ngIf="options.length; else noOptionsAtAll">
-              <cds-icon shape="warning-standard" status="warning" solid />
-              {{ commonStrings.keys.datagridFilters.noOptionsFound }}
-            </ng-container>
-            <ng-template #noOptionsAtAll>
-              <cds-icon shape="info-standard" status="info" solid />
-              {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
-            </ng-template>
-          </div>
-        </ng-template>
-      </div>
+    <div class="filter-buttons">
+      <button
+        type="button"
+        class="btn btn-block btn-sm"
+        (click)="clearSelection()"
+        [disabled]="filterValue === null"
+      >
+        <cds-icon shape="filter-off" />
+        {{ commonStrings.keys.datagridFilters.clear }}
+      </button>
 
-      <div class="filter-buttons">
+      @if (hasCustomDefaultState) {
         <button
-          type="button"
-          class="btn btn-block btn-sm"
-          (click)="clearSelection()"
-          [disabled]="filterValue === null"
-        >
-          <cds-icon shape="filter-off" />
-          {{ commonStrings.keys.datagridFilters.showAll }}
-        </button>
-        <button
-          *ngIf="hasCustomDefaultState"
           type="button"
           class="btn btn-block btn-sm"
           (click)="resetToDefault()"
@@ -93,26 +114,7 @@
           <cds-icon shape="filter" />
           {{ commonStrings.keys.datagridFilters.resetToDefault }}
         </button>
-      </div>
-    </ng-container>
-  </ng-container>
-</div>
-
-<ng-template #loadingOptions>
-  <div class="await-loading">
-    <div>
-      {{ commonStrings.keys.datagridFilters.loading }}
-      <span class="spinner spinner-inline"></span>
+      }
     </div>
-    <div>{{ commonStrings.keys.datagridFilters.pleaseWait }}</div>
-  </div>
-</ng-template>
-
-<ng-template #wrongConfig>
-  <div class="config-errors">
-    {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
-    <ul>
-      <li *ngFor="let error of configErrors">{{ error }}</li>
-    </ul>
-  </div>
-</ng-template>
+  }
+</div>

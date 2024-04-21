@@ -280,12 +280,14 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    const isValueChanged = !!changes['value'];
+
     if (changes['options']) {
-      this.onOptionsChange();
+      this.onOptionsChange(isValueChanged ? this.value : undefined);
       return;
     }
 
-    if (changes['value'] && this.value !== undefined) {
+    if (isValueChanged && this.value !== undefined) {
       this.setValue(this.value);
     }
   }
@@ -381,10 +383,6 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
     this.updateVisibleOptions();
   }
 
-  protected trackByValue(index: number, option: EcEnumValueFilterOption<E>): E {
-    return option.value;
-  }
-
   private checkInputsValidity(): string[] {
     if (this.propertyKey) {
       return [];
@@ -402,7 +400,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
     return this.options.some(option => option.value === value);
   }
 
-  private onOptionsChange(): void {
+  private onOptionsChange(newFilterValue: E | null | undefined): void {
     this.updateVisibleOptions();
 
     const optionsSelectedByDefault = this.options.filter(option => option.selectedByDefault);
@@ -413,12 +411,12 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
 
     this.hasCustomDefaultState = this.defaultValue !== null;
 
-    if (this.value === undefined) {
+    if (newFilterValue === undefined) {
       this.setValue(this.filterValue ?? this.defaultValue);
       return;
     }
 
-    this.setValue(this.value);
+    this.setValue(newFilterValue);
   }
 
   private updateFilterValue(
