@@ -23,7 +23,7 @@ import { Params, RouterLink } from '@angular/router';
     RouterLink,
   ],
 })
-export class RouterLinkWrapperComponent {
+export class EcRouterLinkWrapperComponent {
   /**
    * When `true`-ish, enables the link (including styling), by wrapping the content with `<a [routerLink]>` internally.
    *

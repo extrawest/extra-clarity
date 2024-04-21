@@ -6,15 +6,15 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 
-import { RouterLinkWrapperComponent } from '../../../projects/extra-clarity/router-link-wrapper';
+import { EcRouterLinkWrapperComponent } from '../../../projects/extra-clarity/router-link-wrapper';
 import { hideAllControlRows } from '../../helpers';
 
-type Story = StoryObj<RouterLinkWrapperComponent>;
+type Story = StoryObj<EcRouterLinkWrapperComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Router Link Wrapper',
-  component: RouterLinkWrapperComponent,
+  component: EcRouterLinkWrapperComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -54,7 +54,7 @@ const MetaStory = {
     fwdRouterLink: '/',
     queryParams: undefined,
   },
-} as Meta<RouterLinkWrapperComponent>;
+} as Meta<EcRouterLinkWrapperComponent>;
 
 export default MetaStory;
 
@@ -64,7 +64,7 @@ export const WrapperItselfStory: Story = {
   decorators: [
     moduleMetadata({
       imports: [
-        RouterLinkWrapperComponent,
+        EcRouterLinkWrapperComponent,
       ],
     }),
   ],
@@ -91,7 +91,7 @@ export const DocsExampleStory: Story = {
     moduleMetadata({
       imports: [
         RouterLink,
-        RouterLinkWrapperComponent,
+        EcRouterLinkWrapperComponent,
       ],
     }),
   ],
