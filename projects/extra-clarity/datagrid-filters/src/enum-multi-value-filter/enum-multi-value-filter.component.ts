@@ -186,7 +186,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
    * Providing `null` will clear the current selection, and `undefined` will be ignored.
    * */
   @Input()
-  public value: E[] | null;
+  public value?: E[] | null;
 
   /**
    * Width (in pixels) of the filter's container
@@ -282,11 +282,14 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    const isValueChanged = !!changes['value'];
+
     if (changes['options']) {
-      this.onOptionsChange();
+      this.onOptionsChange(isValueChanged ? this.value : undefined);
       return;
     }
-    if (changes['value'] && this.value !== undefined) {
+
+    if (isValueChanged && this.value !== undefined) {
       this.setValue(this.value);
     }
   }
@@ -430,20 +433,22 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
   }
 
-  private onOptionsChange(): void {
+  private onOptionsChange(newFilterValue: E[] | null | undefined): void {
     this.updateVisibleOptions();
 
     this.isStateDefault = this.checkIfStateIsDefault();
     this.hasCustomDefaultState = this.options.some(option => option.selectedByDefault);
 
-    if (this.value !== undefined) {
-      this.setValue(this.value);
+    if (newFilterValue !== undefined) {
+      this.setValue(newFilterValue);
       return;
     }
+
     if (this.selectedValues.size === 0) {
       this.resetToDefault();
       return;
     }
+
     this.setValue(Array.from(this.selectedValues));
   }
 

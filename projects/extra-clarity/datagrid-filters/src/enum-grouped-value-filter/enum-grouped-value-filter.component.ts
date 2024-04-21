@@ -295,11 +295,14 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    const isValueChanged = !!changes['value'];
+
     if (changes['options']) {
-      this.onOptionsChange();
+      this.onOptionsChange(isValueChanged ? this.value : undefined);
       return;
     }
-    if (changes['value'] && this.value !== undefined) {
+
+    if (isValueChanged && this.value !== undefined) {
       this.setValue(this.value);
     }
   }
@@ -492,7 +495,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
   }
 
-  private onOptionsChange(): void {
+  private onOptionsChange(newFilterValue: E[] | null | undefined): void {
     this.updateVisibleOptions();
 
     this.totalOptionItems = this.options.reduce((total, group) => total + group.items.length, 0);
@@ -504,14 +507,16 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
 
     this.isGroupExpanded = this.options.map(group => this.expandedAll ?? group.expandedByDefault ?? false);
 
-    if (this.value !== undefined) {
-      this.setValue(this.value);
+    if (newFilterValue !== undefined) {
+      this.setValue(newFilterValue);
       return;
     }
+
     if (this.selectedValues.size === 0) {
       this.resetToDefault();
       return;
     }
+
     this.setValue(Array.from(this.selectedValues));
   }
 
