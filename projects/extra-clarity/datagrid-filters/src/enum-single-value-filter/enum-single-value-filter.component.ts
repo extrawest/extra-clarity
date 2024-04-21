@@ -383,10 +383,6 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
     this.updateVisibleOptions();
   }
 
-  protected trackByValue(index: number, option: EcEnumValueFilterOption<E>): E {
-    return option.value;
-  }
-
   private checkInputsValidity(): string[] {
     if (this.propertyKey) {
       return [];
