@@ -30,22 +30,30 @@ yarn add @extrawest/extra-clarity
 To work with the library, you also need to add the Clarity packages:
 
 ```shell
-npm i @cds/angular @clr/angular @clr/ui
+npm i @cds/angular @cds/core @clr/angular @clr/ui
 
-yarn add @cds/angular @clr/angular @clr/ui
+yarn add @cds/angular @cds/core @clr/angular @clr/ui
 ```
 
 And then add the global Clarity styles to your `angular.json` config:
 
 ```json
 "styles": [
-  "node_modules/@clr/ui/clr-ui.min.css",
-  .. any other styles
+  "node_modules/@cds/core/global.min.css",
+  "node_modules/@cds/core/styles/theme.dark.min.css",
+  "node_modules/@clr/ui/clr-ui.min.css"
+  ... any other styles
 ]
 ```
 
-Please refer to the [Clarity docs](https://clarity.design/documentation/get-started)
-for more details on 'Adding Clarity to an Angular project'.
+and add the `cds-theme="light"` attribute to the body element in your main HTML file:
+
+```html
+<body cds-theme="light" />
+```
+
+Please refer to the [Clarity docs](https://clarity.design/pages/developing#adding-clarity-to-an-existing-angular-application)
+for more details on 'Adding Clarity to an Existing Angular Application'.
 
 ## Documentation
 
