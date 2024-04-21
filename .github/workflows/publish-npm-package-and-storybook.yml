@@ -1,4 +1,3 @@
-
 name: Build & publish extra-clarity and storybook
 
 on:
@@ -30,8 +29,8 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         id: node-modules-cache
         with:
           path: ${{ env.NODE_MODULES_PATH }}
@@ -40,7 +39,7 @@ jobs:
         run: npm ci
       - name: Build extra-clarity
         run: npm run ${{ env.SCRIPT_BUILD_LIB }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
           path: ${{ env.LIB_DIST_PATH }}
@@ -53,8 +52,8 @@ jobs:
     outputs:
       package-json-changed: ${{ steps.check-package-json.outputs.changed }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
         id: check-package-json
         with:
           filters: |
@@ -68,11 +67,11 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VER }}
           registry-url: ${{ env.NPM_REGISTRY }}
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
           path: ${{ env.LIB_DIST_PATH }}
@@ -87,8 +86,8 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         id: node-modules-cache
         with:
           path: ${{ env.NODE_MODULES_PATH }}
