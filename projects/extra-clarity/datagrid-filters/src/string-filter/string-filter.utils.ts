@@ -18,7 +18,7 @@ const uuidRegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12
 
 export function uuidValidator(): ValidatorFn {
   return (control: AbstractControl<string>): ValidationErrors | null => {
-    if (!control.value || control.value.match(uuidRegExp)) {
+    if (!control.value || uuidRegExp.test(control.value)) {
       return null;
     }
     return {

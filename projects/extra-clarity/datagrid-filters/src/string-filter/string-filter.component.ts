@@ -88,6 +88,12 @@ export class EcStringFilterComponent<T extends object = {}>
   public fullMatch = false;
 
   /**
+   * String to be shown as the helper text under the input field when an entered value is valid
+   * */
+  @Input()
+  public helperMessage?: string;
+
+  /**
    * Max length validation for the filter's value.
    *
    * Utilizes `Validators.maxlength` from `@angular/forms`.
@@ -126,14 +132,6 @@ export class EcStringFilterComponent<T extends object = {}>
    * */
   @Input()
   public placeholder?: string;
-
-  /**
-   * Free-from identifier of a filtering field to be shown in the helper text under the input field.
-   *
-   * If not set, the `[propertyKey]` value will be used instead.
-   * */
-  @Input()
-  public propertyDisplayName?: string;
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -243,27 +241,11 @@ export class EcStringFilterComponent<T extends object = {}>
     return !this.filterValue;
   }
 
-  protected get isValueTooShort(): boolean {
-    return this.formControl.value.length < this.minLength;
-  }
-
   protected get minLengthMessage(): string {
     return this.commonStrings.parse(
       this.commonStrings.keys.datagridFilters.minLengthMessage,
       {
         MIN_LENGTH: this.minLength.toString(),
-      },
-    );
-  }
-
-  protected get searchMessage(): string {
-    return this.commonStrings.parse(
-      this.commonStrings.keys.datagridFilters.searchMessage,
-      {
-        TYPE: this.fullMatch
-          ? this.commonStrings.keys.datagridFilters.full
-          : this.commonStrings.keys.datagridFilters.partial,
-        PROPERTY_NAME: this.propertyDisplayName ?? '',
       },
     );
   }
@@ -426,10 +408,6 @@ export class EcStringFilterComponent<T extends object = {}>
   }
 
   private checkInputsValidity(): string[] {
-    if (!this.propertyDisplayName) {
-      this.propertyDisplayName = this.propertyKey;
-    }
-
     const inputsErrors: string[] = [];
 
     if (!this.propertyKey) {

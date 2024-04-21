@@ -24,7 +24,6 @@ export const commonStringsDefault: EcCommonStrings = {
     emailNotValid: 'The entered value is not a valid e-mail',
     enteredValueInvalid: 'The entered value is invalid',
     filterOptions: 'Filter the options...',
-    full: 'full',
     inputIssuesMessage: 'There are some issues with the component"s inputs:',
     loading: 'Loading...',
     maxLengthError:
@@ -35,14 +34,12 @@ export const commonStringsDefault: EcCommonStrings = {
     minLengthMessage: 'Please provide at least {MIN_LENGTH} characters',
     noOptionsAvailable: 'No options available',
     noOptionsFound: 'No options found for the entered search-term',
-    partial: 'partial',
     patternError: `[pattern] is required when [validator]="'pattern'"`,
     pleaseWait: 'Please wait',
     propertyKeyRequired: '[propertyKey] is required',
     rangeLengthError:
       '[maxLength] must be less than or equal to [minLength] ({MAX_LENGTH} < {MIN_LENGTH})',
     resetToDefault: 'Reset to default',
-    searchMessage: 'Searching for a {TYPE} match in "{PROPERTY_NAME}"',
     selected: 'Selected: {VALUE}',
     selectedItems: 'Selected {SELECTED} out of {TOTAL}',
     selectedNone: 'Selected none',
