@@ -66,7 +66,7 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   ],
 })
 export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
-  extends EcDatagridFilter<E[] | null, T>
+  extends EcDatagridFilter<E[], T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.
@@ -127,7 +127,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
    *   even when a custom label template is provided by the `[customLabelTpl]` input.
    * * `selectedByDefault`: an optional boolean flag to mark the options selected by default,
    *   i.e. to define a custom default state of the filter;
-   *   when not provided for any option, the default state is empty (null).
+   *   when not provided for any option, the default state is an empty array `[]`.
    *
    * NOTE: The parent `<clr-datagrid>` component treats the default filter's state as inactive
    * and ignores the actual filter's value in that case. So, if you set a custom default value,
@@ -190,15 +190,15 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
   public title?: string;
 
   /**
-   * A value `E[] | null` to be set as the actual filter's value on this input change or on `[options]` change.
+   * An array of values `E[]` to be set as the actual filter's state on this input change.
    *
    * If any of the provided values is not included in the values within the option list,
    * the filter will be reset to the default state.
    *
-   * Providing `null` will clear the current selection, and `undefined` will be ignored.
+   * Providing an empty array `[]` will clear the current selection, and `undefined` will be ignored.
    * */
   @Input()
-  public value?: E[] | null;
+  public value?: E[];
 
   /**
    * Width (in pixels) of the filter's container
@@ -214,10 +214,10 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<EcFilterState<E[] | null>>`
+   * `EventEmitter<EcFilterState<E[]>>`
    */
   @Output()
-  public filterValueChanged = new EventEmitter<EcFilterState<E[] | null>>();
+  public filterValueChanged = new EventEmitter<EcFilterState<E[]>>();
 
   protected configErrors: string[] = [];
   protected hasCustomDefaultState = false;
@@ -258,14 +258,10 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
    *
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
-  override get state(): EcFilterState<E[] | null> {
-    const filterValue = this.selectedValues.size > 0
-      ? Array.from(this.selectedValues)
-      : null;
-
+  override get state(): EcFilterState<E[]> {
     return {
       property: this.propertyKey,
-      value: filterValue,
+      value: Array.from(this.selectedValues),
     };
   }
 
@@ -388,19 +384,19 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
   }
 
   /**
-   * Set the actual filter's value as `E[] | null`.
+   * Set the actual filter's value as `E[]`.
    *
    * If any of the provided values is not included in the values within the option list,
    *   the filter will be reset to the default state.
    *
-   * Providing `null` will clear the current selection, which is equivalent to calling `clearSelection()`.
+   * Providing an empty array `[]` will clear the current selection, which is equivalent to calling `clearSelection()`.
    * */
-  override setValue(values: E[] | null): void {
-    if (!values || !this.areAllValuesAllowed(values)) {
-      this.resetToDefault();
+  override setValue(values: E[]): void {
+    if (Array.isArray(values) && this.areAllValuesAllowed(values)) {
+      this.updateSelectedValues(new Set(values));
       return;
     }
-    this.updateSelectedValues(new Set(values));
+    this.resetToDefault();
   }
 
   protected getGroupSelectedAmountLabel(group: EcEnumValueFilterOptionGroup<E>): string {
@@ -467,15 +463,15 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     this.updateVisibleOptions();
   }
 
-  protected trackByValue(index: number, option: EcEnumValueFilterOption<E>): E {
+  protected trackByValue(_index: number, option: EcEnumValueFilterOption<E>): E {
     return option.value;
   }
 
-  private areAllValuesAllowed(filterValues: E[]): boolean {
-    if (filterValues.length === 0) {
+  private areAllValuesAllowed(values: E[]): boolean {
+    if (values.length === 0) {
       return true;
     }
-    return filterValues.every(value => {
+    return values.every(value => {
       return this.options.some(group => group.items.some(option => option.value === value));
     });
   }
@@ -495,7 +491,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
   }
 
-  private onOptionsChange(newFilterValue: E[] | null | undefined): void {
+  private onOptionsChange(newFilterValue: E[] | undefined): void {
     this.updateVisibleOptions();
 
     this.totalOptionItems = this.options.reduce((total, group) => total + group.items.length, 0);
@@ -527,12 +523,15 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     if (areSetsEqual(newSelectedValues, this.selectedValues, { ignoreOrder: true })) {
       return;
     }
+
     this.selectedValues = newSelectedValues;
     this.isStateDefault = this.checkIfStateIsDefault();
+
     if (params.emit) {
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
+
     this.changeDetectorRef.markForCheck();
   }
 
