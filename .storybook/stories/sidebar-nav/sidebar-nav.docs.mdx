@@ -34,7 +34,7 @@ import * as Stories from './sidebar-nav.stories';
 > **Standalone component**: yes
 
 ```typescript
-import { SidebarNavComponent } from '@extrawest/extra-clarity/button-copy-to-clipboard';
+import { EcSidebarNavComponent } from '@extrawest/extra-clarity/button-copy-to-clipboard';
 ```
 ```html
 <ec-sidebar-nav [navList]="[]" />
@@ -86,19 +86,19 @@ and slightly improve the original navigation component:
 handle auto expanding groups, disabling active items to prevent loosing url query params, etc.
 
 You may find useful these topics from the original Clarity docs about the app layout and navigation:
-* [Vertical Nav](https://clarity.design/documentation/vertical-nav/)
+* [Vertical Nav](https://clarity.design/documentation/vertical-nav)
 * [Navigation](https://clarity.design/documentation/navigation)
 * [Application Layout](https://clarity.design/documentation/app-layout)
 
 ### Configuration
 
-The only required input is `[navList]` containing the actual list (array) of navigational items `NavListItem[]`.
+The only required input is `[navList]` containing the actual list (array) of navigational items `EcNavListItem[]`.
 
 Each navigational item can be one of the following types:
 
-1.`NavItemLink` - a router link or a regular href-link:
+1.`EcNavItemLink` - a router link or a regular href-link:
 ```typescript
-interface NavItemLink {
+interface EcNavItemLink {
   type: 'router-link' | 'href';
   label: string;
   link: string;
@@ -109,19 +109,19 @@ interface NavItemLink {
 `router-link` should be used for the internal (in-app) navigation,
 when `href` links may be useful for the `mailto:` kind of links or any external reference.
 
-2.`NavItemDivider` - a horizontal separator between items:
+2.`EcNavItemDivider` - a horizontal separator between items:
 ```typescript
-interface NavItemDivider {
+interface EcNavItemDivider {
   type: 'divider',
 }
 ```
 
-3.`NavItemGroup` - an expandable group of nested items:
+3.`EcNavItemGroup` - an expandable group of nested items:
 ```typescript
-interface NavItemGroup {
+interface EcNavItemGroup {
   type: 'group';
   label: string;
-  children: (NavItemLink | NavItemDivider)[];
+  children: (EcNavItemLink | EcNavItemDivider)[];
   expanded?: boolean;
   icon?: string;
   data?: unknown;
@@ -139,7 +139,7 @@ To simplify creating of a nav list, there are helper functions and constants:
 import { createGroup, createHrefLink, createRouterLink, divider } from '@extrawest/extra-clarity/sidebar-nav';
 ```
 
-1.`createRouterLink(label: string, link: string, icon?: string): NavItemLink`:
+1.`createRouterLink(label: string, link: string, icon?: string): EcNavItemLink`:
 ```typescript
 const navRouterLink = createRouterLink(
   'Dashboard',
@@ -147,14 +147,14 @@ const navRouterLink = createRouterLink(
 );
 
 // which is equivalent to:
-const navRouterLink: NavItemLink = {
+const navRouterLink: EcNavItemLink = {
   type: 'router-link',
   label: 'Dashboard',
   link: '/dashboard',
 };
 ```
 
-2.`createHrefLink(label: string, link: string, icon?: string): NavItemLink`:
+2.`createHrefLink(label: string, link: string, icon?: string): EcNavItemLink`:
 ```typescript
 const navHrefLink = createHrefLink(
   'Send Feedback',
@@ -162,14 +162,14 @@ const navHrefLink = createHrefLink(
 );
 
 // which is equivalent to:
-const navHrefLink: NavItemLink = {
+const navHrefLink: EcNavItemLink = {
   type: 'href',
   label: 'Send Feedback',
   link: 'mailto:support@example.com',
 };
 ```
 
-3.`createGroup(label: string, children: (NavItemLink | NavItemDivider)[], icon?: string): NavItemGroup`:
+3.`createGroup(label: string, children: (NavItemLink | NavItemDivider)[], icon?: string): EcNavItemGroup`:
 ```typescript
 const navGroup = createGroup('Group Label', [
   createRouterLink('Nested Item #1', '/nested-link-1'),
@@ -177,7 +177,7 @@ const navGroup = createGroup('Group Label', [
 ]);
 
 // which is equivalent to:
-const navGroup: NavItemGroup = {
+const navGroup: EcNavItemGroup = {
   type: 'Group Label',
   children: [
     {
@@ -196,7 +196,7 @@ const navGroup: NavItemGroup = {
 
 4.`divider` is a constant to substitute `{ type: 'divider' }`:
 ```typescript
-const navList: NavListItem[] = [
+const navList: EcNavListItem[] = [
   createRouterLink('Router Link #1', '/router-link-1'),
   createRouterLink('Router Link #1', '/router-link-1'),
   divider,
@@ -213,7 +213,7 @@ To do this, you should put the `shape` property of the selected icon
 into the `icon` property of the nav item's configuration object:
 
 ```typescript
-const navHrefLink: NavItemLink = {
+const navHrefLink: EcNavItemLink = {
   type: 'href',
   label: 'Send Feedback',
   link: 'mailto:support@example.com',

@@ -3,7 +3,7 @@ import { IsActiveMatchOptions, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
 @Injectable()
-export class SidebarNavService {
+export class EcSidebarNavService {
   customLabelTemplateRef?: TemplateRef<unknown>;
 
   readonly navigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));

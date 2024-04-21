@@ -4,9 +4,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CdsIconModule } from '@cds/angular';
 import { ClrVerticalNavModule } from '@clr/angular';
 
-import { NAV_ITEM_TYPE, NavListItem } from '../../sidebar-nav.models';
-import { SidebarNavService } from '../../sidebar-nav.service';
-import { SidebarNavLabelComponent } from '../sidebar-nav-label';
+import { EC_NAV_ITEM_TYPE, EcNavListItem } from '../../sidebar-nav.models';
+import { EcSidebarNavService } from '../../sidebar-nav.service';
+import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
 
 @Component({
   selector: 'ec-sidebar-nav-item',
@@ -18,20 +18,20 @@ import { SidebarNavLabelComponent } from '../sidebar-nav-label';
     CommonModule,
     RouterLink,
     RouterLinkActive,
-    ClrVerticalNavModule,
-    SidebarNavLabelComponent,
     CdsIconModule,
+    ClrVerticalNavModule,
+    EcSidebarNavLabelComponent,
   ],
 })
-export class SidebarNavItemComponent implements OnInit {
-  @Input() navItem?: NavListItem;
+export class EcSidebarNavItemComponent implements OnInit {
+  @Input() navItem?: EcNavListItem;
   @Input() isBold: boolean = false;
 
-  readonly NavItemTypeEnum = NAV_ITEM_TYPE;
+  readonly NavItemTypeEnum = EC_NAV_ITEM_TYPE;
 
   constructor(
     readonly changeDetectionRef: ChangeDetectorRef,
-    readonly navService: SidebarNavService,
+    readonly navService: EcSidebarNavService,
   ) {}
 
   ngOnInit(): void {

@@ -4,10 +4,10 @@ import { CdsIconModule } from '@cds/angular';
 import { ClrVerticalNavModule } from '@clr/angular';
 import { Subject, takeUntil } from 'rxjs';
 
-import { NAV_ITEM_TYPE, NavItemGroup } from '../../sidebar-nav.models';
-import { SidebarNavService } from '../../sidebar-nav.service';
-import { SidebarNavItemComponent } from '../sidebar-nav-item';
-import { SidebarNavLabelComponent } from '../sidebar-nav-label';
+import { EC_NAV_ITEM_TYPE, EcNavItemGroup } from '../../sidebar-nav.models';
+import { EcSidebarNavService } from '../../sidebar-nav.service';
+import { EcSidebarNavItemComponent } from '../sidebar-nav-item';
+import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
 
 @Component({
   selector: 'ec-sidebar-nav-group',
@@ -18,12 +18,12 @@ import { SidebarNavLabelComponent } from '../sidebar-nav-label';
     CommonModule,
     CdsIconModule,
     ClrVerticalNavModule,
-    SidebarNavItemComponent,
-    SidebarNavLabelComponent,
+    EcSidebarNavItemComponent,
+    EcSidebarNavLabelComponent,
   ],
 })
-export class SidebarNavGroupComponent implements OnDestroy, OnInit {
-  @Input() navItem?: NavItemGroup;
+export class EcSidebarNavGroupComponent implements OnDestroy, OnInit {
+  @Input() navItem?: EcNavItemGroup;
   @Input() isBold: boolean = false;
 
   isExpanded = false;
@@ -33,7 +33,7 @@ export class SidebarNavGroupComponent implements OnDestroy, OnInit {
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
-    protected navService: SidebarNavService,
+    protected navService: EcSidebarNavService,
   ) {}
 
   ngOnDestroy(): void {
@@ -55,7 +55,7 @@ export class SidebarNavGroupComponent implements OnDestroy, OnInit {
 
   private checkForActiveLinks(): void {
     this.hasActiveLink = !!this.navItem?.children.some(nestedItem => (
-      nestedItem.type === NAV_ITEM_TYPE.RouterLink &&
+      nestedItem.type === EC_NAV_ITEM_TYPE.RouterLink &&
       this.navService.isPathActive(nestedItem.link, 'subset')
     ));
 

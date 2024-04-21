@@ -1,26 +1,26 @@
-import { NAV_ITEM_TYPE, NavItemGroup, NavItemLink, NavListSingleItem } from './sidebar-nav.models';
+import { EC_NAV_ITEM_TYPE, EcNavItemGroup, EcNavItemLink, EcNavListSingleItem } from './sidebar-nav.models';
 
 export const divider = {
-  type: NAV_ITEM_TYPE.Divider,
+  type: EC_NAV_ITEM_TYPE.Divider,
 };
 
-export const createGroup = (label: string, children: NavListSingleItem[], icon?: string): NavItemGroup => ({
+export const createGroup = (label: string, children: EcNavListSingleItem[], icon?: string): EcNavItemGroup => ({
   label,
   children,
   icon,
-  type: NAV_ITEM_TYPE.Group,
+  type: EC_NAV_ITEM_TYPE.Group,
 });
 
-export const createHrefLink = (label: string, link: string, icon?: string): NavItemLink => ({
+export const createHrefLink = (label: string, link: string, icon?: string): EcNavItemLink => ({
   label,
   link,
   icon,
-  type: NAV_ITEM_TYPE.Href,
+  type: EC_NAV_ITEM_TYPE.Href,
 });
 
-export const createRouterLink = (label: string, link: string, icon?: string): NavItemLink => ({
+export const createRouterLink = (label: string, link: string, icon?: string): EcNavItemLink => ({
   label,
   link,
   icon,
-  type: NAV_ITEM_TYPE.RouterLink,
+  type: EC_NAV_ITEM_TYPE.RouterLink,
 });

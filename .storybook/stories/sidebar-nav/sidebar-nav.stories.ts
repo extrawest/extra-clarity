@@ -9,15 +9,15 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 
-import { SidebarNavComponent } from '../../../projects/extra-clarity/sidebar-nav';
+import { EcSidebarNavComponent } from '../../../projects/extra-clarity/sidebar-nav';
 import { hideAllControlRows } from '../../helpers';
 
-type Story = StoryObj<SidebarNavComponent>;
+type Story = StoryObj<EcSidebarNavComponent>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MetaStory = {
   title: 'Components/Sidebar Navigation',
-  component: SidebarNavComponent,
+  component: EcSidebarNavComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -41,7 +41,7 @@ const MetaStory = {
         value: '[]',
       },
       table: {
-        type: { summary: '(NavItemLink | NavItemGroup | NavItemDivider)[]' },
+        type: { summary: '(EcNavItemLink | EcNavItemGroup | EcNavItemDivider)[]' },
       },
     },
     rootLevelBold: {
@@ -53,7 +53,7 @@ const MetaStory = {
     customLabelTpl: undefined,
     navList: [],
   },
-} as Meta<SidebarNavComponent>;
+} as Meta<EcSidebarNavComponent>;
 
 export default MetaStory;
 
@@ -64,7 +64,7 @@ export const ComponentItselfStory: Story = {
     moduleMetadata({
       imports: [
         ClrVerticalNavModule,
-        SidebarNavComponent,
+        EcSidebarNavComponent,
       ],
     }),
     componentWrapperDecorator(ClrVerticalNav),

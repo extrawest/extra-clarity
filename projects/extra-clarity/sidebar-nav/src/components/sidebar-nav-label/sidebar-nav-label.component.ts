@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
 
-import { NavItemGroup, NavItemLink } from '../../sidebar-nav.models';
-import { SidebarNavService } from '../../sidebar-nav.service';
+import { EcNavItemGroup, EcNavItemLink } from '../../sidebar-nav.models';
+import { EcSidebarNavService } from '../../sidebar-nav.service';
 
 @Component({
   selector: 'ec-sidebar-nav-label',
@@ -26,8 +26,8 @@ import { SidebarNavService } from '../../sidebar-nav.service';
     '[style.font-weight]': `fontWeight`,
   },
 })
-export class SidebarNavLabelComponent implements OnInit {
-  @Input() navItem?: NavItemLink | NavItemGroup;
+export class EcSidebarNavLabelComponent implements OnInit {
+  @Input() navItem?: EcNavItemLink | EcNavItemGroup;
   @Input() isBold: boolean = false;
 
   customLabelTpl?: TemplateRef<unknown>;
@@ -38,7 +38,7 @@ export class SidebarNavLabelComponent implements OnInit {
       : 'var(--cds-global-typography-font-weight-regular, 400)';
   }
 
-  constructor(private navService: SidebarNavService) {}
+  constructor(private navService: EcSidebarNavService) {}
 
   ngOnInit(): void {
     this.customLabelTpl = this.navService.customLabelTemplateRef;

@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { ClrVerticalNavModule } from '@clr/angular';
 
-import { SidebarNavGroupComponent } from './components/sidebar-nav-group';
-import { SidebarNavItemComponent } from './components/sidebar-nav-item';
-import { NAV_ITEM_TYPE, NavList } from './sidebar-nav.models';
-import { SidebarNavService } from './sidebar-nav.service';
+import { EcSidebarNavGroupComponent } from './components/sidebar-nav-group';
+import { EcSidebarNavItemComponent } from './components/sidebar-nav-item';
+import { EC_NAV_ITEM_TYPE, EcNavList } from './sidebar-nav.models';
+import { EcSidebarNavService } from './sidebar-nav.service';
 
 @Component({
   selector: 'ec-sidebar-nav',
@@ -16,21 +16,21 @@ import { SidebarNavService } from './sidebar-nav.service';
   imports: [
     CommonModule,
     ClrVerticalNavModule,
-    SidebarNavGroupComponent,
-    SidebarNavItemComponent,
+    EcSidebarNavGroupComponent,
+    EcSidebarNavItemComponent,
   ],
   providers: [
-    SidebarNavService,
+    EcSidebarNavService,
   ],
 })
-export class SidebarNavComponent implements OnInit {
+export class EcSidebarNavComponent implements OnInit {
   /**
    * Array of nav items configurations
    *
    * @required
    */
   @Input()
-  public navList: NavList = [];
+  public navList: EcNavList = [];
 
   /**
    * Optional `TemplateRef` for a template to use as a custom label for all nav items.
@@ -51,9 +51,9 @@ export class SidebarNavComponent implements OnInit {
   @Input()
   public rootLevelBold: 'none' | 'all' | 'groups' | 'items' = 'groups';
 
-  protected readonly NavItemTypeEnum = NAV_ITEM_TYPE;
+  protected readonly NavItemTypeEnum = EC_NAV_ITEM_TYPE;
 
-  constructor(private navService: SidebarNavService) {}
+  constructor(private navService: EcSidebarNavService) {}
 
   ngOnInit(): void {
     this.navService.customLabelTemplateRef = this.customLabelTpl;

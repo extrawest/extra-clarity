@@ -1,32 +1,32 @@
-export const NAV_ITEM_TYPE = {
+export const EC_NAV_ITEM_TYPE = {
   Divider: 'divider',
   Href: 'href',
   RouterLink: 'router-link',
   Group: 'group',
 } as const;
 
-interface NavItemDivider {
-  type: typeof NAV_ITEM_TYPE.Divider;
+interface EcNavItemDivider {
+  type: typeof EC_NAV_ITEM_TYPE.Divider;
 }
 
-export interface NavItemLink {
-  type: typeof NAV_ITEM_TYPE.RouterLink | typeof NAV_ITEM_TYPE.Href;
+export interface EcNavItemLink {
+  type: typeof EC_NAV_ITEM_TYPE.RouterLink | typeof EC_NAV_ITEM_TYPE.Href;
   label: string;
   icon?: string;
   link: string;
   data?: unknown;
 }
 
-export interface NavItemGroup {
-  type: typeof NAV_ITEM_TYPE.Group;
+export interface EcNavItemGroup {
+  type: typeof EC_NAV_ITEM_TYPE.Group;
   label: string;
   icon?: string;
   expanded?: boolean;
   data?: unknown;
-  children: NavListSingleItem[];
+  children: EcNavListSingleItem[];
 }
 
-export type NavListItem = NavItemLink | NavItemGroup | NavItemDivider;
-export type NavListSingleItem = Exclude<NavListItem, NavItemGroup>;
+export type EcNavListItem = EcNavItemLink | EcNavItemGroup | EcNavItemDivider;
+export type EcNavListSingleItem = Exclude<EcNavListItem, EcNavItemGroup>;
 
-export type NavList = readonly NavListItem[];
+export type EcNavList = readonly EcNavListItem[];
