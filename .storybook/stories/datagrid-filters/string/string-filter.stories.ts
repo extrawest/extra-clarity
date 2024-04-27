@@ -69,6 +69,8 @@ const MetaStory = {
     },
     value: {
     },
+    usePlaceholderAsHelperText: {
+    },
     widthPx: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
@@ -159,8 +161,9 @@ const MetaStory = {
     caseSensitive: false,
     debounceTimeMs: STRING_FILTER_DEFAULTS.debounceTimeMs,
     fullMatch: false,
-    helperMessage: '',
+    helperMessage: 'Searching...',
     placeholder: STRING_FILTER_DEFAULTS.placeholder,
+    usePlaceholderAsHelperText: false,
     propertyKey: '',
     serverDriven: true,
     value: '',
@@ -214,6 +217,7 @@ export const WithinDatagridStory: Story = {
         [fullMatch]="fullMatch"
         [helperMessage]="helperMessage"
         [placeholder]="placeholder"
+        [usePlaceholderAsHelperText]="usePlaceholderAsHelperText"
         [serverDriven]="serverDriven"
         [value]="value"
         [widthPx]="widthPx"

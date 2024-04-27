@@ -24,7 +24,11 @@
       <clr-control-helper>
         @if (!validationErrorMessage) {
           @if (formControl.value.length >= minLength) {
-            {{ helperMessage }}
+            {{
+              usePlaceholderAsHelperText
+                ? placeholder || commonStrings.keys.shared.typeToSearch
+                : helperMessage
+            }}
           } @else if (minLength > 1) {
             {{ minLengthMessage }}
           }

@@ -176,6 +176,12 @@ export class EcStringFilterComponent<T extends object = {}>
   public value?: string;
 
   /**
+   * Whether to use a string from the [placeholder] input as the text for the helper slot under the input field
+   */
+  @Input()
+  public usePlaceholderAsHelperText: boolean = false;
+
+  /**
    * Width in pixels of the filter's container
    * */
   @Input()
