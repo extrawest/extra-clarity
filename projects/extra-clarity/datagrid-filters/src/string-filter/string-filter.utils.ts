@@ -14,7 +14,7 @@ export enum EcStringValidatorEnum {
   UUID = 'uuid',
 }
 
-const uuidRegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/gi;
+const uuidRegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export function uuidValidator(): ValidatorFn {
   return (control: AbstractControl<string>): ValidationErrors | null => {

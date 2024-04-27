@@ -82,7 +82,7 @@ export class EcStringFilterComponent<T extends object = {}>
    * * `false` = search for partial and full matches;
    * * `true` = search for a full match only.
    *
-   * For server-driven, this input affects only the helper hint under the input field.
+   * NOTE: Affects only client-driven filters, i.e. requires another input `[serverDriven]="false"`.
    * */
   @Input()
   public fullMatch = false;
@@ -174,6 +174,12 @@ export class EcStringFilterComponent<T extends object = {}>
    * */
   @Input()
   public value?: string;
+
+  /**
+   * Whether to use a string from the [placeholder] input as the text for the helper slot under the input field
+   */
+  @Input()
+  public usePlaceholderAsHelperText: boolean = false;
 
   /**
    * Width in pixels of the filter's container
