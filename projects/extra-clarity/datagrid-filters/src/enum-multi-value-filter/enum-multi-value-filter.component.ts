@@ -438,6 +438,13 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
   }
 
+  private isOptionBeingSearched(option: EcEnumValueFilterOption<E>, searchTerm: string): boolean {
+    return (
+      option.searchableValue?.toLowerCase().includes(searchTerm) ||
+      option.label.toLowerCase().includes(searchTerm)
+    );
+  }
+
   private onOptionsChange(newFilterValue: E[] | undefined): void {
     this.updateVisibleOptions();
 
@@ -477,11 +484,9 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   }
 
   private updateVisibleOptions(): void {
-    // TODO: re-think how to filter visible options with a custom label template
-
     if (!this.categories?.length) {
       const visibleOptions = this.searchTerm
-        ? this.options.filter((option) => option.label.toLowerCase().includes(this.searchTerm))
+        ? this.options.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
         : [...this.options];
 
       if (!visibleOptions.length) {
@@ -515,7 +520,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
         const allOptions = this.options.slice(optionIndexStart, optionIndexEnd + 1);
 
         const visibleOptions = this.searchTerm
-          ? allOptions.filter((option) => option.label.toLowerCase().includes(this.searchTerm))
+          ? allOptions.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
           : allOptions;
 
         if (!visibleOptions.length) {

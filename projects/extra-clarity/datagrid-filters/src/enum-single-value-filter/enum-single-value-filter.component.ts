@@ -396,6 +396,13 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
     }
   }
 
+  private isOptionBeingSearched(option: EcEnumValueFilterOption<E>, searchTerm: string): boolean {
+    return (
+      option.searchableValue?.toLowerCase().includes(searchTerm) ||
+      option.label.toLowerCase().includes(searchTerm)
+    );
+  }
+
   private isValueAllowed(value: E | null): boolean {
     return this.options.some(option => option.value === value);
   }
@@ -439,9 +446,8 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
       this.visibleOptions = [...this.options];
     }
 
-    // TODO: re-think how to filter options with a custom label template
-    this.visibleOptions = this.options.filter(option => {
-      return option.label.toLowerCase().includes(this.searchTerm);
-    });
+    this.visibleOptions = this.options.filter(
+      (option) => this.isOptionBeingSearched(option, this.searchTerm),
+    );
   }
 }
