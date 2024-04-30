@@ -43,12 +43,20 @@
     }
 
     <div class="filter-options" [style.max-height.px]="maxHeightPx">
-      @if (visibleOptions.length) {
+      @for (optionCategory of visibleOptionCategories; track $index) {
         <clr-checkbox-container
           class="checkbox-container"
           [class.stretch-labels]="stretchLabels"
+          [class.with-margin-top]="optionCategory.withMarginTop"
+          [class.with-divider-top]="optionCategory.withDividerTop"
+          [class.with-margin-bottom]="optionCategory.withMarginBottom"
+          [class.with-divider-bottom]="optionCategory.withDividerBottom"
         >
-          @for (option of visibleOptions; track option.value) {
+          @if (optionCategory.label) {
+            <label class="category-label">{{ optionCategory.label }}</label>
+          }
+
+          @for (option of optionCategory.options; track option.value) {
             <clr-checkbox-wrapper>
               <input
                 type="checkbox"
@@ -78,14 +86,20 @@
             </clr-checkbox-wrapper>
           }
         </clr-checkbox-container>
-      } @else {
+
+        <!-- -->
+      } @empty {
         <div class="no-options">
-          @if (options.length) {
+          @if (!options.length) {
+            <cds-icon shape="info-standard" status="info" solid />
+            {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
+          } @else if (searchTerm) {
             <cds-icon shape="warning-standard" status="warning" solid />
             {{ commonStrings.keys.datagridFilters.noOptionsFound }}
           } @else {
-            <cds-icon shape="info-standard" status="info" solid />
-            {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
+            <cds-icon shape="warning-standard" status="danger" solid />
+            <!-- TODO: add this text to commonStrings -->
+            Wrong config detected at the [categories] input
           }
         </div>
       }
