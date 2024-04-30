@@ -33,6 +33,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcShowSelected } from '../common/enums/show-selected.enum';
 import {
+  EcEnumValueFilterOptionCategory,
+  EcEnumValueFilterOptionCategoryConfig,
+  EcEnumValueFilterOptionCategoryBorder as OptionCategoryBorder,
+} from '../common/interfaces/filter-option-category';
+import {
   EcEnumValueFilterOption,
   EcFilterState,
 } from '../common/interfaces/filter-state.interface';
@@ -68,6 +73,12 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   extends EcDatagridFilter<E[], T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
+   * Optional config for splitting visible options into groups or categories within the filter body.
+   * The categories can have a text title and optional bounds as a divider or just a margin.
+   */
+  @Input() categories?: EcEnumValueFilterOptionCategoryConfig[];
+
+  /**
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
    *
@@ -75,8 +86,6 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
    * as the `$implicit` context parameter.
    *
    * Also the substring entered into the internal search bar is passed to the context as `marked`.
-   *
-   * `TemplateRef<unknown>`
    */
   @Input()
   public customLabelTpl?: TemplateRef<unknown>;
@@ -213,7 +222,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   protected selectedValues = new Set<E>();
 
   protected searchTerm = '';
-  protected visibleOptions: EcEnumValueFilterOption<E>[] = [];
+  protected visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
 
   protected readonly EcShowSelected = EcShowSelected;
 
@@ -287,6 +296,10 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
 
     if (isValueChanged && this.value !== undefined) {
       this.setValue(this.value);
+    }
+
+    if (changes['categories']) {
+      this.updateVisibleOptions();
     }
   }
 
@@ -403,10 +416,6 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
     this.updateVisibleOptions();
   }
 
-  protected trackByValue(_index: number, option: EcEnumValueFilterOption<E>): E {
-    return option.value;
-  }
-
   private areAllValuesAllowed(values: E[]): boolean {
     if (values.length === 0) {
       return true;
@@ -427,6 +436,13 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
       return [];
     }
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
+  }
+
+  private isOptionBeingSearched(option: EcEnumValueFilterOption<E>, searchTerm: string): boolean {
+    return (
+      option.searchableValue?.toLowerCase().includes(searchTerm) ||
+      option.label.toLowerCase().includes(searchTerm)
+    );
   }
 
   private onOptionsChange(newFilterValue: E[] | undefined): void {
@@ -468,13 +484,50 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   }
 
   private updateVisibleOptions(): void {
-    if (!this.searchTerm) {
-      this.visibleOptions = [...this.options];
+    const visibleOptions = this.searchTerm
+      ? this.options.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
+      : [...this.options];
+
+    if (!visibleOptions.length) {
+      this.visibleOptionCategories = [];
+      return;
     }
 
-    // TODO: re-think how to filter options with a custom label template
-    this.visibleOptions = this.options.filter(option => {
-      return option.label.toLowerCase().includes(this.searchTerm);
+    if (!this.categories?.length) {
+      this.visibleOptionCategories = [{ options: visibleOptions }];
+      return;
+    }
+
+    const visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
+
+    this.categories.forEach(({ id, label, top, bottom }) => {
+      const thisCategoryOptions = visibleOptions.filter(option => id && option.categoryId === id);
+
+      if (thisCategoryOptions.length) {
+        visibleOptionCategories.push({
+          options: thisCategoryOptions,
+          label,
+          withDividerTop: top === OptionCategoryBorder.Divider,
+          withDividerBottom: bottom === OptionCategoryBorder.Divider,
+          withMarginTop: top === OptionCategoryBorder.Margin,
+          withMarginBottom: bottom === OptionCategoryBorder.Margin,
+        });
+      }
     });
+
+    const categoryIds = new Set(this.categories.map((category) => category.id));
+
+    const optionsWithoutCategory = visibleOptions.filter(
+      (option) => (!option.categoryId || !categoryIds.has(option.categoryId)),
+    );
+
+    if (optionsWithoutCategory.length) {
+      visibleOptionCategories.push({
+        options: optionsWithoutCategory,
+        withDividerTop: true,
+      });
+    }
+
+    this.visibleOptionCategories = visibleOptionCategories;
   }
 }

@@ -37,6 +37,12 @@ const MetaStory = {
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
     // INPUTS
+    categories: {
+      type: {
+        name: 'other',
+        value: '[]',
+      },
+    },
     customLabelTpl: {
       control: false,
       table: {
@@ -143,6 +149,7 @@ const MetaStory = {
     },
   },
   args: {
+    categories: [],
     loading: false,
     matchSelected: 'any',
     maxHeightPx: ENUM_MULTI_VALUE_FILTER_DEFAULTS.maxHeightPx,
@@ -197,6 +204,7 @@ export const WithinDatagridStory: Story = {
       <ec-enum-multi-value-filter
         [options]="options"
         [propertyKey]="propertyKey"
+        [categories]="categories"
         [customLabelTpl]="customLabelTpl"
         [loading]="loading"
         [matchSelected]="matchSelected"

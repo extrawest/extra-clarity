@@ -10,6 +10,8 @@
         }
       </ul>
     </div>
+
+    <!--  -->
   } @else if (loading) {
     <!-- Options loading -->
 
@@ -20,6 +22,8 @@
       </div>
       <div>{{ commonStrings.keys.datagridFilters.pleaseWait }}</div>
     </div>
+
+    <!--  -->
   } @else {
     <!-- Normal mode -->
 
@@ -45,12 +49,20 @@
     }
 
     <div class="filter-options" [style.max-height.px]="maxHeightPx">
-      @if (visibleOptions.length) {
+      @for (optionCategory of visibleOptionCategories; track $index) {
         <clr-radio-container
           class="radio-container"
           [class.stretch-labels]="stretchLabels"
+          [class.with-margin-top]="optionCategory.withMarginTop"
+          [class.with-divider-top]="optionCategory.withDividerTop"
+          [class.with-margin-bottom]="optionCategory.withMarginBottom"
+          [class.with-divider-bottom]="optionCategory.withDividerBottom"
         >
-          @for (option of visibleOptions; track option) {
+          @if (optionCategory.label) {
+            <label class="category-label">{{ optionCategory.label }}</label>
+          }
+
+          @for (option of optionCategory.options; track option.value) {
             <clr-radio-wrapper>
               <input
                 type="radio"
@@ -80,7 +92,9 @@
             </clr-radio-wrapper>
           }
         </clr-radio-container>
-      } @else {
+
+        <!--  -->
+      } @empty {
         <div class="no-options">
           @if (options.length) {
             <cds-icon shape="warning-standard" status="warning" solid />

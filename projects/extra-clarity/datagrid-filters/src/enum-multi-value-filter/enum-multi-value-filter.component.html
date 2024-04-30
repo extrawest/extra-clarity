@@ -1,84 +1,125 @@
 <div [style.width.px]="widthPx">
-  <ng-container *ngIf="!configErrors.length; else wrongConfig">
+  @if (configErrors.length) {
+    <!-- Config Errors -->
 
-    <ng-container *ngIf="!loading; else loadingOptions">
-      <div class="filter-title" *ngIf="title">
-        {{ title }}
+    <div class="config-errors">
+      {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
+      <ul>
+        @for (error of configErrors; track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+
+    <!-- -->
+  } @else if (loading) {
+    <!-- Options loading -->
+
+    <div class="await-loading">
+      <div>
+        {{ commonStrings.keys.datagridFilters.loading }}
+        <span class="spinner spinner-inline"></span>
       </div>
+      <div>{{ commonStrings.keys.datagridFilters.pleaseWait }}</div>
+    </div>
 
-      <div class="filter-selected-amount" *ngIf="
-        showSelectedAmount === EcShowSelected.Always ||
-        showSelectedAmount === EcShowSelected.WithSearchbar && showSearchBar
-      ">
-        {{ selectedAmountLabel }}
-      </div>
+    <!--  -->
+  } @else {
+    <!-- Normal mode -->
 
+    @if (title) {
+      <div class="filter-title">{{ title }}</div>
+    }
+
+    @if (
+      showSelectedAmount === EcShowSelected.Always ||
+      (showSelectedAmount === EcShowSelected.WithSearchbar && showSearchBar)
+    ) {
+      <div class="filter-selected-amount">{{ selectedAmountLabel }}</div>
+    }
+
+    @if (showSearchBar) {
       <ec-search-bar
         class="filter-search-bar"
-        *ngIf="showSearchBar"
         (valueChange)="onSearchTermChange($event)"
         [debounceMs]="0"
         [highlightActive]="false"
         [placeholder]="commonStrings.keys.datagridFilters.filterOptions"
       />
+    }
 
-      <div class="filter-options" [style.max-height.px]="maxHeightPx">
+    <div class="filter-options" [style.max-height.px]="maxHeightPx">
+      @for (optionCategory of visibleOptionCategories; track $index) {
         <clr-checkbox-container
-          *ngIf="visibleOptions.length; else noVisibleOptions"
           class="checkbox-container"
           [class.stretch-labels]="stretchLabels"
+          [class.with-margin-top]="optionCategory.withMarginTop"
+          [class.with-divider-top]="optionCategory.withDividerTop"
+          [class.with-margin-bottom]="optionCategory.withMarginBottom"
+          [class.with-divider-bottom]="optionCategory.withDividerBottom"
         >
-          <clr-checkbox-wrapper *ngFor="let option of visibleOptions; trackBy: trackByValue">
-            <input
-              type="checkbox"
-              clrCheckbox
-              [name]="propertyKey"
-              [checked]="selectedValues.has(option.value)"
-              (change)="onInputChange($event, option.value)"
-            />
-            <label>
-              <ng-container
-                [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
-                [ngTemplateOutletContext]="{ $implicit: option, marked: searchTerm }"
+          @if (optionCategory.label) {
+            <label class="category-label">{{ optionCategory.label }}</label>
+          }
+
+          @for (option of optionCategory.options; track option.value) {
+            <clr-checkbox-wrapper>
+              <input
+                type="checkbox"
+                clrCheckbox
+                [name]="propertyKey"
+                [checked]="selectedValues.has(option.value)"
+                (change)="onInputChange($event, option.value)"
               />
-              <ng-template #defaultLabelTpl>
-                <span
-                  *ngIf="searchTerm; else unmarkedLabel"
-                  [innerHtml]="option.label | markMatched:searchTerm"
-                ></span>
-                <ng-template #unmarkedLabel>
-                  {{ option.label }}
+              <label>
+                <ng-container
+                  [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
+                  [ngTemplateOutletContext]="{
+                    $implicit: option,
+                    marked: searchTerm
+                  }"
+                />
+                <ng-template #defaultLabelTpl>
+                  @if (searchTerm) {
+                    <span
+                      [innerHtml]="option.label | markMatched: searchTerm"
+                    ></span>
+                  } @else {
+                    {{ option.label }}
+                  }
                 </ng-template>
-              </ng-template>
-            </label>
-          </clr-checkbox-wrapper>
+              </label>
+            </clr-checkbox-wrapper>
+          }
         </clr-checkbox-container>
 
-        <ng-template #noVisibleOptions>
-          <div class="no-options">
-            <ng-container *ngIf="options.length; else noOptionsAtAll">
-              <cds-icon shape="warning-standard" status="warning" solid />
-              {{ commonStrings.keys.datagridFilters.noOptionsFound }}
-            </ng-container>
-            <ng-template #noOptionsAtAll>
-              <cds-icon shape="info-standard" status="info" solid />
-              {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
-            </ng-template>
-          </div>
-        </ng-template>
-      </div>
-      <div class="filter-buttons">
+        <!-- -->
+      } @empty {
+        <div class="no-options">
+          @if (options.length) {
+            <cds-icon shape="warning-standard" status="warning" solid />
+            {{ commonStrings.keys.datagridFilters.noOptionsFound }}
+          } @else {
+            <cds-icon shape="info-standard" status="info" solid />
+            {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
+          }
+        </div>
+      }
+    </div>
+
+    <div class="filter-buttons">
+      <button
+        type="button"
+        class="btn btn-block btn-sm"
+        (click)="clearSelection()"
+        [disabled]="!selectedValues.size"
+      >
+        <cds-icon shape="filter-off" />
+        {{ commonStrings.keys.datagridFilters.clear }}
+      </button>
+
+      @if (hasCustomDefaultState) {
         <button
-          type="button"
-          class="btn btn-block btn-sm"
-          (click)="clearSelection()"
-          [disabled]="!selectedValues.size"
-        >
-          <cds-icon shape="filter-off" />
-          {{ commonStrings.keys.datagridFilters.clear }}
-        </button>
-        <button
-          *ngIf="hasCustomDefaultState"
           type="button"
           class="btn btn-block btn-sm"
           (click)="resetToDefault()"
@@ -87,25 +128,7 @@
           <cds-icon shape="filter" />
           {{ commonStrings.keys.datagridFilters.resetToDefault }}
         </button>
-      </div>
-    </ng-container>
-  </ng-container>
-</div>
-
-<ng-template #loadingOptions>
-  <div class="await-loading">
-    <div>
-      {{ commonStrings.keys.datagridFilters.loading }} <span class="spinner spinner-inline"></span>
+      }
     </div>
-    <div>{{ commonStrings.keys.datagridFilters.pleaseWait }}</div>
-  </div>
-</ng-template>
-
-<ng-template #wrongConfig>
-  <div class="config-errors">
-    {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
-    <ul>
-      <li *ngFor="let error of configErrors">{{ error }}</li>
-    </ul>
-  </div>
-</ng-template>
+  }
+</div>

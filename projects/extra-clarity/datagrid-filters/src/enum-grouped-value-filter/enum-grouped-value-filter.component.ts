@@ -491,6 +491,13 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
   }
 
+  private isOptionBeingSearched(option: EcEnumValueFilterOption<E>, searchTerm: string): boolean {
+    return (
+      option.searchableValue?.toLowerCase().includes(searchTerm) ||
+      option.label.toLowerCase().includes(searchTerm)
+    );
+  }
+
   private onOptionsChange(newFilterValue: E[] | undefined): void {
     this.updateVisibleOptions();
 
@@ -540,11 +547,10 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
       this.visibleOptions = [...this.options];
     }
 
-    // TODO: re-think how to filter options with a custom label template
     this.visibleOptions = this.options
       .map(group => ({
         ...group,
-        items: group.items.filter(item => item.label.toLowerCase().includes(this.searchTerm)),
+        items: group.items.filter(item => this.isOptionBeingSearched(item, this.searchTerm)),
       }))
       .filter(group => group.items.length > 0);
   }
