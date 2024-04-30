@@ -32,6 +32,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcShowSelected } from '../common/enums/show-selected.enum';
 import {
+  EcEnumValueFilterOptionCategory,
+  EcEnumValueFilterOptionCategoryConfig,
+  EcEnumValueFilterOptionCategoryBorder as OptionCategoryBorder,
+} from '../common/interfaces/filter-option-category';
+import {
   EcEnumValueFilterOption,
   EcFilterState,
 } from '../common/interfaces/filter-state.interface';
@@ -67,6 +72,12 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
   extends EcDatagridFilter<E | null, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
+   * Optional config for splitting visible options into groups or categories within the filter body.
+   * The categories can have a text title and optional bounds as a divider or just a margin.
+   */
+  @Input() categories?: EcEnumValueFilterOptionCategoryConfig[];
+
+  /**
    * When `true`, the filter will be closed on selecting any new value or on resetting/clearing
    * */
   @Input()
@@ -80,8 +91,6 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
    * as the `$implicit` context parameter.
    *
    * Also the substring entered into the internal search bar is passed to the context as `marked`.
-   *
-   * `TemplateRef<unknown>`
    */
   @Input()
   public customLabelTpl?: TemplateRef<unknown>;
@@ -208,7 +217,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
   protected hasCustomDefaultState = false;
 
   protected searchTerm = '';
-  protected visibleOptions: EcEnumValueFilterOption<E>[] = [];
+  protected visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
 
   protected readonly EcShowSelected = EcShowSelected;
 
@@ -289,6 +298,10 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
 
     if (isValueChanged && this.value !== undefined) {
       this.setValue(this.value);
+    }
+
+    if (changes['categories']) {
+      this.updateVisibleOptions();
     }
   }
 
@@ -442,12 +455,59 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
   }
 
   private updateVisibleOptions(): void {
-    if (!this.searchTerm) {
-      this.visibleOptions = [...this.options];
+    if (!this.categories?.length) {
+      const visibleOptions = this.searchTerm
+        ? this.options.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
+        : [...this.options];
+
+      if (!visibleOptions.length) {
+        this.visibleOptionCategories = [];
+        return;
+      }
+
+      this.visibleOptionCategories = [{
+        options: visibleOptions,
+        withDividerTop: false,
+        withDividerBottom: false,
+        withMarginTop: false,
+        withMarginBottom: false,
+      }];
+      return;
     }
 
-    this.visibleOptions = this.options.filter(
-      (option) => this.isOptionBeingSearched(option, this.searchTerm),
-    );
+    const visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
+    const lastOptionIndex = this.options.length - 1;
+
+    // TODO: maybe check the [categories] config for overlapped index ranges
+
+    this.categories
+      .filter(({ optionIndexStart, optionIndexEnd }) => (
+        // skip wrong configs
+        optionIndexStart <= optionIndexEnd &&
+        optionIndexStart <= lastOptionIndex &&
+        optionIndexEnd <= lastOptionIndex
+      ))
+      .forEach(({ optionIndexStart, optionIndexEnd, label, top, bottom }) => {
+        const allOptions = this.options.slice(optionIndexStart, optionIndexEnd + 1);
+
+        const visibleOptions = this.searchTerm
+          ? allOptions.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
+          : allOptions;
+
+        if (!visibleOptions.length) {
+          return;
+        }
+
+        visibleOptionCategories.push({
+          options: visibleOptions,
+          label,
+          withDividerTop: top === OptionCategoryBorder.Divider,
+          withDividerBottom: bottom === OptionCategoryBorder.Divider,
+          withMarginTop: top === OptionCategoryBorder.Margin,
+          withMarginBottom: bottom === OptionCategoryBorder.Margin,
+        });
+      });
+
+    this.visibleOptionCategories = visibleOptionCategories;
   }
 }
