@@ -7,8 +7,7 @@ export enum EcEnumValueFilterOptionCategoryBorder {
 }
 
 export interface EcEnumValueFilterOptionCategoryConfig {
-  optionIndexStart: number;
-  optionIndexEnd: number;
+  id: string;
   label?: string;
   top?: EcEnumValueFilterOptionCategoryBorder;
   bottom?: EcEnumValueFilterOptionCategoryBorder;
@@ -17,8 +16,8 @@ export interface EcEnumValueFilterOptionCategoryConfig {
 export interface EcEnumValueFilterOptionCategory<E> {
   options: EcEnumValueFilterOption<E>[];
   label?: string;
-  withDividerTop: boolean;
-  withDividerBottom: boolean;
-  withMarginTop: boolean;
-  withMarginBottom: boolean;
+  withDividerTop?: boolean;
+  withDividerBottom?: boolean;
+  withMarginTop?: boolean;
+  withMarginBottom?: boolean;
 }

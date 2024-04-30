@@ -484,58 +484,49 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   }
 
   private updateVisibleOptions(): void {
+    const visibleOptions = this.searchTerm
+      ? this.options.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
+      : [...this.options];
+
+    if (!visibleOptions.length) {
+      this.visibleOptionCategories = [];
+      return;
+    }
+
     if (!this.categories?.length) {
-      const visibleOptions = this.searchTerm
-        ? this.options.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
-        : [...this.options];
-
-      if (!visibleOptions.length) {
-        this.visibleOptionCategories = [];
-        return;
-      }
-
-      this.visibleOptionCategories = [{
-        options: visibleOptions,
-        withDividerTop: false,
-        withDividerBottom: false,
-        withMarginTop: false,
-        withMarginBottom: false,
-      }];
+      this.visibleOptionCategories = [{ options: visibleOptions }];
       return;
     }
 
     const visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
-    const lastOptionIndex = this.options.length - 1;
 
-    // TODO: maybe check the [categories] config for overlapped index ranges
+    this.categories.forEach(({ id, label, top, bottom }) => {
+      const thisCategoryOptions = visibleOptions.filter(option => id && option.categoryId === id);
 
-    this.categories
-      .filter(({ optionIndexStart, optionIndexEnd }) => (
-        // skip wrong configs
-        optionIndexStart <= optionIndexEnd &&
-        optionIndexStart <= lastOptionIndex &&
-        optionIndexEnd <= lastOptionIndex
-      ))
-      .forEach(({ optionIndexStart, optionIndexEnd, label, top, bottom }) => {
-        const allOptions = this.options.slice(optionIndexStart, optionIndexEnd + 1);
-
-        const visibleOptions = this.searchTerm
-          ? allOptions.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
-          : allOptions;
-
-        if (!visibleOptions.length) {
-          return;
-        }
-
+      if (thisCategoryOptions.length) {
         visibleOptionCategories.push({
-          options: visibleOptions,
+          options: thisCategoryOptions,
           label,
           withDividerTop: top === OptionCategoryBorder.Divider,
           withDividerBottom: bottom === OptionCategoryBorder.Divider,
           withMarginTop: top === OptionCategoryBorder.Margin,
           withMarginBottom: bottom === OptionCategoryBorder.Margin,
         });
+      }
+    });
+
+    const categoryIds = new Set(this.categories.map((category) => category.id));
+
+    const optionsWithoutCategory = visibleOptions.filter(
+      (option) => (!option.categoryId || !categoryIds.has(option.categoryId)),
+    );
+
+    if (optionsWithoutCategory.length) {
+      visibleOptionCategories.push({
+        options: optionsWithoutCategory,
+        withDividerTop: true,
       });
+    }
 
     this.visibleOptionCategories = visibleOptionCategories;
   }

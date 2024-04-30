@@ -1,5 +1,7 @@
 <div [style.width.px]="widthPx">
   @if (configErrors.length) {
+    <!-- Config Errors -->
+
     <div class="config-errors">
       {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
       <ul>
@@ -11,6 +13,8 @@
 
     <!-- -->
   } @else if (loading) {
+    <!-- Options loading -->
+
     <div class="await-loading">
       <div>
         {{ commonStrings.keys.datagridFilters.loading }}
@@ -21,6 +25,8 @@
 
     <!--  -->
   } @else {
+    <!-- Normal mode -->
+
     @if (title) {
       <div class="filter-title">{{ title }}</div>
     }
@@ -90,16 +96,12 @@
         <!-- -->
       } @empty {
         <div class="no-options">
-          @if (!options.length) {
-            <cds-icon shape="info-standard" status="info" solid />
-            {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
-          } @else if (searchTerm) {
+          @if (options.length) {
             <cds-icon shape="warning-standard" status="warning" solid />
             {{ commonStrings.keys.datagridFilters.noOptionsFound }}
           } @else {
-            <cds-icon shape="warning-standard" status="danger" solid />
-            <!-- TODO: add this text to commonStrings -->
-            Wrong config detected at the [categories] input
+            <cds-icon shape="info-standard" status="info" solid />
+            {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
           }
         </div>
       }

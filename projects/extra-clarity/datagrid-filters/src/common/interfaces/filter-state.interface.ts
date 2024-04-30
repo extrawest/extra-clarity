@@ -7,6 +7,7 @@ export interface EcEnumValueFilterOption<E> {
   value: E;
   label: string;
   selectedByDefault?: boolean;
+  categoryId?: string;
   // searchableValue - to make the option filterable via the SearchBar when a CustomLabelTmpl is used
   searchableValue?: string;
 }
