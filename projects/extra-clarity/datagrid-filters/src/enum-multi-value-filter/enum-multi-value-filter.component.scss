@@ -40,8 +40,8 @@
     content: "";
     display: block;
     width: 100%;
-    height: $divider-height / 2;
-    margin-top: $divider-height / 2;
+    height: calc($divider-height / 2);
+    margin-top: calc($divider-height / 2);
     border-top: 1px solid var(--cds-alias-object-border-color, #cbd4d8);
   }
 }
