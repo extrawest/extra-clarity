@@ -13,7 +13,7 @@
 }
 
 .with-btn-break .copy-btn-container {
-  margin-left: .25rem;
+  margin-left: 0.25rem;
 }
 
 .trunc-overflow {
@@ -23,11 +23,11 @@
 }
 
 .break-overflow {
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .cell-content {
-  margin-right: .15rem;
+  margin-right: 0.15rem;
 }
 
 .copy-btn {
