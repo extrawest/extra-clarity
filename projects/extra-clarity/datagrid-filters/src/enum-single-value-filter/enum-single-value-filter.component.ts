@@ -216,6 +216,8 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
   protected filterValue: E | null = null;
   protected hasCustomDefaultState = false;
 
+  protected isInitiated = false;
+
   protected searchTerm = '';
   protected visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
 
@@ -286,6 +288,8 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
           setTimeout(() => this.searchBar?.focusSearchBar());
         }
       });
+
+    this.isInitiated = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -446,11 +450,14 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
     if (value === this.filterValue) {
       return;
     }
+
     this.filterValue = value;
-    if (params.emit) {
+
+    if (params.emit && this.isInitiated) {
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
+
     this.changeDetectorRef.markForCheck();
   }
 

@@ -221,6 +221,8 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
   protected isStateDefault = true;
   protected selectedValues = new Set<E>();
 
+  protected isInitiated = false;
+
   protected searchTerm = '';
   protected visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
 
@@ -284,6 +286,8 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
           setTimeout(() => this.searchBar?.focusSearchBar());
         }
       });
+
+    this.isInitiated = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -475,7 +479,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
     this.selectedValues = newSelectedValues;
     this.isStateDefault = this.checkIfStateIsDefault();
 
-    if (params.emit) {
+    if (params.emit && this.isInitiated) {
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }

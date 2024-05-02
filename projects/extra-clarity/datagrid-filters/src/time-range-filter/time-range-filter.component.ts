@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -66,7 +67,7 @@ export const TIMERANGE_FILTER_DEFAULTS = {
 })
 export class EcTimeRangeFilterComponent<T extends object = {}>
   extends EcDatagridFilter<FilterValue, T>
-  implements OnChanges, OnDestroy, OnInit {
+  implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
    * When `true`, the filter will be closed via ClrPopoverToggleService
    * on selecting any new value or on resetting/clearing.
@@ -163,6 +164,8 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   protected visualCustomRange: EcCustomTimeRange = ALL_TIME;
   protected hasAllTimePreset = false;
 
+  protected isInitiated = false;
+
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override readonly changes = new Subject<void>();
 
@@ -190,6 +193,10 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
       property: this.propertyKey,
       value: this.filterValue,
     };
+  }
+
+  ngAfterViewInit(): void {
+    this.isInitiated = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -400,9 +407,14 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
     if (isEqual(newValue, this.filterValue)) {
       return;
     }
+
     this.filterValue = newValue;
-    this.filterValueChanged.emit(this.state);
-    this.changes.next();
+
+    if (this.isInitiated) {
+      this.filterValueChanged.emit(this.state);
+      this.changes.next();
+    }
+
     this.changeDetectorRef.markForCheck();
   }
 

@@ -225,6 +225,8 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
   protected isStateDefault = true;
   protected selectedValues = new Set<E>();
 
+  protected isInitiated = false;
+
   protected searchTerm = '';
   protected totalOptionItems = 0;
   protected visibleOptions: EcEnumValueFilterOptionGroup<E>[] = [];
@@ -288,6 +290,8 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
           setTimeout(() => this.searchBar?.focusSearchBar());
         }
       });
+
+    this.isInitiated = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -534,7 +538,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     this.selectedValues = newSelectedValues;
     this.isStateDefault = this.checkIfStateIsDefault();
 
-    if (params.emit) {
+    if (params.emit && this.isInitiated) {
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
