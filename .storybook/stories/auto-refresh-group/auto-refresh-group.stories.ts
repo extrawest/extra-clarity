@@ -11,6 +11,8 @@ export default {
     componentWrapperDecorator(story => `<div style="max-width:380px">${story}</div>`),
   ],
   argTypes: {
+    locale: {
+    },
     period: {
       table: {
         defaultValue: { summary: DEFAULT_PERIOD_SEC },
@@ -37,6 +39,7 @@ export default {
 export const AutoRefreshGroupStory: Story = {
   name: 'Auto Refresh Group',
   args: {
+    locale: '',
     period: 10,
     useAutoRefresh: true,
     autoRefreshBlocked: false,
