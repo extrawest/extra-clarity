@@ -1,6 +1,15 @@
-import { CommonModule } from '@angular/common';
+import { formatDate } from '@angular/common';
 import {
-  ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  LOCALE_ID,
+  OnChanges,
+  Output,
+  signal,
+  SimpleChanges,
 } from '@angular/core';
 import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, errorStandardIcon, refreshIcon } from '@cds/core/icon';
@@ -9,18 +18,30 @@ import { EcAutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 export const DEFAULT_PERIOD_SEC = 60;
 
 @Component({
+  standalone: true,
   selector: 'ec-auto-refresh-group',
+  imports: [CdsIconModule, EcAutoRefreshComponent],
   templateUrl: './auto-refresh-group.component.html',
   styleUrls: ['./auto-refresh-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    CommonModule,
-    CdsIconModule,
-    EcAutoRefreshComponent,
-  ],
 })
 export class EcAutoRefreshGroupComponent implements OnChanges {
+  /**
+   * Code of the locale (e.g. 'en-US', 'pl', etc.) to format timestamps within the refresh button.
+   *
+   * This feature uses the 'formatDate' function from '@angular/common' under the hood and thus
+   * requires Angular's locale data to be registered preliminary in your main app.
+   *
+   * Please refer to https://angular.io/api/common/registerLocaleData for more information.
+   *
+   * When this input is not provided with any value, the LOCALE_ID token is used instead.
+   *
+   * The American English locale 'en-US' is used as the fallback locale for error cases.
+   * It does not require the locale data registration as it's shipped with Angular out of the box.
+   * */
+  @Input()
+  public locale?: string;
+
   @Input()
   public failed = false;
 
@@ -48,15 +69,17 @@ export class EcAutoRefreshGroupComponent implements OnChanges {
   @Output()
   public readonly autoRefreshToggled = new EventEmitter<boolean>();
 
-  protected lastFetchTimestamp = Date.now();
+  protected lastFetchTimestamp = signal(this.formatTimestamp(Date.now()));
+
+  private readonly localeId = inject(LOCALE_ID);
 
   constructor() {
     ClarityIcons.addIcons(refreshIcon, errorStandardIcon);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (('refreshing' in changes) && !changes['refreshing'].currentValue) {
-      this.lastFetchTimestamp = Date.now();
+    if (changes['refreshing']) {
+      this.lastFetchTimestamp.set(this.formatTimestamp(Date.now()));
     }
   }
 
@@ -66,5 +89,21 @@ export class EcAutoRefreshGroupComponent implements OnChanges {
 
   protected onRefresh(): void {
     this.refresh.emit();
+  }
+
+  private formatTimestamp(timestamp: number): string {
+    const format = 'mediumTime';
+    const fallbackLocale = 'en-US';
+    const preferredLocale = (this.locale ?? this.localeId) || fallbackLocale;
+
+    try {
+      return formatDate(timestamp, format, preferredLocale);
+    } catch {
+      try {
+        return formatDate(timestamp, format, this.localeId);
+      } catch {
+        return formatDate(timestamp, format, fallbackLocale);
+      }
+    }
   }
 }

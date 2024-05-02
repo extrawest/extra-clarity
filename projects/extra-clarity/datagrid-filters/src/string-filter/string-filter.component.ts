@@ -210,6 +210,8 @@ export class EcStringFilterComponent<T extends object = {}>
   protected filterValue = '';
   protected readonly formControl = new FormControl<string>('', { nonNullable: true });
 
+  protected isInitiated = false;
+
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override readonly changes = new Subject<void>();
 
@@ -318,6 +320,8 @@ export class EcStringFilterComponent<T extends object = {}>
         }
         setTimeout(() => this.focusInputElement());
       });
+
+    this.isInitiated = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -509,11 +513,14 @@ export class EcStringFilterComponent<T extends object = {}>
     if (value === this.filterValue) {
       return;
     }
+
     this.filterValue = value;
-    if (params.emit) {
+
+    if (params.emit && this.isInitiated) {
       this.filterValueChanged.emit(this.state);
       this.changes.next();
     }
+
     this.updateMinLengthValidator();
     this.changeDetectorRef.markForCheck();
   }

@@ -1,20 +1,20 @@
-$title-padding-left: .2rem;
+$title-padding-left: 0.2rem;
 
 .filter-options {
   overflow: auto;
 
   &:not(:first-child) {
-    margin-top: .25rem;
+    margin-top: 0.25rem;
   }
 
   &:not(:last-child) {
-    margin-bottom: .65rem;
+    margin-bottom: 0.65rem;
   }
 }
 
 .filter-title,
 .filter-selected-amount {
-  font-size: .65rem;
+  font-size: 0.65rem;
   font-weight: 500;
   line-height: 1.2rem;
   padding-left: $title-padding-left;
@@ -33,21 +33,26 @@ $title-padding-left: .2rem;
     margin: 0;
 
     &:not(:last-of-type) {
-      margin-bottom: .25rem;
+      margin-bottom: 0.25rem;
     }
   }
 }
 
 .await-loading {
-  font-size: .65rem;
+  font-size: 0.65rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .spinner {
+    margin: 0;
+    margin-bottom: 0.6rem;
+  }
 }
 
 .config-errors {
-  font-size: .65rem;
+  font-size: 0.65rem;
   line-height: 1.5;
 }
 
@@ -61,7 +66,7 @@ $title-padding-left: .2rem;
   margin: 0 0.25rem 0.65rem;
 
   &:not(:first-child) {
-    margin-top: .25rem;
+    margin-top: 0.25rem;
   }
 }
 

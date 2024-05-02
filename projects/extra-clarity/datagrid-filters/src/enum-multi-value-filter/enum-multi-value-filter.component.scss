@@ -73,6 +73,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .spinner {
+    margin: 0;
+    margin-bottom: 0.6rem;
+  }
 }
 
 .config-errors {
