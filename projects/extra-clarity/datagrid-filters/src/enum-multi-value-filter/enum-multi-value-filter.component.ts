@@ -519,6 +519,11 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
       }
     });
 
+    if (visibleOptionCategories.length == 0) {
+      this.visibleOptionCategories = [{ options: visibleOptions }];
+      return;
+    }
+
     const categoryIds = new Set(this.categories.map((category) => category.id));
 
     const optionsWithoutCategory = visibleOptions.filter(
