@@ -1,3 +1,4 @@
+import { enableProdMode } from '@angular/core';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import type { Preview } from '@storybook/angular';
 
@@ -35,5 +36,8 @@ const preview: Preview = {
     },
   },
 };
+
+// Uncomment to test the production mode on a local dev machine
+// enableProdMode();
 
 export default preview;
