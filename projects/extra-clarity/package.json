@@ -1,6 +1,6 @@
 {
   "name": "@extrawest/extra-clarity",
-  "version": "0.17.8",
+  "version": "0.17.9",
   "description": "Extrawest Angular components based on the Clarity Design System",
   "author": "extrawest.com",
   "repository": {
@@ -15,10 +15,10 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/animations": "^17.3.0",
-    "@angular/common": "^17.3.0",
-    "@angular/core": "^17.3.0",
-    "@angular/forms": "^17.3.0",
+    "@angular/animations": "^17.3.0 || 18 || 19",
+    "@angular/common": "^17.3.0 || 18 || 19",
+    "@angular/core": "^17.3.0 || 18 || 19",
+    "@angular/forms": "^17.3.0 || 18 || 19",
     "@cds/angular": "^6.10.0",
     "@cds/core": "^6.10.0",
     "@clr/angular": "^17.0.0",
