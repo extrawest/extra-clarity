@@ -16,7 +16,6 @@ import {
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
-import { isEqual } from 'lodash-es';
 import { Subject, takeUntil } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
@@ -365,6 +364,14 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
     }
   }
 
+  private isFilterValueEqual(valueA: FilterValue, valueB: FilterValue): boolean {
+    return (
+      valueA.presetId === valueB.presetId &&
+      valueA.custom.start === valueB.custom.start &&
+      valueA.custom.end === valueB.custom.end
+    );
+  }
+
   private onPresetsChange(): void {
     this.defaultPresetId = getDefaultPreset(this.presets)?.id ?? null;
     this.hasAllTimePreset = containsAllTimePreset(this.presets);
@@ -404,7 +411,7 @@ export class EcTimeRangeFilterComponent<T extends object = {}>
   }
 
   private updateFilterValue(newValue: FilterValue): void {
-    if (isEqual(newValue, this.filterValue)) {
+    if (this.isFilterValueEqual(newValue, this.filterValue)) {
       return;
     }
 

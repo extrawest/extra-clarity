@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { groupBy, toPairs } from 'lodash-es';
 import { BehaviorSubject, map } from 'rxjs';
 
 import { NOTIFICATION_DEFAULT_CONFIG } from '../../constants';
-import { NotificationData } from '../../typings';
+import { NotificationData, NotificationPosition } from '../../typings';
 
 @Component({
   selector: 'ec-notification-container',
@@ -14,7 +13,7 @@ import { NotificationData } from '../../typings';
 export class NotificationContainerComponent {
   readonly instances$ = new BehaviorSubject<Required<NotificationData[]>>([]);
   readonly groupedInstances$ = this.instances$.pipe(
-    map((instances) => toPairs(groupBy(instances, 'config.position'))),
+    map((instances) => this.groupByConfigPosition(instances)),
   );
 
   create(notification: NotificationData): void {
@@ -40,6 +39,29 @@ export class NotificationContainerComponent {
 
   trackGroupById(index: number, [group]: [string, NotificationData[]]): string {
     return group;
+  }
+
+  private groupByConfigPosition(
+    instances: NotificationData[],
+  ): [NotificationPosition | 'undefined', NotificationData[]][] {
+    // This method replaces the 'toPairs' and 'groupBy' methods from lodash:
+    //   toPairs(groupBy(instances, 'config.position')))
+
+    // For non-enum 'position' values the 'undefined' key is used
+
+    const result = new Map<NotificationPosition | 'undefined', NotificationData[]>();
+
+    instances.forEach(instance => {
+      const position = instance.config?.position ?? 'undefined';
+      const existingInstances = result.get(position);
+      const updatedInstances = existingInstances
+        ? [...existingInstances, instance]
+        : [instance];
+
+      result.set(position, updatedInstances);
+    });
+
+    return Array.from(result);
   }
 
   private mergeConfig(instance: NotificationData): Required<NotificationData> {
