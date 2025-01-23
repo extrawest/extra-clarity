@@ -67,16 +67,17 @@ export const ComponentItselfStory: Story = {
         EcSidebarNavComponent,
       ],
     }),
-    componentWrapperDecorator(ClrVerticalNav),
   ],
   render: (args) => ({
     props: args,
     template: `
-      <ec-sidebar-nav
-        [navList]="navList"
-        [customLabelTpl]="customLabelTpl"
-        [rootLevelBold]="rootLevelBold"
-      />
+      <clr-vertical-nav>
+        <ec-sidebar-nav
+          [navList]="navList"
+          [customLabelTpl]="customLabelTpl"
+          [rootLevelBold]="rootLevelBold"
+        />
+      </clr-vertical-nav>
     `,
     styles: [
       `.clr-vertical-nav { padding-bottom: .9rem }`,
@@ -125,20 +126,23 @@ export const DocsExampleStory: Story = {
   render: (args) => ({
     props: args,
     template: `
-  <ec-sidebar-nav
-    [navList]="[
-      { type: 'router-link', label: 'Nav Item #1', link: '/nav-link-1' },
-      { type: 'router-link', label: 'Nav Item #2', link: '/nav-link-2' },
-      { type: 'group', label: 'Nav Group', expanded: false, children: [
-        { type: 'router-link', label: 'Nested Item #1', link: '/nested-link-1' },
-        { type: 'router-link', label: 'Nested Item #2', link: '/nested-link-2' },
-        { type: 'router-link', label: 'Nested Item #3', link: '/nested-link-3' }
-      ]},
-      { type: 'divider' },
-      { type: 'href', label: 'Send Email', link: 'mailto:user@example.com' },
-    ]"
-    [rootLevelBold]="'groups'"
-  />`,
+      <clr-vertical-nav>
+        <ec-sidebar-nav
+          [navList]="[
+            { type: 'router-link', label: 'Nav Item #1', link: '/nav-link-1' },
+            { type: 'router-link', label: 'Nav Item #2', link: '/nav-link-2' },
+            { type: 'group', label: 'Nav Group', expanded: false, children: [
+              { type: 'router-link', label: 'Nested Item #1', link: '/nested-link-1' },
+              { type: 'router-link', label: 'Nested Item #2', link: '/nested-link-2' },
+              { type: 'router-link', label: 'Nested Item #3', link: '/nested-link-3' }
+            ]},
+            { type: 'divider' },
+            { type: 'href', label: 'Send Email', link: 'mailto:user@example.com' },
+          ]"
+          [rootLevelBold]="'groups'"
+        />
+      </clr-vertical-nav>
+    `,
     styles: [
       `.clr-vertical-nav { padding-bottom: .9rem }`,
     ],
