@@ -80,6 +80,9 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   @Input()
   public widthPx: number = TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx;
 
+  @Input()
+  public labelLocale?: string;
+
   // Inputs passed to EcPopoverToggleComponent
 
   @Input()
@@ -143,7 +146,7 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['presets']) {
+    if (changes['presets'] || changes['labelLocale']) {
       this.updateSelectedRangeLabel();
     }
   }
@@ -154,6 +157,8 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   }
 
   ngOnInit(): void {
+    this.updateSelectedRangeLabel();
+
     this.commonStrings.stringsChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
@@ -196,16 +201,34 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
     if (!start && !end) {
       return commonStrings.timeRangeToggle.allTime;
     }
+
+    const timeFrom = this.timestampPipe.transform(start, 'min', this.labelLocale) ?? '';
+    const timeTo = this.timestampPipe.transform(end, 'min', this.labelLocale) ?? '';
+
     if (!start && end) {
-      return this.commonStrings.parse(commonStrings.timeRangeToggle.beforeDateTime, {
-        DATETIME: this.timestampPipe.transform(end, 'min') ?? '',
-      });
+      return (
+        timeTo
+          ? this.commonStrings.parse(commonStrings.timeRangeToggle.beforeDateTime, {
+            DATETIME: timeTo,
+          })
+          : commonStrings.timeRangeFilter.customPeriod
+      );
     }
+
     if (start && !end) {
-      return this.commonStrings.parse(commonStrings.timeRangeToggle.afterDateTime, {
-        DATETIME: this.timestampPipe.transform(start, 'min') ?? '',
-      });
+      return (
+        timeFrom
+          ? this.commonStrings.parse(commonStrings.timeRangeToggle.afterDateTime, {
+            DATETIME: timeFrom,
+          })
+          : commonStrings.timeRangeFilter.customPeriod
+      );
     }
+
+    if (timeFrom && timeTo) {
+      return `${timeFrom} - ${timeTo}`;
+    }
+
     return commonStrings.timeRangeFilter.customPeriod;
   }
 

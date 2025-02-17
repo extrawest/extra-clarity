@@ -3,3 +3,10 @@
   align-items: center;
   column-gap: 0.5rem;
 }
+
+.popover-toggle-label-text {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -39,6 +39,12 @@ const MetaStory = {
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
     // INPUTS
+    labelLocale: {
+      type: {
+        name: 'string',        
+      },
+      defaultValue: undefined,      
+    },
     // Inputs passed to EcTimeRangeFilterComponent
     propertyKey: {
       type: {
@@ -69,6 +75,9 @@ const MetaStory = {
         },
         subcategory: SUBCATEGORY_FILTER,
       },
+    },
+    withTime: {
+      table: { subcategory: SUBCATEGORY_FILTER },
     },
     // Inputs passed to EcPopoverToggleComponent
     anchorToContentAlign: {
@@ -148,6 +157,7 @@ const MetaStory = {
     closeOnChange: false,
     value: undefined,
     widthPx: TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx,
+    withTime: true,
     anchorToContentAlign: EcAnchorToContentAlign.StartToStart,
     contentPosition: EcContentPosition.Bottom,
     btnDisabled: false,
@@ -157,7 +167,7 @@ const MetaStory = {
     closeOnClickOutside: true,
     closeOnScroll: true,
     open: false,
-    withTime: true,
+    labelLocale: 'en-US',
   },
 } as Meta<EcTimeRangeFilterToggleComponent>;
 
