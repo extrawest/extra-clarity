@@ -58,6 +58,9 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   ],
 })
 export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnChanges, OnDestroy, OnInit {
+  @Input()
+  public labelLocale?: string;
+
   // Inputs passed to EcTimeRangeFilterComponent
   @Input({ required: true })
   public propertyKey!: string;
@@ -79,9 +82,6 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
 
   @Input()
   public widthPx: number = TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx;
-
-  @Input()
-  public labelLocale?: string;
 
   // Inputs passed to EcPopoverToggleComponent
 
@@ -157,14 +157,14 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   }
 
   ngOnInit(): void {
-    this.updateSelectedRangeLabel();
-
     this.commonStrings.stringsChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.changeDetectorRef.markForCheck();
         this.updateSelectedRangeLabel();
       });
+
+    this.updateSelectedRangeLabel(true);
   }
 
   resetToDefault(): void {
@@ -232,12 +232,15 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
     return commonStrings.timeRangeFilter.customPeriod;
   }
 
-  private updateSelectedRangeLabel(): void {
+  private updateSelectedRangeLabel(isCalledFromNgOnInit: boolean = false): void {
     this.selectedRangeLabel = this.getTimeRangeLabel(this.timeRangeFilter?.state.value);
 
     if (!this.initiallyChecked) {
       // TODO: maybe call detectChanges every time when this method is executed?
       this.changeDetectorRef.detectChanges();
+    }
+
+    if (isCalledFromNgOnInit) {
       this.initiallyChecked = true;
     }
   }
