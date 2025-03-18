@@ -1,0 +1,50 @@
+{
+  "$schema": "https://unpkg.com/release-it@18/schema/release-it.json",
+  "hooks": {
+    "before:init": ["git pull", "npm run build:extra-clarity"],
+    "after:bump": ["npx auto-changelog -p", "git add CHANGELOG.md"]
+  },
+  "git": {
+    "requireCleanWorkingDir": true,
+    "requireBranch": ["main", "+([0-9]).x"],
+    "requireUpstream": true,
+    "commitMessage": "chore: release v${version}",
+    "tag": true,
+    "tagName": "v${version}",
+    "push": true
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": true,
+    "releaseName": "v${version}",
+    "web": true
+  },
+  "plugins": {
+    "@release-it/bumper": {
+      "in": "projects/extra-clarity/package.json",
+      "out": ["projects/extra-clarity/package.json", "package.json"]
+    },
+    "@release-it/conventional-changelog": {
+      "infile": "CHANGELOG.md",
+      "preset": {
+        "name": "conventionalcommits",
+        "type": [
+          { "type": "feat", "section": "Features" },
+          { "type": "fix", "section": "Bug Fixes" },
+          { "type": "chore", "hidden": true },
+          { "type": "docs", "hidden": true },
+          { "type": "style", "hidden": true },
+          { "type": "refactor", "hidden": true },
+          { "type": "perf", "hidden": true },
+          { "type": "test", "hidden": true },
+          { "type": "build", "hidden": true },
+          { "type": "ci", "hidden": true },
+          { "type": "revert", "hidden": true },
+          {}
+        ]
+      }
+    }
+  }
+}

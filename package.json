@@ -9,9 +9,10 @@
     "watch": "ng build --watch --configuration development",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "storybook": "ng run extra-clarity:storybook --no-open",
-    "build-storybook": "ng run extra-clarity:build-storybook",
-    "docs:extra-clarity": "npx compodoc -e json -d . -p tsconfig.doc.json --minimal --disableLifeCycleHooks --disablePrivate --disableProtected"
+    "build:storybook": "ng run extra-clarity:build-storybook",
+    "serve:storybook": "ng run extra-clarity:storybook --no-open",
+    "docs:extra-clarity": "npx compodoc -e json -d . -p tsconfig.doc.json --minimal --disableLifeCycleHooks --disablePrivate --disableProtected",
+    "release": "release-it"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +43,8 @@
     "@angular/cli": "17.3.0",
     "@angular/compiler-cli": "17.3.0",
     "@compodoc/compodoc": "1.1.23",
+    "@release-it/bumper": "7.0.2",
+    "@release-it/conventional-changelog": "10.0.0",
     "@storybook/addon-essentials": "8.0.6",
     "@storybook/addon-interactions": "8.0.6",
     "@storybook/addon-links": "8.0.6",
@@ -57,6 +60,7 @@
     "firebase-tools": "latest",
     "husky": "8.0.3",
     "ng-packagr": "17.3.0",
+    "release-it": "18.1.2",
     "storybook": "8.0.6",
     "typescript": "5.4.4"
   }
