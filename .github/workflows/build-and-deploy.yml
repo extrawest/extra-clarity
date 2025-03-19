@@ -32,8 +32,8 @@ env:
   NPM_REGISTRY: https://registry.npmjs.org/
   # firebase settings from '.firebaserc' & 'firebase.json'
   SB_FIREBASE_PROJECT_ID: storybook-deploy
-  SB_FIREBASE_TARGET_HOSTING: storybook-hosting
-  SB_FIREBASE_MAIN_HOSTING_SITE: extra-clarity-docs # IMPORTANT: this string should be unique across entire .firebaserc
+  SB_FIREBASE_HOSTING_TARGET: storybook-hosting
+  SB_FIREBASE_HOSTING_SITE: extra-clarity-docs # IMPORTANT: this string should be unique across entire .firebaserc
   # script names from the main 'package.json' to be called with 'npm run'
   SCRIPT_BUILD_LIB: build:extra-clarity
   SCRIPT_BUILD_STORYBOOK: build:storybook
@@ -64,13 +64,21 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: ./.github/actions/build-extra-clarity
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: node-modules-cache
         with:
-          script-build-extra-clarity: ${{ env.SCRIPT_BUILD_LIB }}
-          lib-artifact-name: ${{ env.LIB_ARTIFACT_NAME }}
-          lib-dist-path: ${{ env.LIB_DIST_PATH }}
-          # root-package-lock-json: ${{ env.ROOT_PACKAGE_LOCK_JSON }}
-          # node-modules-path: ${{ env.NODE_MODULES_PATH }}
+          path: ${{ env.NODE_MODULES_PATH }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles(env.ROOT_PACKAGE_LOCK_JSON) }}
+      - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+      - name: Building extra-clarity
+        run: npm run ${{ env.SCRIPT_BUILD_LIB }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST_PATH }}
+          if-no-files-found: error
 
   publish-package-to-npm:
     needs: [build-extra-clarity]
@@ -79,13 +87,18 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: ./.github/actions/publish-npm-package
+      - uses: actions/setup-node@v4
         with:
-          lib-artifact-name: ${{ env.LIB_ARTIFACT_NAME }}
-          lib-dist-path: ${{ env.LIB_DIST_PATH }}
           node-version: ${{ env.NODE_VER }}
-          npm-registry-url: ${{ env.NPM_REGISTRY }}
-          secrets-npm-token: ${{ secrets.npm-token }}
+          registry-url: ${{ env.NPM_REGISTRY }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST_PATH }}
+      - run: npm publish
+        working-directory: ${{ env.LIB_DIST_PATH }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
 
   build-and-publish-storybook:
     needs: [check-version, build-extra-clarity]
@@ -93,16 +106,31 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: ./.github/actions/build-and-publish-storybook
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: node-modules-cache
         with:
-          firebase-project-id: ${{ env.SB_FIREBASE_PROJECT_ID }}
-          firebase-hosting-target: ${{ env.SB_FIREBASE_TARGET_HOSTING }}
-          firebase-hosting-site-main: ${{ env.SB_FIREBASE_MAIN_HOSTING_SITE }}
-          firebase-hosting-site-prefix: ${{ needs.check-version.outputs.prefix }}
-          script-build-storybook: ${{ env.SCRIPT_BUILD_STORYBOOK }}
-          lib-artifact-name: ${{ env.LIB_ARTIFACT_NAME }}
-          lib-dist-path: ${{ env.LIB_DIST_PATH }}
-          # root-package-lock-json: ${{ env.ROOT_PACKAGE_LOCK_JSON }}
-          # node-modules-path: ${{ env.NODE_MODULES_PATH }}
-          secrets-github-token: ${{ secrets.github-token }}
-          secrets-firebase-service-account: ${{ secrets.storybook-firebase-service-account }}
+          path: ${{ env.NODE_MODULES_PATH }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles(env.ROOT_PACKAGE_LOCK_JSON) }}
+      - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST_PATH }}
+      - name: Building storybook
+        run: npm run ${{ env.SCRIPT_BUILD_STORYBOOK }}
+      - name: Correcting firebase hosting site for non-actual versions
+        if: ${{ needs.check-version.outputs.prefix != '' }}
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          include: ".firebaserc"
+          find: "${{ env.SB_FIREBASE_HOSTING_SITE }}"
+          replace: "${{ needs.check-version.outputs.prefix }}${{ env.SB_FIREBASE_HOSTING_SITE }}"
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.github-token }}
+          firebaseServiceAccount: ${{ secrets.storybook-firebase-service-account }}
+          projectId: ${{ env.SB_FIREBASE_PROJECT_ID }}
+          target: ${{ env.SB_FIREBASE_HOSTING_TARGET }}
+          channelId: live
