@@ -9,6 +9,13 @@ on:
       release-tag-full:
         type: string
         required: true
+    secrets:
+      npm-token:
+        required: true
+      github-token:
+        required: true
+      storybook-firebase-service-account:
+        required: true
 
 env:
   # name of the main branch for releasing the most actual version
@@ -78,7 +85,7 @@ jobs:
           lib-dist-path: ${{ env.LIB_DIST_PATH }}
           node-version: ${{ env.NODE_VER }}
           npm-registry-url: ${{ env.NPM_REGISTRY }}
-          secrets-npm-token: ${{ secrets.NPM_TOKEN }}
+          secrets-npm-token: ${{ secrets.npm-token }}
 
   build-and-publish-storybook:
     needs: [check-version, build-extra-clarity]
@@ -97,5 +104,5 @@ jobs:
           lib-dist-path: ${{ env.LIB_DIST_PATH }}
           # root-package-lock-json: ${{ env.ROOT_PACKAGE_LOCK_JSON }}
           # node-modules-path: ${{ env.NODE_MODULES_PATH }}
-          secrets-github-token: ${{ secrets.GITHUB_TOKEN }}
-          secrets-firebase-service-account: ${{ secrets.STORYBOOK_FIREBASE_SERVICE_ACCOUNT }}
+          secrets-github-token: ${{ secrets.github-token }}
+          secrets-firebase-service-account: ${{ secrets.storybook-firebase-service-account }}

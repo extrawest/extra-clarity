@@ -1,76 +1,15 @@
-name: Publish Storybook manually
+name: Build & publish storybook manually
 
 on:
   workflow_dispatch:
 
-# TODO: consider sharing these variables with another workflows
-env:
-  # name of the main branch for releasing the most actual version
-  PRIMARY_RELEASING_BRANCH: "main"
-  # artifact names (available on the github actions page after completing the workflow)
-  LIB_ARTIFACT_NAME: extra-clarity-build
-  # paths to specific folders & files
-  LIB_DIST_PATH: dist/extra-clarity
-  LIB_PACKAGE_JSON: projects/extra-clarity/package.json
-  ROOT_PACKAGE_LOCK_JSON: package-lock.json
-  NODE_MODULES_PATH: node_modules
-  # firebase settings from '.firebaserc' & 'firebase.json'
-  SB_FIREBASE_PROJECT_ID: storybook-deploy
-  SB_FIREBASE_TARGET_HOSTING: storybook-hosting
-  SB_FIREBASE_MAIN_HOSTING_SITE: extra-clarity-docs # IMPORTANT: this string should be unique across entire .firebaserc
-  # script names from the main 'package.json' to be called with 'npm run'
-  SCRIPT_BUILD_LIB: build:extra-clarity
-  SCRIPT_BUILD_STORYBOOK: build:storybook
-
 jobs:
-  check-version:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    outputs:
-      prefix: ${{ steps.get-storybook-site-prefix.outputs.prefix }}
-    steps:
-      - id: get-package-version
-        uses: ./.github/actions/get-package-version
-        with:
-          extra-clarity-package-json: ${{ env.LIB_PACKAGE_JSON }}
-      - id: get-storybook-site-prefix
-        uses: ./.github/actions/get-storybook-site-prefix
-        with:
-          tag: ${{ steps.get-package-version.outputs.tag }}
-          major-version: ${{ steps.get-package-version.outputs.major }}
-          primary-release-branch: ${{ env.PRIMARY_RELEASING_BRANCH }}
-
-  build-extra-clarity:
-    needs: [check-version]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: ./.github/actions/build-extra-clarity
-        with:
-          script-build-extra-clarity: ${{ env.SCRIPT_BUILD_LIB }}
-          lib-artifact-name: ${{ env.LIB_ARTIFACT_NAME }}
-          lib-dist-path: ${{ env.LIB_DIST_PATH }}
-          # root-package-lock-json: ${{ env.ROOT_PACKAGE_LOCK_JSON }}
-          # node-modules-path: ${{ env.NODE_MODULES_PATH }}
-
-  build-and-publish-storybook:
-    needs: [check-version, build-extra-clarity]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: ./.github/actions/build-and-publish-storybook
-        with:
-          firebase-project-id: ${{ env.SB_FIREBASE_PROJECT_ID }}
-          firebase-hosting-target: ${{ env.SB_FIREBASE_TARGET_HOSTING }}
-          firebase-hosting-site-main: ${{ env.SB_FIREBASE_MAIN_HOSTING_SITE }}
-          firebase-hosting-site-prefix: ${{ needs.check-version.outputs.prefix }}
-          script-build-storybook: ${{ env.SCRIPT_BUILD_STORYBOOK }}
-          lib-artifact-name: ${{ env.LIB_ARTIFACT_NAME }}
-          lib-dist-path: ${{ env.LIB_DIST_PATH }}
-          # root-package-lock-json: ${{ env.ROOT_PACKAGE_LOCK_JSON }}
-          # node-modules-path: ${{ env.NODE_MODULES_PATH }}
-          secrets-github-token: ${{ secrets.GITHUB_TOKEN }}
-          secrets-firebase-service-account: ${{ secrets.STORYBOOK_FIREBASE_SERVICE_ACCOUNT }}
+  build-and-deploy:
+    uses: ./.github/workflows/build-and-deploy.yml
+    with:
+      publish-to-npm: false
+      release-tag-full: ""
+    secrets:
+      npm-token: ${{ secrets.NPM_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      storybook-firebase-service-account: ${{ secrets.STORYBOOK_FIREBASE_SERVICE_ACCOUNT }}
