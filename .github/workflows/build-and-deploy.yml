@@ -1,0 +1,136 @@
+name: Build & publish Extra-Clarity package & Storybook docs
+
+on:
+  workflow_call:
+    inputs:
+      publish-to-npm:
+        type: boolean
+        required: true
+      release-tag-full:
+        type: string
+        required: true
+    secrets:
+      npm-token:
+        required: true
+      github-token:
+        required: true
+      storybook-firebase-service-account:
+        required: true
+
+env:
+  # name of the main branch for releasing the most actual version
+  PRIMARY_RELEASING_BRANCH: "main"
+  # artifact names (available on the github actions page after completing the workflow)
+  LIB_ARTIFACT_NAME: extra-clarity-build
+  # paths to specific folders & files
+  LIB_DIST_PATH: dist/extra-clarity
+  LIB_PACKAGE_JSON: projects/extra-clarity/package.json
+  ROOT_PACKAGE_LOCK_JSON: package-lock.json
+  NODE_MODULES_PATH: node_modules
+  # settings for publishing the package
+  NODE_VER: 22
+  NPM_REGISTRY: https://registry.npmjs.org/
+  # firebase settings from '.firebaserc' & 'firebase.json'
+  SB_FIREBASE_PROJECT_ID: storybook-deploy
+  SB_FIREBASE_HOSTING_TARGET: storybook-hosting
+  SB_FIREBASE_HOSTING_SITE: extra-clarity-docs # IMPORTANT: this string should be unique across entire .firebaserc
+  # script names from the main 'package.json' to be called with 'npm run'
+  SCRIPT_BUILD_LIB: build:extra-clarity
+  SCRIPT_BUILD_STORYBOOK: build:storybook
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      prefix: ${{ steps.get-storybook-site-prefix.outputs.prefix }}
+    steps:
+      - id: get-package-version
+        uses: ./.github/actions/get-package-version
+        with:
+          extra-clarity-package-json: ${{ env.LIB_PACKAGE_JSON }}
+          tag-full: ${{ inputs.release-tag-full }}
+      - id: get-storybook-site-prefix
+        uses: ./.github/actions/get-storybook-site-prefix
+        with:
+          tag: ${{ steps.get-package-version.outputs.tag }}
+          major-version: ${{ steps.get-package-version.outputs.major }}
+          primary-release-branch: ${{ env.PRIMARY_RELEASING_BRANCH }}
+
+  build-extra-clarity:
+    needs: [check-version]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: node-modules-cache
+        with:
+          path: ${{ env.NODE_MODULES_PATH }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles(env.ROOT_PACKAGE_LOCK_JSON) }}
+      - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+      - name: Building extra-clarity
+        run: npm run ${{ env.SCRIPT_BUILD_LIB }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST_PATH }}
+          if-no-files-found: error
+
+  publish-package-to-npm:
+    needs: [build-extra-clarity]
+    if: inputs.publish-to-npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VER }}
+          registry-url: ${{ env.NPM_REGISTRY }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST_PATH }}
+      - run: npm publish
+        working-directory: ${{ env.LIB_DIST_PATH }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
+
+  build-and-publish-storybook:
+    needs: [check-version, build-extra-clarity]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: node-modules-cache
+        with:
+          path: ${{ env.NODE_MODULES_PATH }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles(env.ROOT_PACKAGE_LOCK_JSON) }}
+      - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.LIB_ARTIFACT_NAME }}
+          path: ${{ env.LIB_DIST_PATH }}
+      - name: Building storybook
+        run: npm run ${{ env.SCRIPT_BUILD_STORYBOOK }}
+      - name: Correcting firebase hosting site for non-actual versions
+        if: ${{ needs.check-version.outputs.prefix != '' }}
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          include: ".firebaserc"
+          find: "${{ env.SB_FIREBASE_HOSTING_SITE }}"
+          replace: "${{ needs.check-version.outputs.prefix }}${{ env.SB_FIREBASE_HOSTING_SITE }}"
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.github-token }}
+          firebaseServiceAccount: ${{ secrets.storybook-firebase-service-account }}
+          projectId: ${{ env.SB_FIREBASE_PROJECT_ID }}
+          target: ${{ env.SB_FIREBASE_HOSTING_TARGET }}
+          channelId: live

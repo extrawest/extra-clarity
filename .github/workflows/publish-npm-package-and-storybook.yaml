@@ -1,0 +1,18 @@
+name: Build & publish extra-clarity package & storybook on a new release
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+-[0-9a-zA-z]+"
+
+jobs:
+  build-and-deploy:
+    uses: ./.github/workflows/build-and-deploy.yml
+    with:
+      publish-to-npm: true
+      release-tag-full: ${{ github.ref }}
+    secrets:
+      npm-token: ${{ secrets.NPM_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      storybook-firebase-service-account: ${{ secrets.STORYBOOK_FIREBASE_SERVICE_ACCOUNT }}

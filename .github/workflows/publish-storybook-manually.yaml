@@ -1,0 +1,15 @@
+name: Build & publish storybook manually
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    uses: ./.github/workflows/build-and-deploy.yml
+    with:
+      publish-to-npm: false
+      release-tag-full: ""
+    secrets:
+      npm-token: ${{ secrets.NPM_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      storybook-firebase-service-account: ${{ secrets.STORYBOOK_FIREBASE_SERVICE_ACCOUNT }}
