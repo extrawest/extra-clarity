@@ -1,0 +1,67 @@
+name: "Reusable action: get the package version"
+
+description: ""
+
+inputs:
+  extra-clarity-package-json:
+    required: true
+    type: string
+    description: "Path to the package.json file of the extra-clarity library project itself"
+  tag-full:
+    required: false
+    type: string
+    description: "Full path/name of the tag published with the release - for auto-triggered workflows only"
+
+outputs:
+  full:
+    description: "Full version, e.g. 12.2.1"
+    value: ${{ steps.extract-major.outputs.full }}
+  major:
+    description: "Major version, e.g. 12 when the full version is 12.2.1"
+    value: ${{ steps.extract-major.outputs.major }}
+  tag:
+    description: "Version from the tag name, e.g. v12.2.1",
+    value: ${{ steps.extract-major.outputs.full }}
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+      with:
+      fetch-depth: 0 # Ensure we fetch all branches
+
+    - name: Read the package version from 'package.json'
+      id: package-version
+      uses: jaywcjlove/github-action-package@main
+      with:
+        path: ${{ inputs.extra-clarity-package-json }}
+
+    # TODO: here we could check if the tag-full matches the version read from the package.json file
+
+    - name: Extracting major version
+      id: extract-major
+      env:
+        PACKAGE_JSON_VERSION: ${{ steps.package-version.outputs.version }}
+        TAG_FULL: ${{ inputs.tag-full }}
+      run: |
+        FULL_VER=""
+        MAJOR_VER=""
+        TAG_VERSION=""
+
+        if [[ -n "$TAG_FULL" ]]; then 
+          FULL_VER="${TAG_FULL#refs/tags/v}"   # Remove 'refs/tags/v' prefix
+          MAJOR_VER="${FULL_VER%%.*}"            # Extract major version
+          TAG_NAME="v${FULL_VER}"                # Pure tag name === $GITHUB_REF_NAME
+        else
+          FULL_VER="${PACKAGE_JSON_VERSION}"
+          MAJOR_VER="${FULL_VER%%.*}"
+          TAG_NAME="v${FULL_VER}"
+        fi
+
+        echo "Full version: $FULL_VER"
+        echo "Major version: $MAJOR_VER"
+        echo "Tag version: $TAG_NAME"
+
+        echo "full=$FULL_VER" >> $GITHUB_OUT
+        echo "major=$MAJOR_VER" >> $GITHUB_OUT
+        echo "tag=v$TAG_NAME" >> $GITHUB_OUT

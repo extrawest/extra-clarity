@@ -1,9 +1,15 @@
-name: Publish Storybook manually
+name: Build & publish Extra-Clarity package & Storybook docs
 
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      publish-to-npm:
+        type: boolean
+        required: true
+      release-tag-full:
+        type: string
+        required: true
 
-# TODO: consider sharing these variables with another workflows
 env:
   # name of the main branch for releasing the most actual version
   PRIMARY_RELEASING_BRANCH: "main"
@@ -14,6 +20,9 @@ env:
   LIB_PACKAGE_JSON: projects/extra-clarity/package.json
   ROOT_PACKAGE_LOCK_JSON: package-lock.json
   NODE_MODULES_PATH: node_modules
+  # settings for publishing the package
+  NODE_VER: 22
+  NPM_REGISTRY: https://registry.npmjs.org/
   # firebase settings from '.firebaserc' & 'firebase.json'
   SB_FIREBASE_PROJECT_ID: storybook-deploy
   SB_FIREBASE_TARGET_HOSTING: storybook-hosting
@@ -34,6 +43,7 @@ jobs:
         uses: ./.github/actions/get-package-version
         with:
           extra-clarity-package-json: ${{ env.LIB_PACKAGE_JSON }}
+          tag-full: ${{ inputs.release-tag-full }}
       - id: get-storybook-site-prefix
         uses: ./.github/actions/get-storybook-site-prefix
         with:
@@ -54,6 +64,21 @@ jobs:
           lib-dist-path: ${{ env.LIB_DIST_PATH }}
           # root-package-lock-json: ${{ env.ROOT_PACKAGE_LOCK_JSON }}
           # node-modules-path: ${{ env.NODE_MODULES_PATH }}
+
+  publish-package-to-npm:
+    needs: [build-extra-clarity]
+    if: inputs.publish-to-npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: ./.github/actions/publish-npm-package
+        with:
+          lib-artifact-name: ${{ env.LIB_ARTIFACT_NAME }}
+          lib-dist-path: ${{ env.LIB_DIST_PATH }}
+          node-version: ${{ env.NODE_VER }}
+          npm-registry-url: ${{ env.NPM_REGISTRY }}
+          secrets-npm-token: ${{ secrets.NPM_TOKEN }}
 
   build-and-publish-storybook:
     needs: [check-version, build-extra-clarity]

@@ -28,6 +28,7 @@ yarn-error.log
 /.angular
 .firebase
 .github/*
+!.github/actions
 !.github/workflows
 .sass-cache/
 /connect.lock

@@ -1,0 +1,95 @@
+name: "Reusable action: build & deploy Storybook to Firebase Hosting"
+
+description: ""
+
+inputs:
+  firebase-project-id:
+    required: true
+    type: string
+    default: "storybook-deploy"
+    description: "Firebase Project ID from .firebaserc"
+  firebase-hosting-target:
+    required: true
+    type: string
+    default: "storybook-hosting"
+    description: "Firebase Hosting target name from .firebaserc & firebase.json"
+  firebase-hosting-site-main:
+    required: true
+    type: string
+    default: "extra-clarity-docs"
+    description: "Firebase Hosting site name from .firebaserc for the primary package version"
+  firebase-hosting-site-prefix:
+    required: true
+    type: string
+    default: ""
+    description: "Prefix to prepend the storybook site url, e.g. v17-... for non-primary versions"
+  script-build-storybook:
+    required: true
+    type: string
+    default: "build:storybook"
+    description: "Script name from the package.json for building the Storybook distributive files"
+  lib-artifact-name:
+    required: true
+    type: string
+    default: "extra-clarity-build"
+    description: "Name of the extra-clarity package build available via artifacts"
+  lib-dist-path:
+    required: true
+    type: string
+    default: "dist/extra-clarity"
+    description: "Path to the built extra-clarity package's files"
+  root-package-lock-json:
+    required: false
+    type: string
+    default: "package-lock.json"
+    description: "Path to the root 'package-lock.json' file - for caching purposes"
+  node-modules-path:
+    required: false
+    type: string
+    default: "node_modules"
+    description: "Path to the 'node_modules' directory - for caching purposes"
+  secrets-github-token:
+    required: true
+    type: string
+  secrets-firebase-service-account:
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/cache@v4
+      id: node-modules-cache
+      with:
+        path: ${{ inputs.node-modules-path }}
+        key: node-modules-${{ runner.os }}-${{ hashFiles(inputs.root-package-lock-json) }}
+      env:
+
+    - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
+      run: npm ci
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: ${{ inputs.lib-artifact-name }}
+        path: ${{ inputs.lib-dist-path }}
+
+    - name: Building storybook
+      run: npm run ${{ inputs.script-build-storybook }}
+
+    - name: Correcting firebase hosting site for non-actual versions
+      if: ${{ inputs.firebase-hosting-site-prefix != '' }}
+      uses: jacobtomlinson/gha-find-replace@v3
+      with:
+        include: ".firebaserc"
+        find: "${{ inputs.firebase-hosting-site-main }}"
+        replace: "${{ inputs.firebase-hosting-site-prefix }}${{ inputs.firebase-hosting-site-main }}"
+
+    - uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: ${{ inputs.secrets-github-token }}
+        firebaseServiceAccount: ${{ inputs.secrets-firebase-service-account }}
+        projectId: ${{ inputs.firebase-project-id }}
+        target: ${{ inputs.firebase-hosting-target }}
+        channelId: live

@@ -1,0 +1,53 @@
+name: "Reusable action: build extra-clarity package"
+
+description: ""
+
+inputs:
+  script-build-extra-clarity:
+    required: true
+    type: string
+    default: "build:extra-clarity"
+    description: "Script name from the package.json for building the Extra-Clarity distributive files"
+  lib-artifact-name:
+    required: true
+    type: string
+    default: "extra-clarity-build"
+    description: "Name of the extra-clarity package build available via artifacts"
+  lib-dist-path:
+    required: true
+    type: string
+    default: "dist/extra-clarity"
+    description: "Path to the built extra-clarity package's files"
+  root-package-lock-json:
+    required: false
+    type: string
+    default: "package-lock.json"
+    description: "Path to the root 'package-lock.json' file - for caching purposes"
+  node-modules-path:
+    required: false
+    type: string
+    default: "node_modules"
+    description: "Path to the 'node_modules' directory - for caching purposes"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/cache@v4
+      id: node-modules-cache
+      with:
+        path: ${{ inputs.node-modules-path }}
+        key: node-modules-${{ runner.os }}-${{ hashFiles(inputs.root-package-lock-json) }}
+
+    - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
+      run: npm ci
+
+    - name: Building extra-clarity
+      run: npm run ${{ inputs.script-build-extra-clarity }}
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.lib-artifact-name }}
+        path: ${{ inputs.lib-dist-path }}
+        if-no-files-found: error
