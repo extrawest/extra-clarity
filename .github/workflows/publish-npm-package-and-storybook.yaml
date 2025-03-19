@@ -7,6 +7,8 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+-[0-9a-zA-z]+"
 
 env:
+  # name of the main branch for releasing the most actual version
+  MAIN_RELEASING_BRANCH: "main"
   # artifact names (available on the github actions page after completing the workflow)
   LIB_ARTIFACT_NAME: extra-clarity-build
   # paths to specific folders & files
@@ -44,13 +46,12 @@ jobs:
           echo "Extracted major version: $MAJOR_VERSION"
           echo "MAJOR_VERSION=$MAJOR_VERSION" >> $GITHUB_ENV
 
-      - name: Checking if the tag was pushed to a releasing branch and evaluate the prefix for Storybook's Firebase Hosting site
+      - name: Checking if the tag was pushed to a releasing branch, and evaluating the prefix for Storybook's Firebase Hosting site
         id: storybook-prefix
         run: |
           git fetch --all
 
-          MAIN_RELEASING_BRANCH="main"                  # for releasing the most actual version
-          PREV_RELEASING_BRANCH="${MAJOR_VERSION}.x"    # for releasing previous versions
+          PREV_RELEASING_BRANCH="${MAJOR_VERSION}.x"         # for releasing previous versions
           STORYBOOK_URL_PREFIX=""
 
           if [[ -n "$(git branch -r --contains ${GITHUB_REF_NAME} | grep "origin/${PREV_RELEASING_BRANCH}" || echo "")" ]]; then
