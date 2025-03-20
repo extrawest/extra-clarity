@@ -46,6 +46,8 @@ jobs:
     outputs:
       prefix: ${{ steps.get-storybook-site-prefix.outputs.prefix }}
     steps:
+      # uses: actions/checkout@v4 -- to make custom actions available from within the repository itself
+      - uses: actions/checkout@v4
       - id: get-package-version
         uses: ./.github/actions/get-package-version
         with:
