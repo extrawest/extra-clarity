@@ -20,7 +20,7 @@ outputs:
     description: "Major version, e.g. 12 when the full version is 12.2.1"
     value: ${{ steps.extract-major.outputs.major }}
   tag:
-    description: "Version from the tag name, e.g. v12.2.1",
+    description: "Version from the tag name, e.g. v12.2.1"
     value: ${{ steps.extract-major.outputs.full }}
 
 runs:
