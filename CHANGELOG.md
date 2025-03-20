@@ -1,12 +1,13 @@
 # Changelog
 
-## [17.12.3](https://github.com/extrawest/extra-clarity/compare/0.17.12...v17.12.3) (2025-03-20)
+## [17.12.4](https://github.com/extrawest/extra-clarity/compare/0.17.12...v17.12.4) (2025-03-20)
 
 ### Misc
 
 * release v17.12.0 ([327b730](https://github.com/extrawest/extra-clarity/commit/327b730e2a90b7e35cbaa2e2001f77376c144b34))
 * release v17.12.1 ([1e81f31](https://github.com/extrawest/extra-clarity/commit/1e81f3184b81add452fb047d5fc0067cbad980dd))
 * release v17.12.2 ([b83dbaf](https://github.com/extrawest/extra-clarity/commit/b83dbafa6505ea03bf8569f54e1a7fecdf8aa387))
+* release v17.12.3 ([d2a71da](https://github.com/extrawest/extra-clarity/commit/d2a71dab57d25eb205a6e6fea6672910626a388b))
 
 ### CI
 
@@ -18,6 +19,7 @@
 * generate CHANGELOG.md according to conventional-commits ([8d9e23a](https://github.com/extrawest/extra-clarity/commit/8d9e23a973c95bc4510706b6f7769afd6270fd6a))
 * generate release notes according to conventional-commits, and do not generate CHANGELOG.md ([4ff0681](https://github.com/extrawest/extra-clarity/commit/4ff06816673b23c998100ac1de708c930bcf9512))
 * rework CI/CD to support releases & multiple versions ([71b03de](https://github.com/extrawest/extra-clarity/commit/71b03dec404d7873fa04934075c9d2ae5f1ab984))
+* specify 'shell: bash' for composite actions ([c0d3358](https://github.com/extrawest/extra-clarity/commit/c0d3358695f88724acfd26815037537555e05f29))
 * use actions/checkout to make custom actions available within workflows ([88b3efe](https://github.com/extrawest/extra-clarity/commit/88b3efeba03b6e7e62f50981c3eae3ecdf1b6773))
 ## [0.17.12](https://github.com/extrawest/extra-clarity/compare/0.17.11...0.17.12) (2025-02-17)
 ## [0.17.11](https://github.com/extrawest/extra-clarity/compare/0.17.10...0.17.11) (2025-02-17)
