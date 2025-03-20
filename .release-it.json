@@ -25,6 +25,7 @@
     },
     "@release-it/conventional-changelog": {
       "ignoreRecommendedBump": true,
+      "infile": "CHANGELOG.md",
       "gitRawCommitsOpts": {
         "merges": null
       },
