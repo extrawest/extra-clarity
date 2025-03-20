@@ -1,9 +1,10 @@
 # Changelog
 
-## [17.12.5](https://github.com/extrawest/extra-clarity/compare/0.17.12...v17.12.5) (2025-03-20)
+## [17.12.6](https://github.com/extrawest/extra-clarity/compare/0.17.12...v17.12.6) (2025-03-20)
 
 ### Misc
 
+* release v17.12.5 ([5f42bce](https://github.com/extrawest/extra-clarity/commit/5f42bce5083260d41af8c34a5d5691c61f8a4c28))
 * release v17.12.4 ([87570b1](https://github.com/extrawest/extra-clarity/commit/87570b1801c6c714a0cbbb03a1e9dbb510805b94))
 * release v17.12.3 ([d2a71da](https://github.com/extrawest/extra-clarity/commit/d2a71dab57d25eb205a6e6fea6672910626a388b))
 * release v17.12.2 ([b83dbaf](https://github.com/extrawest/extra-clarity/commit/b83dbafa6505ea03bf8569f54e1a7fecdf8aa387))
@@ -12,6 +13,7 @@
 
 ### CI
 
+* fix errors in action scripts ([0a6798b](https://github.com/extrawest/extra-clarity/commit/0a6798b07d422637bab4ffbd94e9948b2d0cca86))
 * disable alphabetical sorting of commits within changelog ([68532e8](https://github.com/extrawest/extra-clarity/commit/68532e80f925dee70f0d9fa055cefae0cb197cf5))
 * fix incorrect github-output environment variable ([9c5215e](https://github.com/extrawest/extra-clarity/commit/9c5215edb3875d9bc04419d593d6d1ff6b04aa71))
 * specify 'shell: bash' for composite actions ([c0d3358](https://github.com/extrawest/extra-clarity/commit/c0d3358695f88724acfd26815037537555e05f29))
