@@ -27,9 +27,24 @@
     },
     "@release-it/conventional-changelog": {
       "ignoreRecommendedBump": true,
-      "infile": "CHANGELOG.md",
       "gitRawCommitsOpts": {
         "merges": null
+      },
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          { "type": "feat", "section": "Features", "hidden": false },
+          { "type": "fix", "section": "Bug fixes", "hidden": false },
+          { "type": "chore", "section": "Misc", "hidden": false },
+          { "type": "docs", "section": "Documentation", "hidden": false },
+          { "type": "style", "section": "Corrections", "hidden": false },
+          { "type": "refactor", "section": "Refactored", "hidden": false },
+          { "type": "perf", "section": "Perf improvements", "hidden": false },
+          { "type": "test", "section": "Tests", "hidden": false },
+          { "type": "build", "section": "Build", "hidden": false },
+          { "type": "ci", "section": "CI", "hidden": false },
+          { "type": "revert", "section": "Reverted", "hidden": false }
+        ]
       }
     }
   }
