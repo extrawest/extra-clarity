@@ -1,26 +1,29 @@
 # Changelog
 
-## [17.12.4](https://github.com/extrawest/extra-clarity/compare/0.17.12...v17.12.4) (2025-03-20)
+## [17.12.5](https://github.com/extrawest/extra-clarity/compare/0.17.12...v17.12.5) (2025-03-20)
 
 ### Misc
 
-* release v17.12.0 ([327b730](https://github.com/extrawest/extra-clarity/commit/327b730e2a90b7e35cbaa2e2001f77376c144b34))
-* release v17.12.1 ([1e81f31](https://github.com/extrawest/extra-clarity/commit/1e81f3184b81add452fb047d5fc0067cbad980dd))
-* release v17.12.2 ([b83dbaf](https://github.com/extrawest/extra-clarity/commit/b83dbafa6505ea03bf8569f54e1a7fecdf8aa387))
+* release v17.12.4 ([87570b1](https://github.com/extrawest/extra-clarity/commit/87570b1801c6c714a0cbbb03a1e9dbb510805b94))
 * release v17.12.3 ([d2a71da](https://github.com/extrawest/extra-clarity/commit/d2a71dab57d25eb205a6e6fea6672910626a388b))
+* release v17.12.2 ([b83dbaf](https://github.com/extrawest/extra-clarity/commit/b83dbafa6505ea03bf8569f54e1a7fecdf8aa387))
+* release v17.12.1 ([1e81f31](https://github.com/extrawest/extra-clarity/commit/1e81f3184b81add452fb047d5fc0067cbad980dd))
+* release v17.12.0 ([327b730](https://github.com/extrawest/extra-clarity/commit/327b730e2a90b7e35cbaa2e2001f77376c144b34))
 
 ### CI
 
-* correct release-it configuration to prompt new package version & generate more extended initial changelog ([a8deec3](https://github.com/extrawest/extra-clarity/commit/a8deec385873c2a7398085ca930e4b377e59472f))
-* create GitHub Release via GitHub Actions, with release notes according to conventional commits ([b5a9c50](https://github.com/extrawest/extra-clarity/commit/b5a9c50154b99f8cab33e3835ffdc40edcd42f79))
-* do not create GitHub Release via release-it script ([e84d61a](https://github.com/extrawest/extra-clarity/commit/e84d61aa0c42ccd05d1b2725e3a3cce86ad0d40e))
+* disable alphabetical sorting of commits within changelog ([68532e8](https://github.com/extrawest/extra-clarity/commit/68532e80f925dee70f0d9fa055cefae0cb197cf5))
+* fix incorrect github-output environment variable ([9c5215e](https://github.com/extrawest/extra-clarity/commit/9c5215edb3875d9bc04419d593d6d1ff6b04aa71))
+* specify 'shell: bash' for composite actions ([c0d3358](https://github.com/extrawest/extra-clarity/commit/c0d3358695f88724acfd26815037537555e05f29))
 * fix typo in action script leading to failed parsing during workflow execution ([b5899ca](https://github.com/extrawest/extra-clarity/commit/b5899caa68bc47f8fdb03e17b2b88fad7b7d7a3d))
 * fix typo in action script leading to failed parsing during workflow execution ([083728d](https://github.com/extrawest/extra-clarity/commit/083728d7dac09e112c157b44a84461f8ed62789d))
+* create GitHub Release via GitHub Actions, with release notes according to conventional commits ([b5a9c50](https://github.com/extrawest/extra-clarity/commit/b5a9c50154b99f8cab33e3835ffdc40edcd42f79))
 * generate CHANGELOG.md according to conventional-commits ([8d9e23a](https://github.com/extrawest/extra-clarity/commit/8d9e23a973c95bc4510706b6f7769afd6270fd6a))
-* generate release notes according to conventional-commits, and do not generate CHANGELOG.md ([4ff0681](https://github.com/extrawest/extra-clarity/commit/4ff06816673b23c998100ac1de708c930bcf9512))
-* rework CI/CD to support releases & multiple versions ([71b03de](https://github.com/extrawest/extra-clarity/commit/71b03dec404d7873fa04934075c9d2ae5f1ab984))
-* specify 'shell: bash' for composite actions ([c0d3358](https://github.com/extrawest/extra-clarity/commit/c0d3358695f88724acfd26815037537555e05f29))
+* do not create GitHub Release via release-it script ([e84d61a](https://github.com/extrawest/extra-clarity/commit/e84d61aa0c42ccd05d1b2725e3a3cce86ad0d40e))
 * use actions/checkout to make custom actions available within workflows ([88b3efe](https://github.com/extrawest/extra-clarity/commit/88b3efeba03b6e7e62f50981c3eae3ecdf1b6773))
+* generate release notes according to conventional-commits, and do not generate CHANGELOG.md ([4ff0681](https://github.com/extrawest/extra-clarity/commit/4ff06816673b23c998100ac1de708c930bcf9512))
+* correct release-it configuration to prompt new package version & generate more extended initial changelog ([a8deec3](https://github.com/extrawest/extra-clarity/commit/a8deec385873c2a7398085ca930e4b377e59472f))
+* rework CI/CD to support releases & multiple versions ([71b03de](https://github.com/extrawest/extra-clarity/commit/71b03dec404d7873fa04934075c9d2ae5f1ab984))
 ## [0.17.12](https://github.com/extrawest/extra-clarity/compare/0.17.11...0.17.12) (2025-02-17)
 ## [0.17.11](https://github.com/extrawest/extra-clarity/compare/0.17.10...0.17.11) (2025-02-17)
 ## [0.17.10](https://github.com/extrawest/extra-clarity/compare/0.17.9...0.17.10) (2025-01-09)
