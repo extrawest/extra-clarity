@@ -16,9 +16,7 @@
     "publish": false
   },
   "github": {
-    "release": true,
-    "releaseName": "v${version}",
-    "web": true
+    "release": false
   },
   "plugins": {
     "@release-it/bumper": {
