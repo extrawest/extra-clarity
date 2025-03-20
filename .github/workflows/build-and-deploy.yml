@@ -44,6 +44,7 @@ jobs:
     permissions:
       contents: read
     outputs:
+      tag: ${{ steps.get-package-version.outputs.tag }}
       prefix: ${{ steps.get-storybook-site-prefix.outputs.prefix }}
     steps:
       # uses: actions/checkout@v4 -- to make custom actions available from within the repository itself
@@ -101,6 +102,34 @@ jobs:
         working-directory: ${{ env.LIB_DIST_PATH }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
+
+  create-github-release:
+    needs: [check-version, publish-package-to-npm]
+    if: inputs.publish-to-npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate Release Notes as Changelog between the latest and previous tags
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ needs.check-version.outputs.tag }}
+          restrictToTypes: feat,fix,perf,revert
+          writeToFile: false
+          includeInvalidCommits: true
+          reverseOrder: true
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          skipIfReleaseExists: true
+          token: ${{ github.token }}
+          tag: ${{ needs.check-version.outputs.tag }}
+          name: ${{ needs.check-version.outputs.tag }}
+          body: ${{ steps.changelog.outputs.changes }}
+          makeLatest: ${{ needs.check-version.outputs.prefix == '' && 'true' || 'false' }} # only for the primary releasing branch (main)
 
   build-and-publish-storybook:
     needs: [check-version, build-extra-clarity]
