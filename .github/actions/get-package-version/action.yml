@@ -28,7 +28,7 @@ runs:
   steps:
     - uses: actions/checkout@v4
       with:
-      fetch-depth: 0 # Ensure we fetch all branches
+        fetch-depth: 0 # Ensure we fetch all branches
 
     - name: Read the package version from 'package.json'
       id: package-version
