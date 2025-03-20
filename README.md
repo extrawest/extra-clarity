@@ -9,30 +9,18 @@ which we use in our internal projects in [extrawest.com](https://extrawest.com).
 
 The library is under development. Any suggestions would be highly appreciated.
 
-Required deps:
-
-- Angular 17.3.0 or later
-- Clarity: 17.0.0 or later
-
-The latest version with Angular 16 support is 0.17.2 (based on Clarity 15), and for Angular 15 - 0.15.22.
-
 ## Installation
 
-The library is available as a [npm-package](https://www.npmjs.com/package/@extrawest/extra-clarity).
-You can add it to your project with `npm` or `yarn`:
+The library is available as an [npm-package](https://www.npmjs.com/package/@extrawest/extra-clarity):
 
 ```shell
 npm install @extrawest/extra-clarity
-
-yarn add @extrawest/extra-clarity
 ```
 
 To work with the library, you also need to add the Clarity packages:
 
 ```shell
 npm i @cds/angular @cds/core @clr/angular @clr/ui
-
-yarn add @cds/angular @cds/core @clr/angular @clr/ui
 ```
 
 And then add the global Clarity styles to your `angular.json` config:
@@ -54,6 +42,19 @@ and add the `cds-theme="light"` attribute to the body element in your main HTML 
 
 Please refer to the [Clarity docs](https://clarity.design/pages/developing#adding-clarity-to-an-existing-angular-application)
 for more details on 'Adding Clarity to an Existing Angular Application'.
+
+## Dependencies:
+
+| Extra-Clarity     | Angular               | Clarity               |
+| ----------------- | --------------------- | --------------------- |
+| 17.x              | ^17.3 \|\| 18 \|\| 19 | 17                    |
+| 0.17.9 - 0.17.12  | ^17.3 \|\| 18 \|\| 19 | 17                    |
+| 0.17.3 - 0.17.8   | ^17.3                 | 17                    |
+| 0.17.1 - 0.17.2   | ^16.2 \|\| 17         | ^15.4 \|\| 16 \|\| 17 |
+| 0.16.3 - 0.16.7   | ^16.2                 | ^15.4 \|\| 16         |
+| 0.16.1 - 0.16.2   | ^16.2                 | ^15.4                 |
+| 0.15.23           | ^16.2                 | ^15.4                 |
+| 0.15.16 - 0.15.22 | 15 \|\| 16            | ^15.3                 |
 
 ## Documentation
 
