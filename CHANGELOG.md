@@ -1,17 +1,19 @@
 # Changelog
 
-## [17.12.2](https://github.com/extrawest/extra-clarity/compare/0.17.12...v17.12.2) (2025-03-20)
+## [17.12.3](https://github.com/extrawest/extra-clarity/compare/0.17.12...v17.12.3) (2025-03-20)
 
 ### Misc
 
 * release v17.12.0 ([327b730](https://github.com/extrawest/extra-clarity/commit/327b730e2a90b7e35cbaa2e2001f77376c144b34))
 * release v17.12.1 ([1e81f31](https://github.com/extrawest/extra-clarity/commit/1e81f3184b81add452fb047d5fc0067cbad980dd))
+* release v17.12.2 ([b83dbaf](https://github.com/extrawest/extra-clarity/commit/b83dbafa6505ea03bf8569f54e1a7fecdf8aa387))
 
 ### CI
 
 * correct release-it configuration to prompt new package version & generate more extended initial changelog ([a8deec3](https://github.com/extrawest/extra-clarity/commit/a8deec385873c2a7398085ca930e4b377e59472f))
 * create GitHub Release via GitHub Actions, with release notes according to conventional commits ([b5a9c50](https://github.com/extrawest/extra-clarity/commit/b5a9c50154b99f8cab33e3835ffdc40edcd42f79))
 * do not create GitHub Release via release-it script ([e84d61a](https://github.com/extrawest/extra-clarity/commit/e84d61aa0c42ccd05d1b2725e3a3cce86ad0d40e))
+* fix typo in action script leading to failed parsing during workflow execution ([b5899ca](https://github.com/extrawest/extra-clarity/commit/b5899caa68bc47f8fdb03e17b2b88fad7b7d7a3d))
 * fix typo in action script leading to failed parsing during workflow execution ([083728d](https://github.com/extrawest/extra-clarity/commit/083728d7dac09e112c157b44a84461f8ed62789d))
 * generate CHANGELOG.md according to conventional-commits ([8d9e23a](https://github.com/extrawest/extra-clarity/commit/8d9e23a973c95bc4510706b6f7769afd6270fd6a))
 * generate release notes according to conventional-commits, and do not generate CHANGELOG.md ([4ff0681](https://github.com/extrawest/extra-clarity/commit/4ff06816673b23c998100ac1de708c930bcf9512))
