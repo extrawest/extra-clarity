@@ -59,6 +59,6 @@ runs:
         echo "Major version: $MAJOR_VER"
         echo "Tag version: $TAG_NAME"
 
-        echo "full=$FULL_VER" >> $GITHUB_OUT
-        echo "major=$MAJOR_VER" >> $GITHUB_OUT
-        echo "tag=v$TAG_NAME" >> $GITHUB_OUT
+        echo "full=$FULL_VER" >> $GITHUB_OUTPUT
+        echo "major=$MAJOR_VER" >> $GITHUB_OUTPUT
+        echo "tag=v$TAG_NAME" >> $GITHUB_OUTPUT
