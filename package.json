@@ -12,7 +12,8 @@
     "build:storybook": "ng run extra-clarity:build-storybook",
     "serve:storybook": "ng run extra-clarity:storybook --no-open",
     "docs:extra-clarity": "npx compodoc -e json -d . -p tsconfig.doc.json --minimal --disableLifeCycleHooks --disablePrivate --disableProtected",
-    "release": "release-it"
+    "release": "release-it",
+    "prepare": "husky || true"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +43,8 @@
     "@angular-eslint/template-parser": "17.3.0",
     "@angular/cli": "17.3.0",
     "@angular/compiler-cli": "17.3.0",
+    "@commitlint/cli": "19.8.0",
+    "@commitlint/config-conventional": "19.8.0",
     "@compodoc/compodoc": "1.1.23",
     "@release-it/bumper": "7.0.2",
     "@release-it/conventional-changelog": "10.0.0",
@@ -58,7 +61,7 @@
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-storybook": "0.8.0",
     "firebase-tools": "latest",
-    "husky": "8.0.3",
+    "husky": "9.1.7",
     "ng-packagr": "17.3.0",
     "release-it": "18.1.2",
     "storybook": "8.0.6",

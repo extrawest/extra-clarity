@@ -18,6 +18,8 @@ on:
         required: true
 
 env:
+  # disable Husky
+  HUSKY: 0
   # name of the main branch for releasing the most actual version
   PRIMARY_RELEASING_BRANCH: "main"
   # artifact names (available on the github actions page after completing the workflow)
