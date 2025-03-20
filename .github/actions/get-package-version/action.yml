@@ -21,7 +21,7 @@ outputs:
     value: ${{ steps.extract-major.outputs.major }}
   tag:
     description: "Version from the tag name, e.g. v12.2.1"
-    value: ${{ steps.extract-major.outputs.full }}
+    value: ${{ steps.extract-major.outputs.tag }}
 
 runs:
   using: "composite"
@@ -61,4 +61,4 @@ runs:
 
         echo "full=$FULL_VER" >> $GITHUB_OUTPUT
         echo "major=$MAJOR_VER" >> $GITHUB_OUTPUT
-        echo "tag=v$TAG_NAME" >> $GITHUB_OUTPUT
+        echo "tag=$TAG_NAME" >> $GITHUB_OUTPUT
