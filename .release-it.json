@@ -29,6 +29,9 @@
       "gitRawCommitsOpts": {
         "merges": null
       },
+      "writerOpts": {
+        "commitsSort": null
+      },
       "preset": {
         "name": "conventionalcommits",
         "types": [
