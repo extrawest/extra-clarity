@@ -34,6 +34,7 @@ runs:
         MAJOR_VERSION: ${{ inputs.major-version }}
         PRIMARY_RELEASE_BRANCH: ${{ inputs.primary-release-branch }}
         SECONDARY_RELEASE_BRANCH: "${{ inputs.major-version }}.x"
+      shell: bash
       run: |
         git fetch --all
 

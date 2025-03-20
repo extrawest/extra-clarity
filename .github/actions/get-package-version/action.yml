@@ -43,6 +43,7 @@ runs:
       env:
         PACKAGE_JSON_VERSION: ${{ steps.package-version.outputs.version }}
         TAG_FULL: ${{ inputs.tag-full }}
+      shell: bash
       run: |
         FULL_VER=""
         if [[ -n "$TAG_FULL" ]]; then 
