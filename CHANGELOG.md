@@ -1,5 +1,25 @@
 # Changelog
 
+## [17.13.0](https://github.com/extrawest/extra-clarity/compare/v17.12.6...v17.13.0) (2025-03-21)
+
+### ⚠ BREAKING CHANGES
+
+* NumericField has been removed in favor of native alternatives from Clarity 17.6.0:
+  - ClrNumberInput component
+  - prefix & suffix slots within input fields
+
+### Features
+
+* remove NumericField directive ([2d67557](https://github.com/extrawest/extra-clarity/commit/2d6755779fd290d1a6bde1d60023739937619ac3))
+
+### Misc
+
+* add passed linting as required step prior to pushing new release-tag ([59e010d](https://github.com/extrawest/extra-clarity/commit/59e010d9c433a2cba84b6abbf7a1e54b4e1e783b))
+* fix linting errors ([96367bf](https://github.com/extrawest/extra-clarity/commit/96367bfc566eb9cf777f73fd0e5304170c3f1692))
+* exclude storybook sources from primary eslint configs to fix broken linting via ng lint ([ce1bd33](https://github.com/extrawest/extra-clarity/commit/ce1bd33b14bd96dda6eff805611b94c824712c27))
+* add .nx/cache directory to .gitignore ([29ed61f](https://github.com/extrawest/extra-clarity/commit/29ed61f939b29295b27387b26ee8a6bb2703a6c8))
+* add commitlint & husky to validate commit messages against conventional-commits rules ([a4e18e1](https://github.com/extrawest/extra-clarity/commit/a4e18e196934a3d2cf4c88117e0d84360311e42a))
+
 ## [17.12.6](https://github.com/extrawest/extra-clarity/compare/0.17.12...v17.12.6) (2025-03-20)
 
 ### Misc
