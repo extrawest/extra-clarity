@@ -67,7 +67,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     interval(NOTIFICATION_INTERVAL_STEP)
       .pipe(
         withLatestFrom(this.paused$),
-        filter(([_, paused]) => !paused),
+        filter(([, paused]) => !paused),
         map(() => NOTIFICATION_INTERVAL_STEP),
         scan((acc: number, curr: number) => acc + curr, 0),
         takeWhile((value) => value < this.config.duration),
