@@ -30,7 +30,6 @@
             "lintFilePatterns": [
               "projects/extra-clarity/**/*.ts",
               "projects/extra-clarity/**/*.html",
-              ".storybook/**/*.mdx",
               ".storybook/**/*.ts"
             ]
           }

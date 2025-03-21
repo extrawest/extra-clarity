@@ -13,7 +13,6 @@
     "**/*.spec.ts"
   ],
   "include": [
-    "**/*.ts",
-    "../../.storybook/**/*.ts"
+    "**/*.ts"
   ]
 }
