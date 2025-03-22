@@ -131,8 +131,9 @@ export class EcDatagridCellWrapperComponent implements OnDestroy, OnInit {
   public btnWithBorder = false;
 
   /**
-   * Emits a `string` successfully copied to the clipboard
-   * by pressing the copy-to-clipboard button
+   * Emits a `string` successfully copied to the clipboard by pressing the copy-to-clipboard button
+   *
+   * `EventEmitter<string>`
    */
   @Output()
   public copied = new EventEmitter<string>();
@@ -141,6 +142,8 @@ export class EcDatagridCellWrapperComponent implements OnDestroy, OnInit {
    * Emits an `unknown` value if copying to the clipboard failed.
    *
    * Caught from `navigator.clipboard.writeText()`.
+   *
+   * `EventEmitter<unknown>`
    */
   @Output()
   public failed = new EventEmitter<unknown>();

@@ -86,6 +86,8 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
    * as the `$implicit` context parameter.
    *
    * Also the substring entered into the internal search bar is passed to the context as `marked`.
+   *
+   * `TemplateRef<unknown>`
    */
   @Input()
   public customLabelTpl?: TemplateRef<unknown>;

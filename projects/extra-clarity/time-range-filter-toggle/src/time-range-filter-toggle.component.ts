@@ -112,9 +112,11 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   @Input()
   public open: boolean = false;
 
+  /** `EventEmitter<boolean>` */
   @Output()
   public openChange = new EventEmitter<boolean>();
 
+  /** `EventEmitter<EcTimeRangeFilterToggleState>` */
   @Output()
   public valueChanged = new EventEmitter<EcTimeRangeFilterToggleState>();
 

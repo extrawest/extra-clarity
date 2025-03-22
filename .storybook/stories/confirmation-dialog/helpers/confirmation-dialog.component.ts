@@ -53,7 +53,7 @@ export class StorybookConfirmationDialogComponent {
   @Input()
   public rejectBtn?: DialogButtonConfig;
 
-  /** `TemplateRef<any>` */
+  /** `TemplateRef<unknown>` */
   @Input()
   public template?: TemplateRef<unknown>;
 

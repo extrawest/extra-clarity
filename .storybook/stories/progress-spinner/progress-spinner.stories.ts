@@ -5,7 +5,7 @@ import { ProgressSpinnerDemoComponent } from './helpers/progress-spinner-demo.co
 
 type Story = StoryObj<ProgressSpinnerDemoComponent>;
 
-export default {
+const meta: Meta<ProgressSpinnerDemoComponent> = {
   title: 'Components/Progress Spinner',
   component: ProgressSpinnerDemoComponent,
   decorators: [
@@ -15,7 +15,8 @@ export default {
       ],
     }),
   ],
-} as Meta<ProgressSpinnerDemoComponent>;
+};
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ProgressSpinnerStory: Story = {
