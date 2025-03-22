@@ -46,7 +46,7 @@
     "@angular/compiler-cli": "17.3.0",
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
-    "@compodoc/compodoc": "1.1.23",
+    "@compodoc/compodoc": "1.1.26",
     "@release-it/bumper": "7.0.2",
     "@release-it/conventional-changelog": "10.0.0",
     "@storybook/addon-essentials": "8.6.8",

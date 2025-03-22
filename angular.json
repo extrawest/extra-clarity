@@ -65,6 +65,7 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
+            "outputDir": "dist/storybook-static",
             "compodoc": true,
             "compodocArgs": [
               "-e",
@@ -78,7 +79,6 @@
               "--disablePrivate",
               "--disableProtected"
             ],
-            "outputDir": "dist/storybook-static",
             "styles": [
               "node_modules/@cds/core/global.min.css",
               "node_modules/@cds/core/styles/theme.dark.min.css",
