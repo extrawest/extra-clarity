@@ -27,6 +27,8 @@ export class EcSidebarNavComponent implements OnInit {
   /**
    * Array of nav items configurations
    *
+   * `(EcNavItemLink | EcNavItemGroup | EcNavItemDivider)[]`
+   *
    * @required
    */
   @Input()
@@ -37,6 +39,8 @@ export class EcSidebarNavComponent implements OnInit {
    *
    * The entire `navItem: NavItemLink | NavItemGroup` object is passed
    * to the template as the `$implicit` context parameter.
+   *
+   * `TemplateRef<unknown>`
    */
   @Input()
   public customLabelTpl?: TemplateRef<unknown>;

@@ -140,17 +140,17 @@ export class EcPopoverToggleComponent implements OnChanges, OnDestroy {
   public dropdownIconPosition: EcDropdownIconPosition = EcDropdownIconPosition.Right;
 
   /** Show/hide the content body on change of this input:
-   *
-   * `true` = show
-   * `false` = hide
+   * * `true` = show
+   * * `false` = hide
    */
   @Input()
   public open?: boolean = false;
 
   /** Emit a boolean on showing/hiding the content body with a new state:
+   * * `true` = open
+   * * `false` = closed
    *
-   * `true` = open
-   * `false` = closed
+   * `EventEmitter<boolean>`
    */
   @Output()
   public openChange = new EventEmitter<boolean>();

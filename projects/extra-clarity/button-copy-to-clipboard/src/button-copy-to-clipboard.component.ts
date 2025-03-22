@@ -101,11 +101,19 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, O
   @Input()
   public withBorder = false;
 
-  /** Emits a string successfully copied to the clipboard by pressing the button */
+  /**
+   * Emits a string successfully copied to the clipboard by pressing the button
+   *
+   * `EventEmitter<string>`
+   * */
   @Output()
   public copied = new EventEmitter<string>();
 
-  /** Emits an unknown value on failed copying, caught from `navigator.clipboard.writeText()` */
+  /**
+   * Emits an unknown value on failed copying, caught from `navigator.clipboard.writeText()`
+   *
+   * `EventEmitter<unknown>`
+  */
   @Output()
   public failed = new EventEmitter<unknown>();
 

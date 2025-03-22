@@ -53,11 +53,19 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   @Input()
   public blocked?: boolean;
 
-  /** Emits when the countdown timer reaches 0 */
+  /**
+   * Emits when the countdown timer reaches 0
+   *
+   * `EventEmitter<void>`
+   * */
   @Output()
   public readonly refresh = new EventEmitter<void>();
 
-  /** Emits a new toggle state as a `boolean` every time it is changed */
+  /**
+   * Emits a new toggle state as a `boolean` every time it is changed
+   *
+   * `EventEmitter<boolean>`
+   * */
   @Output()
   public readonly toggle = new EventEmitter<boolean>();
 
