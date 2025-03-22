@@ -29,7 +29,6 @@ const meta: Meta<EcSearchBarComponent> = {
     // INPUTS
     debounceMs: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: SEARCH_BAR_DEFAULTS.debounceTimeMs.toString() },
       },
     },
@@ -43,10 +42,7 @@ const meta: Meta<EcSearchBarComponent> = {
     },
     placeholder: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: SEARCH_BAR_DEFAULTS.placeholder,
-        },
+        defaultValue: { summary: SEARCH_BAR_DEFAULTS.placeholder },
       },
     },
     value: {

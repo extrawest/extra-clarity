@@ -64,7 +64,6 @@ const meta: Meta<EcTimeRangeFilterToggleComponent> = {
     },
     widthPx: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx.toString() },
         subcategory: SUBCATEGORY_FILTER,
       },
@@ -124,7 +123,7 @@ const meta: Meta<EcTimeRangeFilterToggleComponent> = {
     setValue: {
       control: false,
     },
-    // GETTERS
+    // GETTERS: add explicit controls as compodoc does not generate it
     state: {
       control: false,
       table: {

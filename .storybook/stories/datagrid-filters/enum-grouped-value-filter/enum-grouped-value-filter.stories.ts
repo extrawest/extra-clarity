@@ -49,7 +49,6 @@ const meta: Meta<EcEnumGroupedValueFilterComponent<unknown>> = {
     },
     maxHeightPx: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.maxHeightPx.toString() },
       },
     },
@@ -68,7 +67,6 @@ const meta: Meta<EcEnumGroupedValueFilterComponent<unknown>> = {
     },
     searchBarForAmount: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.searchBarForAmount.toString() },
       },
     },
@@ -92,7 +90,6 @@ const meta: Meta<EcEnumGroupedValueFilterComponent<unknown>> = {
     },
     widthPx: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: ENUM_GROUPED_VALUE_FILTER_DEFAULTS.widthPx.toString() },
       },
     },
@@ -114,14 +111,13 @@ const meta: Meta<EcEnumGroupedValueFilterComponent<unknown>> = {
     setValue: {
       control: false,
     },
-    // GETTERS
+    // GETTERS: add explicit controls as compodoc does not generate it
     state: {
-      name: 'state',
+      control: false,
       description:
         `Get the actual filter state in the same shape as it's emitted to the parent datagrid. ` +
         `<br/> ` +
         `Refer to the <strong>filterValueChanged</strong> output's description for more details.`,
-      control: false,
       table: {
         category: 'Getters',
         defaultValue: {},

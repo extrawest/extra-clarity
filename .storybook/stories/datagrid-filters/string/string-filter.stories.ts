@@ -41,7 +41,6 @@ const meta: Meta<EcStringFilterComponent> = {
     },
     debounceTimeMs: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: STRING_FILTER_DEFAULTS.debounceTimeMs.toString() },
       },
     },
@@ -51,7 +50,6 @@ const meta: Meta<EcStringFilterComponent> = {
     },
     placeholder: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: STRING_FILTER_DEFAULTS.placeholder },
       },
     },
@@ -69,21 +67,18 @@ const meta: Meta<EcStringFilterComponent> = {
     },
     widthPx: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: STRING_FILTER_DEFAULTS.widthPx.toString() },
       },
     },
     // INPUTS - Validation subcategory
     maxLength: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: STRING_FILTER_DEFAULTS.maxLength.toString() },
         subcategory: SUBCATEGORY_VALIDATION,
       },
     },
     minLength: {
       table: {
-        // set default value explicitly as compodoc shows only a constant name
         defaultValue: { summary: STRING_FILTER_DEFAULTS.minLength.toString() },
         subcategory: SUBCATEGORY_VALIDATION,
       },
@@ -128,12 +123,11 @@ const meta: Meta<EcStringFilterComponent> = {
     },
     // GETTERS: add explicit controls as compodoc does not generate it
     state: {
-      name: 'state',
+      control: false,
       description:
         `Get the actual filter state in the same shape as it's emitted to the parent datagrid. ` +
         `<br/> ` +
         `Refer to the <strong>filterValueChanged</strong> output's description for more details.`,
-      control: false,
       table: {
         category: 'Getters',
         defaultValue: {},
