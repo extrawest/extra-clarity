@@ -1,18 +1,12 @@
 import { provideRouter, RouterLink } from '@angular/router';
-import {
-  applicationConfig,
-  type Meta,
-  moduleMetadata,
-  type StoryObj,
-} from '@storybook/angular';
+import { applicationConfig, type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
 import { EcRouterLinkWrapperComponent } from '../../../projects/extra-clarity/router-link-wrapper';
 import { hideAllControlRows } from '../../helpers';
 
 type Story = StoryObj<EcRouterLinkWrapperComponent>;
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const MetaStory = {
+const meta: Meta<EcRouterLinkWrapperComponent> = {
   title: 'Components/Router Link Wrapper',
   component: EcRouterLinkWrapperComponent,
   decorators: [
@@ -54,9 +48,9 @@ const MetaStory = {
     fwdRouterLink: '/',
     queryParams: undefined,
   },
-} as Meta<EcRouterLinkWrapperComponent>;
+};
 
-export default MetaStory;
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const WrapperItselfStory: Story = {
@@ -117,7 +111,7 @@ export const DocsExampleStory: Story = {
   }),
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {
-    ...hideAllControlRows(MetaStory.argTypes),
+    ...hideAllControlRows(meta.argTypes),
   },
   args: {
   },

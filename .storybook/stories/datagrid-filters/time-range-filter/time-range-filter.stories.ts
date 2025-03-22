@@ -15,8 +15,7 @@ import { demoPresets } from './helpers/demo-presets';
 
 type Story = StoryObj<EcTimeRangeFilterComponent>;
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const MetaStory = {
+const meta: Meta<EcTimeRangeFilterComponent> = {
   title: 'Components/Datagrid Filters/Time Range Filter',
   component: EcTimeRangeFilterComponent,
   decorators: [
@@ -46,33 +45,29 @@ const MetaStory = {
     widthPx: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: TIMERANGE_FILTER_DEFAULTS.widthPx,
-        },
+        defaultValue: { summary: TIMERANGE_FILTER_DEFAULTS.widthPx.toString() },
       },
     },
     withCustomRange: {},
     // OUTPUTS
     filterValueChanged: {
-      control: { type: null },
+      control: false,
       table: {
-        type: {
-          summary: null,
-        },
+        type: { summary: '' },
       },
     },
     // METHODS
     clearSelection: {
-      control: { type: null },
+      control: false,
     },
     isActive: {
-      control: { type: null },
+      control: false,
     },
     resetToDefault: {
-      control: { type: null },
+      control: false,
     },
     setValue: {
-      control: { type: null },
+      control: false,
     },
     // GETTERS
     state: {
@@ -96,9 +91,9 @@ const MetaStory = {
     value: undefined,
     widthPx: TIMERANGE_FILTER_DEFAULTS.widthPx,
   },
-} as Meta<EcTimeRangeFilterComponent>;
+};
 
-export default MetaStory;
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const FilterItselfStory: Story = {

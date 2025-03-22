@@ -1,21 +1,13 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
-import {
-  applicationConfig,
-  type Meta,
-  moduleMetadata,
-  type StoryObj,
-} from '@storybook/angular';
+import { applicationConfig, type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
-import {
-  EcCardComponent,
-  EcCardModule,
-} from '../../../projects/extra-clarity/card';
+import { EcCardComponent, EcCardModule } from '../../../projects/extra-clarity/card';
 
 import { CardContentComponent } from './helpers/card-content.component';
 
 type Story = StoryObj<EcCardComponent>;
 
-export default {
+const meta: Meta<EcCardComponent> = {
   title: 'Components/Card',
   component: EcCardComponent,
   argTypes: {
@@ -24,7 +16,7 @@ export default {
     reload: {
       control: false,
       table: {
-        type: { summary: null },
+        type: { summary: '' },
       },
     },
   },
@@ -54,7 +46,9 @@ export default {
       </ec-card>
     `,
   }),
-} as Meta<EcCardComponent>;
+};
+
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const CardStory: Story = {

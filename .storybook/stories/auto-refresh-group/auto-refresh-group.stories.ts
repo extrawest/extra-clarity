@@ -4,7 +4,7 @@ import { EcAutoRefreshGroupComponent, DEFAULT_PERIOD_SEC } from '../../../projec
 
 type Story = StoryObj<EcAutoRefreshGroupComponent>;
 
-export default {
+const meta: Meta<EcAutoRefreshGroupComponent> = {
   title: 'Components/Auto Refresh Group',
   component: EcAutoRefreshGroupComponent,
   decorators: [
@@ -15,25 +15,27 @@ export default {
     },
     period: {
       table: {
-        defaultValue: { summary: DEFAULT_PERIOD_SEC },
+        defaultValue: { summary: DEFAULT_PERIOD_SEC.toString() },
       },
     },
     // hide editable controls for outputs (actions) - 'control: false'
-    // hide default type `EventEmitter` (without generic type) - 'type: { summary: null }',
+    // hide default type `EventEmitter` (without generic type) - 'type: { summary: '' }',
     refresh: {
       control: false,
       table: {
-        type: { summary: null },
+        type: { summary: '' },
       },
     },
     autoRefreshToggled: {
       control: false,
       table: {
-        type: { summary: null },
+        type: { summary: '' },
       },
     },
   },
-} as Meta<EcAutoRefreshGroupComponent>;
+};
+
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const AutoRefreshGroupStory: Story = {

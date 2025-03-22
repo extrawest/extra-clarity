@@ -13,8 +13,7 @@ import {
 
 type Story = StoryObj<EcSearchBarComponent>;
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const MetaStory = {
+const meta: Meta<EcSearchBarComponent> = {
   title: 'Components/Search Bar',
   component: EcSearchBarComponent,
   decorators: [
@@ -30,9 +29,7 @@ const MetaStory = {
     debounceMs: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: SEARCH_BAR_DEFAULTS.debounceTimeMs,
-        },
+        defaultValue: { summary: SEARCH_BAR_DEFAULTS.debounceTimeMs.toString() },
       },
     },
     highlightActive: {
@@ -55,19 +52,17 @@ const MetaStory = {
     },
     // OUTPUTS
     valueChange: {
-      control: { type: null },
+      control: false,
       table: {
-        type: {
-          summary: null,
-        },
+        type: { summary: '' },
       },
     },
     // METHODS
     clearInput: {
-      control: { type: null },
+      control: false,
     },
     focusSearchBar: {
-      control: { type: null },
+      control: false,
     },
   },
   args: {
@@ -79,9 +74,9 @@ const MetaStory = {
     placeholder: SEARCH_BAR_DEFAULTS.placeholder,
     value: '',
   },
-} as Meta<EcSearchBarComponent>;
+};
 
-export default MetaStory;
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ComponentItselfStory: Story = {

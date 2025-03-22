@@ -4,13 +4,13 @@ import { EcAutoRefreshComponent, DEFAULT_PERIOD_SEC } from '../../../projects/ex
 
 type Story = StoryObj<EcAutoRefreshComponent>;
 
-export default {
+const meta: Meta<EcAutoRefreshComponent> = {
   title: 'Components/Auto Refresh',
   component: EcAutoRefreshComponent,
   argTypes: {
     period: {
       table: {
-        defaultValue: { summary: DEFAULT_PERIOD_SEC },
+        defaultValue: { summary: DEFAULT_PERIOD_SEC.toString() },
       },
     },
     // hide editable controls for outputs (actions)
@@ -27,7 +27,9 @@ export default {
       },
     },
   },
-} as Meta<EcAutoRefreshComponent>;
+};
+
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const AutoRefreshStory: Story = {

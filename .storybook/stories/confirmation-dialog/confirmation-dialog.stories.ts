@@ -7,7 +7,7 @@ type Story = StoryObj<StorybookConfirmationDialogComponent>;
 
 const PARAMETERS_CATEGORY = { table: { category: 'Parameters' } };
 
-export default {
+const meta: Meta<StorybookConfirmationDialogComponent> = {
   title: 'Components/Confirmation Dialog',
   component: StorybookConfirmationDialogComponent,
   decorators: [
@@ -31,7 +31,9 @@ export default {
     rejectBtnLabel: PARAMETERS_CATEGORY,
     template: PARAMETERS_CATEGORY,
   },
-} as Meta<StorybookConfirmationDialogComponent>;
+};
+
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ConfirmationDialogStory: Story = {
@@ -64,7 +66,7 @@ export const ConfirmationDialogStory: Story = {
       // hide default type `TemplateRef` (without generic type)
       control: false,
       table: {
-        type: { summary: null },
+        type: { summary: '' },
       },
     },
   },

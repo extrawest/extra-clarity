@@ -23,8 +23,7 @@ type Story = StoryObj<EcStringFilterComponent>;
 
 const SUBCATEGORY_VALIDATION = 'Validation';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const MetaStory = {
+const meta: Meta<EcStringFilterComponent> = {
   title: 'Components/Datagrid Filters/String Filter',
   component: EcStringFilterComponent,
   decorators: [
@@ -42,9 +41,7 @@ const MetaStory = {
     debounceTimeMs: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: STRING_FILTER_DEFAULTS.debounceTimeMs,
-        },
+        defaultValue: { summary: STRING_FILTER_DEFAULTS.debounceTimeMs.toString() },
       },
     },
     fullMatch: {
@@ -54,9 +51,7 @@ const MetaStory = {
     placeholder: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: STRING_FILTER_DEFAULTS.placeholder,
-        },
+        defaultValue: { summary: STRING_FILTER_DEFAULTS.placeholder },
       },
     },
     propertyKey: {
@@ -74,27 +69,21 @@ const MetaStory = {
     widthPx: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: STRING_FILTER_DEFAULTS.widthPx,
-        },
+        defaultValue: { summary: STRING_FILTER_DEFAULTS.widthPx.toString() },
       },
     },
     // INPUTS - Validation subcategory
     maxLength: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: STRING_FILTER_DEFAULTS.maxLength,
-        },
+        defaultValue: { summary: STRING_FILTER_DEFAULTS.maxLength.toString() },
         subcategory: SUBCATEGORY_VALIDATION,
       },
     },
     minLength: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: STRING_FILTER_DEFAULTS.minLength,
-        },
+        defaultValue: { summary: STRING_FILTER_DEFAULTS.minLength.toString() },
         subcategory: SUBCATEGORY_VALIDATION,
       },
     },
@@ -123,23 +112,21 @@ const MetaStory = {
       control: false,
       // hide auto generated control type
       table: {
-        type: {
-          summary: null,
-        },
+        type: { summary: '' },
       },
     },
     // METHODS
     clearSelection: {
-      control: { type: null },
+      control: false,
     },
     isActive: {
-      control: { type: null },
+      control: false,
     },
     resetToDefault: {
-      control: { type: null },
+      control: false,
     },
     setValue: {
-      control: { type: null },
+      control: false,
     },
     // GETTERS: add explicit controls as compodoc does not generate it
     state: {
@@ -174,9 +161,9 @@ const MetaStory = {
     patternErrMsg: '',
     validator: undefined,
   },
-} as Meta<EcStringFilterComponent>;
+};
 
-export default MetaStory;
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const FilterItselfStory: Story = {
@@ -254,7 +241,7 @@ export const DocsExampleStory: Story = {
   }),
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {
-    ...hideAllControlRows(MetaStory.argTypes),
+    ...hideAllControlRows(meta.argTypes),
   },
   args: {
   },

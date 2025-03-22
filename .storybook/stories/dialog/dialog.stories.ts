@@ -7,7 +7,7 @@ type Story = StoryObj<StorybookDialogCallerComponent>;
 
 const PARAMETERS_CATEGORY = { table: { category: 'Parameters' } };
 
-export default {
+const meta: Meta<StorybookDialogCallerComponent> = {
   title: 'Components/Dialog',
   component: StorybookDialogCallerComponent,
   decorators: [
@@ -22,7 +22,9 @@ export default {
     closable: PARAMETERS_CATEGORY,
     closableBackdrop: PARAMETERS_CATEGORY,
   },
-} as Meta<StorybookDialogCallerComponent>;
+};
+
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const DialogStory: Story = {

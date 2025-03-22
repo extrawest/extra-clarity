@@ -1,21 +1,14 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { ClrVerticalNav, ClrVerticalNavModule } from '@clr/angular';
-import {
-  applicationConfig,
-  componentWrapperDecorator,
-  type Meta,
-  moduleMetadata,
-  type StoryObj,
-} from '@storybook/angular';
+import { ClrVerticalNavModule } from '@clr/angular';
+import { applicationConfig, type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
 import { EcSidebarNavComponent } from '../../../projects/extra-clarity/sidebar-nav';
 import { hideAllControlRows } from '../../helpers';
 
 type Story = StoryObj<EcSidebarNavComponent>;
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const MetaStory = {
+const meta: Meta<EcSidebarNavComponent> = {
   title: 'Components/Sidebar Navigation',
   component: EcSidebarNavComponent,
   decorators: [
@@ -32,7 +25,7 @@ const MetaStory = {
   argTypes: {
     // INPUTS:
     customLabelTpl: {
-      control: { type: null },
+      control: false,
     },
     navList: {
       type: {
@@ -53,9 +46,9 @@ const MetaStory = {
     customLabelTpl: undefined,
     navList: [],
   },
-} as Meta<EcSidebarNavComponent>;
+};
 
-export default MetaStory;
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ComponentItselfStory: Story = {
@@ -149,7 +142,7 @@ export const DocsExampleStory: Story = {
   }),
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {
-    ...hideAllControlRows(MetaStory.argTypes),
+    ...hideAllControlRows(meta.argTypes),
   },
   args: {
     rootLevelBold: 'groups',

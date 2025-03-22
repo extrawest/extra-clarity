@@ -9,7 +9,7 @@ type Story = StoryObj<NotificationDemoComponent>;
 
 const PARAMETERS_CATEGORY = 'Parameters';
 
-export default {
+const meta: Meta<NotificationDemoComponent> = {
   title: 'Components/Notification',
   component: NotificationDemoComponent,
   decorators: [
@@ -29,25 +29,40 @@ export default {
     pauseOnHover: {
       table: {
         category: PARAMETERS_CATEGORY,
-        defaultValue: { summary: NOTIFICATION_DEFAULT_CONFIG.pauseOnHover },
+        defaultValue: {
+          summary:
+            typeof NOTIFICATION_DEFAULT_CONFIG.pauseOnHover === 'boolean'
+              ? String(NOTIFICATION_DEFAULT_CONFIG.pauseOnHover)
+              : undefined,
+        },
       },
     },
     duration: {
       table: {
         category: PARAMETERS_CATEGORY,
-        defaultValue: { summary: NOTIFICATION_DEFAULT_CONFIG.duration },
+        defaultValue: { summary: NOTIFICATION_DEFAULT_CONFIG.duration?.toString() },
       },
     },
     closable: {
       table: {
         category: PARAMETERS_CATEGORY,
-        defaultValue: { summary: NOTIFICATION_DEFAULT_CONFIG.closable },
+        defaultValue: {
+          summary:
+            typeof NOTIFICATION_DEFAULT_CONFIG.closable === 'boolean'
+              ? String(NOTIFICATION_DEFAULT_CONFIG.closable)
+              : undefined,
+        },
       },
     },
     autoClose: {
       table: {
         category: PARAMETERS_CATEGORY,
-        defaultValue: { summary: NOTIFICATION_DEFAULT_CONFIG.autoClose },
+        defaultValue: {
+          summary:
+            typeof NOTIFICATION_DEFAULT_CONFIG.autoClose === 'boolean'
+              ? String(NOTIFICATION_DEFAULT_CONFIG.autoClose)
+              : undefined,
+        },
       },
     },
     message: {
@@ -62,7 +77,9 @@ export default {
       },
     },
   },
-} as Meta<NotificationDemoComponent>;
+};
+
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const NotificationStory: Story = {

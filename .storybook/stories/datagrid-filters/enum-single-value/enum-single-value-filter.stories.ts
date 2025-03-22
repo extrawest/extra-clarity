@@ -23,8 +23,7 @@ import {
 
 type Story = StoryObj<EcEnumSingleValueFilterComponent<unknown>>;
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const MetaStory = {
+const meta: Meta<EcEnumSingleValueFilterComponent<unknown>> = {
   title: 'Components/Datagrid Filters/Enum Single-Value Filter',
   component: EcEnumSingleValueFilterComponent,
   decorators: [
@@ -58,9 +57,7 @@ const MetaStory = {
     maxHeightPx: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.maxHeightPx,
-        },
+        defaultValue: { summary: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.maxHeightPx.toString() },
       },
     },
     options: {
@@ -79,9 +76,7 @@ const MetaStory = {
     searchBarForAmount: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount,
-        },
+        defaultValue: { summary: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount.toString() },
       },
     },
     serverDriven: {
@@ -105,32 +100,28 @@ const MetaStory = {
     widthPx: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx,
-        },
+        defaultValue: { summary: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx.toString() },
       },
     },
     // OUTPUTS
     filterValueChanged: {
       control: false,
       table: {
-        type: {
-          summary: null,
-        },
+        type: { summary: '' },
       },
     },
     // METHODS
     clearSelection: {
-      control: { type: null },
+      control: false,
     },
     isActive: {
-      control: { type: null },
+      control: false,
     },
     resetToDefault: {
-      control: { type: null },
+      control: false,
     },
     setValue: {
-      control: { type: null },
+      control: false,
     },
     // GETTERS
     state: {
@@ -163,9 +154,9 @@ const MetaStory = {
     value: undefined,
     widthPx: ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx,
   },
-} as Meta<EcEnumSingleValueFilterComponent<unknown>>;
+};
 
-export default MetaStory;
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const FilterItselfStory: Story = {
@@ -248,7 +239,7 @@ export const DocsExampleStory: Story = {
   }),
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {
-    ...hideAllControlRows(MetaStory.argTypes),
+    ...hideAllControlRows(meta.argTypes),
   },
   args: {
   },

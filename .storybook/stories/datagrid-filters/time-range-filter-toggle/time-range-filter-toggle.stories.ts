@@ -16,7 +16,7 @@ import {
   EcTimeRangeFilterToggleComponent,
   TIMERANGE_FILTER_TOGGLE_DEFAULTS,
 } from '../../../../projects/extra-clarity/time-range-filter-toggle';
-import PopoverToggleMetaStory from '../../popover-toggle/popover-toggle.stories';
+import popoverToggleMeta from '../../popover-toggle/popover-toggle.stories';
 
 import { demoPresets } from './helpers/demo-presets';
 
@@ -25,8 +25,7 @@ type Story = StoryObj<EcTimeRangeFilterToggleComponent>;
 const SUBCATEGORY_FILTER = 'Passed to EcTimeRangeFilter';
 const SUBCATEGORY_TOGGLE = 'Passed to EcPopoverToggle';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const MetaStory = {
+const meta: Meta<EcTimeRangeFilterToggleComponent> = {
   title: 'Components/Datagrid Filters/Time Range Filter (External)',
   component: EcTimeRangeFilterToggleComponent,
   decorators: [
@@ -70,9 +69,7 @@ const MetaStory = {
     widthPx: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx,
-        },
+        defaultValue: { summary: TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx.toString() },
         subcategory: SUBCATEGORY_FILTER,
       },
     },
@@ -82,13 +79,13 @@ const MetaStory = {
     // Inputs passed to EcPopoverToggleComponent
     anchorToContentAlign: {
       table: { subcategory: SUBCATEGORY_TOGGLE },
-      control: PopoverToggleMetaStory.argTypes?.anchorToContentAlign?.['control'],
-      options: PopoverToggleMetaStory.argTypes?.anchorToContentAlign?.['options'],
+      control: popoverToggleMeta.argTypes?.anchorToContentAlign?.['control'],
+      options: popoverToggleMeta.argTypes?.anchorToContentAlign?.['options'],
     },
     contentPosition: {
       table: { subcategory: SUBCATEGORY_TOGGLE },
-      control: PopoverToggleMetaStory.argTypes?.contentPosition?.['control'],
-      options: PopoverToggleMetaStory.argTypes?.contentPosition?.['options'],
+      control: popoverToggleMeta.argTypes?.contentPosition?.['control'],
+      options: popoverToggleMeta.argTypes?.contentPosition?.['options'],
     },
     btnDisabled: {
       table: { subcategory: SUBCATEGORY_TOGGLE },
@@ -98,13 +95,13 @@ const MetaStory = {
     },
     btnStatus: {
       table: { subcategory: SUBCATEGORY_TOGGLE },
-      control: PopoverToggleMetaStory.argTypes?.btnStatus?.['control'],
-      options: PopoverToggleMetaStory.argTypes?.btnStatus?.['options'],
+      control: popoverToggleMeta.argTypes?.btnStatus?.['control'],
+      options: popoverToggleMeta.argTypes?.btnStatus?.['options'],
     },
     btnStyle: {
       table: { subcategory: SUBCATEGORY_TOGGLE },
-      control: PopoverToggleMetaStory.argTypes?.btnStyle?.['control'],
-      options: PopoverToggleMetaStory.argTypes?.btnStyle?.['options'],
+      control: popoverToggleMeta.argTypes?.btnStyle?.['control'],
+      options: popoverToggleMeta.argTypes?.btnStyle?.['options'],
     },
     closeOnClickOutside: {
       table: { subcategory: SUBCATEGORY_TOGGLE },
@@ -117,7 +114,7 @@ const MetaStory = {
     },
     // OUTPUTS
     valueChanged: {
-      control: { type: null },
+      control: false,
       table: {
         type: {
           summary: `EventEmitter<EcTimeRangeFilterToggleState>`,
@@ -125,7 +122,7 @@ const MetaStory = {
       },
     },
     openChange: {
-      control: { type: null },
+      control: false,
       table: {
         type: {
           summary: `EventEmitter<boolean>`,
@@ -134,14 +131,14 @@ const MetaStory = {
     },
     // METHODS
     resetToDefault: {
-      control: { type: null },
+      control: false,
     },
     setValue: {
-      control: { type: null },
+      control: false,
     },
     // GETTERS
     state: {
-      control: { type: null },
+      control: false,
       table: {
         category: 'Getters',
         type: { summary: '{ isActive: boolean; state: EcFilterState<EcTimeRangeFilterValue> }' },
@@ -169,9 +166,9 @@ const MetaStory = {
     open: false,
     labelLocale: 'en-US',
   },
-} as Meta<EcTimeRangeFilterToggleComponent>;
+};
 
-export default MetaStory;
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ComponentItselfStory: Story = {

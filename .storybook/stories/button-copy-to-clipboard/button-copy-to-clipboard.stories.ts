@@ -2,12 +2,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ClrInputModule } from '@clr/angular';
-import {
-  applicationConfig,
-  type Meta,
-  moduleMetadata,
-  type StoryObj,
-} from '@storybook/angular';
+import { applicationConfig, type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
 import {
   BUTTON_DEFAULTS,
@@ -17,8 +12,7 @@ import { hideAllControlRows } from '../../helpers';
 
 type Story = StoryObj<EcButtonCopyToClipboardComponent>;
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const MetaStory = {
+const meta: Meta<EcButtonCopyToClipboardComponent> = {
   title: 'Components/Button Copy-to-Clipboard',
   component: EcButtonCopyToClipboardComponent,
   decorators: [
@@ -35,17 +29,13 @@ const MetaStory = {
     },
     heightPx: {
       table: {
-        defaultValue: {
-          summary: null,
-        },
+        defaultValue: { summary: '' },
       },
     },
     iconSizePx: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: BUTTON_DEFAULTS.iconSizePx,
-        },
+        defaultValue: { summary: BUTTON_DEFAULTS.iconSizePx.toString() },
       },
     },
     label: {
@@ -53,17 +43,13 @@ const MetaStory = {
     },
     labelFontSizePx: {
       table: {
-        defaultValue: {
-          summary: null,
-        },
+        defaultValue: { summary: '' },
       },
     },
     sizePx: {
       table: {
         // set default value explicitly as compodoc shows only a constant name
-        defaultValue: {
-          summary: BUTTON_DEFAULTS.buttonSizePx,
-        },
+        defaultValue: { summary: BUTTON_DEFAULTS.buttonSizePx.toString() },
       },
     },
     textToCopy: {
@@ -82,9 +68,7 @@ const MetaStory = {
     },
     widthPx: {
       table: {
-        defaultValue: {
-          summary: null,
-        },
+        defaultValue: { summary: '' },
       },
     },
     withAnimation: {
@@ -124,9 +108,9 @@ const MetaStory = {
     withAnimation: true,
     withBorder: false,
   },
-} as Meta<EcButtonCopyToClipboardComponent>;
+};
 
-export default MetaStory;
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ButtonItselfStory: Story = {
@@ -176,7 +160,7 @@ export const DocsExampleStory: Story = {
   }),
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {
-    ...hideAllControlRows(MetaStory.argTypes),
+    ...hideAllControlRows(meta.argTypes),
   },
   args: {
   },

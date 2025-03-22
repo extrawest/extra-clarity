@@ -1,10 +1,5 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
-import {
-  applicationConfig,
-  type Meta,
-  moduleMetadata,
-  type StoryObj,
-} from '@storybook/angular';
+import { applicationConfig, type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
 import {
   EcAnchorToContentAlign,
@@ -17,8 +12,7 @@ import {
 
 type Story = StoryObj<EcPopoverToggleComponent>;
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const MetaStory = {
+const meta: Meta<EcPopoverToggleComponent> = {
   title: 'Components/Popover Toggle',
   component: EcPopoverToggleComponent,
   decorators: [
@@ -140,16 +134,14 @@ const MetaStory = {
     open: {},
     // OUTPUTS
     openChange: {
-      control: { type: null },
+      control: false,
       table: {
-        type: {
-          summary: null,
-        },
+        type: { summary: '' },
       },
     },
     // METHODS
     toggleOpen: {
-      control: { type: null },
+      control: false,
     },
   },
   args: {
@@ -167,9 +159,9 @@ const MetaStory = {
     dropdownIconPosition: EcDropdownIconPosition.Right,
     open: false,
   },
-} as Meta<EcPopoverToggleComponent>;
+};
 
-export default MetaStory;
+export default meta;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ComponentItselfStory: Story = {
