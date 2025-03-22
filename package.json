@@ -13,6 +13,7 @@
     "serve:storybook": "ng run extra-clarity:storybook --no-open",
     "docs:extra-clarity": "npx compodoc -e json -d . -p tsconfig.doc.json --minimal --disableLifeCycleHooks --disablePrivate --disableProtected",
     "release": "release-it",
+    "release-notes": "npx conventional-changelog-cli -k ./projects/extra-clarity/package.json -r 1 --skip-unstable -t v -p conventionalcommits -n ./.release-notes.github.json",
     "prepare": "husky || true"
   },
   "private": true,
@@ -57,6 +58,7 @@
     "@types/mdx": "2.0.12",
     "@typescript-eslint/eslint-plugin": "7.6.0",
     "@typescript-eslint/parser": "7.6.0",
+    "conventional-changelog-cli": "5.0.0",
     "eslint": "8.57.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-storybook": "0.8.0",

@@ -41,7 +41,7 @@
           { "type": "docs", "section": "Documentation", "hidden": false },
           { "type": "style", "section": "Corrections", "hidden": false },
           { "type": "refactor", "section": "Refactored", "hidden": false },
-          { "type": "perf", "section": "Perf improvements", "hidden": false },
+          { "type": "perf", "section": "Performance improvements", "hidden": false },
           { "type": "test", "section": "Tests", "hidden": false },
           { "type": "build", "section": "Build", "hidden": false },
           { "type": "ci", "section": "CI", "hidden": false },

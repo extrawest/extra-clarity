@@ -38,6 +38,7 @@ env:
   SB_FIREBASE_HOSTING_SITE: extra-clarity-docs # IMPORTANT: this string should be unique across entire .firebaserc
   # script names from the main 'package.json' to be called with 'npm run'
   SCRIPT_BUILD_LIB: build:extra-clarity
+  SCRIPT_RELEASE_NOTES: release-notes
   SCRIPT_BUILD_STORYBOOK: build:storybook
 
 jobs:
@@ -68,6 +69,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      notes: ${{ steps.release-notes.outputs.notes }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -79,6 +82,9 @@ jobs:
         run: npm ci
       - name: Building extra-clarity
         run: npm run ${{ env.SCRIPT_BUILD_LIB }}
+      - name: Generate release notes for GitHub Releases
+        id: release-notes
+        run: echo "notes=$(npm run ${{ env.SCRIPT_RELEASE_NOTES }} --silent)" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
@@ -106,24 +112,13 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
 
   create-github-release:
-    needs: [check-version, publish-package-to-npm]
+    needs: [check-version, build-extra-clarity, publish-package-to-npm]
     if: inputs.publish-to-npm
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Generate Release Notes as Changelog between the latest and previous tags
-        id: changelog
-        uses: requarks/changelog-action@v1
-        with:
-          token: ${{ github.token }}
-          tag: ${{ needs.check-version.outputs.tag }}
-          restrictToTypes: feat,fix,perf,revert
-          writeToFile: false
-          includeInvalidCommits: true
-          reverseOrder: true
-          useGitmojis: false
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
@@ -131,7 +126,7 @@ jobs:
           token: ${{ github.token }}
           tag: ${{ needs.check-version.outputs.tag }}
           name: ${{ needs.check-version.outputs.tag }}
-          body: ${{ steps.changelog.outputs.changes }}
+          body: ${{ needs.build-extra-clarity.outputs.notes }}
           makeLatest: ${{ needs.check-version.outputs.prefix == '' && 'true' || 'false' }} # only for the primary releasing branch (main)
 
   build-and-publish-storybook:
