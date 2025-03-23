@@ -88,7 +88,10 @@ jobs:
         run: npm run ${{ env.SCRIPT_BUILD_LIB }}
       - name: Generate release notes for GitHub Releases
         id: release-notes
-        run: echo "notes=$(npm run ${{ env.SCRIPT_RELEASE_NOTES }} --silent)" >> $GITHUB_OUTPUT
+        run: |
+          NOTES=$(npm run ${{ env.SCRIPT_RELEASE_NOTES }} --silent)
+          echo "Auto generated release notes:\n\n${NOTES}"
+          echo "notes=${NOTES}" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
