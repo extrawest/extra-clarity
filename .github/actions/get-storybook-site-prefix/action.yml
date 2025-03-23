@@ -1,4 +1,4 @@
-name: "Match the current version/tag and the branch"
+name: "Get the prefix for the Storybook hosting site according to the Extra-Clarity package version"
 
 inputs:
   tag:
@@ -12,12 +12,12 @@ inputs:
   primary-release-branch:
     type: string
     required: true
-    description: "Name of the primary releasing branch, e.g. 'main', containing releases for the most actual/latest package versions"
+    description: "Name of the primary releasing branch, e.g. 'main', containing releases for the latest package versions"
 
 outputs:
-  is-primary-branch:
-    description: "Whether the tag is present on the primary ('main') branch and leads to publishing the 'latest' release"
-    value: ${{ steps.check-branch.outputs.is-primary }}
+  prefix:
+    description: "Prefix to prepend the address of the storybook hosting site, e.g. v17-"
+    value: ${{ steps.get-prefix.outputs.prefix }}
 
 runs:
   using: composite
@@ -26,27 +26,27 @@ runs:
       with:
         fetch-depth: 0 # Ensure we fetch all branches
 
-    - id: check-branch
-      shell: bash
+    - id: get-prefix
       env:
         RELEASE_TAG_NAME: ${{ inputs.tag }}
         MAJOR_VERSION: ${{ inputs.major-version }}
         PRIMARY_RELEASE_BRANCH: ${{ inputs.primary-release-branch }}
         SECONDARY_RELEASE_BRANCH: "${{ inputs.major-version }}.x"
+      shell: bash
       run: |
         git fetch --all
 
-        IS_PRIMARY=
+        STORYBOOK_URL_PREFIX=""
 
         if [[ -n "$(git branch -r --contains tags/${RELEASE_TAG_NAME} | grep "origin/${SECONDARY_RELEASE_BRANCH}" || echo "")" ]]; then
           echo "Tag '${RELEASE_TAG_NAME}' exists on the secondary releasing branch '${SECONDARY_RELEASE_BRANCH}'"
-          IS_PRIMARY=false
+          STORYBOOK_URL_PREFIX="v${MAJOR_VERSION}-"
         elif [[ -n "$(git branch -r --contains tags/${RELEASE_TAG_NAME} | grep "origin/${PRIMARY_RELEASE_BRANCH}" || echo "")" ]]; then
           echo "Tag '${RELEASE_TAG_NAME}' exists on the primary releasing branch '${PRIMARY_RELEASE_BRANCH}'"
-          IS_PRIMARY=true
         else
-          echo "Tag '${RELEASE_TAG_NAME}' seems to be published on a wrong branch! Please re-check: the most actual version should be released on the '${PRIMARY_RELEASE_BRANCH}' branch, and previous versions on their dedicated branch '${MAJOR_VERSION}.x'"
+          echo "Tag '${RELEASE_TAG_NAME}' seems to be published on a wrong branch! Please re-check: the latest version should be released on the '${PRIMARY_RELEASE_BRANCH}' branch, and previous versions on their dedicated branch '${MAJOR_VERSION}.x'"
           exit 1
         fi
 
-        echo "is-primary=${IS_PRIMARY}" >> $GITHUB_OUTPUT
+        echo "Prefix for the Storybook hosting site: ${STORYBOOK_URL_PREFIX}"
+        echo "prefix=${STORYBOOK_URL_PREFIX}" >> $GITHUB_OUTPUT

@@ -20,7 +20,7 @@ on:
 env:
   # disable Husky
   HUSKY: 0
-  # name of the main branch for releasing the most actual version
+  # name of the primary branch for releasing the latest version
   PRIMARY_RELEASING_BRANCH: "main"
   # artifact names (available on the github actions page after completing the workflow)
   LIB_ARTIFACT_NAME: extra-clarity-build
@@ -35,10 +35,15 @@ env:
   # firebase settings from '.firebaserc' & 'firebase.json'
   SB_FIREBASE_PROJECT_ID: storybook-deploy
   SB_FIREBASE_HOSTING_TARGET: storybook-hosting-target
+  SB_FIREBASE_HOSTING_SITE_LATEST: extra-clarity-docs # IMPORTANT: see the note below
   # script names from the main 'package.json' to be called with 'npm run'
   SCRIPT_BUILD_LIB: build:extra-clarity
   SCRIPT_RELEASE_NOTES: release-notes
   SCRIPT_BUILD_STORYBOOK: build:storybook
+
+  # IMPORTANT: The string value of SB_FIREBASE_HOSTING_SITE_LATEST must be unique across
+  # entire .firebaserc to be correctly replaced for secondary releasing branches, e.g.:
+  # "extra-clarity-docs" -> "v17-extra-clarity-docs"
 
 jobs:
   check-version:
@@ -47,7 +52,7 @@ jobs:
       contents: read
     outputs:
       tag: ${{ steps.get-package-version.outputs.tag }}
-      is-primary-branch: ${{ steps.match-version-and-branch.outputs.is-primary-branch }}
+      prefix: ${{ steps.get-storybook-site-prefix.outputs.prefix }}
     steps:
       # uses: actions/checkout@v4 -- to make custom actions available from within the repository itself
       - uses: actions/checkout@v4
@@ -56,8 +61,8 @@ jobs:
         with:
           extra-clarity-package-json: ${{ env.LIB_PACKAGE_JSON }}
           tag-full: ${{ inputs.release-tag-full }}
-      - id: match-version-and-branch
-        uses: ./.github/actions/match-version-and-branch
+      - id: get-storybook-site-prefix
+        uses: ./.github/actions/get-storybook-site-prefix
         with:
           tag: ${{ steps.get-package-version.outputs.tag }}
           major-version: ${{ steps.get-package-version.outputs.major }}
@@ -126,7 +131,7 @@ jobs:
           tag: ${{ needs.check-version.outputs.tag }}
           name: ${{ needs.check-version.outputs.tag }}
           body: ${{ needs.build-extra-clarity.outputs.notes }}
-          makeLatest: ${{ needs.check-version.outputs.is-primary-branch }}
+          makeLatest: ${{ needs.check-version.outputs.prefix == '' && 'true' || 'false' }} # is-latest == only primary releasing branch
 
   build-and-publish-storybook:
     needs: [check-version, build-extra-clarity]
@@ -148,6 +153,13 @@ jobs:
           path: ${{ env.LIB_DIST_PATH }}
       - name: Building storybook
         run: npm run ${{ env.SCRIPT_BUILD_STORYBOOK }}
+      - name: Correcting firebase hosting site for non-latest versions
+        if: ${{ needs.check-version.outputs.prefix != '' }}
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          include: ".firebaserc"
+          find: ${{ env.SB_FIREBASE_HOSTING_SITE_LATEST }}
+          replace: ${{ needs.check-version.outputs.prefix }}${{ env.SB_FIREBASE_HOSTING_SITE_LATEST }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.github-token }}
