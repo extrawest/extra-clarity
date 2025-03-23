@@ -32,7 +32,7 @@
     @if (refreshing) {
       <span class="spinner spinner-inline"></span>
     } @else {
-      <cds-icon shape="refresh" [status]="failed ? 'danger' : 'info'" />
+      <cds-icon shape="refresh" [attr.status]="failed ? 'danger' : 'info'" />
     }
   </button>
 </div>

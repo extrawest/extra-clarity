@@ -12,8 +12,8 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { CdsIconModule } from '@cds/angular';
 import { angleIcon, calendarIcon, ClarityIcons } from '@cds/core/icon';
+import { ClrIconModule } from '@clr/angular';
 import {
   EcFilterState,
   EcResettableFilter,
@@ -48,7 +48,7 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   standalone: true,
   imports: [
     CommonModule,
-    CdsIconModule,
+    ClrIconModule,
     EcPopoverToggleLabelDirective,
     EcPopoverToggleComponent,
     EcTimeRangeFilterComponent,

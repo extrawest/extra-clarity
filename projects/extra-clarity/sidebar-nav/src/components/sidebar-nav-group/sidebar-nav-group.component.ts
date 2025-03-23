@@ -7,8 +7,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { CdsIconModule } from '@cds/angular';
-import { ClrVerticalNavModule } from '@clr/angular';
+import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
 import { Subject, takeUntil } from 'rxjs';
 
 import { EC_NAV_ITEM_TYPE, EcNavItemGroup } from '../../sidebar-nav.models';
@@ -23,7 +22,7 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   standalone: true,
   imports: [
     CommonModule,
-    CdsIconModule,
+    ClrIconModule,
     ClrVerticalNavModule,
     EcSidebarNavItemComponent,
     EcSidebarNavLabelComponent,

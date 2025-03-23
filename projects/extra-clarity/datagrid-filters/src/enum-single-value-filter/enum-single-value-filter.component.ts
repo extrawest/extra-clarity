@@ -15,7 +15,6 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { CdsIconModule } from '@cds/angular';
 import {
   ClarityIcons,
   filterIcon,
@@ -23,7 +22,12 @@ import {
   infoStandardIcon,
   warningStandardIcon,
 } from '@cds/core/icon';
-import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr/angular';
+import {
+  ClrDatagridFilter,
+  ClrIconModule,
+  ClrPopoverToggleService,
+  ClrRadioModule,
+} from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
@@ -55,7 +59,7 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   standalone: true,
   imports: [
     CommonModule,
-    CdsIconModule,
+    ClrIconModule,
     ClrRadioModule,
     EcMarkMatchedStringPipe,
     EcSearchBarComponent,

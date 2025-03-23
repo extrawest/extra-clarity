@@ -7,8 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CdsIconModule } from '@cds/angular';
-import { ClrVerticalNavModule } from '@clr/angular';
+import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
 
 import { EC_NAV_ITEM_TYPE, EcNavListItem } from '../../sidebar-nav.models';
 import { EcSidebarNavService } from '../../sidebar-nav.service';
@@ -24,7 +23,7 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
     CommonModule,
     RouterLink,
     RouterLinkActive,
-    CdsIconModule,
+    ClrIconModule,
     ClrVerticalNavModule,
     EcSidebarNavLabelComponent,
   ],

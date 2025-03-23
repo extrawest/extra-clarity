@@ -3,7 +3,7 @@
   [ngClass]="{ active: hasActiveLink }"
   [(clrVerticalNavGroupExpanded)]="isExpanded"
 >
-  <cds-icon *ngIf="navItem.icon" clrVerticalNavIcon [shape]="navItem.icon" />
+  <cds-icon *ngIf="navItem.icon" clrVerticalNavIcon [attr.shape]="navItem.icon" />
 
   <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
 

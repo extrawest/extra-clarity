@@ -26,7 +26,7 @@
     </div>
 
     <div *ngSwitchCase="clrLoadingState.DEFAULT" @defaultButton class="button-inner-box">
-      <cds-icon shape="copy" [size]="iconSizeAsString" />
+      <cds-icon shape="copy" [attr.size]="iconSizeAsString" />
       <span *ngIf="label" [style.font-size.px]="labelFontSizePx">
         {{ label }}
       </span>

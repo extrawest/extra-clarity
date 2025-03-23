@@ -16,9 +16,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, filterOffIcon } from '@cds/core/icon';
-import { ClrDatagridFilter, ClrInput, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
+import {
+  ClrDatagridFilter,
+  ClrIconModule,
+  ClrInput,
+  ClrInputModule,
+  ClrPopoverToggleService,
+} from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
@@ -41,7 +46,7 @@ export const STRING_FILTER_DEFAULTS = {
   styleUrls: ['./string-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CdsIconModule, ClrInputModule],
+  imports: [CommonModule, ReactiveFormsModule, ClrIconModule, ClrInputModule],
   providers: [
     // make EcStringFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {

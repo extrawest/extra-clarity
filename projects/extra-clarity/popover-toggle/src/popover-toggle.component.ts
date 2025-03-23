@@ -12,11 +12,11 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { CdsIconModule } from '@cds/angular';
 import { angleIcon, ClarityIcons } from '@cds/core/icon';
 import { Directions } from '@cds/core/internal';
 import {
   ClrAxis,
+  ClrIconModule,
   ClrPopoverEventsService,
   ÇlrClrPopoverModuleNext as ClrPopoverModuleNext,
   ClrPopoverPosition,
@@ -49,7 +49,7 @@ import { EcPopoverAlign } from './types';
     NgIf,
     NgTemplateOutlet,
     CdkTrapFocusDirective,
-    CdsIconModule,
+    ClrIconModule,
     ClrPopoverModuleNext,
   ],
   providers: [ClrPopoverEventsService, ClrPopoverPositionService, ClrPopoverToggleService],
