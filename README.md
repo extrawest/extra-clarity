@@ -43,18 +43,12 @@ and add the `cds-theme="light"` attribute to the body element in your main HTML 
 Please refer to the [Clarity docs](https://clarity.design/pages/developing#adding-clarity-to-an-existing-angular-application)
 for more details on 'Adding Clarity to an Existing Angular Application'.
 
-## Dependencies:
+## Supported Versions
 
-| Extra-Clarity     | Angular               | Clarity               |
-| ----------------- | --------------------- | --------------------- |
-| 17.x              | ^17.3 \|\| 18 \|\| 19 | 17                    |
-| 0.17.9 - 0.17.12  | ^17.3 \|\| 18 \|\| 19 | 17                    |
-| 0.17.3 - 0.17.8   | ^17.3                 | 17                    |
-| 0.17.1 - 0.17.2   | ^16.2 \|\| 17         | ^15.4 \|\| 16 \|\| 17 |
-| 0.16.3 - 0.16.7   | ^16.2                 | ^15.4 \|\| 16         |
-| 0.16.1 - 0.16.2   | ^16.2                 | ^15.4                 |
-| 0.15.23           | ^16.2                 | ^15.4                 |
-| 0.15.16 - 0.15.22 | 15 \|\| 16            | ^15.3                 |
+| Extra-Clarity | Angular               | Clarity |
+| :------------ | :-------------------- | :------ |
+| 18.x          | 18 \|\| 19            | ^17.3   |
+| 17.x          | ^17.3 \|\| 18 \|\| 19 | 17      |
 
 ## Documentation
 

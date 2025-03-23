@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/blocks';
+import { Markdown, Meta } from '@storybook/blocks';
 import { docsStylePatch } from '../helpers';
 
 <style>{docsStylePatch}</style>
@@ -7,52 +7,37 @@ import { docsStylePatch } from '../helpers';
 
 # Extra Clarity Docs
 
-Extra Clarity is a library that contains [Angular components](#available-components) built on the top of the
-[Clarity Design System](https://clarity.design), which we use in our internal projects in
+Extra Clarity is a library that contains [Angular components](#available-components) built on the
+top of the [Clarity Design System](https://clarity.design), which we use in our internal projects in
 [extrawest.com](https://extrawest.com).
 
-Required deps:
-
-- Angular 17.3.0 or later
-- Clarity: 17.0.0 or later
-
-The latest version with Angular 16 support is 0.17.2 (based on Clarity 15), and for Angular 15 - 0.15.22.
-
 The library is under development. Any suggestions would be highly appreciated.
+
+## Documentation
+
+This site is Storybook-based and contains the details about the
+[available components](#available-components) and some live examples.
+
+We are working on adding more information to it.
 
 ## Source Code
 
 For the source code, either to report an issue, please refer to our
 [GitHub repository](https://github.com/extrawest/extra-clarity).
 
-## Documentation
-
-This site is Storybook-based and contains the details about the [available components](#available-components)
-and some live examples.
-
-We are working on adding more information to it.
-
 ## Installation
 
 The library is available as a [npm-package](https://www.npmjs.com/package/@extrawest/extra-clarity).
-You can add the package to your project with `npm install` or `yarn add`:
+You can add the package to your project with `npm install`:
 
 ```shell
 npm i @extrawest/extra-clarity
-```
-
-```shell
-yarn add @extrawest/extra-clarity
 ```
 
 To work with the library, you also need to add the Clarity packages:
 
 ```shell
 npm i @cds/core @clr/angular @clr/ui
-```
-
-```shell
-yarn add @cds/core @clr/angular @clr/ui
 ```
 
 And then add the global Clarity styles to your `angular.json` config:
@@ -74,6 +59,17 @@ and add the `cds-theme="light"` attribute to the body element in your main HTML 
 
 Please refer to the [Clarity docs](https://clarity.design/pages/developing#adding-clarity-to-an-existing-angular-application)
 for more details on 'Adding Clarity to an Existing Angular Application'.
+
+## Supported Versions
+
+<Markdown>
+  {`
+| Extra-Clarity | Angular       | Clarity |
+| :------------ | :-------------| :------ |
+| 18.x          | 18, 19        | 17.3+   |
+| 17.x          | 17.3+, 18, 19 | 17      |
+`}
+</Markdown>
 
 ## Available Components
 
