@@ -55,7 +55,7 @@ export const STRING_FILTER_DEFAULTS = {
     },
   ],
 })
-export class EcStringFilterComponent<T extends object = {}>
+export class EcStringFilterComponent<T extends object = object>
   extends EcDatagridFilter<string, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**

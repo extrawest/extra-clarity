@@ -64,7 +64,7 @@ export const TIMERANGE_FILTER_DEFAULTS = {
     },
   ],
 })
-export class EcTimeRangeFilterComponent<T extends object = {}>
+export class EcTimeRangeFilterComponent<T extends object = object>
   extends EcDatagridFilter<FilterValue, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**

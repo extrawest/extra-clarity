@@ -68,7 +68,7 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
     },
   ],
 })
-export class EcEnumSingleValueFilterComponent<E, T extends object = {}>
+export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   extends EcDatagridFilter<E | null, T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**

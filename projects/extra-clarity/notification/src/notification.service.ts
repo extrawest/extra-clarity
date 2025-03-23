@@ -37,7 +37,7 @@ export class NotificationService {
     this.createInstance({ type: 'danger', message }, config);
   }
 
-  template(type: NotificationType, template: TemplateRef<{}>, config?: NotificationConfig): void {
+  template(type: NotificationType, template: TemplateRef<unknown>, config?: NotificationConfig): void {
     this.createInstance({ type, template }, config);
   }
 

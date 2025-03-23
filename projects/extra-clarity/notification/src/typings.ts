@@ -10,7 +10,7 @@ export enum NotificationAnimationState {
   enterLeft = 'enterLeft',
 }
 
-export interface NotificationConfig<T = {}> {
+export interface NotificationConfig<T = object> {
   duration?: number;
   closable?: boolean;
   pauseOnHover?: boolean;
@@ -23,7 +23,7 @@ export interface NotificationConfig<T = {}> {
 export interface NotificationData {
   id?: string;
   message?: string;
-  template?: TemplateRef<{}>;
+  template?: TemplateRef<unknown>;
   type?: NotificationType;
   config?: NotificationConfig;
 }

@@ -65,7 +65,7 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
     },
   ],
 })
-export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
+export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
   extends EcDatagridFilter<E[], T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**

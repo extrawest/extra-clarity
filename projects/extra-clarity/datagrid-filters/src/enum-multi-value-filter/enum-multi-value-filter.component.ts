@@ -69,7 +69,7 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
     },
   ],
 })
-export class EcEnumMultiValueFilterComponent<E, T extends object = {}>
+export class EcEnumMultiValueFilterComponent<E, T extends object = object>
   extends EcDatagridFilter<E[], T>
   implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   /**
