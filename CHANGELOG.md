@@ -1,5 +1,28 @@
 # Changelog
 
+## 18.0.0 (2025-03-23)
+
+### Documentation
+
+* add package version to overview page ([b63c5cf](https://github.com/extrawest/extra-clarity/commit/b63c5cf))
+* **storybook**: upgrade Storybook to version 8.6 (#11) ([79c258f](https://github.com/extrawest/extra-clarity/commit/79c258f)), closes [#11](https://github.com/extrawest/extra-clarity/issues/11)
+
+### CI
+
+* add explicit 'target' suffix for firebase hosting target name, correct comments ([974e05c](https://github.com/extrawest/extra-clarity/commit/974e05c))
+* rename workflows ([9532c17](https://github.com/extrawest/extra-clarity/commit/9532c17))
+* utilize conventional-changelog to generate release notes for GitHub Releases ([b11d4a3](https://github.com/extrawest/extra-clarity/commit/b11d4a3))
+* disable emojis prepending headers within auto-generated release notes ([5b14f84](https://github.com/extrawest/extra-clarity/commit/5b14f84))
+
+### Misc
+
+* reinstall node_modules ([625e44b](https://github.com/extrawest/extra-clarity/commit/625e44b))
+* upgrade to Angular 18 (#12) ([c18547d](https://github.com/extrawest/extra-clarity/commit/c18547d)), closes [#12](https://github.com/extrawest/extra-clarity/issues/12)
+
+### BREAKING CHANGE
+
+* EcAutoRefreshComponent's output 'toggle' renamed to 'toggleState' to avoid potential name conflict with standard DOM events
+
 ## [17.13.0](https://github.com/extrawest/extra-clarity/compare/v17.12.6...v17.13.0) (2025-03-21)
 
 ### ⚠ BREAKING CHANGES

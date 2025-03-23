@@ -1,6 +1,6 @@
 {
   "name": "@extrawest/extra-clarity",
-  "version": "18.0.0-next",
+  "version": "18.0.0",
   "description": "Extrawest Angular components based on the Clarity Design System",
   "author": "extrawest.com",
   "repository": {
