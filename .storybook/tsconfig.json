@@ -1,5 +1,6 @@
 {
   "extends": "../projects/extra-clarity/tsconfig.lib.json",
+  "resolveJsonModule": true,
   "compilerOptions": {
     "types": [
       "node",

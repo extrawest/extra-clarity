@@ -1,4 +1,5 @@
 import { Meta } from "@storybook/blocks";
+import { version } from "../../projects/extra-clarity/package.json";
 import { docsStylePatch } from "../helpers";
 
 <style>{docsStylePatch}</style>
@@ -6,6 +7,8 @@ import { docsStylePatch } from "../helpers";
 <Meta title="Overview/Getting Started" />
 
 # Extra Clarity Docs
+
+**Version: {`v${version}`}**
 
 Extra Clarity is a library that contains [Angular components](#available-components) built on the top of the
 [Clarity Design System](https://clarity.design), which we use in our internal projects in
