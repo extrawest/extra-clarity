@@ -1,4 +1,4 @@
-name: Build & publish Extra-Clarity package & Storybook docs
+name: "Private: DO NOT run it directly!"
 
 on:
   workflow_call:

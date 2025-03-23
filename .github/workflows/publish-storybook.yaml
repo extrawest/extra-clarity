@@ -1,11 +1,11 @@
-name: Build & publish storybook manually
+name: "Publish storybook manually"
 
 on:
   workflow_dispatch:
 
 jobs:
   build-and-deploy:
-    uses: ./.github/workflows/build-and-deploy.yml
+    uses: ./.github/workflows/_build-and-deploy.yml
     with:
       publish-to-npm: false
       release-tag-full: ""

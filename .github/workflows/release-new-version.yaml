@@ -1,4 +1,4 @@
-name: Build & publish extra-clarity package & storybook on a new release
+name: "Release new version: npm package & storybook"
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-deploy:
-    uses: ./.github/workflows/build-and-deploy.yml
+    uses: ./.github/workflows/_build-and-deploy.yml
     with:
       publish-to-npm: true
       release-tag-full: ${{ github.ref }}
