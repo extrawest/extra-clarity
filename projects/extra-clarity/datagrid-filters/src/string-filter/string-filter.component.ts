@@ -422,7 +422,7 @@ export class EcStringFilterComponent<T extends object = object>
 
     if (!this.propertyKey) {
       inputsErrors.push(
-        this.commonStrings.keys.datagridFilters.propertyKeyRequired as string,
+        this.commonStrings.keys.datagridFilters.propertyKeyRequired,
       );
     }
     if (this.minLength < 1) {
@@ -432,7 +432,7 @@ export class EcStringFilterComponent<T extends object = object>
           {
             MIN_LENGTH: this.minLength.toString(),
           },
-        ) as string,
+        )
       );
     }
     if (this.maxLength < 1) {
@@ -442,7 +442,7 @@ export class EcStringFilterComponent<T extends object = object>
           {
             MAX_LENGTH: this.maxLength.toString(),
           },
-        ) as string,
+        ),
       );
     }
     if (this.maxLength < this.minLength) {
@@ -453,14 +453,14 @@ export class EcStringFilterComponent<T extends object = object>
             MAX_LENGTH: this.maxLength.toString(),
             MIN_LENGTH: this.minLength.toString(),
           },
-        ) as string,
+        ),
       );
     }
     if (!this.pattern && this.validator === EcStringValidatorEnum.PATTERN) {
-      inputsErrors.push(this.commonStrings.keys.datagridFilters.patternError as string);
+      inputsErrors.push(this.commonStrings.keys.datagridFilters.patternError);
     }
     if (this.pattern && this.validator !== EcStringValidatorEnum.PATTERN) {
-      inputsErrors.push(this.commonStrings.keys.datagridFilters.validationError as string);
+      inputsErrors.push(this.commonStrings.keys.datagridFilters.validationError);
     }
 
     return inputsErrors;
