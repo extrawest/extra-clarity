@@ -12,7 +12,7 @@ export function datetimeInputValidator(inputEl: ElementRef<HTMLInputElement>): V
 
     if (
       !inputEl.nativeElement.validity.valid ||
-      control.value && isNaN(new Date(control.value).getTime())
+      (control.value && isNaN(new Date(control.value).getTime()))
     ) {
       return badInputError;
     }

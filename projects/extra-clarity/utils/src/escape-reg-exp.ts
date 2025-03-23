@@ -9,8 +9,5 @@ export function escapeRegExp(str: string | undefined): string | undefined {
   if (!str) {
     return str;
   }
-  return str.replace(
-    escapedRegExpChars.custom,
-    '\\$&',
-  );
+  return str.replace(escapedRegExpChars.custom, '\\$&');
 }

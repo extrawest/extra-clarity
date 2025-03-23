@@ -14,9 +14,7 @@ const meta: Meta<StorybookConfirmationDialogComponent> = {
   component: StorybookConfirmationDialogComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
   ],
   argTypes: {

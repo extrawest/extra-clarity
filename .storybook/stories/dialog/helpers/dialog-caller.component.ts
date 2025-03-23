@@ -7,19 +7,11 @@ import { StorybookDialogContentComponent } from './dialog-content.component';
 @Component({
   selector: 'ec-storybook-dialog',
   template: `
-    <button
-      (click)="onOpen()"
-      class="btn btn-primary"
-      type="button"
-    >
-      Open dialog
-    </button>
+    <button (click)="onOpen()" class="btn btn-primary" type="button">Open dialog</button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    DialogModule,
-  ],
+  imports: [DialogModule],
 })
 export class StorybookDialogCallerComponent {
   @Input()
@@ -34,15 +26,13 @@ export class StorybookDialogCallerComponent {
   private readonly dialogService = inject(DialogService);
 
   protected onOpen(): void {
-    this.dialogService.open(
-      StorybookDialogContentComponent,
-      {
+    this.dialogService
+      .open(StorybookDialogContentComponent, {
         size: this.size,
         closable: this.closable,
         closableBackdrop: this.closableBackdrop,
-      },
-    )
+      })
       .afterClosed()
-      .subscribe(result => alert(`The value returned from the dialog is '${result}'`));
+      .subscribe((result) => alert(`The value returned from the dialog is '${result}'`));
   }
 }

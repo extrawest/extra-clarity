@@ -2,18 +2,14 @@ import { Markdown, Meta } from '@storybook/blocks';
 
 import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
-<style>
-  { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta title="Components/Auto Refresh/Overview"  />
+<Meta title="Components/Auto Refresh/Overview" />
 
 # Auto Refresh
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Stories](#stories)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Stories](#stories) - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -23,6 +19,7 @@ import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 ```typescript
 import { EcAutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 ```
+
 ```html
 <ec-auto-refresh
   [enabled]="isAutoRefreshEnabled"
@@ -35,10 +32,8 @@ import { EcAutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 
 ## Stories
 
-* [The component in isolation](/story/components-auto-refresh--auto-refresh-story)
+- [The component in isolation](/story/components-auto-refresh--auto-refresh-story)
 
 ## Source Code
 
-<Markdown>
-  {`See at [GitHub](${extraClarityGithubSrc}/auto-refresh/src)`}
-</Markdown>
+<Markdown>{`See at [GitHub](${extraClarityGithubSrc}/auto-refresh/src)`}</Markdown>

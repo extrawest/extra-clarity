@@ -37,7 +37,7 @@
 
   &.with-divider-top::before,
   &.with-divider-bottom::after {
-    content: "";
+    content: '';
     display: block;
     width: 100%;
     height: calc($divider-height / 2);

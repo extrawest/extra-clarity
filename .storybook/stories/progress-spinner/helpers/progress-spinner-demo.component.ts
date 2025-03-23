@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ProgressSpinnerComponent } from '../../../../projects/extra-clarity/progress-spinner';
 
 const CODE_EXAMPLES: readonly string[] = [
-`
+  `
 <div class="clr-row">
     <div class="clr-col-6">
         <div class="card">
@@ -14,7 +14,7 @@ const CODE_EXAMPLES: readonly string[] = [
 </div>
 <button class="btn btn-primary" (click)="cardLoadingState = !cardLoadingState">Toggle Loading</button>
 `,
-`
+  `
 <div>
   <progress-spinner [showSpinner]="loadingState" clrSize="md"></progress-spinner>
   <h2>Content Title</h2>
@@ -29,9 +29,7 @@ const CODE_EXAMPLES: readonly string[] = [
   templateUrl: './progress-spinner-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    ProgressSpinnerComponent,
-  ],
+  imports: [ProgressSpinnerComponent],
 })
 export class ProgressSpinnerDemoComponent {
   protected codeExamples = CODE_EXAMPLES;

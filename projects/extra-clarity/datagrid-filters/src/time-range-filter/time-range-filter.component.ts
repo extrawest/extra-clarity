@@ -43,7 +43,7 @@ export const TIMERANGE_FILTER_DEFAULTS = {
  * - ignore duplicated or empty (no-label) presets before applying them to the filter
  * - on preset-list update - keep the filter value if it is allowed in the updated list as well (when this.defaultPreset !== null)
  * - maybe highlight not 'non-empty' inputs but 'modified' (i.e. different from applied values)
-*/
+ */
 
 @Component({
   selector: 'ec-time-range-filter',
@@ -51,12 +51,7 @@ export const TIMERANGE_FILTER_DEFAULTS = {
   styleUrls: ['./time-range-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ClrRadioModule,
-    EcDateTimeGroupComponent,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, ClrRadioModule, EcDateTimeGroupComponent],
   providers: [
     {
       provide: EcDatagridFilter,
@@ -66,7 +61,8 @@ export const TIMERANGE_FILTER_DEFAULTS = {
 })
 export class EcTimeRangeFilterComponent<T extends object = object>
   extends EcDatagridFilter<FilterValue, T>
-  implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+  implements AfterViewInit, OnChanges, OnDestroy, OnInit
+{
   /**
    * When `true`, the filter will be closed via ClrPopoverToggleService
    * on selecting any new value or on resetting/clearing.
@@ -223,19 +219,17 @@ export class EcTimeRangeFilterComponent<T extends object = object>
 
     this.radioControl.valueChanges
       .pipe(takeUntil(this.destroy$))
-      .subscribe(value => this.onPresetSelected(value));
+      .subscribe((value) => this.onPresetSelected(value));
 
-    this.clrPopoverToggleService?.openChange
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(open => {
-        if (open) {
-          this.updateVisualCustomRange();
-          return;
-        }
-        if (this.radioControl.value === null) {
-          this.onCustomRangeDiscard();
-        }
-      });
+    this.clrPopoverToggleService?.openChange.pipe(takeUntil(this.destroy$)).subscribe((open) => {
+      if (open) {
+        this.updateVisualCustomRange();
+        return;
+      }
+      if (this.radioControl.value === null) {
+        this.onCustomRangeDiscard();
+      }
+    });
 
     this.commonStrings.stringsChanged$
       .pipe(takeUntil(this.destroy$))
@@ -263,18 +257,14 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       return false;
     }
 
-    const itemTimestamp = typeof valueInItem === 'string'
-      ? new Date(valueInItem).getTime()
-      : valueInItem;
+    const itemTimestamp =
+      typeof valueInItem === 'string' ? new Date(valueInItem).getTime() : valueInItem;
 
     if (isNaN(itemTimestamp)) {
       return false;
     }
 
-    return (
-      (!start || itemTimestamp >= start) &&
-      (!end || itemTimestamp <= end)
-    );
+    return (!start || itemTimestamp >= start) && (!end || itemTimestamp <= end);
   }
 
   /** Reset the filter to the default state */
@@ -293,9 +283,8 @@ export class EcTimeRangeFilterComponent<T extends object = object>
   override isActive(): boolean {
     return (
       this.filterValue.presetId !== this.defaultPresetId ||
-      this.filterValue.presetId === null && (
-        !!this.filterValue.custom.start || !!this.filterValue.custom.end
-      )
+      (this.filterValue.presetId === null &&
+        (!!this.filterValue.custom.start || !!this.filterValue.custom.end))
     );
   }
 
@@ -390,7 +379,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       return;
     }
 
-    if (this.presets.some(preset => preset.id === this.filterValue.presetId)) {
+    if (this.presets.some((preset) => preset.id === this.filterValue.presetId)) {
       this.onPresetSelected(this.filterValue.presetId);
       return;
     }

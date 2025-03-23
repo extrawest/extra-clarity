@@ -5,14 +5,7 @@ import { ClrAlertModule, ClrIconModule } from '@clr/angular';
 import { NotificationComponent, NotificationContainerComponent } from './components';
 
 @NgModule({
-  declarations: [
-    NotificationComponent,
-    NotificationContainerComponent,
-  ],
-  imports: [
-    CommonModule,
-    ClrAlertModule,
-    ClrIconModule,
-  ],
+  declarations: [NotificationComponent, NotificationContainerComponent],
+  imports: [CommonModule, ClrAlertModule, ClrIconModule],
 })
-export class NotificationModule { }
+export class NotificationModule {}

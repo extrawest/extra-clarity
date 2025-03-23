@@ -24,11 +24,7 @@ export const DEFAULT_PERIOD_SEC = 60;
   styleUrls: ['./auto-refresh.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ClrCheckboxModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, ClrCheckboxModule],
 })
 export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   /**
@@ -78,10 +74,9 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   private readonly destroy$ = new Subject<void>();
 
   protected get timeMessage(): string {
-    return this.commonStrings.parse(
-      this.commonStrings.keys.autoRefresh.message,
-      { SEC: this.secondsRemaining.toString() },
-    );
+    return this.commonStrings.parse(this.commonStrings.keys.autoRefresh.message, {
+      SEC: this.secondsRemaining.toString(),
+    });
   }
 
   constructor(
@@ -100,7 +95,7 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
         : this.toggleControl.enable();
     }
 
-    if (changes['enabled'] || changes['period'] && this._period === 0) {
+    if (changes['enabled'] || (changes['period'] && this._period === 0)) {
       const isEnabled = this.enabled ?? false;
       this.toggleControl.patchValue(isEnabled && this._period > 0);
     }
@@ -133,15 +128,15 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
     // set the input [refreshing]="true" before the timer relaunches counting
     timer(1, 1000)
       .pipe(
-        map(timeElapsed => this._period - timeElapsed),
-        tap(timeRemain => {
+        map((timeElapsed) => this._period - timeElapsed),
+        tap((timeRemain) => {
           this.secondsRemaining = timeRemain < 0 ? 0 : timeRemain;
         }),
-        takeWhile(timeRemain => timeRemain > 0, true),
+        takeWhile((timeRemain) => timeRemain > 0, true),
         takeUntil(this.abortTimer$),
         takeUntil(this.destroy$),
       )
-      .subscribe(timeRemain => {
+      .subscribe((timeRemain) => {
         if (timeRemain <= 0) {
           this.refresh.emit();
           this.resetTimerState(true);
@@ -153,12 +148,7 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   private resetTimerState(launch: boolean): void {
     this.abortTimer$.next();
 
-    if (
-      launch &&
-      this.toggleControl.value &&
-      this._period > 0 &&
-      !this.refreshing
-    ) {
+    if (launch && this.toggleControl.value && this._period > 0 && !this.refreshing) {
       this.launchTimer();
     }
   }

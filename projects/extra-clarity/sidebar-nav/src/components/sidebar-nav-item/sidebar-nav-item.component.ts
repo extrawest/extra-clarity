@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CdsIconModule } from '@cds/angular';
 import { ClrVerticalNavModule } from '@clr/angular';

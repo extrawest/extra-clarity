@@ -4,25 +4,16 @@ import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
 import * as WrapperStories from './datagrid-cell-wrapper.stories';
 
-<style>
-  { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  of={WrapperStories}
-  name="Overview"
-/>
+<Meta of={WrapperStories} name="Overview" />
 
 # Datagrid Cell Wrapper
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Example](#example)
-  - [Stories](#stories)
-  - [Description](#description)
-    * [Configuration](#configuration)
-  - [API](#api)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Example](#example) - [Stories](#stories) -
+  [Description](#description) * [Configuration](#configuration) - [API](#api) - [Source
+  Code](#source-code)
 </div>
 
 ## Quick Start
@@ -32,9 +23,11 @@ import * as WrapperStories from './datagrid-cell-wrapper.stories';
 ```typescript
 import { EcDatagridCellWrapperComponent } from '@extrawest/extra-clarity/datagrid-cell-wrapper';
 ```
+
 ```html
 <ec-dg-cell-wrapper />
 ```
+
 ```html
 <clr-datagrid>
   ...
@@ -58,16 +51,17 @@ import { EcDatagridCellWrapperComponent } from '@extrawest/extra-clarity/datagri
 
 ## Stories
 
-* [A wrapper within a datagrid](/story/components-datagrid-cell-wrapper--within-datagrid-story)
+- [A wrapper within a datagrid](/story/components-datagrid-cell-wrapper--within-datagrid-story)
 
 ## Description
 
 This component helps with two issues within a datagrid cell:
+
 1. Handle overflowing content: either truncate with ellipsis, or break into a new line.
-    You can see the default datagrid behavior for too-long non-breakable strings
-    in the example above within the second column.
+   You can see the default datagrid behavior for too-long non-breakable strings
+   in the example above within the second column.
 2. Optionally add a copy-to-clipboard button to allow fast copying of truncated content
-    without changing the column size to select the entire string.
+   without changing the column size to select the entire string.
 
 Although this component was designed for using within datagrids,
 it also may be used within tables and standalone containers with limited width.
@@ -98,6 +92,4 @@ Please refer to the [API](#api) section below for more details about the inputs 
 
 ## Source Code
 
-<Markdown>
-  {`See at [GitHub](${extraClarityGithubSrc}/datagrid-cell-wrapper/src)`}
-</Markdown>
+<Markdown>{`See at [GitHub](${extraClarityGithubSrc}/datagrid-cell-wrapper/src)`}</Markdown>

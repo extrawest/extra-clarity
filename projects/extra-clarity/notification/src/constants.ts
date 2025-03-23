@@ -8,7 +8,10 @@ export const NOTIFICATION_DEFAULT_CONFIG: NotificationConfig = {
   pauseOnHover: true,
 };
 
-export const NOTIFICATION_ANIMATION_STATE_CONFIG: Record<NotificationPosition, NotificationAnimationState> = {
+export const NOTIFICATION_ANIMATION_STATE_CONFIG: Record<
+  NotificationPosition,
+  NotificationAnimationState
+> = {
   ['top']: NotificationAnimationState.enterTop,
   ['bottom']: NotificationAnimationState.enterBottom,
   ['topLeft']: NotificationAnimationState.enterLeft,

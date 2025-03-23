@@ -1,15 +1,17 @@
 <div [style.width.px]="widthPx">
   <ng-container *ngIf="!configErrors.length; else wrongConfig">
-
     <ng-container *ngIf="!loading; else loadingOptions">
       <div class="filter-title" *ngIf="title">
         {{ title }}
       </div>
 
-      <div class="filter-selected-amount" *ngIf="
-        showSelectedAmount === EcShowSelected.Always ||
-        showSelectedAmount === EcShowSelected.WithSearchbar && showSearchBar
-      ">
+      <div
+        class="filter-selected-amount"
+        *ngIf="
+          showSelectedAmount === EcShowSelected.Always ||
+          (showSelectedAmount === EcShowSelected.WithSearchbar && showSearchBar)
+        "
+      >
         {{ totalSelectedAmountLabel }}
       </div>
 
@@ -46,13 +48,13 @@
                 [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
                 [ngTemplateOutletContext]="{
                   $implicit: option,
-                  marked: searchTerm
+                  marked: searchTerm,
                 }"
               />
               <ng-template #defaultLabelTpl>
                 <span
                   *ngIf="searchTerm; else unmarkedLabel"
-                  [innerHtml]="option.label | markMatched : searchTerm"
+                  [innerHtml]="option.label | markMatched: searchTerm"
                 ></span>
                 <ng-template #unmarkedLabel>
                   {{ option.label }}

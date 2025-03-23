@@ -74,11 +74,9 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
       this.formControl.updateValueAndValidity();
     }
 
-    this.formControl.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((formValue) => {
-        this.valueChange.emit(this.convertFromFormValue(formValue));
-      });
+    this.formControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((formValue) => {
+      this.valueChange.emit(this.convertFromFormValue(formValue));
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -148,9 +146,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
     const hh = date.getHours().toString().padStart(2, '0');
     const mm = date.getMinutes().toString().padStart(2, '0');
 
-    return this.withTime
-      ? `${YYYY}-${MM}-${DD}T${hh}:${mm}`
-      : `${YYYY}-${MM}-${DD}`;
+    return this.withTime ? `${YYYY}-${MM}-${DD}T${hh}:${mm}` : `${YYYY}-${MM}-${DD}`;
   }
 
   private convertFromFormValue(timestampAsString: string): number | null {

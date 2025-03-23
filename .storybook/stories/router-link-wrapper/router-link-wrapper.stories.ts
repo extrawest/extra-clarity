@@ -11,11 +11,7 @@ const meta: Meta<EcRouterLinkWrapperComponent> = {
   component: EcRouterLinkWrapperComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideRouter([
-          { path: '**', children: [], canActivate: [() => false] },
-        ]),
-      ],
+      providers: [provideRouter([{ path: '**', children: [], canActivate: [() => false] }])],
     }),
   ],
   parameters: { controls: { sort: 'requiredFirst' } },
@@ -40,8 +36,7 @@ const meta: Meta<EcRouterLinkWrapperComponent> = {
         required: true,
       },
     },
-    queryParams: {
-    },
+    queryParams: {},
   },
   args: {
     enabled: true,
@@ -57,9 +52,7 @@ export const WrapperItselfStory: Story = {
   name: 'Story: Wrapper itself',
   decorators: [
     moduleMetadata({
-      imports: [
-        EcRouterLinkWrapperComponent,
-      ],
+      imports: [EcRouterLinkWrapperComponent],
     }),
   ],
   render: (args) => ({
@@ -74,8 +67,7 @@ export const WrapperItselfStory: Story = {
       </ec-router-link>
     `,
   }),
-  args: {
-  },
+  args: {},
 };
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -83,10 +75,7 @@ export const DocsExampleStory: Story = {
   name: 'Story: Example for docs',
   decorators: [
     moduleMetadata({
-      imports: [
-        RouterLink,
-        EcRouterLinkWrapperComponent,
-      ],
+      imports: [RouterLink, EcRouterLinkWrapperComponent],
     }),
   ],
   render: (args) => ({
@@ -113,6 +102,5 @@ export const DocsExampleStory: Story = {
   argTypes: {
     ...hideAllControlRows(meta.argTypes),
   },
-  args: {
-  },
+  args: {},
 };

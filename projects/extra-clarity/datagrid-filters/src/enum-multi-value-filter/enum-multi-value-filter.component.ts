@@ -71,7 +71,8 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
 })
 export class EcEnumMultiValueFilterComponent<E, T extends object = object>
   extends EcDatagridFilter<E[], T>
-  implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+  implements AfterViewInit, OnChanges, OnDestroy, OnInit
+{
   /**
    * Optional config for splitting visible options into groups or categories within the filter body.
    * The categories can have a text title and optional bounds as a divider or just a margin.
@@ -355,9 +356,9 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     const selectedValues = Array.from(this.selectedValues);
 
     if (this.matchSelected === 'all') {
-      return selectedValues.every(selectedValue => propertyValue.includes(selectedValue));
+      return selectedValues.every((selectedValue) => propertyValue.includes(selectedValue));
     }
-    return selectedValues.some(selectedValue => propertyValue.includes(selectedValue));
+    return selectedValues.some((selectedValue) => propertyValue.includes(selectedValue));
   }
 
   /**
@@ -380,11 +381,11 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    * Reset the filter to the default state
    * */
   override resetToDefault(): void {
-    this.updateSelectedValues(new Set(
-      this.options
-        .filter(option => option.selectedByDefault)
-        .map(option => option.value),
-    ));
+    this.updateSelectedValues(
+      new Set(
+        this.options.filter((option) => option.selectedByDefault).map((option) => option.value),
+      ),
+    );
   }
 
   /**
@@ -426,14 +427,14 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     if (values.length === 0) {
       return true;
     }
-    return values.every(value => {
-      return this.options.some(option => option.value === value);
+    return values.every((value) => {
+      return this.options.some((option) => option.value === value);
     });
   }
 
   private checkIfStateIsDefault(): boolean {
-    return this.options.every(option => {
-      return (!!option.selectedByDefault) === this.selectedValues.has(option.value);
+    return this.options.every((option) => {
+      return !!option.selectedByDefault === this.selectedValues.has(option.value);
     });
   }
 
@@ -455,7 +456,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     this.updateVisibleOptions();
 
     this.isStateDefault = this.checkIfStateIsDefault();
-    this.hasCustomDefaultState = this.options.some(option => option.selectedByDefault);
+    this.hasCustomDefaultState = this.options.some((option) => option.selectedByDefault);
 
     if (newFilterValue !== undefined) {
       this.setValue(newFilterValue);
@@ -507,7 +508,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     const visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
 
     this.categories.forEach(({ id, label, top, bottom }) => {
-      const thisCategoryOptions = visibleOptions.filter(option => id && option.categoryId === id);
+      const thisCategoryOptions = visibleOptions.filter((option) => id && option.categoryId === id);
 
       if (thisCategoryOptions.length) {
         visibleOptionCategories.push({
@@ -529,7 +530,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     const categoryIds = new Set(this.categories.map((category) => category.id));
 
     const optionsWithoutCategory = visibleOptions.filter(
-      (option) => (!option.categoryId || !categoryIds.has(option.categoryId)),
+      (option) => !option.categoryId || !categoryIds.has(option.categoryId),
     );
 
     if (optionsWithoutCategory.length) {

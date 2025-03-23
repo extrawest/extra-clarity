@@ -1,21 +1,14 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*",
-    ".storybook/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*", ".storybook/**/*"],
   "env": {
     "es6": true
   },
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -55,28 +48,17 @@
           "error",
           {
             "selector": "variableLike",
-            "format": [
-              "camelCase"
-            ]
+            "format": ["camelCase"]
           },
           {
             "selector": "variable",
-            "modifiers": [
-              "const"
-            ],
-            "format": [
-              "UPPER_CASE",
-              "camelCase"
-            ],
+            "modifiers": ["const"],
+            "format": ["UPPER_CASE", "camelCase"],
             "leadingUnderscore": "allowSingleOrDouble"
           },
           {
             "selector": "parameter",
-            "format": [
-              "camelCase",
-              "PascalCase",
-              "snake_case"
-            ],
+            "format": ["camelCase", "PascalCase", "snake_case"],
             "leadingUnderscore": "allowSingleOrDouble"
           }
         ],
@@ -124,15 +106,10 @@
         ],
         "no-console": ["error", { "allow": ["warn", "error"] }]
       }
-    },   
+    },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        "prettier"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended", "prettier"],
       "rules": {
         "@angular-eslint/template/conditional-complexity": "error",
         "@angular-eslint/template/no-duplicate-attributes": "error",

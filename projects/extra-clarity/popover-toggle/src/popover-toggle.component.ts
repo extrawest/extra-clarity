@@ -28,10 +28,7 @@ import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 import { clrAlignmentMap } from './constants';
-import {
-  CdkTrapFocusDirective,
-  EcPopoverToggleLabelDirective,
-} from './directives';
+import { CdkTrapFocusDirective, EcPopoverToggleLabelDirective } from './directives';
 import {
   EcAnchorToContentAlign,
   EcContentPosition,
@@ -55,11 +52,7 @@ import { EcPopoverAlign } from './types';
     CdsIconModule,
     ClrPopoverModuleNext,
   ],
-  providers: [
-    ClrPopoverEventsService,
-    ClrPopoverPositionService,
-    ClrPopoverToggleService,
-  ],
+  providers: [ClrPopoverEventsService, ClrPopoverPositionService, ClrPopoverToggleService],
 })
 export class EcPopoverToggleComponent implements OnChanges, OnDestroy {
   /**
@@ -176,17 +169,15 @@ export class EcPopoverToggleComponent implements OnChanges, OnDestroy {
     this.popoverPosition = this.getPopoverPosition();
     this.buttonClasses = this.getButtonClasses();
 
-    this.clrPopoverToggleService.openChange
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(isOpen => {
-        if (this.isOpen === isOpen) return;
+    this.clrPopoverToggleService.openChange.pipe(takeUntil(this.destroy$)).subscribe((isOpen) => {
+      if (this.isOpen === isOpen) return;
 
-        if (!isOpen) {
-          this.anchor?.nativeElement.focus();
-        }
-        this.openChange.emit(isOpen);
-        this.isOpen = isOpen;
-      });
+      if (!isOpen) {
+        this.anchor?.nativeElement.focus();
+      }
+      this.openChange.emit(isOpen);
+      this.isOpen = isOpen;
+    });
 
     ClarityIcons.addIcons(angleIcon);
   }
@@ -229,11 +220,7 @@ export class EcPopoverToggleComponent implements OnChanges, OnDestroy {
   }
 
   private getButtonClasses(): string[] {
-    const classes = [
-      'btn',
-      'ec-button-trigger',
-      this.getButtonStyleClass(),
-    ];
+    const classes = ['btn', 'ec-button-trigger', this.getButtonStyleClass()];
 
     if (this.btnSmall) {
       classes.push('btn-sm');
@@ -269,13 +256,15 @@ export class EcPopoverToggleComponent implements OnChanges, OnDestroy {
   private getClrPopoverAxisAndSide(
     position: EcContentPosition,
   ): Pick<ClrPopoverPosition, 'axis' | 'side'> {
-    const axis = (position === EcContentPosition.Bottom || position === EcContentPosition.Top)
-      ? ClrAxis.VERTICAL
-      : ClrAxis.HORIZONTAL;
+    const axis =
+      position === EcContentPosition.Bottom || position === EcContentPosition.Top
+        ? ClrAxis.VERTICAL
+        : ClrAxis.HORIZONTAL;
 
-    const side = (position === EcContentPosition.Bottom || position === EcContentPosition.Right)
-      ? ClrSide.AFTER
-      : ClrSide.BEFORE;
+    const side =
+      position === EcContentPosition.Bottom || position === EcContentPosition.Right
+        ? ClrSide.AFTER
+        : ClrSide.BEFORE;
 
     return { axis, side };
   }

@@ -54,15 +54,15 @@ export const wrapFilterWithinDatagrid = (
 ): string => {
   const getColumnTemplate = (property: string, label: string): string => {
     return filterProperty !== property
-      ? (`<clr-dg-column> ${label} </clr-dg-column>`)
-      : (`
+      ? `<clr-dg-column> ${label} </clr-dg-column>`
+      : `
       <clr-dg-column>
         ${label}
         <clr-dg-filter>
           ${filterTemplate}
         </clr-dg-filter>
       </clr-dg-column>
-      `);
+      `;
   };
 
   return `

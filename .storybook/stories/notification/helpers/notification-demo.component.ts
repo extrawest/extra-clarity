@@ -11,9 +11,7 @@ import {
   templateUrl: './notification-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    NotificationModule,
-  ],
+  imports: [NotificationModule],
 })
 export class NotificationDemoComponent {
   @Input()

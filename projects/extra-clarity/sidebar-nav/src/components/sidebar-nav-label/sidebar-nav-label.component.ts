@@ -7,9 +7,7 @@ import { EcSidebarNavService } from '../../sidebar-nav.service';
 @Component({
   selector: 'ec-sidebar-nav-label',
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-container *ngIf="navItem">

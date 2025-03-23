@@ -1,10 +1,19 @@
-import { EC_NAV_ITEM_TYPE, EcNavItemGroup, EcNavItemLink, EcNavListSingleItem } from './sidebar-nav.models';
+import {
+  EC_NAV_ITEM_TYPE,
+  EcNavItemGroup,
+  EcNavItemLink,
+  EcNavListSingleItem,
+} from './sidebar-nav.models';
 
 export const divider = {
   type: EC_NAV_ITEM_TYPE.Divider,
 };
 
-export const createGroup = (label: string, children: EcNavListSingleItem[], icon?: string): EcNavItemGroup => ({
+export const createGroup = (
+  label: string,
+  children: EcNavListSingleItem[],
+  icon?: string,
+): EcNavItemGroup => ({
   label,
   children,
   icon,

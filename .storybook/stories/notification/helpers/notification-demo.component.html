@@ -7,33 +7,23 @@
 
   <div id="design-guidelines">
     <h3>Notification Types</h3>
-    <p>
-      There are four different sub-types of notifications: error, warning, info, and success.
-    </p>
+    <p>There are four different sub-types of notifications: error, warning, info, and success.</p>
     <p>
       <b>Error</b>
       <br />
       Reserved for errors, malfunctions, as well as critical issues like license expiration.
       <br />
       <br />
-      <button
-        class="btn btn-{{ type }}"
-        (click)="onOpenNotification()"
-      >
-        Show Notification
-      </button>
+      <button class="btn btn-{{ type }}" (click)="onOpenNotification()">Show Notification</button>
 
       OR &nbsp;&nbsp;
 
-      <button
-        class="btn btn-{{ type }}"
-        (click)="onOpenTplNotification(exampleDanger)"
-      >
+      <button class="btn btn-{{ type }}" (click)="onOpenTplNotification(exampleDanger)">
         With Custom Template
       </button>
       <ng-template #exampleDanger>
         <ng-container>
-          Notifications are shown to inform the user<br>
+          Notifications are shown to inform the user<br />
           of a particular event or completed action.
         </ng-container>
       </ng-template>

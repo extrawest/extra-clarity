@@ -3,7 +3,8 @@ import {
   ComponentRef,
   createComponent,
   EnvironmentInjector,
-  Injectable, Injector,
+  Injectable,
+  Injector,
   Type,
 } from '@angular/core';
 
@@ -26,30 +27,38 @@ export class DialogService {
     config: ConfirmDialogConfig<T, C>,
     type?: ConfirmType,
   ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
-    return this.open<ConfirmationDialogComponent, C>(
-      ConfirmationDialogComponent,
-      { ...config, type } as ConfirmDialogConfig<T, C>,
-    );
+    return this.open<ConfirmationDialogComponent, C>(ConfirmationDialogComponent, {
+      ...config,
+      type,
+    } as ConfirmDialogConfig<T, C>);
   }
 
-  public info<T, C = any>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+  public info<T, C = any>(
+    config: ConfirmDialogConfig<T, C>,
+  ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'info');
   }
 
-  public success<T, C = any>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+  public success<T, C = any>(
+    config: ConfirmDialogConfig<T, C>,
+  ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'success');
   }
 
-  public danger<T, C = any>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+  public danger<T, C = any>(
+    config: ConfirmDialogConfig<T, C>,
+  ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'danger');
   }
 
-  public warning<T, C = any>(config: ConfirmDialogConfig<T, C>): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
+  public warning<T, C = any>(
+    config: ConfirmDialogConfig<T, C>,
+  ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'warning');
   }
 
   public open<T, C = any, R = any>(component: Type<T>, config?: DialogConfig<C>): DialogRef<T, R> {
-    const mergedConfig = { ...(new DialogConfig()), ...config };
+    const mergedConfig = { ...new DialogConfig(), ...config };
     const dialogRef = new DialogRef<T, R>(mergedConfig);
     const containerRef = createComponent(component, {
       environmentInjector: this.injector,

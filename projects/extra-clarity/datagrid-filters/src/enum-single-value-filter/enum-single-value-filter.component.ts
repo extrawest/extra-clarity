@@ -70,7 +70,8 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
 })
 export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   extends EcDatagridFilter<E | null, T>
-  implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+  implements AfterViewInit, OnChanges, OnDestroy, OnInit
+{
   /**
    * Optional config for splitting visible options into groups or categories within the filter body.
    * The categories can have a text title and optional bounds as a divider or just a margin.
@@ -267,15 +268,10 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
     if (this.filterValue === null) {
       return this.commonStrings.keys.datagridFilters.selectedNone;
     }
-    const selectedOption = this.options.find(
-      (option) => option.value === this.filterValue,
-    );
-    return this.commonStrings.parse(
-      this.commonStrings.keys.datagridFilters.selected,
-      {
-        VALUE: selectedOption?.label || String(this.filterValue),
-      },
-    );
+    const selectedOption = this.options.find((option) => option.value === this.filterValue);
+    return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.selected, {
+      VALUE: selectedOption?.label || String(this.filterValue),
+    });
   }
 
   protected get showSearchBar(): boolean {
@@ -423,17 +419,16 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   }
 
   private isValueAllowed(value: E | null): boolean {
-    return this.options.some(option => option.value === value);
+    return this.options.some((option) => option.value === value);
   }
 
   private onOptionsChange(newFilterValue: E | null | undefined): void {
     this.updateVisibleOptions();
 
-    const optionsSelectedByDefault = this.options.filter(option => option.selectedByDefault);
+    const optionsSelectedByDefault = this.options.filter((option) => option.selectedByDefault);
 
-    this.defaultValue = optionsSelectedByDefault.length === 1
-      ? optionsSelectedByDefault[0].value
-      : null;
+    this.defaultValue =
+      optionsSelectedByDefault.length === 1 ? optionsSelectedByDefault[0].value : null;
 
     this.hasCustomDefaultState = this.defaultValue !== null;
 
@@ -445,10 +440,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
     this.setValue(newFilterValue);
   }
 
-  private updateFilterValue(
-    value: E | null,
-    params: { emit: boolean } = { emit: true },
-  ): void {
+  private updateFilterValue(value: E | null, params: { emit: boolean } = { emit: true }): void {
     if (value === this.filterValue) {
       return;
     }
@@ -481,7 +473,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
     const visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
 
     this.categories.forEach(({ id, label, top, bottom }) => {
-      const thisCategoryOptions = visibleOptions.filter(option => id && option.categoryId === id);
+      const thisCategoryOptions = visibleOptions.filter((option) => id && option.categoryId === id);
 
       if (thisCategoryOptions.length) {
         visibleOptionCategories.push({
@@ -503,7 +495,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
     const categoryIds = new Set(this.categories.map((category) => category.id));
 
     const optionsWithoutCategory = visibleOptions.filter(
-      (option) => (!option.categoryId || !categoryIds.has(option.categoryId)),
+      (option) => !option.categoryId || !categoryIds.has(option.categoryId),
     );
 
     if (optionsWithoutCategory.length) {

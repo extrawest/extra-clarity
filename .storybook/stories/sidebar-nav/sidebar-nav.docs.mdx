@@ -4,29 +4,17 @@ import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
 import * as Stories from './sidebar-nav.stories';
 
-<style>
-  { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  of={Stories}
-  name="Overview"
-/>
+<Meta of={Stories} name="Overview" />
 
 # Sidebar Navigation
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Example](#example)
-  - [Stories](#stories)
-  - [Description](#description)
-    * [Configuration](#configuration)
-    * [Helpers](#helpers)
-    * [Icons in Labels](#icons-in-labels)
-    * [Custom Template](#custom-template)
-    * [Root-level Bold Items](#root-level-bold-items)
-  - [API](#api)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Example](#example) - [Stories](#stories) -
+  [Description](#description) * [Configuration](#configuration) * [Helpers](#helpers) * [Icons in
+  Labels](#icons-in-labels) * [Custom Template](#custom-template) * [Root-level Bold
+  Items](#root-level-bold-items) - [API](#api) - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -36,9 +24,11 @@ import * as Stories from './sidebar-nav.stories';
 ```typescript
 import { EcSidebarNavComponent } from '@extrawest/extra-clarity/button-copy-to-clipboard';
 ```
+
 ```html
 <ec-sidebar-nav [navList]="[]" />
 ```
+
 ```html
 <clr-vertical-nav>
     <ec-sidebar-nav
@@ -70,14 +60,13 @@ import { EcSidebarNavComponent } from '@extrawest/extra-clarity/button-copy-to-c
 NOTE: In a template, the component must be nested into the `ClrVerticalNav` component
 from the `ClrVerticalNavModule` imported from `@clr/angular`.
 
-
 ## Example
 
 <Canvas of={Stories.DocsExampleStory} />
 
 ## Stories
 
-* [The component in isolation](/story/components-sidebar-navigation--component-itself-story)
+- [The component in isolation](/story/components-sidebar-navigation--component-itself-story)
 
 ## Description
 
@@ -86,9 +75,10 @@ and slightly improve the original navigation component:
 handle auto expanding groups, disabling active items to prevent loosing url query params, etc.
 
 You may find useful these topics from the original Clarity docs about the app layout and navigation:
-* [Vertical Nav](https://clarity.design/documentation/vertical-nav)
-* [Navigation](https://clarity.design/documentation/navigation)
-* [Application Layout](https://clarity.design/documentation/app-layout)
+
+- [Vertical Nav](https://clarity.design/documentation/vertical-nav)
+- [Navigation](https://clarity.design/documentation/navigation)
+- [Application Layout](https://clarity.design/documentation/app-layout)
 
 ### Configuration
 
@@ -97,6 +87,7 @@ The only required input is `[navList]` containing the actual list (array) of nav
 Each navigational item can be one of the following types:
 
 1.`EcNavItemLink` - a router link or a regular href-link:
+
 ```typescript
 interface EcNavItemLink {
   type: 'router-link' | 'href';
@@ -106,17 +97,20 @@ interface EcNavItemLink {
   data?: unknown;
 }
 ```
+
 `router-link` should be used for the internal (in-app) navigation,
 when `href` links may be useful for the `mailto:` kind of links or any external reference.
 
 2.`EcNavItemDivider` - a horizontal separator between items:
+
 ```typescript
 interface EcNavItemDivider {
-  type: 'divider',
+  type: 'divider';
 }
 ```
 
 3.`EcNavItemGroup` - an expandable group of nested items:
+
 ```typescript
 interface EcNavItemGroup {
   type: 'group';
@@ -136,15 +130,18 @@ but only a link item or a separator.
 To simplify creating of a nav list, there are helper functions and constants:
 
 ```typescript
-import { createGroup, createHrefLink, createRouterLink, divider } from '@extrawest/extra-clarity/sidebar-nav';
+import {
+  createGroup,
+  createHrefLink,
+  createRouterLink,
+  divider,
+} from '@extrawest/extra-clarity/sidebar-nav';
 ```
 
 1.`createRouterLink(label: string, link: string, icon?: string): EcNavItemLink`:
+
 ```typescript
-const navRouterLink = createRouterLink(
-  'Dashboard',
-  '/dashboard',
-);
+const navRouterLink = createRouterLink('Dashboard', '/dashboard');
 
 // which is equivalent to:
 const navRouterLink: EcNavItemLink = {
@@ -155,11 +152,9 @@ const navRouterLink: EcNavItemLink = {
 ```
 
 2.`createHrefLink(label: string, link: string, icon?: string): EcNavItemLink`:
+
 ```typescript
-const navHrefLink = createHrefLink(
-  'Send Feedback',
-  'mailto:support@example.com'
-);
+const navHrefLink = createHrefLink('Send Feedback', 'mailto:support@example.com');
 
 // which is equivalent to:
 const navHrefLink: EcNavItemLink = {
@@ -170,6 +165,7 @@ const navHrefLink: EcNavItemLink = {
 ```
 
 3.`createGroup(label: string, children: (NavItemLink | NavItemDivider)[], icon?: string): EcNavItemGroup`:
+
 ```typescript
 const navGroup = createGroup('Group Label', [
   createRouterLink('Nested Item #1', '/nested-link-1'),
@@ -195,12 +191,13 @@ const navGroup: EcNavItemGroup = {
 ```
 
 4.`divider` is a constant to substitute `{ type: 'divider' }`:
+
 ```typescript
 const navList: EcNavListItem[] = [
   createRouterLink('Router Link #1', '/router-link-1'),
   createRouterLink('Router Link #1', '/router-link-1'),
   divider,
-  createHrefLink('Send Feedback', 'mailto:support@example.com')
+  createHrefLink('Send Feedback', 'mailto:support@example.com'),
 ];
 ```
 
@@ -217,7 +214,7 @@ const navHrefLink: EcNavItemLink = {
   type: 'href',
   label: 'Send Feedback',
   link: 'mailto:support@example.com',
-  icon: 'envelope',    // <<---
+  icon: 'envelope', // <<---
 };
 
 // this item will show an icon next to its label equivalent to
@@ -257,6 +254,4 @@ Please note, that this setting does not affect nested items.
 
 ## Source Code
 
-<Markdown>
-  {`See at [GitHub](${extraClarityGithubSrc}/sidebar-nav/src)`}
-</Markdown>
+<Markdown>{`See at [GitHub](${extraClarityGithubSrc}/sidebar-nav/src)`}</Markdown>

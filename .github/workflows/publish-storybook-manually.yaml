@@ -8,7 +8,7 @@ jobs:
     uses: ./.github/workflows/build-and-deploy.yml
     with:
       publish-to-npm: false
-      release-tag-full: ""
+      release-tag-full: ''
     secrets:
       npm-token: ${{ secrets.NPM_TOKEN }}
       github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -12,9 +12,9 @@ export function areSetsEqual<T>(
   }
 
   if (params.ignoreOrder) {
-    return Array.from(set1).every(value1 => set2.has(value1));
+    return Array.from(set1).every((value1) => set2.has(value1));
   }
 
   const valuesFromSet2 = set2.values();
-  return Array.from(set1).every(value1 => value1 === valuesFromSet2.next().value);
+  return Array.from(set1).every((value1) => value1 === valuesFromSet2.next().value);
 }

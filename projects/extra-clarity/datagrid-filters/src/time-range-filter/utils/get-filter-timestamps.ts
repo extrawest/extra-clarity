@@ -15,18 +15,13 @@ export function getFilterTimestamps(
     return { ...filterValue.custom };
   }
 
-  const selectedPresetId =
-    filterValue?.presetId ??
-    getDefaultPreset(presets)?.id ??
-    null;
+  const selectedPresetId = filterValue?.presetId ?? getDefaultPreset(presets)?.id ?? null;
 
   if (selectedPresetId === null) {
     return ALL_TIME;
   }
 
-  const timeRangeFn = presets.find(preset => preset.id === selectedPresetId)?.timeRangeFn;
+  const timeRangeFn = presets.find((preset) => preset.id === selectedPresetId)?.timeRangeFn;
 
-  return typeof timeRangeFn === 'function'
-    ? timeRangeFn()
-    : ALL_TIME;
+  return typeof timeRangeFn === 'function' ? timeRangeFn() : ALL_TIME;
 }

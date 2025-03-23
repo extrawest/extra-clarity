@@ -18,7 +18,7 @@
   <button
     type="button"
     class="btn btn-sm btn-primary"
-    [disabled]="!forceEnabledButtons && (disabled || (!isRangeModified || isAnyInputInvalid))"
+    [disabled]="!forceEnabledButtons && (disabled || !isRangeModified || isAnyInputInvalid)"
     (click)="onApply()"
   >
     <!-- <cds-icon shape="check" /> -->

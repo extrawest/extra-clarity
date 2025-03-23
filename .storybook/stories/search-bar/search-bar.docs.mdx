@@ -4,22 +4,14 @@ import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
 import * as ComponentStories from './search-bar.stories.ts';
 
-<style>
- { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  of={ComponentStories}
-  name="Overview"
-/>
+<Meta of={ComponentStories} name="Overview" />
 
 # Search Bar
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Stories](#stories)
-  - [API](#api)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Stories](#stories) - [API](#api) - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -27,15 +19,16 @@ import * as ComponentStories from './search-bar.stories.ts';
 > **Standalone component**: yes
 
 ```typescript
-import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar'
+import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
 ```
+
 ```html
 <ec-search-bar />
 ```
 
 ## Stories
 
-* [The component in isolation](/story/components-search-bar--component-itself-story)
+- [The component in isolation](/story/components-search-bar--component-itself-story)
 
 ## API
 
@@ -43,6 +36,4 @@ import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar'
 
 ## Source Code
 
-<Markdown>
-  {`See at [GitHub](${extraClarityGithubSrc}/search-bar/src)`}
-</Markdown>
+<Markdown>{`See at [GitHub](${extraClarityGithubSrc}/search-bar/src)`}</Markdown>

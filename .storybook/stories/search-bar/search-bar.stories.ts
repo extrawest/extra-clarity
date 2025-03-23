@@ -19,9 +19,7 @@ const meta: Meta<EcSearchBarComponent> = {
   component: EcSearchBarComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
   ],
   parameters: { controls: { sort: 'requiredFirst' } },
@@ -32,21 +30,16 @@ const meta: Meta<EcSearchBarComponent> = {
         defaultValue: { summary: SEARCH_BAR_DEFAULTS.debounceTimeMs.toString() },
       },
     },
-    highlightActive: {
-    },
-    iconOnFill: {
-    },
-    isDisabled: {
-    },
-    label: {
-    },
+    highlightActive: {},
+    iconOnFill: {},
+    isDisabled: {},
+    label: {},
     placeholder: {
       table: {
         defaultValue: { summary: SEARCH_BAR_DEFAULTS.placeholder },
       },
     },
-    value: {
-    },
+    value: {},
     // OUTPUTS
     valueChange: {
       control: false,
@@ -77,15 +70,16 @@ export default meta;
 export const ComponentItselfStory: Story = {
   name: 'Story: Component Itself',
   decorators: [
-    componentWrapperDecorator((story) => `
+    componentWrapperDecorator(
+      (story) => `
       <div style="
         border: 1px solid whitesmoke;
         width: 10rem;
       ">
         ${story}
       </div>
-    `),
+    `,
+    ),
   ],
-  args: {
-  },
+  args: {},
 };

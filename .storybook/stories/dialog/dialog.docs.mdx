@@ -1,8 +1,6 @@
 import { Meta } from '@storybook/blocks';
 
-<Meta
-  title="Components/Dialog/Overview"
-/>
+<Meta title="Components/Dialog/Overview" />
 
 # Dialog
 
@@ -12,15 +10,15 @@ import { DialogModule } from '@extrawest/extra-clarity/dialog';
 
 ### Usage
 
-<br/>
+<br />
 
-1) Inject DialogService into your component:
+1. Inject DialogService into your component:
 
 ```typescript
 private readonly dialogService = inject(DialogService);
 ```
 
-2) Invoke `open` method from this service with a custom component to be shown as a dialog body and a config object:
+2. Invoke `open` method from this service with a custom component to be shown as a dialog body and a config object:
 
 ```typescript
 const dialogRef: DialogRef = dialogService.open(CustomDialogComponent, {

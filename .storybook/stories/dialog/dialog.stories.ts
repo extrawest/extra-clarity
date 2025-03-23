@@ -12,9 +12,7 @@ const meta: Meta<StorybookDialogCallerComponent> = {
   component: StorybookDialogCallerComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
   ],
   argTypes: {

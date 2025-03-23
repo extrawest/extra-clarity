@@ -24,7 +24,7 @@ export class EcCommonStringsService {
     const names = Object.keys(tokens);
     let output = source;
     if (names.length) {
-      names.forEach(name => {
+      names.forEach((name) => {
         output = output.replace(`{${name}}`, tokens[name]);
       });
     }

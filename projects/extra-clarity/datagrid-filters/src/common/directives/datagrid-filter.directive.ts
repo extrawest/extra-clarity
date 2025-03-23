@@ -6,7 +6,8 @@ import { EcFilterState, EcResettableFilter } from '../interfaces/filter-state.in
 
 @Directive()
 export abstract class EcDatagridFilter<S = unknown, T extends object = object>
-implements ClrDatagridFilterInterface<T, EcFilterState<S>>, EcResettableFilter {
+  implements ClrDatagridFilterInterface<T, EcFilterState<S>>, EcResettableFilter
+{
   abstract accepts(item: T): boolean;
   abstract isActive(): boolean;
   abstract changes: Observable<unknown>;

@@ -1,8 +1,6 @@
 import { Meta } from '@storybook/blocks';
 
-<Meta
-  title="Components/Confirmation Dialog/Overview"
-/>
+<Meta title="Components/Confirmation Dialog/Overview" />
 
 # Confirmation Dialog
 
@@ -14,13 +12,13 @@ import { DialogModule } from '@extrawest/extra-clarity/dialog';
 
 <br />
 
-1) Inject DialogService into your component:
+1. Inject DialogService into your component:
 
 ```typescript
 private readonly dialogService = inject(DialogService);
 ```
 
-2) Invoke `confirm` method from this service with config object:
+2. Invoke `confirm` method from this service with config object:
 
 ```typescript
 const dialogRef: DialogRef = dialogService.confirm({

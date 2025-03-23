@@ -4,29 +4,17 @@ import { docsStylePatch, extraClarityGithubSrc, linksToClrDatagridDocs } from '.
 
 import * as FilterStories from './string-filter.stories';
 
-<style>
-  { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  of={FilterStories}
-  name="Overview"
-/>
+<Meta of={FilterStories} name="Overview" />
 
 # String Filter
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Example](#example)
-  - [Stories](#stories)
-  - [Description](#description)
-    * [Configuration](#configuration)
-    * [Default State](#default-state)
-    * [Output State](#output-state)
-    * [Read/Write the State](#readwrite-the-state)
-    * [Additional Info](#additional-info)
-  - [API](#api)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Example](#example) - [Stories](#stories) -
+  [Description](#description) * [Configuration](#configuration) * [Default State](#default-state) *
+  [Output State](#output-state) * [Read/Write the State](#readwrite-the-state) * [Additional
+  Info](#additional-info) - [API](#api) - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -36,18 +24,18 @@ import * as FilterStories from './string-filter.stories';
 ```typescript
 import { EcStringFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
 ```
+
 ```html
 <ec-string-filter />
 ```
+
 ```html
 <clr-datagrid>
   ...
   <clr-dg-column>
     Station ID
     <clr-dg-filter>
-      <ec-string-filter
-        [propertyKey]="'stationId'"
-      />
+      <ec-string-filter [propertyKey]="'stationId'" />
     </clr-dg-filter>
   </clr-dg-column>
   ...
@@ -62,8 +50,8 @@ In this example, the filter is attached to the 'Name' column:
 
 ## Stories
 
-* [A filter within a client-driven datagrid](/story/components-datagrid-filters-string-filter--within-datagrid-story)
-* [A filter in isolation](/story/components-datagrid-filters-string-filter--filter-itself-story)
+- [A filter within a client-driven datagrid](/story/components-datagrid-filters-string-filter--within-datagrid-story)
+- [A filter in isolation](/story/components-datagrid-filters-string-filter--filter-itself-story)
 
 ## Description
 
@@ -79,14 +67,14 @@ datagrids. By the way, the provided API allows to use the component outside of d
 
 To configure the component you need to provide the following inputs:
 
-1. `[serverDriven]`  A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
-    If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
-    Otherwise, filtering is processed by the filter's `accepts()` method.
+1. `[serverDriven]` A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
+   If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
+   Otherwise, filtering is processed by the filter's `accepts()` method.
 2. `[propertyKey]`
-    * For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
-        as the `property` value in the output state to help identify the filter's state amidst another filters.
-    * For client-driven datagrids it must be equal to the name of a field in the object passed to the `*clrDgItems`
-        directive on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+   - For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
+     as the `property` value in the output state to help identify the filter's state amidst another filters.
+   - For client-driven datagrids it must be equal to the name of a field in the object passed to the `*clrDgItems`
+     directive on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
 
 For client-driven datagrids you can also configure the filtering algorithm by setting the inputs
 `[caseSensitive]` and `[fullMatch]`.
@@ -123,8 +111,9 @@ The actual state of the filter can be read by the public getter `state` as `EcFi
 ```html
 ...
 <ec-string-filter #filterByName>
-...
-<span>{{ filterByName.state.value }}</span>
+  ...
+  <span>{{ filterByName.state.value }}</span></ec-string-filter
+>
 ```
 
 To check if the state is default, you can use the `isActive()` method, which returns `false` for the default state.
@@ -132,8 +121,9 @@ To check if the state is default, you can use the `isActive()` method, which ret
 The value entered in the input field is accepted as the actual filter value only if it's valid.
 
 There are also two ways to set a new value programmatically:
-* put a value into the input `[value]`
-* pass a value into the method `setValue(value: string)`
+
+- put a value into the input `[value]`
+- pass a value into the method `setValue(value: string)`
 
 If the value provided to these methods is invalid, then the filter will be reset to the default state.
 

@@ -29,25 +29,20 @@ const meta: Meta<EcStringFilterComponent> = {
   component: EcStringFilterComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
   ],
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
     // INPUTS
-    caseSensitive: {
-    },
+    caseSensitive: {},
     debounceTimeMs: {
       table: {
         defaultValue: { summary: STRING_FILTER_DEFAULTS.debounceTimeMs.toString() },
       },
     },
-    fullMatch: {
-    },
-    helperMessage: {
-    },
+    fullMatch: {},
+    helperMessage: {},
     placeholder: {
       table: {
         defaultValue: { summary: STRING_FILTER_DEFAULTS.placeholder },
@@ -59,12 +54,9 @@ const meta: Meta<EcStringFilterComponent> = {
         required: true,
       },
     },
-    serverDriven: {
-    },
-    value: {
-    },
-    usePlaceholderAsHelperText: {
-    },
+    serverDriven: {},
+    value: {},
+    usePlaceholderAsHelperText: {},
     widthPx: {
       table: {
         defaultValue: { summary: STRING_FILTER_DEFAULTS.widthPx.toString() },
@@ -160,17 +152,18 @@ export default meta;
 export const FilterItselfStory: Story = {
   name: 'Story: Filter itself',
   decorators: [
-    componentWrapperDecorator((story) => `
+    componentWrapperDecorator(
+      (story) => `
       <div style="
         max-width: fit-content;
         border: 1px solid whitesmoke
       ">
         ${story}
       </div>
-    `),
+    `,
+    ),
   ],
-  args: {
-  },
+  args: {},
 };
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -178,16 +171,13 @@ export const WithinDatagridStory: Story = {
   name: 'Story: With datagrid',
   decorators: [
     moduleMetadata({
-      imports: [
-        ClrDatagridModule,
-        CommonModule,
-        EcStringFilterComponent,
-      ],
+      imports: [ClrDatagridModule, CommonModule, EcStringFilterComponent],
     }),
   ],
   render: (args) => ({
     props: { users: USERS_DATA, ...args },
-    template: wrapFilterWithinDatagrid(`
+    template: wrapFilterWithinDatagrid(
+      `
       <ec-string-filter
         [propertyKey]="propertyKey"
         [caseSensitive]="caseSensitive"
@@ -206,7 +196,9 @@ export const WithinDatagridStory: Story = {
         [validator]="validator"
         (filterValueChanged)="filterValueChanged($event)"
       />
-    `, 'name'),
+    `,
+      'name',
+    ),
   }),
   args: {
     propertyKey: 'name',
@@ -222,18 +214,20 @@ export const DocsExampleStory: Story = {
   decorators: WithinDatagridStory.decorators,
   render: (args) => ({
     props: { users: USERS_DATA, ...args },
-    template: wrapFilterWithinDatagrid(`
+    template: wrapFilterWithinDatagrid(
+      `
       <ec-string-filter
         [propertyKey]="'name'"
         [serverDriven]="false"
         [maxLength]="10"
       />
-    `, 'name'),
+    `,
+      'name',
+    ),
   }),
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {
     ...hideAllControlRows(meta.argTypes),
   },
-  args: {
-  },
+  args: {},
 };

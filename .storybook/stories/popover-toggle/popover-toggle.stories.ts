@@ -18,9 +18,7 @@ const meta: Meta<EcPopoverToggleComponent> = {
   component: EcPopoverToggleComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
   ],
   parameters: { controls: { sort: 'requiredFirst' } },
@@ -112,12 +110,7 @@ const meta: Meta<EcPopoverToggleComponent> = {
     withDropdownIcon: {},
     dropdownIconDirection: {
       control: { type: 'select' },
-      options: [
-        'up',
-        'down',
-        'left',
-        'right',
-      ],
+      options: ['up', 'down', 'left', 'right'],
     },
     dropdownIconPosition: {
       control: {
@@ -127,10 +120,7 @@ const meta: Meta<EcPopoverToggleComponent> = {
           [EcDropdownIconPosition.Right]: 'Right',
         },
       },
-      options: [
-        EcDropdownIconPosition.Left,
-        EcDropdownIconPosition.Right,
-      ],
+      options: [EcDropdownIconPosition.Left, EcDropdownIconPosition.Right],
     },
     open: {},
     // OUTPUTS
@@ -167,9 +157,7 @@ export const ComponentItselfStory: Story = {
   name: 'Story: Component Itself',
   decorators: [
     moduleMetadata({
-      imports: [
-        EcPopoverToggleComponent,
-      ],
+      imports: [EcPopoverToggleComponent],
     }),
   ],
   parameters: {
@@ -201,6 +189,5 @@ export const ComponentItselfStory: Story = {
       </div>
     `,
   }),
-  args: {
-  },
+  args: {},
 };
