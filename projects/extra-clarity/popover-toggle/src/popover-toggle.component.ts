@@ -43,7 +43,6 @@ import { EcPopoverAlign } from './types';
   templateUrl: './popover-toggle.component.html',
   styleUrls: ['./popover-toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     NgClass,
     NgIf,

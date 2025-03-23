@@ -24,7 +24,6 @@ import { EcDateTimeInputComponent } from '../date-time-input';
   templateUrl: './date-time-group.component.html',
   styleUrls: ['./date-time-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, EcDateTimeInputComponent],
 })
 export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {

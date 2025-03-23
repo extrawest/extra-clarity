@@ -56,7 +56,6 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   templateUrl: './enum-single-value-filter.component.html',
   styleUrls: ['./enum-single-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrIconModule,

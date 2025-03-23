@@ -19,7 +19,6 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   selector: 'ec-sidebar-nav-group',
   templateUrl: './sidebar-nav-group.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrIconModule,

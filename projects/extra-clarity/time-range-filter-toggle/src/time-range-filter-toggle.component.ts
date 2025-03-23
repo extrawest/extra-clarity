@@ -45,7 +45,6 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   templateUrl: './time-range-filter-toggle.component.html',
   styleUrls: ['./time-range-filter-toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrIconModule,

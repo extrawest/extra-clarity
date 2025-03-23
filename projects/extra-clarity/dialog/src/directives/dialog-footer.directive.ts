@@ -6,5 +6,6 @@ import { Directive } from '@angular/core';
   host: {
     class: 'modal-footer',
   },
+  standalone: false,
 })
 export class DialogFooterDirective {}

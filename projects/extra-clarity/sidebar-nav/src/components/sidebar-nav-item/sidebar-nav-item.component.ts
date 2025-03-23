@@ -18,7 +18,6 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   templateUrl: './sidebar-nav-item.component.html',
   styleUrls: ['./sidebar-nav-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     RouterLink,

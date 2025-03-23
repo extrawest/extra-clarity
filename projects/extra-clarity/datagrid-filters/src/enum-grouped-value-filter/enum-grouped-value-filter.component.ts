@@ -53,7 +53,6 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   templateUrl: './enum-grouped-value-filter.component.html',
   styleUrls: ['./enum-grouped-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrIconModule,

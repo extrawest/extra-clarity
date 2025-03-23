@@ -57,7 +57,6 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
   templateUrl: './enum-multi-value-filter.component.html',
   styleUrls: ['./enum-multi-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrCheckboxModule,

@@ -12,7 +12,6 @@ import { EcSidebarNavService } from './sidebar-nav.service';
   templateUrl: './sidebar-nav.component.html',
   styleUrl: './sidebar-nav.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrVerticalNavModule,

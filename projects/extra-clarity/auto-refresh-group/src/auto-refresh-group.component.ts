@@ -18,7 +18,6 @@ import { EcAutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 export const DEFAULT_PERIOD_SEC = 60;
 
 @Component({
-  standalone: true,
   selector: 'ec-auto-refresh-group',
   imports: [ClrIconModule, EcAutoRefreshComponent],
   templateUrl: './auto-refresh-group.component.html',

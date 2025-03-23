@@ -19,6 +19,7 @@ import { DIALOG_CONFIG } from '../../tokens/dialog-config.token';
 @Component({
   templateUrl: './confirmation-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ConfirmationDialogComponent implements OnDestroy, OnInit {
   public acceptBtnState = ClrLoadingState.DEFAULT;

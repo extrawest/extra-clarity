@@ -23,7 +23,6 @@ export const DEFAULT_PERIOD_SEC = 60;
   templateUrl: './auto-refresh.component.html',
   styleUrls: ['./auto-refresh.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClrCheckboxModule],
 })
 export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {

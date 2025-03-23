@@ -45,7 +45,6 @@ export const STRING_FILTER_DEFAULTS = {
   templateUrl: './string-filter.component.html',
   styleUrls: ['./string-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClrIconModule, ClrInputModule],
   providers: [
     // make EcStringFilterComponent queryable via @ViewChild(EcDatagridFilter)

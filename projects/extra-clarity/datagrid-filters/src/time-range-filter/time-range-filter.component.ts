@@ -50,7 +50,6 @@ export const TIMERANGE_FILTER_DEFAULTS = {
   templateUrl: './time-range-filter.component.html',
   styleUrls: ['./time-range-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClrRadioModule, EcDateTimeGroupComponent],
   providers: [
     {

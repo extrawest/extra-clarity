@@ -19,6 +19,7 @@ import { DialogSize } from '../../types/dialog-types';
   selector: 'ec-dialog, [dialog]',
   templateUrl: 'dialog.container.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class DialogContainer implements OnInit, OnDestroy {
   @Input() public size: DialogSize = 'md';

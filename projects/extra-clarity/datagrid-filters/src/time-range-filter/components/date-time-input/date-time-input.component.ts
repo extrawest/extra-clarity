@@ -26,7 +26,6 @@ import { datetimeInputValidator } from './date-time-input.validators';
   templateUrl: './date-time-input.component.html',
   styleUrls: ['./date-time-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClrInputModule],
 })
 export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {

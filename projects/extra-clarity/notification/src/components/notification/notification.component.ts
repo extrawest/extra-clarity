@@ -35,6 +35,7 @@ const NOTIFICATION_INTERVAL_STEP = 200;
   styleUrls: ['./notification.component.scss'],
   animations: [notificationAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   @Input() instance: NotificationData;

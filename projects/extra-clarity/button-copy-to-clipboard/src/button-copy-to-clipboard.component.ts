@@ -29,7 +29,6 @@ export const BUTTON_DEFAULTS = {
   templateUrl: './button-copy-to-clipboard.component.html',
   styleUrls: ['./button-copy-to-clipboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ClrIconModule],
   animations,
 })

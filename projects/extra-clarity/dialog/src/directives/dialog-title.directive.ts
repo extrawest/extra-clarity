@@ -6,5 +6,6 @@ import { Directive } from '@angular/core';
   host: {
     class: 'modal-title',
   },
+  standalone: false,
 })
 export class DialogTitleDirective {}

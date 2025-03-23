@@ -8,6 +8,7 @@ import { DialogRef } from '../dialog-ref';
   host: {
     '(click)': 'onClick()',
   },
+  standalone: false,
 })
 export class DialogCloseDirective {
   constructor(private readonly dialogRef: DialogRef) {}

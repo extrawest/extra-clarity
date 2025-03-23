@@ -9,6 +9,7 @@ import { NotificationData, NotificationPosition } from '../../typings';
   templateUrl: './notification-container.component.html',
   styleUrls: ['./notification-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NotificationContainerComponent {
   readonly instances$ = new BehaviorSubject<Required<NotificationData[]>>([]);
