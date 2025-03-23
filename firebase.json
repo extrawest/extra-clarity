@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target": "storybook-hosting",
+      "target": "storybook-hosting-target",
       "public": "dist/storybook-static",
       "ignore": [
         "firebase.json",
