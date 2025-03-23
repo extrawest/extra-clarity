@@ -25,10 +25,7 @@ import { EcDateTimeInputComponent } from '../date-time-input';
   styleUrls: ['./date-time-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    EcDateTimeInputComponent,
-  ],
+  imports: [CommonModule, EcDateTimeInputComponent],
 })
 export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {
   @Input()
@@ -66,10 +63,7 @@ export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {
   ) {}
 
   protected get isAnyInputInvalid(): boolean {
-    return (
-      !!this.inputEnd?.formControl.invalid ||
-      !!this.inputStart?.formControl.invalid
-    );
+    return !!this.inputEnd?.formControl.invalid || !!this.inputStart?.formControl.invalid;
   }
 
   protected get isRangeModified(): boolean {
@@ -126,8 +120,6 @@ export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   private floorToMinutes(timestamp: number | null): number | null {
-    return timestamp === null
-      ? null
-      : new Date(timestamp).setSeconds(0, 0);
+    return timestamp === null ? null : new Date(timestamp).setSeconds(0, 0);
   }
 }

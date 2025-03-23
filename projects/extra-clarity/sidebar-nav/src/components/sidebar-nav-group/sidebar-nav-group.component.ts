@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { CdsIconModule } from '@cds/angular';
-import { ClrVerticalNavModule } from '@clr/angular';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
 import { Subject, takeUntil } from 'rxjs';
 
 import { EC_NAV_ITEM_TYPE, EcNavItemGroup } from '../../sidebar-nav.models';
@@ -16,7 +22,7 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   standalone: true,
   imports: [
     CommonModule,
-    CdsIconModule,
+    ClrIconModule,
     ClrVerticalNavModule,
     EcSidebarNavItemComponent,
     EcSidebarNavLabelComponent,
@@ -45,19 +51,18 @@ export class EcSidebarNavGroupComponent implements OnDestroy, OnInit {
     this.isExpanded = !!this.navItem?.expanded;
     this.checkForActiveLinks();
 
-    this.navService.navigationEnd
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.checkForActiveLinks();
-        this.changeDetectionRef.markForCheck();
-      });
+    this.navService.navigationEnd.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.checkForActiveLinks();
+      this.changeDetectionRef.markForCheck();
+    });
   }
 
   private checkForActiveLinks(): void {
-    this.hasActiveLink = !!this.navItem?.children.some(nestedItem => (
-      nestedItem.type === EC_NAV_ITEM_TYPE.RouterLink &&
-      this.navService.isPathActive(nestedItem.link, 'subset')
-    ));
+    this.hasActiveLink = !!this.navItem?.children.some(
+      (nestedItem) =>
+        nestedItem.type === EC_NAV_ITEM_TYPE.RouterLink &&
+        this.navService.isPathActive(nestedItem.link, 'subset'),
+    );
 
     if (this.hasActiveLink) {
       this.isExpanded = true;

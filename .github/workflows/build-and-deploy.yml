@@ -21,7 +21,7 @@ env:
   # disable Husky
   HUSKY: 0
   # name of the main branch for releasing the most actual version
-  PRIMARY_RELEASING_BRANCH: "main"
+  PRIMARY_RELEASING_BRANCH: main
   # artifact names (available on the github actions page after completing the workflow)
   LIB_ARTIFACT_NAME: extra-clarity-build
   # paths to specific folders & files
@@ -153,9 +153,9 @@ jobs:
         if: ${{ needs.check-version.outputs.prefix != '' }}
         uses: jacobtomlinson/gha-find-replace@v3
         with:
-          include: ".firebaserc"
-          find: "${{ env.SB_FIREBASE_HOSTING_SITE }}"
-          replace: "${{ needs.check-version.outputs.prefix }}${{ env.SB_FIREBASE_HOSTING_SITE }}"
+          include: .firebaserc
+          find: ${{ env.SB_FIREBASE_HOSTING_SITE }}
+          replace: ${{ needs.check-version.outputs.prefix }}${{ env.SB_FIREBASE_HOSTING_SITE }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.github-token }}

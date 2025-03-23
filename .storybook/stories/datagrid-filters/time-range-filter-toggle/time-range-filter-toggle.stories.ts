@@ -31,9 +31,7 @@ const meta: Meta<EcTimeRangeFilterToggleComponent> = {
   component: EcTimeRangeFilterToggleComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
   ],
   parameters: { controls: { sort: 'requiredFirst' } },
@@ -160,7 +158,8 @@ export default meta;
 export const ComponentItselfStory: Story = {
   name: 'Story: Component itself',
   decorators: [
-    componentWrapperDecorator((story) => `
+    componentWrapperDecorator(
+      (story) => `
       <div style="width: 100%">
         <div style="
           max-width: 15rem;
@@ -170,8 +169,8 @@ export const ComponentItselfStory: Story = {
           ${story}
         </div>
       </div>
-    `),
+    `,
+    ),
   ],
-  args: {
-  },
+  args: {},
 };

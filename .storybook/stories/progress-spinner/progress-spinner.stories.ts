@@ -10,9 +10,7 @@ const meta: Meta<ProgressSpinnerDemoComponent> = {
   component: ProgressSpinnerDemoComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
   ],
 };
@@ -21,6 +19,5 @@ export default meta;
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ProgressSpinnerStory: Story = {
   name: 'Basic Usage',
-  args: {
-  },
+  args: {},
 };

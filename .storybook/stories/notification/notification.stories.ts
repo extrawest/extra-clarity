@@ -14,9 +14,7 @@ const meta: Meta<NotificationDemoComponent> = {
   component: NotificationDemoComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
   ],
   argTypes: {

@@ -1,10 +1,12 @@
 {
+  // prettier-ignore
   "include": [
     "./.storybook/stories/**/*",
-    "./projects/extra-clarity/**/*.component.ts",
+    "./projects/extra-clarity/**/*.component.ts"
   ],
+  // prettier-ignore
   "exclude": [
     "./.storybook/stories/test.ts",
-    "./.storybook/stories/**/*.spec.ts",
-  ],
+    "./.storybook/stories/**/*.spec.ts"
+  ]
 }

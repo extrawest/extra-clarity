@@ -4,5 +4,4 @@ import { Directive } from '@angular/core';
   selector: 'ec-card-header-title, [ecCardHeaderTitle]',
   standalone: true,
 })
-export class EcCardHeaderTitleDirective {
-}
+export class EcCardHeaderTitleDirective {}

@@ -26,10 +26,7 @@ export const CELL_WRAPPER_DEFAULTS = {
   styleUrls: ['./datagrid-cell-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    EcButtonCopyToClipboardComponent,
-  ],
+  imports: [CommonModule, EcButtonCopyToClipboardComponent],
 })
 export class EcDatagridCellWrapperComponent implements OnDestroy, OnInit {
   /**

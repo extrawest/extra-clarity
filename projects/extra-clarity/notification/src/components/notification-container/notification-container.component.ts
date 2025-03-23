@@ -51,12 +51,10 @@ export class NotificationContainerComponent {
 
     const result = new Map<NotificationPosition | 'undefined', NotificationData[]>();
 
-    instances.forEach(instance => {
+    instances.forEach((instance) => {
       const position = instance.config?.position ?? 'undefined';
       const existingInstances = result.get(position);
-      const updatedInstances = existingInstances
-        ? [...existingInstances, instance]
-        : [instance];
+      const updatedInstances = existingInstances ? [...existingInstances, instance] : [instance];
 
       result.set(position, updatedInstances);
     });

@@ -74,14 +74,12 @@
                   [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
                   [ngTemplateOutletContext]="{
                     $implicit: option,
-                    marked: searchTerm
+                    marked: searchTerm,
                   }"
                 />
                 <ng-template #defaultLabelTpl>
                   @if (searchTerm) {
-                    <span
-                      [innerHtml]="option.label | markMatched: searchTerm"
-                    ></span>
+                    <span [innerHtml]="option.label | markMatched: searchTerm"></span>
                   } @else {
                     {{ option.label }}
                   }

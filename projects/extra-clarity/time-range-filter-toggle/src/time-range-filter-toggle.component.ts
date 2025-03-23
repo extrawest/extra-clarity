@@ -12,8 +12,8 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { CdsIconModule } from '@cds/angular';
 import { angleIcon, calendarIcon, ClarityIcons } from '@cds/core/icon';
+import { ClrIconModule } from '@clr/angular';
 import {
   EcFilterState,
   EcResettableFilter,
@@ -48,16 +48,16 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   standalone: true,
   imports: [
     CommonModule,
-    CdsIconModule,
+    ClrIconModule,
     EcPopoverToggleLabelDirective,
     EcPopoverToggleComponent,
     EcTimeRangeFilterComponent,
   ],
-  providers: [
-    EcTimestampPipe,
-  ],
+  providers: [EcTimestampPipe],
 })
-export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnChanges, OnDestroy, OnInit {
+export class EcTimeRangeFilterToggleComponent
+  implements EcResettableFilter, OnChanges, OnDestroy, OnInit
+{
   @Input()
   public labelLocale?: string;
 
@@ -159,12 +159,10 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   }
 
   ngOnInit(): void {
-    this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.changeDetectorRef.markForCheck();
-        this.updateSelectedRangeLabel();
-      });
+    this.commonStrings.stringsChanged$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.changeDetectorRef.markForCheck();
+      this.updateSelectedRangeLabel();
+    });
 
     this.updateSelectedRangeLabel(true);
   }
@@ -193,7 +191,7 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
       return commonStrings.timeRangeFilter.customPeriod;
     }
 
-    const selectedPreset = this.presets.find(preset => preset.id === filterValue.presetId);
+    const selectedPreset = this.presets.find((preset) => preset.id === filterValue.presetId);
     if (selectedPreset) {
       return selectedPreset.label || commonStrings.timeRangeToggle.unnamedPeriod;
     }
@@ -208,23 +206,19 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
     const timeTo = this.timestampPipe.transform(end, 'min', this.labelLocale) ?? '';
 
     if (!start && end) {
-      return (
-        timeTo
-          ? this.commonStrings.parse(commonStrings.timeRangeToggle.beforeDateTime, {
+      return timeTo
+        ? this.commonStrings.parse(commonStrings.timeRangeToggle.beforeDateTime, {
             DATETIME: timeTo,
           })
-          : commonStrings.timeRangeFilter.customPeriod
-      );
+        : commonStrings.timeRangeFilter.customPeriod;
     }
 
     if (start && !end) {
-      return (
-        timeFrom
-          ? this.commonStrings.parse(commonStrings.timeRangeToggle.afterDateTime, {
+      return timeFrom
+        ? this.commonStrings.parse(commonStrings.timeRangeToggle.afterDateTime, {
             DATETIME: timeFrom,
           })
-          : commonStrings.timeRangeFilter.customPeriod
-      );
+        : commonStrings.timeRangeFilter.customPeriod;
     }
 
     if (timeFrom && timeTo) {

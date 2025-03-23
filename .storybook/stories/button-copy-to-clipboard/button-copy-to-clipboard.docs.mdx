@@ -4,25 +4,16 @@ import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
 import * as ButtonStories from './button-copy-to-clipboard.stories';
 
-<style>
-  { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  of={ButtonStories}
-  name="Overview"
-/>
+<Meta of={ButtonStories} name="Overview" />
 
 # Button Copy-to-Clipboard
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Example](#example)
-  - [Stories](#stories)
-  - [Description](#description)
-    * [Configuration](#configuration)
-  - [API](#api)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Example](#example) - [Stories](#stories) -
+  [Description](#description) * [Configuration](#configuration) - [API](#api) - [Source
+  Code](#source-code)
 </div>
 
 ## Quick Start
@@ -32,6 +23,7 @@ import * as ButtonStories from './button-copy-to-clipboard.stories';
 ```typescript
 import { EcButtonCopyToClipboardComponent } from '@extrawest/extra-clarity/button-copy-to-clipboard';
 ```
+
 ```html
 <ec-button-copy-to-clipboard [textToCopy]="Hello World!" />
 <!-- OR -->
@@ -44,7 +36,7 @@ import { EcButtonCopyToClipboardComponent } from '@extrawest/extra-clarity/butto
 
 ## Stories
 
-* [A button in isolation](/story/components-button-copy-to-clipboard--button-itself-story)
+- [A button in isolation](/story/components-button-copy-to-clipboard--button-itself-story)
 
 ## Description
 
@@ -72,6 +64,4 @@ Please refer to the [API](#api) section below for more details about the inputs 
 
 ## Source Code
 
-<Markdown>
-  {`See at [GitHub](${extraClarityGithubSrc}/button-copy-to-clipboard/src)`}
-</Markdown>
+<Markdown>{`See at [GitHub](${extraClarityGithubSrc}/button-copy-to-clipboard/src)`}</Markdown>

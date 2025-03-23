@@ -6,7 +6,9 @@ import { filter } from 'rxjs';
 export class EcSidebarNavService {
   customLabelTemplateRef?: TemplateRef<unknown>;
 
-  readonly navigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
+  readonly navigationEnd = this.router.events.pipe(
+    filter((event) => event instanceof NavigationEnd),
+  );
 
   constructor(private router: Router) {}
 

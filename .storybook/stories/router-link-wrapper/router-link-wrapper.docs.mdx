@@ -4,25 +4,16 @@ import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
 import * as Stories from './router-link-wrapper.stories';
 
-<style>
-  { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  of={Stories}
-  name="Overview"
-/>
+<Meta of={Stories} name="Overview" />
 
 # Router Link Wrapper
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Example](#example)
-  - [Stories](#stories)
-  - [Description](#description)
-    * [Configuration](#configuration)
-  - [API](#api)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Example](#example) - [Stories](#stories) -
+  [Description](#description) * [Configuration](#configuration) - [API](#api) - [Source
+  Code](#source-code)
 </div>
 
 ## Quick Start
@@ -32,13 +23,12 @@ import * as Stories from './router-link-wrapper.stories';
 ```typescript
 import { EcRouterLinkWrapperComponent } from '@extrawest/extra-clarity/router-link-wrapper';
 ```
+
 ```html
-<ec-router-link
-  [enabled]="driverId && tenantId"
-  [fwdRouterLink]="['/drivers', driverId, tenantId]"
->
+<ec-router-link [enabled]="driverId && tenantId" [fwdRouterLink]="['/drivers', driverId, tenantId]">
   {{ driverId }}
-<ec/>
+  <ec
+/></ec-router-link>
 ```
 
 ## Example
@@ -47,7 +37,7 @@ import { EcRouterLinkWrapperComponent } from '@extrawest/extra-clarity/router-li
 
 ## Stories
 
-* [An isolated component](/story/components-router-link-wrapper--wrapper-itself-story)
+- [An isolated component](/story/components-router-link-wrapper--wrapper-itself-story)
 
 ## Description
 
@@ -58,9 +48,11 @@ It uses `<a [routerLink]>` internally when the `[enabled]` input is `true`, and 
 element. Otherwise, it shows the content as it is without any wrappers.
 
 Although broken links could be disabled by passing `null` or `undefined` to the original `[routerLink]`:
+
 ```html
-<a [routerLink]="driverId && tenantId ? ['/drivers', driverId, tenantId] : null">
+<a [routerLink]="driverId && tenantId ? ['/drivers', driverId, tenantId] : null"></a>
 ```
+
 it may look cumbersome and does not prevent the `<a [routerLink]>` element from being shown as a link on hovering and
 clicking, due to the applied global styles (see the last line in the example above).
 If this behavior seems like intended for you, then you should go with the plain `<a [routerLink]>`.
@@ -75,6 +67,4 @@ Please refer to the [API](#api) section below for more details about the inputs 
 
 ## Source Code
 
-<Markdown>
-  {`See at [GitHub](${extraClarityGithubSrc}/router-link-wrapper/src)`}
-</Markdown>
+<Markdown>{`See at [GitHub](${extraClarityGithubSrc}/router-link-wrapper/src)`}</Markdown>

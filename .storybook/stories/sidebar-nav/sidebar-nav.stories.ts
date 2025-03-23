@@ -15,9 +15,7 @@ const meta: Meta<EcSidebarNavComponent> = {
     applicationConfig({
       providers: [
         provideAnimations(),
-        provideRouter([
-          { path: '**', children: [], canActivate: [() => false] },
-        ]),
+        provideRouter([{ path: '**', children: [], canActivate: [() => false] }]),
       ],
     }),
   ],
@@ -39,7 +37,7 @@ const meta: Meta<EcSidebarNavComponent> = {
     rootLevelBold: {
       control: { type: 'radio' },
       options: ['none', 'all', 'groups', 'items'],
-    }
+    },
   },
   args: {
     customLabelTpl: undefined,
@@ -54,10 +52,7 @@ export const ComponentItselfStory: Story = {
   name: 'Story: Component itself',
   decorators: [
     moduleMetadata({
-      imports: [
-        ClrVerticalNavModule,
-        EcSidebarNavComponent,
-      ],
+      imports: [ClrVerticalNavModule, EcSidebarNavComponent],
     }),
   ],
   render: (args) => ({
@@ -71,9 +66,7 @@ export const ComponentItselfStory: Story = {
         />
       </clr-vertical-nav>
     `,
-    styles: [
-      `.clr-vertical-nav { padding-bottom: .9rem }`,
-    ],
+    styles: [`.clr-vertical-nav { padding-bottom: .9rem }`],
   }),
   args: {
     rootLevelBold: 'groups',
@@ -135,9 +128,7 @@ export const DocsExampleStory: Story = {
         />
       </clr-vertical-nav>
     `,
-    styles: [
-      `.clr-vertical-nav { padding-bottom: .9rem }`,
-    ],
+    styles: [`.clr-vertical-nav { padding-bottom: .9rem }`],
   }),
   // hide all controls since the purpose of this story is a hard-coded demo in the docs page
   argTypes: {

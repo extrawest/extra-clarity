@@ -11,9 +11,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, copyIcon } from '@cds/core/icon';
-import { ClrLoadingState } from '@clr/angular';
+import { ClrIconModule, ClrLoadingState } from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -31,10 +30,7 @@ export const BUTTON_DEFAULTS = {
   styleUrls: ['./button-copy-to-clipboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    CdsIconModule,
-  ],
+  imports: [CommonModule, ClrIconModule],
   animations,
 })
 export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, OnInit {
@@ -113,7 +109,7 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, O
    * Emits an unknown value on failed copying, caught from `navigator.clipboard.writeText()`
    *
    * `EventEmitter<unknown>`
-  */
+   */
   @Output()
   public failed = new EventEmitter<unknown>();
 
@@ -126,7 +122,7 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, O
 
   constructor(
     protected readonly commonStrings: EcCommonStringsService,
-    private readonly changeDetectionRef:ChangeDetectorRef,
+    private readonly changeDetectionRef: ChangeDetectorRef,
   ) {
     ClarityIcons.addIcons(copyIcon);
   }
@@ -157,13 +153,14 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, O
     this.btnLoadingState = ClrLoadingState.LOADING;
     const textToCopy = this.textToCopyAsString;
 
-    navigator.clipboard.writeText(textToCopy)
+    navigator.clipboard
+      .writeText(textToCopy)
       .then(() => {
         this.btnLoadingState = ClrLoadingState.SUCCESS;
         this.copied.emit(textToCopy);
         this.changeDetectionRef.markForCheck();
       })
-      .catch(error => {
+      .catch((error) => {
         this.btnLoadingState = ClrLoadingState.DEFAULT;
         this.failed.emit(error);
         this.changeDetectionRef.markForCheck();

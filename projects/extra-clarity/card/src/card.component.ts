@@ -10,8 +10,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
+import { ClrIconModule } from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
 import { Subject, takeUntil } from 'rxjs';
@@ -31,7 +31,7 @@ import { EcCardError } from './interfaces';
   standalone: true,
   imports: [
     CommonModule,
-    CdsIconModule,
+    ClrIconModule,
     EcCardFooterDirective,
     EcCardHeaderActionsDirective,
     EcCardHeaderTitleDirective,

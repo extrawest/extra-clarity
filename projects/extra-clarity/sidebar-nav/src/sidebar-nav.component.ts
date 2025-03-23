@@ -19,9 +19,7 @@ import { EcSidebarNavService } from './sidebar-nav.service';
     EcSidebarNavGroupComponent,
     EcSidebarNavItemComponent,
   ],
-  providers: [
-    EcSidebarNavService,
-  ],
+  providers: [EcSidebarNavService],
 })
 export class EcSidebarNavComponent implements OnInit {
   /**

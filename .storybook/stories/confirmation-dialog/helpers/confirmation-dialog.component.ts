@@ -1,23 +1,21 @@
 import { ChangeDetectionStrategy, Component, inject, Input, type TemplateRef } from '@angular/core';
 
-import { type DialogButtonConfig, DialogModule, DialogService } from '../../../../projects/extra-clarity/dialog';
+import {
+  type DialogButtonConfig,
+  DialogModule,
+  DialogService,
+} from '../../../../projects/extra-clarity/dialog';
 
 @Component({
   selector: 'ec-storybook-confirmation-dialog',
   template: `
-    <button
-      (click)="onOpen()"
-      class="btn btn-primary"
-      type="button"
-    >
+    <button (click)="onOpen()" class="btn btn-primary" type="button">
       Open confirmation dialog
     </button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    DialogModule,
-  ],
+  imports: [DialogModule],
 })
 export class StorybookConfirmationDialogComponent {
   @Input()

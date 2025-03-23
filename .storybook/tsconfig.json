@@ -1,23 +1,23 @@
 {
   "extends": "../projects/extra-clarity/tsconfig.lib.json",
   "compilerOptions": {
-    "types": [
-      "node",
-      "mdx",
-    ],
+    "types": ["node", "mdx"],
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
+  // prettier-ignore
   "exclude": [
     "./stories/test.ts",
-    "./stories/**/*.spec.ts",
+    "./stories/**/*.spec.ts"
   ],
+  // prettier-ignore
   "include": [
     "./stories/**/*",
-    "./helpers/**/*.ts",
+    "./helpers/**/*.ts"
   ],
+  // prettier-ignore
   "files": [
-    "./preview.ts",
-  ],
+    "./preview.ts"
+  ]
 }

@@ -21,9 +21,7 @@ const meta: Meta<EcTimeRangeFilterComponent> = {
   component: EcTimeRangeFilterComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        provideAnimations(),
-      ],
+      providers: [provideAnimations()],
     }),
   ],
   parameters: { controls: { sort: 'requiredFirst' } },
@@ -95,14 +93,16 @@ export default meta;
 export const FilterItselfStory: Story = {
   name: 'Story: Filter itself',
   decorators: [
-    componentWrapperDecorator((story) => `
+    componentWrapperDecorator(
+      (story) => `
       <div style="
         max-width: fit-content;
         border: 1px solid whitesmoke;
       ">
         ${story}
       </div>
-    `),
+    `,
+    ),
   ],
   args: {
     presets: demoPresets,

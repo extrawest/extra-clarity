@@ -14,17 +14,19 @@
   </ng-container>
   <ng-template #labelTextTmpl>
     <ng-container *ngIf="withDropdownIcon; else withoutDropdownIconTmpl">
-      <ng-container *ngIf="dropdownIconPosition === EcDropdownIconPosition.Right; else leftIconTmpl">
+      <ng-container
+        *ngIf="dropdownIconPosition === EcDropdownIconPosition.Right; else leftIconTmpl"
+      >
         {{ labelText }}
-        <cds-icon shape="angle" size="10" [direction]="dropdownIconDirection" />
+        <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection" />
       </ng-container>
       <ng-template #leftIconTmpl>
-        <cds-icon shape="angle" size="10" [direction]="dropdownIconDirection" />
+        <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection" />
         {{ labelText }}
       </ng-template>
     </ng-container>
     <ng-template #withoutDropdownIconTmpl>
-      {{ labelText }}  
+      {{ labelText }}
     </ng-template>
   </ng-template>
 </button>
@@ -36,7 +38,7 @@
     isOpen;
     at: popoverPosition;
     outsideClickToClose: closeOnClickOutside;
-    scrollToClose: closeOnScroll;
+    scrollToClose: closeOnScroll
   "
   class="ec-popover-content"
 >

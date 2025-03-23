@@ -1,0 +1,11 @@
+/.angular
+/.idea
+/.nx
+/.vscode
+/dist
+/node_modules
+
+CHANGELOG.md
+documentation.json
+LICENSE
+package-lock.json

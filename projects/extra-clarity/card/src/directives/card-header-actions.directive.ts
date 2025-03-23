@@ -4,5 +4,4 @@ import { Directive } from '@angular/core';
   selector: 'ec-card-header-actions, [ecCardHeaderActions]',
   standalone: true,
 })
-export class EcCardHeaderActionsDirective {
-}
+export class EcCardHeaderActionsDirective {}

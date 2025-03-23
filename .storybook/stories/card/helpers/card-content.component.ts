@@ -9,10 +9,7 @@ import { USERS_MOCK } from './card-content.mocks';
   templateUrl: './card-content.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    ClrDatagridModule,
-  ],
+  imports: [CommonModule, ClrDatagridModule],
 })
 export class CardContentComponent {
   protected readonly users = USERS_MOCK;

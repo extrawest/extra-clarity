@@ -11,8 +11,10 @@ import {
 } from '@angular/core';
 import {
   BehaviorSubject,
-  filter, finalize,
-  interval, map,
+  filter,
+  finalize,
+  interval,
+  map,
   scan,
   Subject,
   take,
@@ -78,7 +80,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
     this.animationStateChanged$
       .pipe(
-        filter(event => event.phaseName === 'done' && event.toState === 'leave'),
+        filter((event) => event.phaseName === 'done' && event.toState === 'leave'),
         take(1),
       )
       .subscribe(() => {

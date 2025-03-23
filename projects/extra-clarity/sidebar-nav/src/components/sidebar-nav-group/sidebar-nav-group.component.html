@@ -3,14 +3,11 @@
   [ngClass]="{ active: hasActiveLink }"
   [(clrVerticalNavGroupExpanded)]="isExpanded"
 >
-  <cds-icon *ngIf="navItem.icon" clrVerticalNavIcon [shape]="navItem.icon" />
+  <cds-icon *ngIf="navItem.icon" clrVerticalNavIcon [attr.shape]="navItem.icon" />
 
   <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
 
   <clr-vertical-nav-group-children>
-    <ec-sidebar-nav-item
-      *ngFor="let nestedItem of navItem.children"
-      [navItem]="nestedItem"
-    />
+    <ec-sidebar-nav-item *ngFor="let nestedItem of navItem.children" [navItem]="nestedItem" />
   </clr-vertical-nav-group-children>
 </clr-vertical-nav-group>

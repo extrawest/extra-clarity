@@ -13,15 +13,12 @@ import { Params, RouterLink } from '@angular/router';
       <ng-container *ngTemplateOutlet="content" />
     </a>
     <ng-template #content>
-      <ng-content/>
+      <ng-content />
     </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-  ],
+  imports: [CommonModule, RouterLink],
 })
 export class EcRouterLinkWrapperComponent {
   /**

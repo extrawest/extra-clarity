@@ -1,6 +1,12 @@
 import { TemplateRef } from '@angular/core';
 
-export type NotificationPosition = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight';
+export type NotificationPosition =
+  | 'top'
+  | 'topLeft'
+  | 'topRight'
+  | 'bottom'
+  | 'bottomLeft'
+  | 'bottomRight';
 export type NotificationType = 'warning' | 'danger' | 'info' | 'success';
 
 export enum NotificationAnimationState {
@@ -10,7 +16,7 @@ export enum NotificationAnimationState {
   enterLeft = 'enterLeft',
 }
 
-export interface NotificationConfig<T = {}> {
+export interface NotificationConfig<T = object> {
   duration?: number;
   closable?: boolean;
   pauseOnHover?: boolean;
@@ -23,7 +29,7 @@ export interface NotificationConfig<T = {}> {
 export interface NotificationData {
   id?: string;
   message?: string;
-  template?: TemplateRef<{}>;
+  template?: TemplateRef<unknown>;
   type?: NotificationType;
   config?: NotificationConfig;
 }

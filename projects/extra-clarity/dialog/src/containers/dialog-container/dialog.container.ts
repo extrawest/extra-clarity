@@ -1,5 +1,13 @@
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostListener, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Subscription, SubscriptionLike } from 'rxjs';
 
 import { DialogConfig } from '../../dialog-config';

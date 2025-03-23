@@ -4,5 +4,4 @@ import { Directive } from '@angular/core';
   selector: 'ec-card-footer, [ecCardFooter]',
   standalone: true,
 })
-export class EcCardFooterDirective {
-}
+export class EcCardFooterDirective {}

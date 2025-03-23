@@ -4,29 +4,17 @@ import { docsStylePatch, extraClarityGithubSrc, linksToClrDatagridDocs } from '.
 
 import * as FilterStories from './enum-multi-value-filter.stories';
 
-<style>
-  { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  of={FilterStories}
-  name="Overview"
-/>
+<Meta of={FilterStories} name="Overview" />
 
 # Enumerated Multi-Value Filter
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Example](#example)
-  - [Stories](#stories)
-  - [Description](#description)
-    * [Configuration](#configuration)
-    * [Option List](#option-list)
-    * [Default State](#default-state)
-    * [Output State](#output-state)
-    * [Read/Write the State](#readwrite-the-state)
-  - [API](#api)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Example](#example) - [Stories](#stories) -
+  [Description](#description) * [Configuration](#configuration) * [Option List](#option-list) *
+  [Default State](#default-state) * [Output State](#output-state) * [Read/Write the
+  State](#readwrite-the-state) - [API](#api) - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -36,9 +24,11 @@ import * as FilterStories from './enum-multi-value-filter.stories';
 ```typescript
 import { EcEnumMultiValueFilterComponent } from '@extrawest/extra-clarity/datagrid-filters';
 ```
+
 ```html
 <ec-enum-multi-value-filter />
 ```
+
 ```html
 <clr-datagrid>
   ...
@@ -63,8 +53,8 @@ In this example, the filter is attached to the 'Favorite color' column:
 
 ## Stories
 
-* [A filter within a client-driven datagrid](/story/components-datagrid-filters-enum-multi-value-filter--within-datagrid-story)
-* [A filter in isolation](/story/components-datagrid-filters-enum-multi-value-filter--filter-itself-story)
+- [A filter within a client-driven datagrid](/story/components-datagrid-filters-enum-multi-value-filter--within-datagrid-story)
+- [A filter in isolation](/story/components-datagrid-filters-enum-multi-value-filter--filter-itself-story)
 
 ## Description
 
@@ -80,16 +70,16 @@ datagrids. By the way, the provided API allows to use the component outside of d
 
 To configure the component you need to provide the following inputs:
 
-1. `[serverDriven]`  A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
-    If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
-    Otherwise, filtering is processed by the filter's `accepts()` method.
+1. `[serverDriven]` A boolean flag to indicate whether the filter and the parent datagrid are server-driven.
+   If `true` (default) then the filtering algorithm must be processed externally, e.g. by a backend.
+   Otherwise, filtering is processed by the filter's `accepts()` method.
 2. `[propertyKey]`
-    * For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
-        as the `property` value in the output state to help identify the filter's state amidst another filters.
-    * For client-driven datagrids it must be equal to the name of a field in the object passed to the `*clrDgItems`
-        directive on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
+   - For server-driven datagrids, it is a free-form identifier defined by a developer, that will be used
+     as the `property` value in the output state to help identify the filter's state amidst another filters.
+   - For client-driven datagrids it must be equal to the name of a field in the object passed to the `*clrDgItems`
+     directive on `<clr-dg-row>` to filter by, i.e. to decide whether a row should be shown or not.
 3. `[options]` An array of options `EcEnumValueFilterOption<E>` to select from.
-    See the following [section](#option-list) for more details.
+   See the following [section](#option-list) for more details.
 
 ### Option List
 
@@ -98,24 +88,25 @@ Each item of this array contains the configuration for a filter option:
 
 ```typescript
 export interface EcEnumValueFilterOption<E> {
-    value: E;
-    label: string;
-    selectedByDefault?: boolean;
+  value: E;
+  label: string;
+  selectedByDefault?: boolean;
 }
 ```
 
 with the following properties:
-* `value`
-    A required field, of any type (generic `<E>`, usually a `string`), to be added to/removed from the filter value
-    on selecting/unselecting this option. All **values must be unique** among all options in the filter.
-* `label`
-    A required string label to be shown in the filter's body next to the checkbox for this option.
-    This value is also used for internal filtering via the search bar (activated by the `[withSearchBar]` input),
-    even when a custom label template is provided by the `[customLabelTpl]` input.
-* `selectedByDefault`
-    An optional boolean flag to mark the option to be selected by default,
-    i.e. to define a custom default state for the filter.
-    When not provided for any option, the default state is an empty array `[]`.
+
+- `value`
+  A required field, of any type (generic `<E>`, usually a `string`), to be added to/removed from the filter value
+  on selecting/unselecting this option. All **values must be unique** among all options in the filter.
+- `label`
+  A required string label to be shown in the filter's body next to the checkbox for this option.
+  This value is also used for internal filtering via the search bar (activated by the `[withSearchBar]` input),
+  even when a custom label template is provided by the `[customLabelTpl]` input.
+- `selectedByDefault`
+  An optional boolean flag to mark the option to be selected by default,
+  i.e. to define a custom default state for the filter.
+  When not provided for any option, the default state is an empty array `[]`.
 
 The simplest option list may be formed in this way:
 
@@ -142,7 +133,7 @@ The entire option object `EcEnumValueFilterOption<E>` is passed to this template
 ...
 <ng-template #customColorLabel let-option>
   <span>{{ option.label }}</span>
-  <cds-icon shape="mapOptionToCdsIconShape(option)" />
+  <cds-icon [shape]="mapOptionToCdsIconShape(option)" />
 </ng-template>
 ```
 
@@ -202,8 +193,9 @@ The actual state of the filter can be read by the public getter `state` as `EcFi
 To check if the state is default, you can use the `isActive()` method, which returns `false` for the default state.
 
 There are two ways to set a new value programmatically:
-* put a value into the input `[value]` as `E[]`
-* pass a value into the method `setValue(value: E[])`
+
+- put a value into the input `[value]` as `E[]`
+- pass a value into the method `setValue(value: E[])`
 
 If any of the provided values is not included in the values within the option list,
 the filter will be reset to the default state. Providing an empty array `[]` will clear the current selection.

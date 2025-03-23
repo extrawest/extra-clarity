@@ -4,24 +4,15 @@ import { docsStylePatch, extraClarityGithubSrc } from '../../../helpers';
 
 import * as ComponentStories from './time-range-filter-toggle.stories.ts';
 
-<style>
- { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  of={ComponentStories}
-  name="Overview"
-/>
+<Meta of={ComponentStories} name="Overview" />
 
 # Time Range Filter with External Toggle
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Stories](#stories)
-  - [Description](#description)
-    * [Configuration](#configuration)
-  - [API](#api)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Stories](#stories) - [Description](#description) *
+  [Configuration](#configuration) - [API](#api) - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -31,6 +22,7 @@ import * as ComponentStories from './time-range-filter-toggle.stories.ts';
 ```typescript
 import { EcTimeRangeFilterToggleComponent } from '@extrawest/extra-clarity/time-range-filter-toggle';
 ```
+
 ```html
 <ec-time-range-filter-toggle
   [propertyKey]="'timestamps'"
@@ -41,7 +33,7 @@ import { EcTimeRangeFilterToggleComponent } from '@extrawest/extra-clarity/time-
 
 ## Stories
 
-* [The component itself](/story/components-datagrid-filters-time-range-filter-external--component-itself-story)
+- [The component itself](/story/components-datagrid-filters-time-range-filter-external--component-itself-story)
 
 ## Description
 
@@ -49,8 +41,9 @@ This component combines the EcPopoverToggleComponent as an outer wrapper and
 the EcTimeRangeFilterComponent as a projected content.
 
 For more details, please refer to the API section below and the docs pages of the nested components:
-* [Time Range Filter](/docs/components-datagrid-filters-time-range-filter--overview)
-* [Popover Toggle](/docs/components-popover-toggle--overview)
+
+- [Time Range Filter](/docs/components-datagrid-filters-time-range-filter--overview)
+- [Popover Toggle](/docs/components-popover-toggle--overview)
 
 ## API
 
@@ -58,6 +51,4 @@ For more details, please refer to the API section below and the docs pages of th
 
 ## Source Code
 
-<Markdown>
-  {`See at [GitHub](${extraClarityGithubSrc}/time-range-filter-toggle/src)`}
-</Markdown>
+<Markdown>{`See at [GitHub](${extraClarityGithubSrc}/time-range-filter-toggle/src)`}</Markdown>

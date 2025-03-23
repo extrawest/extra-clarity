@@ -2,21 +2,15 @@ import { Markdown, Meta } from '@storybook/blocks';
 
 import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
-<style>
-  { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  title="Components/Card/Overview"
-/>
+<Meta title="Components/Card/Overview" />
 
 # Card
 
 <div className="table-of-contents">
-  - [Description](#description)
-  - [Quick Start](#quick-start)
-  - [Stories](#stories)
-  - [Source Code](#source-code)
+  - [Description](#description) - [Quick Start](#quick-start) - [Stories](#stories) - [Source
+  Code](#source-code)
 </div>
 
 ## Description
@@ -28,8 +22,9 @@ A card presents high-level information and can guide the user toward related act
 > **Standalone component**: yes, but exported also within a module-like array containing additional directives
 
 ```typescript
-import { EcCardModule } from "@extrawest/extra-clarity/card";
+import { EcCardModule } from '@extrawest/extra-clarity/card';
 ```
+
 ```html
 <ec-card
   [title]="title"
@@ -40,18 +35,14 @@ import { EcCardModule } from "@extrawest/extra-clarity/card";
 >
   ...
 
-  <ec-card-footer>
-    ...
-  </ec-card-footer>
+  <ec-card-footer> ... </ec-card-footer>
 </ec-card>
 ```
 
 ## Stories
 
-* [The component in isolation](/story/components-card--card-story)
+- [The component in isolation](/story/components-card--card-story)
 
 ## Source Code
 
-<Markdown>
-  {`See at [GitHub](${extraClarityGithubSrc}/card/src)`}
-</Markdown>
+<Markdown>{`See at [GitHub](${extraClarityGithubSrc}/card/src)`}</Markdown>

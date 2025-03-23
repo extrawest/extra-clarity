@@ -4,5 +4,4 @@ import { Directive } from '@angular/core';
   selector: 'ec-popover-toggle-label, [ecPopoverToggleLabel]',
   standalone: true,
 })
-export class EcPopoverToggleLabelDirective {
-}
+export class EcPopoverToggleLabelDirective {}

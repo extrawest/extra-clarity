@@ -14,9 +14,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, searchIcon, windowCloseIcon } from '@cds/core/icon';
-import { ClrInputModule } from '@clr/angular';
+import { ClrIconModule, ClrInputModule } from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
@@ -32,13 +31,7 @@ export const SEARCH_BAR_DEFAULTS = {
   styleUrls: ['./search-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    NgClass,
-    NgIf,
-    ReactiveFormsModule,
-    CdsIconModule,
-    ClrInputModule,
-  ],
+  imports: [NgClass, NgIf, ReactiveFormsModule, ClrIconModule, ClrInputModule],
 })
 export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   /**
@@ -174,12 +167,12 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
 
     this.formControl.valueChanges
       .pipe(
-        tap(value => !value && this.valueChange.emit('')),
+        tap((value) => !value && this.valueChange.emit('')),
         debounceTime(this.debounceMs),
         takeUntil(this.unobserve$),
         takeUntil(this.destroy$),
       )
-      .subscribe(value => {
+      .subscribe((value) => {
         if (value && value === this.formControl.value) {
           this.valueChange.emit(value);
         }

@@ -15,7 +15,6 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { CdsIconModule } from '@cds/angular';
 import {
   ClarityIcons,
   filterIcon,
@@ -23,7 +22,12 @@ import {
   infoStandardIcon,
   warningStandardIcon,
 } from '@cds/core/icon';
-import { ClrDatagridFilter, ClrPopoverToggleService, ClrTreeViewModule } from '@clr/angular';
+import {
+  ClrDatagridFilter,
+  ClrIconModule,
+  ClrPopoverToggleService,
+  ClrTreeViewModule,
+} from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
@@ -52,7 +56,7 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   standalone: true,
   imports: [
     CommonModule,
-    CdsIconModule,
+    ClrIconModule,
     ClrTreeViewModule,
     EcMarkMatchedStringPipe,
     EcSearchBarComponent,
@@ -65,9 +69,10 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
     },
   ],
 })
-export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
+export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
   extends EcDatagridFilter<E[], T>
-  implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+  implements AfterViewInit, OnChanges, OnDestroy, OnInit
+{
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.
    * May be useful to show icons within an option label or to apply a custom format to it.
@@ -355,9 +360,9 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     const selectedValues = Array.from(this.selectedValues);
 
     if (this.matchSelected === 'all') {
-      return selectedValues.every(selectedValue => propertyValue.includes(selectedValue));
+      return selectedValues.every((selectedValue) => propertyValue.includes(selectedValue));
     }
-    return selectedValues.some(selectedValue => propertyValue.includes(selectedValue));
+    return selectedValues.some((selectedValue) => propertyValue.includes(selectedValue));
   }
 
   /**
@@ -381,10 +386,10 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
    * */
   override resetToDefault(): void {
     const defaultValues = new Set<E>();
-    this.options.forEach(group => {
+    this.options.forEach((group) => {
       group.items
-        .filter(option => option.selectedByDefault)
-        .forEach(option => defaultValues.add(option.value));
+        .filter((option) => option.selectedByDefault)
+        .forEach((option) => defaultValues.add(option.value));
     });
     this.updateSelectedValues(defaultValues);
   }
@@ -406,7 +411,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
   }
 
   protected getGroupSelectedAmountLabel(group: EcEnumValueFilterOptionGroup<E>): string {
-    const selected = group.items.filter(item => this.selectedValues.has(item.value)).length;
+    const selected = group.items.filter((item) => this.selectedValues.has(item.value)).length;
     const total = group.items.length;
     return `${selected}/${total}`;
   }
@@ -420,7 +425,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     const groupLabel = this.visibleOptions[index].label;
     if (!groupLabel) return;
 
-    const optionIndex = this.options.findIndex(option => option.label === groupLabel);
+    const optionIndex = this.options.findIndex((option) => option.label === groupLabel);
     if (optionIndex >= 0) {
       this.isGroupExpanded[optionIndex] = isExpanded;
     }
@@ -433,7 +438,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
 
     const newSelectedValues = new Set(this.selectedValues);
 
-    this.visibleOptions[groupIndex].items.forEach(item => {
+    this.visibleOptions[groupIndex].items.forEach((item) => {
       (event.target as HTMLInputElement).checked
         ? newSelectedValues.add(item.value)
         : newSelectedValues.delete(item.value);
@@ -452,9 +457,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     const newSelectedValues = new Set(this.selectedValues);
     const isChecked = (event.target as HTMLInputElement).checked;
 
-    isChecked
-      ? newSelectedValues.add(inputValue)
-      : newSelectedValues.delete(inputValue);
+    isChecked ? newSelectedValues.add(inputValue) : newSelectedValues.delete(inputValue);
 
     this.updateSelectedValues(newSelectedValues);
 
@@ -477,15 +480,15 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     if (values.length === 0) {
       return true;
     }
-    return values.every(value => {
-      return this.options.some(group => group.items.some(option => option.value === value));
+    return values.every((value) => {
+      return this.options.some((group) => group.items.some((option) => option.value === value));
     });
   }
 
   private checkIfStateIsDefault(): boolean {
-    return this.options.every(group => {
-      return group.items.every(option => {
-        return (!!option.selectedByDefault) === this.selectedValues.has(option.value);
+    return this.options.every((group) => {
+      return group.items.every((option) => {
+        return !!option.selectedByDefault === this.selectedValues.has(option.value);
       });
     });
   }
@@ -510,11 +513,13 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     this.totalOptionItems = this.options.reduce((total, group) => total + group.items.length, 0);
 
     this.isStateDefault = this.checkIfStateIsDefault();
-    this.hasCustomDefaultState = this.options.some(group => {
-      return group.items.some(option => option.selectedByDefault);
+    this.hasCustomDefaultState = this.options.some((group) => {
+      return group.items.some((option) => option.selectedByDefault);
     });
 
-    this.isGroupExpanded = this.options.map(group => this.expandedAll ?? group.expandedByDefault ?? false);
+    this.isGroupExpanded = this.options.map(
+      (group) => this.expandedAll ?? group.expandedByDefault ?? false,
+    );
 
     if (newFilterValue !== undefined) {
       this.setValue(newFilterValue);
@@ -554,10 +559,10 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = {}>
     }
 
     this.visibleOptions = this.options
-      .map(group => ({
+      .map((group) => ({
         ...group,
-        items: group.items.filter(item => this.isOptionBeingSearched(item, this.searchTerm)),
+        items: group.items.filter((item) => this.isOptionBeingSearched(item, this.searchTerm)),
       }))
-      .filter(group => group.items.length > 0);
+      .filter((group) => group.items.length > 0);
   }
 }

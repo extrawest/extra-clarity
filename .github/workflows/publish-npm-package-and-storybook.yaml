@@ -3,8 +3,8 @@ name: Build & publish extra-clarity package & storybook on a new release
 on:
   push:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
-      - "v[0-9]+.[0-9]+.[0-9]+-[0-9a-zA-z]+"
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-[0-9a-zA-z]+'
 
 jobs:
   build-and-deploy:

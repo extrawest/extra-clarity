@@ -26,11 +26,9 @@ export const commonStringsDefault: EcCommonStrings = {
     filterOptions: 'Filter the options...',
     inputIssuesMessage: 'There are some issues with the component"s inputs:',
     loading: 'Loading...',
-    maxLengthError:
-      '[maxLength] must be positive (current value: {MAX_LENGTH})',
+    maxLengthError: '[maxLength] must be positive (current value: {MAX_LENGTH})',
     maxLengthMessage: 'Max length exceeded ({ACTUAL_LENGTH}/{REQUIRED_LENGTH})',
-    minLengthError:
-      '[minLength] must be positive (current value: {MIN_LENGTH})',
+    minLengthError: '[minLength] must be positive (current value: {MIN_LENGTH})',
     minLengthMessage: 'Please provide at least {MIN_LENGTH} characters',
     noOptionsAvailable: 'No options available',
     noOptionsFound: 'No options found for the entered search-term',

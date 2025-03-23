@@ -4,22 +4,14 @@ import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
 import * as ComponentStories from './popover-toggle.stories.ts';
 
-<style>
- { docsStylePatch }
-</style>
+<style>{docsStylePatch}</style>
 
-<Meta
-  of={ComponentStories}
-  name="Overview"
-/>
+<Meta of={ComponentStories} name="Overview" />
 
 # Popover Toggle
 
 <div className="table-of-contents">
-  - [Quick Start](#quick-start)
-  - [Stories](#stories)
-  - [API](#api)
-  - [Source Code](#source-code)
+  - [Quick Start](#quick-start) - [Stories](#stories) - [API](#api) - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -29,18 +21,16 @@ import * as ComponentStories from './popover-toggle.stories.ts';
 ```typescript
 import { EcPopoverToggleComponent } from '@extrawest/extra-clarity/popover-toggle';
 ```
+
 ```html
-<ec-popover-toggle
-  [labelText]="'Show / Hide'"
-  [withDropdownIcon]="true"
->
+<ec-popover-toggle [labelText]="'Show / Hide'" [withDropdownIcon]="true">
   <!-- Any content, e.g. an external datagrid filter -->
 </ec-popover-toggle>
 ```
 
 ## Stories
 
-* [The component in isolation](/story/components-popover-toggle--component-itself-story)
+- [The component in isolation](/story/components-popover-toggle--component-itself-story)
 
 ## API
 
@@ -48,6 +38,4 @@ import { EcPopoverToggleComponent } from '@extrawest/extra-clarity/popover-toggl
 
 ## Source Code
 
-<Markdown>
-  {`See at [GitHub](${extraClarityGithubSrc}/popover-toggle/src)`}
-</Markdown>
+<Markdown>{`See at [GitHub](${extraClarityGithubSrc}/popover-toggle/src)`}</Markdown>

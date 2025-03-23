@@ -16,9 +16,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { CdsIconModule } from '@cds/angular';
 import { ClarityIcons, filterOffIcon } from '@cds/core/icon';
-import { ClrDatagridFilter, ClrInput, ClrInputModule, ClrPopoverToggleService } from '@clr/angular';
+import {
+  ClrDatagridFilter,
+  ClrIconModule,
+  ClrInput,
+  ClrInputModule,
+  ClrPopoverToggleService,
+} from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
@@ -41,12 +46,7 @@ export const STRING_FILTER_DEFAULTS = {
   styleUrls: ['./string-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    CdsIconModule,
-    ClrInputModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, ClrIconModule, ClrInputModule],
   providers: [
     // make EcStringFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {
@@ -55,9 +55,10 @@ export const STRING_FILTER_DEFAULTS = {
     },
   ],
 })
-export class EcStringFilterComponent<T extends object = {}>
+export class EcStringFilterComponent<T extends object = object>
   extends EcDatagridFilter<string, T>
-  implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+  implements AfterViewInit, OnChanges, OnDestroy, OnInit
+{
   /**
    * Comparison type for the filtering algorithm:
    * * `false` = case-insensitive, when both filter value and cell content value are transformed to lower case
@@ -250,12 +251,9 @@ export class EcStringFilterComponent<T extends object = {}>
   }
 
   protected get minLengthMessage(): string {
-    return this.commonStrings.parse(
-      this.commonStrings.keys.datagridFilters.minLengthMessage,
-      {
-        MIN_LENGTH: this.minLength.toString(),
-      },
-    );
+    return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.minLengthMessage, {
+      MIN_LENGTH: this.minLength.toString(),
+    });
   }
 
   protected get validationErrorMessage(): string | undefined {
@@ -264,28 +262,20 @@ export class EcStringFilterComponent<T extends object = {}>
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.MIN_LENGTH)) {
-      const { requiredLength } = this.formControl.getError(
-        EcValidationErrorEnum.MIN_LENGTH,
-      );
-      return this.commonStrings.parse(
-        this.commonStrings.keys.datagridFilters.minLengthMessage,
-        {
-          MIN_LENGTH: requiredLength,
-        },
-      );
+      const { requiredLength } = this.formControl.getError(EcValidationErrorEnum.MIN_LENGTH);
+      return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.minLengthMessage, {
+        MIN_LENGTH: requiredLength,
+      });
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.MAX_LENGTH)) {
       const { requiredLength, actualLength } = this.formControl.getError(
         EcValidationErrorEnum.MAX_LENGTH,
       );
-      return this.commonStrings.parse(
-        this.commonStrings.keys.datagridFilters.maxLengthMessage,
-        {
-          ACTUAL_LENGTH: actualLength,
-          REQUIRED_LENGTH: requiredLength,
-        },
-      );
+      return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.maxLengthMessage, {
+        ACTUAL_LENGTH: actualLength,
+        REQUIRED_LENGTH: requiredLength,
+      });
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.EMAIL)) {
@@ -297,10 +287,7 @@ export class EcStringFilterComponent<T extends object = {}>
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.PATTERN)) {
-      return (
-        this.patternErrMsg ||
-        this.commonStrings.keys.datagridFilters.enteredValueInvalid
-      );
+      return this.patternErrMsg || this.commonStrings.keys.datagridFilters.enteredValueInvalid;
     }
 
     return this.commonStrings.keys.datagridFilters.enteredValueInvalid;
@@ -325,7 +312,7 @@ export class EcStringFilterComponent<T extends object = {}>
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['value'] && (typeof this.value === 'string') && this.propertyKey) {
+    if (changes['value'] && typeof this.value === 'string' && this.propertyKey) {
       this.updateFormControlValue(this.value);
     }
   }
@@ -365,9 +352,7 @@ export class EcStringFilterComponent<T extends object = {}>
       return false;
     }
 
-    const propertyValueToCompare = this.caseSensitive
-      ? propertyValue
-      : propertyValue.toLowerCase();
+    const propertyValueToCompare = this.caseSensitive ? propertyValue : propertyValue.toLowerCase();
 
     const filterValueToCompare = this.caseSensitive
       ? this.filterValue
@@ -421,46 +406,35 @@ export class EcStringFilterComponent<T extends object = {}>
     const inputsErrors: string[] = [];
 
     if (!this.propertyKey) {
-      inputsErrors.push(
-        this.commonStrings.keys.datagridFilters.propertyKeyRequired as string,
-      );
+      inputsErrors.push(this.commonStrings.keys.datagridFilters.propertyKeyRequired);
     }
     if (this.minLength < 1) {
       inputsErrors.push(
-        this.commonStrings.parse(
-          this.commonStrings.keys.datagridFilters.minLengthError,
-          {
-            MIN_LENGTH: this.minLength.toString(),
-          },
-        ) as string,
+        this.commonStrings.parse(this.commonStrings.keys.datagridFilters.minLengthError, {
+          MIN_LENGTH: this.minLength.toString(),
+        }),
       );
     }
     if (this.maxLength < 1) {
       inputsErrors.push(
-        this.commonStrings.parse(
-          this.commonStrings.keys.datagridFilters.maxLengthError,
-          {
-            MAX_LENGTH: this.maxLength.toString(),
-          },
-        ) as string,
+        this.commonStrings.parse(this.commonStrings.keys.datagridFilters.maxLengthError, {
+          MAX_LENGTH: this.maxLength.toString(),
+        }),
       );
     }
     if (this.maxLength < this.minLength) {
       inputsErrors.push(
-        this.commonStrings.parse(
-          this.commonStrings.keys.datagridFilters.rangeLengthError,
-          {
-            MAX_LENGTH: this.maxLength.toString(),
-            MIN_LENGTH: this.minLength.toString(),
-          },
-        ) as string,
+        this.commonStrings.parse(this.commonStrings.keys.datagridFilters.rangeLengthError, {
+          MAX_LENGTH: this.maxLength.toString(),
+          MIN_LENGTH: this.minLength.toString(),
+        }),
       );
     }
     if (!this.pattern && this.validator === EcStringValidatorEnum.PATTERN) {
-      inputsErrors.push(this.commonStrings.keys.datagridFilters.patternError as string);
+      inputsErrors.push(this.commonStrings.keys.datagridFilters.patternError);
     }
     if (this.pattern && this.validator !== EcStringValidatorEnum.PATTERN) {
-      inputsErrors.push(this.commonStrings.keys.datagridFilters.validationError as string);
+      inputsErrors.push(this.commonStrings.keys.datagridFilters.validationError);
     }
 
     return inputsErrors;
@@ -506,10 +480,7 @@ export class EcStringFilterComponent<T extends object = {}>
     this.minLengthValidatorFn = Validators.minLength(this.minLength);
   }
 
-  private updateFilterValue(
-    value: string,
-    params: { emit: boolean } = { emit: true },
-  ): void {
+  private updateFilterValue(value: string, params: { emit: boolean } = { emit: true }): void {
     if (value === this.filterValue) {
       return;
     }

@@ -1,7 +1,5 @@
 <ec-dialog>
-  <div dialog-title>
-    Title
-  </div>
+  <div dialog-title>Title</div>
 
   <div dialog-content>
     <form clrForm clrLayout="vertical" [formGroup]="exampleForm">
@@ -19,19 +17,7 @@
   </div>
 
   <footer dialog-footer>
-    <button
-      dialog-close
-      class="btn btn-outline"
-      type="button"
-    >
-      Cancel
-    </button>
-    <button
-      class="btn btn-primary"
-      type="button"
-      (click)="onConfirm()"
-    >
-      Confirm
-    </button>
+    <button dialog-close class="btn btn-outline" type="button">Cancel</button>
+    <button class="btn btn-primary" type="button" (click)="onConfirm()">Confirm</button>
   </footer>
 </ec-dialog>

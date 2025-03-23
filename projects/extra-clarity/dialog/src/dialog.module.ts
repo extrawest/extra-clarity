@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import {
-  ClrLoadingButtonModule,
-  ClrLoadingModule,
-  ClrModalModule,
-} from '@clr/angular';
+import { ClrLoadingButtonModule, ClrLoadingModule, ClrModalModule } from '@clr/angular';
 
 import { ConfirmationDialogComponent, DialogContainer } from './containers';
 import {
@@ -23,21 +19,9 @@ const DIRECTIVES = [
 ];
 
 @NgModule({
-  declarations: [
-    ...DIRECTIVES,
-    ConfirmationDialogComponent,
-    DialogContainer,
-  ],
-  imports: [
-    CommonModule,
-    ClrModalModule,
-    ClrLoadingModule,
-    ClrLoadingButtonModule,
-  ],
-  exports: [
-    ...DIRECTIVES,
-    DialogContainer,
-  ],
+  declarations: [...DIRECTIVES, ConfirmationDialogComponent, DialogContainer],
+  imports: [CommonModule, ClrModalModule, ClrLoadingModule, ClrLoadingButtonModule],
+  exports: [...DIRECTIVES, DialogContainer],
   providers: [DialogService],
 })
-export class DialogModule { }
+export class DialogModule {}
