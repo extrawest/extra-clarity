@@ -67,7 +67,7 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
    * `EventEmitter<boolean>`
    * */
   @Output()
-  public readonly toggle = new EventEmitter<boolean>();
+  public readonly toggleState = new EventEmitter<boolean>();
 
   protected readonly toggleControl = new FormControl<boolean>(false, { nonNullable: true });
 
@@ -125,7 +125,7 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
 
   protected onToggle(): void {
     this.resetTimerState(this.toggleControl.value);
-    this.toggle.emit(this.toggleControl.value);
+    this.toggleState.emit(this.toggleControl.value);
   }
 
   private launchTimer(): void {
