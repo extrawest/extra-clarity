@@ -1,4 +1,4 @@
-name: "Private: DO NOT run it directly!"
+name: 'Private: DO NOT run it directly!'
 
 on:
   workflow_call:
@@ -21,7 +21,7 @@ env:
   # disable Husky
   HUSKY: 0
   # name of the primary branch for releasing the latest version
-  PRIMARY_RELEASING_BRANCH: "main"
+  PRIMARY_RELEASING_BRANCH: main
   # artifact names (available on the github actions page after completing the workflow)
   LIB_ARTIFACT_NAME: extra-clarity-build
   # paths to specific folders & files
@@ -131,7 +131,8 @@ jobs:
           tag: ${{ needs.check-version.outputs.tag }}
           name: ${{ needs.check-version.outputs.tag }}
           body: ${{ needs.build-extra-clarity.outputs.notes }}
-          makeLatest: ${{ needs.check-version.outputs.prefix == '' && 'true' || 'false' }} # is-latest == only primary releasing branch
+          makeLatest: ${{ needs.check-version.outputs.prefix == '' && 'true' || 'false' }}
+          # makeLatest == only primary releasing branch
 
   build-and-publish-storybook:
     needs: [check-version, build-extra-clarity]
@@ -157,7 +158,7 @@ jobs:
         if: ${{ needs.check-version.outputs.prefix != '' }}
         uses: jacobtomlinson/gha-find-replace@v3
         with:
-          include: ".firebaserc"
+          include: .firebaserc
           find: ${{ env.SB_FIREBASE_HOSTING_SITE_LATEST }}
           replace: ${{ needs.check-version.outputs.prefix }}${{ env.SB_FIREBASE_HOSTING_SITE_LATEST }}
       - uses: FirebaseExtended/action-hosting-deploy@v0

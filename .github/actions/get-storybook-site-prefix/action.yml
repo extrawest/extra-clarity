@@ -1,14 +1,14 @@
-name: "Get the prefix for the Storybook hosting site according to the Extra-Clarity package version"
+name: 'Get the prefix for the Storybook hosting site according to the Extra-Clarity package version'
 
 inputs:
   tag:
     type: string
     required: true
-    description: "Tag name according to the version from package.json, e.g. v12.1.2"
+    description: 'Tag name according to the version from package.json, e.g. v12.1.2'
   major-version:
     type: string
     required: true
-    description: "Major version of the package, e.g. 17 for a tag v17.1.2"
+    description: 'Major version of the package, e.g. 17 for a tag v17.1.2'
   primary-release-branch:
     type: string
     required: true
@@ -16,7 +16,7 @@ inputs:
 
 outputs:
   prefix:
-    description: "Prefix to prepend the address of the storybook hosting site, e.g. v17-"
+    description: 'Prefix to prepend the address of the storybook hosting site, e.g. v17-'
     value: ${{ steps.get-prefix.outputs.prefix }}
 
 runs:
@@ -31,7 +31,7 @@ runs:
         RELEASE_TAG_NAME: ${{ inputs.tag }}
         MAJOR_VERSION: ${{ inputs.major-version }}
         PRIMARY_RELEASE_BRANCH: ${{ inputs.primary-release-branch }}
-        SECONDARY_RELEASE_BRANCH: "${{ inputs.major-version }}.x"
+        SECONDARY_RELEASE_BRANCH: ${{ inputs.major-version }}.x
       shell: bash
       run: |
         git fetch --all

@@ -3,8 +3,8 @@ name: "Release new version: npm package & storybook"
 on:
   push:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
-      - "v[0-9]+.[0-9]+.[0-9]+-[0-9a-zA-z]+"
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-[0-9a-zA-z]+'
 
 jobs:
   build-and-deploy:
