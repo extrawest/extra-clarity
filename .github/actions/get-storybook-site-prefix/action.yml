@@ -1,4 +1,4 @@
-name: 'Reusable action: get the prefix for the Storybook hosting site according to the Extra-Clarity package version'
+name: 'Get the prefix for the Storybook hosting site according to the Extra-Clarity package version'
 
 inputs:
   tag:
@@ -12,7 +12,7 @@ inputs:
   primary-release-branch:
     type: string
     required: true
-    description: "Name of the primary releasing branch, e.g. 'main', containing releases for the most actual package versions"
+    description: "Name of the primary releasing branch, e.g. 'main', containing releases for the latest package versions"
 
 outputs:
   prefix:
@@ -44,9 +44,9 @@ runs:
         elif [[ -n "$(git branch -r --contains tags/${RELEASE_TAG_NAME} | grep "origin/${PRIMARY_RELEASE_BRANCH}" || echo "")" ]]; then
           echo "Tag '${RELEASE_TAG_NAME}' exists on the primary releasing branch '${PRIMARY_RELEASE_BRANCH}'"
         else
-          echo "Tag '${RELEASE_TAG_NAME}' has been published on a wrong branch! Please re-check: the most actual version should be released on the '${PRIMARY_RELEASE_BRANCH}' branch, and previous versions on their dedicated branch '${MAJOR_VERSION}.x'"
+          echo "Tag '${RELEASE_TAG_NAME}' seems to be published on a wrong branch! Please re-check: the latest version should be released on the '${PRIMARY_RELEASE_BRANCH}' branch, and previous versions on their dedicated branch '${MAJOR_VERSION}.x'"
           exit 1
         fi
 
-        echo "Prefix for the Storybook's Firebase Hosting site: ${STORYBOOK_URL_PREFIX}"
+        echo "Prefix for the Storybook hosting site: ${STORYBOOK_URL_PREFIX}"
         echo "prefix=${STORYBOOK_URL_PREFIX}" >> $GITHUB_OUTPUT

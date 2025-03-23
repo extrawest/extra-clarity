@@ -6,7 +6,7 @@
   "targets": {
     "p---extraclarity": {
       "hosting": {
-        "storybook-hosting": [
+        "storybook-hosting-target": [
           "extra-clarity-docs"
         ]
       }
