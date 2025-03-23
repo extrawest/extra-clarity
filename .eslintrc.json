@@ -26,7 +26,8 @@
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:import/errors",
         "plugin:import/warnings",
-        "plugin:import/typescript"
+        "plugin:import/typescript",
+        "prettier"
       ],
       "rules": {
         "@angular-eslint/component-class-suffix": [
@@ -362,7 +363,8 @@
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended"
+        "plugin:@angular-eslint/template/recommended",
+        "prettier"
       ],
       "rules": {
         "@angular-eslint/template/no-negated-async": "off",
