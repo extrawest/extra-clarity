@@ -10,7 +10,6 @@ import {
   selector: 'ec-storybook-notification-demo',
   templateUrl: './notification-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NotificationModule],
 })
 export class NotificationDemoComponent {

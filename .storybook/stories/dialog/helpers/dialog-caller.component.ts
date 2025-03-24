@@ -10,7 +10,6 @@ import { StorybookDialogContentComponent } from './dialog-content.component';
     <button (click)="onOpen()" class="btn btn-primary" type="button">Open dialog</button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [DialogModule],
 })
 export class StorybookDialogCallerComponent {

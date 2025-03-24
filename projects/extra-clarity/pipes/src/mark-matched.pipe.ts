@@ -4,7 +4,6 @@ import { escapeRegExp } from '@extrawest/extra-clarity/utils';
 
 @Pipe({
   name: 'markMatched',
-  standalone: true,
 })
 export class EcMarkMatchedStringPipe implements PipeTransform {
   transform(srcString: string | undefined | null, subString: string): string | undefined | null {

@@ -28,7 +28,6 @@ const CODE_EXAMPLES: readonly string[] = [
   selector: 'ec-storybook-progress-spinner',
   templateUrl: './progress-spinner-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [ProgressSpinnerComponent],
 })
 export class ProgressSpinnerDemoComponent {

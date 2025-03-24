@@ -2,7 +2,6 @@ import { LOCALE_ID, Pipe, PipeTransform, inject } from '@angular/core';
 
 @Pipe({
   name: 'timestamp',
-  standalone: true,
 })
 export class EcTimestampPipe implements PipeTransform {
   readonly appLocale = inject(LOCALE_ID);

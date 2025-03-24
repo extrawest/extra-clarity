@@ -14,7 +14,6 @@ import {
     </button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [DialogModule],
 })
 export class StorybookConfirmationDialogComponent {

@@ -8,7 +8,6 @@ import { DialogModule, DialogRef } from '../../../../projects/extra-clarity/dial
 @Component({
   templateUrl: './dialog-content.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [DialogModule, ReactiveFormsModule, ClrInputModule],
 })
 export class StorybookDialogContentComponent {
