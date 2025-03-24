@@ -416,9 +416,11 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
 
     const newSelectedValues = new Set(this.selectedValues);
 
-    (event.target as HTMLInputElement).checked
-      ? newSelectedValues.add(inputValue)
-      : newSelectedValues.delete(inputValue);
+    if ((event.target as HTMLInputElement).checked) {
+      newSelectedValues.add(inputValue);
+    } else {
+      newSelectedValues.delete(inputValue);
+    }
 
     this.updateSelectedValues(newSelectedValues);
   }

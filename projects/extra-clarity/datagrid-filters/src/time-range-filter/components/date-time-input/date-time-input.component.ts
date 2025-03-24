@@ -82,9 +82,11 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['disabled']) {
-      this.disabled
-        ? this.formControl.disable({ emitEvent: false })
-        : this.formControl.enable({ emitEvent: false });
+      if (this.disabled) {
+        this.formControl.disable({ emitEvent: false });
+      } else {
+        this.formControl.enable({ emitEvent: false });
+      }
     }
 
     if (changes['value'] && this.value !== undefined) {

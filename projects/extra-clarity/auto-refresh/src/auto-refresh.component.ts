@@ -91,9 +91,11 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (changes['period'] || changes['blocked']) {
-      this.blocked || this._period === 0
-        ? this.toggleControl.disable()
-        : this.toggleControl.enable();
+      if (this.blocked || this._period === 0) {
+        this.toggleControl.disable();
+      } else {
+        this.toggleControl.enable();
+      }
     }
 
     if (changes['enabled'] || (changes['period'] && this._period === 0)) {

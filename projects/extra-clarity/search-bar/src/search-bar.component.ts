@@ -113,9 +113,11 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (changes['isDisabled']) {
-      this.isDisabled
-        ? this.formControl.disable({ emitEvent: false })
-        : this.formControl.enable({ emitEvent: false });
+      if (this.isDisabled) {
+        this.formControl.disable({ emitEvent: false });
+      } else {
+        this.formControl.enable({ emitEvent: false });
+      }
     }
 
     const valueChange = changes['value'];

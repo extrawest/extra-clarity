@@ -440,9 +440,11 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
     const newSelectedValues = new Set(this.selectedValues);
 
     this.visibleOptions[groupIndex].items.forEach((item) => {
-      (event.target as HTMLInputElement).checked
-        ? newSelectedValues.add(item.value)
-        : newSelectedValues.delete(item.value);
+      if ((event.target as HTMLInputElement).checked) {
+        newSelectedValues.add(item.value);
+      } else {
+        newSelectedValues.delete(item.value);
+      }
     });
 
     this.updateSelectedValues(newSelectedValues);
@@ -458,7 +460,11 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
     const newSelectedValues = new Set(this.selectedValues);
     const isChecked = (event.target as HTMLInputElement).checked;
 
-    isChecked ? newSelectedValues.add(inputValue) : newSelectedValues.delete(inputValue);
+    if (isChecked) {
+      newSelectedValues.add(inputValue);
+    } else {
+      newSelectedValues.delete(inputValue);
+    }
 
     this.updateSelectedValues(newSelectedValues);
 
