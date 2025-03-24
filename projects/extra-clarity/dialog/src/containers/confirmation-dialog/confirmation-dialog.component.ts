@@ -8,9 +8,10 @@ import {
 } from '@angular/core';
 
 import { ClrLoadingState } from '@clr/angular';
-import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
 import { isPromise } from 'rxjs/internal/util/isPromise';
+
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { ConfirmDialogConfig } from '../../dialog-config';
 import { DialogRef } from '../../dialog-ref';

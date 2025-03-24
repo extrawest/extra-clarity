@@ -14,6 +14,7 @@ import {
 
 import { ClarityIcons, errorStandardIcon, refreshIcon } from '@cds/core/icon';
 import { ClrIconModule } from '@clr/angular';
+
 import { EcAutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 
 export const DEFAULT_PERIOD_SEC = 60;

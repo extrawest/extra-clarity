@@ -29,10 +29,11 @@ import {
   ClrPopoverToggleService,
   ClrRadioModule,
 } from '@clr/angular';
+import { Subject, takeUntil } from 'rxjs';
+
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcShowSelected } from '../common/enums/show-selected.enum';

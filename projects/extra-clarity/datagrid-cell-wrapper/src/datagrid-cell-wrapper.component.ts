@@ -10,12 +10,13 @@ import {
   Output,
 } from '@angular/core';
 
+import { Subject, takeUntil } from 'rxjs';
+
 import {
   BUTTON_DEFAULTS,
   EcButtonCopyToClipboardComponent,
 } from '@extrawest/extra-clarity/button-copy-to-clipboard';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
-import { Subject, takeUntil } from 'rxjs';
 
 export const CELL_WRAPPER_DEFAULTS = {
   btnTopOffsetRem: -0.25,

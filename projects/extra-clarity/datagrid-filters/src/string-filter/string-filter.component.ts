@@ -25,8 +25,9 @@ import {
   ClrInputModule,
   ClrPopoverToggleService,
 } from '@clr/angular';
-import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
+
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcFilterState } from '../common/interfaces/filter-state.interface';

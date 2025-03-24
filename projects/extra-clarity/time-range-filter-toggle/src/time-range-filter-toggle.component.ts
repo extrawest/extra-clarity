@@ -15,6 +15,8 @@ import {
 
 import { ClarityIcons, angleIcon, calendarIcon } from '@cds/core/icon';
 import { ClrIconModule } from '@clr/angular';
+import { Subject, takeUntil } from 'rxjs';
+
 import {
   EcFilterState,
   EcResettableFilter,
@@ -33,7 +35,6 @@ import {
   EcPopoverToggleComponent,
   EcPopoverToggleLabelDirective,
 } from '@extrawest/extra-clarity/popover-toggle';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EcTimeRangeFilterToggleState } from './interfaces';
 

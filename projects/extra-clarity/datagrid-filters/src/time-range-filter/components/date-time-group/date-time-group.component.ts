@@ -13,8 +13,9 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
+
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { ALL_TIME } from '../../constants';
 import { EcCustomTimeRange } from '../../interfaces';

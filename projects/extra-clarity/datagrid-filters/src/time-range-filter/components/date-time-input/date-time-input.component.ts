@@ -17,8 +17,9 @@ import {
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ClrInput, ClrInputModule } from '@clr/angular';
-import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
+
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { datetimeInputValidator } from './date-time-input.validators';
 

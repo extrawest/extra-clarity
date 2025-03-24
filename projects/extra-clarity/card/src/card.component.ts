@@ -13,9 +13,10 @@ import {
 
 import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
 import { ClrIconModule } from '@clr/angular';
+import { Subject, takeUntil } from 'rxjs';
+
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
-import { Subject, takeUntil } from 'rxjs';
 
 import {
   EcCardFooterDirective,

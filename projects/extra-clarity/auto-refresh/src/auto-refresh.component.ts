@@ -14,8 +14,9 @@ import {
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ClrCheckboxModule } from '@clr/angular';
-import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, map, takeUntil, takeWhile, tap, timer } from 'rxjs';
+
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 export const DEFAULT_PERIOD_SEC = 60;
 

@@ -25,8 +25,9 @@ import {
   ClrPopoverToggleService,
   ClrSide,
 } from '@clr/angular';
-import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
+
+import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 
 import { clrAlignmentMap } from './constants';
 import { CdkTrapFocusDirective, EcPopoverToggleLabelDirective } from './directives';
