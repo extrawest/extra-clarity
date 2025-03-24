@@ -1,12 +1,14 @@
 // @ts-check
 import eslint from '@eslint/js';
 import angular from 'angular-eslint';
+import { globalIgnores } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import * as importPlugin from 'eslint-plugin-import';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
+  globalIgnores(['dist/']),
   {
     ignores: ['.angular/*'],
     settings: {
