@@ -46,11 +46,6 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "19.2.4",
-    "@angular-eslint/builder": "19.3.0",
-    "@angular-eslint/eslint-plugin": "19.3.0",
-    "@angular-eslint/eslint-plugin-template": "19.3.0",
-    "@angular-eslint/schematics": "19.3.0",
-    "@angular-eslint/template-parser": "19.3.0",
     "@angular/cli": "19.2.4",
     "@angular/compiler-cli": "19.2.3",
     "@commitlint/cli": "19.8.0",
@@ -66,20 +61,22 @@
     "@storybook/manager-api": "8.6.8",
     "@storybook/theming": "8.6.8",
     "@types/mdx": "2.0.13",
-    "@typescript-eslint/eslint-plugin": "8.27.0",
-    "@typescript-eslint/parser": "8.27.0",
+    "angular-eslint": "19.3.0",
     "conventional-changelog-cli": "5.0.0",
     "conventional-changelog-conventionalcommits": "8.0.0",
-    "eslint": "8.57.0",
+    "eslint": "9.23.0",
     "eslint-config-prettier": "10.1.1",
+    "eslint-import-resolver-typescript": "4.2.2",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-storybook": "0.11.6",
+    "globals": "16.0.0",
     "husky": "9.1.7",
     "lint-staged": "15.5.0",
     "ng-packagr": "19.2.0",
     "prettier": "3.5.3",
     "release-it": "18.1.2",
     "storybook": "8.6.8",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "typescript-eslint": "8.28.0"
   }
 }

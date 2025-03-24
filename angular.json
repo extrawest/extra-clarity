@@ -31,7 +31,8 @@
               "projects/extra-clarity/**/*.ts",
               "projects/extra-clarity/**/*.html",
               ".storybook/**/*.ts"
-            ]
+            ],
+            "eslintConfig": "projects/extra-clarity/eslint.config.mjs"
           }
         },
         "storybook": {
@@ -91,15 +92,9 @@
   },
   "cli": {
     "analytics": false,
-    "schematicCollections": ["@angular-eslint/schematics"]
+    "schematicCollections": ["angular-eslint"]
   },
   "schematics": {
-    "@angular-eslint/schematics:application": {
-      "setParserOptionsProject": true
-    },
-    "@angular-eslint/schematics:library": {
-      "setParserOptionsProject": true
-    },
     "@schematics/angular:component": {
       "standalone": true,
       "skipTests": true,
