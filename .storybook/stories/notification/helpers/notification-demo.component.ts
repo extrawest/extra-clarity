@@ -4,7 +4,7 @@ import {
   type NotificationConfig,
   NotificationModule,
   NotificationService,
-} from '../../../../projects/extra-clarity/notification';
+} from '@extrawest/extra-clarity/notification';
 
 @Component({
   selector: 'ec-storybook-notification-demo',

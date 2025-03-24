@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 
-import { DialogModule, DialogService } from '../../../../projects/extra-clarity/dialog';
+import { DialogModule, DialogService } from '@extrawest/extra-clarity/dialog';
 
 import { StorybookDialogContentComponent } from './dialog-content.component';
 

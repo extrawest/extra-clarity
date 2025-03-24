@@ -2,7 +2,8 @@ import { RouterLink, provideRouter } from '@angular/router';
 
 import { type Meta, type StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';
 
-import { EcRouterLinkWrapperComponent } from '../../../projects/extra-clarity/router-link-wrapper';
+import { EcRouterLinkWrapperComponent } from '@extrawest/extra-clarity/router-link-wrapper';
+
 import { hideAllControlRows } from '../../helpers';
 
 type Story = StoryObj<EcRouterLinkWrapperComponent>;

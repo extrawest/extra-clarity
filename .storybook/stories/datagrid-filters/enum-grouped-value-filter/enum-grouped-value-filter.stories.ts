@@ -14,7 +14,8 @@ import {
   ENUM_GROUPED_VALUE_FILTER_DEFAULTS,
   EcEnumGroupedValueFilterComponent,
   EcShowSelected,
-} from '../../../../projects/extra-clarity/datagrid-filters';
+} from '@extrawest/extra-clarity/datagrid-filters';
+
 import {
   USERS_DATA,
   colorGroupedEnumOptions,

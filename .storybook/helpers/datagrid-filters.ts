@@ -1,7 +1,7 @@
 import {
   type EcEnumValueFilterOption,
   type EcEnumValueFilterOptionGroup,
-} from '../../projects/extra-clarity/datagrid-filters';
+} from '@extrawest/extra-clarity/datagrid-filters';
 
 export const linksToClrDatagridDocs = `
 > You also may find useful to refer to the original documentation on

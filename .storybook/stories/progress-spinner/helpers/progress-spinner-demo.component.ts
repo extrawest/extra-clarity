@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ProgressSpinnerComponent } from '../../../../projects/extra-clarity/progress-spinner';
+import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
 
 const CODE_EXAMPLES: readonly string[] = [
   `

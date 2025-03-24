@@ -4,7 +4,7 @@ import {
   type DialogButtonConfig,
   DialogModule,
   DialogService,
-} from '../../../../projects/extra-clarity/dialog';
+} from '@extrawest/extra-clarity/dialog';
 
 @Component({
   selector: 'ec-storybook-confirmation-dialog',

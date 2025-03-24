@@ -13,7 +13,8 @@ import {
 import {
   EcStringFilterComponent,
   STRING_FILTER_DEFAULTS,
-} from '../../../../projects/extra-clarity/datagrid-filters';
+} from '@extrawest/extra-clarity/datagrid-filters';
+
 import {
   USERS_DATA,
   hideAllControlRows,

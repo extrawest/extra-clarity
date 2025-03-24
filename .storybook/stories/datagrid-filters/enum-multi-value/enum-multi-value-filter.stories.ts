@@ -14,7 +14,8 @@ import {
   ENUM_MULTI_VALUE_FILTER_DEFAULTS,
   EcEnumMultiValueFilterComponent,
   EcShowSelected,
-} from '../../../../projects/extra-clarity/datagrid-filters';
+} from '@extrawest/extra-clarity/datagrid-filters';
+
 import {
   USERS_DATA,
   colorEnumOptions,
