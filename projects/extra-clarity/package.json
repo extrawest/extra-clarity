@@ -16,11 +16,14 @@
   "license": "MIT",
   "peerDependencies": {
     "@angular/animations": "^19.0.0",
+    "@angular/cdk": "^19.0.0",
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",
     "@angular/forms": "^19.0.0",
+    "@angular/router": "^19.0.0",
     "@cds/core": "^6.15.0",
     "@clr/angular": "^17.8.0",
-    "@clr/ui": "^17.8.0"
+    "@clr/ui": "^17.8.0",
+    "rxjs": "^7.4.0"
   }
 }
