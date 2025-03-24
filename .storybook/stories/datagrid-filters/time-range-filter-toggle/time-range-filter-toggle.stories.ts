@@ -1,16 +1,18 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
+
+import {
+  type Meta,
+  type StoryObj,
+  applicationConfig,
+  componentWrapperDecorator,
+} from '@storybook/angular';
+
 import {
   EcAnchorToContentAlign,
   EcContentPosition,
   EcPopoverToggleButtonStatus,
   EcPopoverToggleButtonStyle,
 } from '@extrawest/extra-clarity/popover-toggle';
-import {
-  applicationConfig,
-  componentWrapperDecorator,
-  type Meta,
-  type StoryObj,
-} from '@storybook/angular';
 
 import {
   EcTimeRangeFilterToggleComponent,

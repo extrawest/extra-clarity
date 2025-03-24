@@ -12,6 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -40,10 +41,10 @@ export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {
   public withTime: boolean = true;
 
   @Output()
-  public apply: EventEmitter<EcCustomTimeRange> = new EventEmitter();
+  public apply = new EventEmitter<EcCustomTimeRange>();
 
   @Output()
-  public discard: EventEmitter<void> = new EventEmitter();
+  public discard = new EventEmitter<void>();
 
   @ViewChild('inputStart', { static: true, read: EcDateTimeInputComponent })
   protected inputStart?: EcDateTimeInputComponent;

@@ -1,7 +1,7 @@
-import { enableProdMode } from '@angular/core';
+// import { enableProdMode } from '@angular/core';
+
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import type { Preview } from '@storybook/angular';
-
 // required for Angular stories
 import 'zone.js';
 

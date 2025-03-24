@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { ClrDatagridModule } from '@clr/angular';
 
 import { USERS_MOCK } from './card-content.mocks';

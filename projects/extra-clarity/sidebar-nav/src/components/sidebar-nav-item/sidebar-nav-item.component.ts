@@ -7,6 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
 import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
 
 import { EC_NAV_ITEM_TYPE, EcNavListItem } from '../../sidebar-nav.models';

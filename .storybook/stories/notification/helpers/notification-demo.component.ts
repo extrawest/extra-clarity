@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input, type TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, type TemplateRef, inject } from '@angular/core';
 
 import {
   type NotificationConfig,
@@ -42,7 +42,7 @@ export class NotificationDemoComponent {
     this.notificationService.create(this.type, this.message, this.config);
   }
 
-  protected onOpenTplNotification(tpl: TemplateRef<{}>): void {
+  protected onOpenTplNotification(tpl: TemplateRef<unknown>): void {
     this.notificationService.template(this.type, tpl, this.config);
   }
 

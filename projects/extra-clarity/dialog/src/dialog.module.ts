@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+
 import { ClrLoadingButtonModule, ClrLoadingModule, ClrModalModule } from '@clr/angular';
 
 import { ConfirmationDialogComponent, DialogContainer } from './containers';

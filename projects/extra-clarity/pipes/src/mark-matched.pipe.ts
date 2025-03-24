@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { escapeRegExp } from '@extrawest/extra-clarity/utils';
 
 @Pipe({

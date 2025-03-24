@@ -1,6 +1,7 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
+
 import { ClrAlertModule, ClrDatagridModule } from '@clr/angular';
-import { applicationConfig, type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { type Meta, type StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';
 
 import { BUTTON_DEFAULTS } from '../../../projects/extra-clarity/button-copy-to-clipboard';
 import {
@@ -35,7 +36,7 @@ const meta: Meta<ComponentWithAdditionalControls> = {
       control: 'text',
       description: `A text content for the cells in the first two columns. The first column contains the wrapper,
         and the second one does not (to demonstrate the default datagrid behavior). <br />
-        NOTE: This parameter is not a part of the component\'s API! And provided only for interacting with the story.`,
+        NOTE: This parameter is not a part of the component's API! And provided only for interacting with the story.`,
       table: {
         category: 'Story Parameters',
       },

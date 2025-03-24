@@ -16,6 +16,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+
 import { ClarityIcons, filterOffIcon } from '@cds/core/icon';
 import {
   ClrDatagridFilter,
@@ -25,7 +26,7 @@ import {
   ClrPopoverToggleService,
 } from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
-import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
+import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcFilterState } from '../common/interfaces/filter-state.interface';

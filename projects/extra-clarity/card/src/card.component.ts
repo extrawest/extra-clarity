@@ -10,6 +10,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+
 import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
 import { ClrIconModule } from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';

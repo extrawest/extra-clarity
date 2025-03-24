@@ -1,5 +1,6 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular';
+
+import { type Meta, type StoryObj, applicationConfig } from '@storybook/angular';
 
 import { StorybookDialogCallerComponent } from './helpers/dialog-caller.component';
 

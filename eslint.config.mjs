@@ -114,6 +114,8 @@ export default tseslint.config(
       '@angular-eslint/no-queries-metadata-property': 'error',
       '@angular-eslint/use-component-view-encapsulation': 'error',
       '@angular-eslint/prefer-on-push-component-change-detection': ['warn'],
+      // this rule is disabled since it supports autofix and just removes 'standalone: false' where it's really needed
+      '@angular-eslint/prefer-standalone': ['off'],
 
       '@typescript-eslint/consistent-type-definitions': 'error',
       '@typescript-eslint/explicit-member-accessibility': [
@@ -190,12 +192,11 @@ export default tseslint.config(
     ],
     rules: {
       '@angular-eslint/template/conditional-complexity': 'error',
-      '@angular-eslint/template/no-duplicate-attributes': 'error',
       '@angular-eslint/template/eqeqeq': ['error', { allowNullOrUndefined: true }],
+      '@angular-eslint/template/label-has-associated-control': ['off'],
+      '@angular-eslint/template/no-duplicate-attributes': 'error',
       '@angular-eslint/template/prefer-self-closing-tags': ['warn'],
       // Another template-related rules which might be useful for later migrations to Angular 18+:
-      //   "@angular-eslint/prefer-on-push-component-change-detection": ["warn"]
-      //   "@angular-eslint/prefer-standalone": ["warn|error"],
       //   "@angular-eslint/template/prefer-control-flow": ["warn"]
       //   "@angular-eslint/template/prefer-ngsrc": ["warn"]
     },

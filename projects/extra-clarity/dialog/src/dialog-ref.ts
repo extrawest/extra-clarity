@@ -1,4 +1,5 @@
 import { ComponentRef } from '@angular/core';
+
 import { Observable, Subject } from 'rxjs';
 
 import { DialogConfig } from './dialog-config';
@@ -8,7 +9,7 @@ export class DialogRef<T = any, R = any> {
   public containerRef: ComponentRef<T>;
 
   private state: DialogState = DialogState.OPEN;
-  private afterClosed$: Subject<R | undefined> = new Subject();
+  private afterClosed$ = new Subject<R | undefined>();
 
   constructor(public readonly config: DialogConfig) {}
 

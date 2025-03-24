@@ -12,7 +12,8 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { angleIcon, calendarIcon, ClarityIcons } from '@cds/core/icon';
+
+import { ClarityIcons, angleIcon, calendarIcon } from '@cds/core/icon';
 import { ClrIconModule } from '@clr/angular';
 import {
   EcFilterState,

@@ -12,7 +12,8 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { angleIcon, ClarityIcons } from '@cds/core/icon';
+
+import { ClarityIcons, angleIcon } from '@cds/core/icon';
 import { Directions } from '@cds/core/internal';
 import {
   ClrAxis,

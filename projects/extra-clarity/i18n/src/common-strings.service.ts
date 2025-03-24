@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { Subject } from 'rxjs';
 
 import { commonStringsDefault } from './common-strings.default';
@@ -20,7 +21,7 @@ export class EcCommonStringsService {
     this.stringsChanged$.next();
   }
 
-  parse(source: string, tokens: { [key: string]: string } = {}): string {
+  parse(source: string, tokens: Record<string, string> = {}): string {
     const names = Object.keys(tokens);
     let output = source;
     if (names.length) {

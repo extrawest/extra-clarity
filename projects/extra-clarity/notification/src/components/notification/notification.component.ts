@@ -9,14 +9,15 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+
 import {
   BehaviorSubject,
+  Subject,
   filter,
   finalize,
   interval,
   map,
   scan,
-  Subject,
   take,
   takeUntil,
   takeWhile,

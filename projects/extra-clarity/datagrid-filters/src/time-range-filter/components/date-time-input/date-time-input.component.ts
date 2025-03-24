@@ -15,6 +15,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
 import { ClrInput, ClrInputModule } from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
@@ -42,7 +43,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
   public withTime: boolean = true;
 
   @Output()
-  public valueChange: EventEmitter<number | null> = new EventEmitter();
+  public valueChange = new EventEmitter<number | null>();
 
   @ViewChild('datetimeInput', { static: true })
   protected inputRef?: ElementRef<HTMLInputElement>;

@@ -1,9 +1,10 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
+
 import {
-  applicationConfig,
-  componentWrapperDecorator,
   type Meta,
   type StoryObj,
+  applicationConfig,
+  componentWrapperDecorator,
 } from '@storybook/angular';
 
 import {

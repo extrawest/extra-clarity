@@ -15,6 +15,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+
 import {
   ClarityIcons,
   filterIcon,

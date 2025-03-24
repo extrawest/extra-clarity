@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
+
 import { ClrVerticalNavModule } from '@clr/angular';
 
 import { EcSidebarNavGroupComponent } from './components/sidebar-nav-group';

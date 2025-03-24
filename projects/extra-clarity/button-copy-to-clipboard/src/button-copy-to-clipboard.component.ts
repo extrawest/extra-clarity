@@ -11,6 +11,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+
 import { ClarityIcons, copyIcon } from '@cds/core/icon';
 import { ClrIconModule, ClrLoadingState } from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';

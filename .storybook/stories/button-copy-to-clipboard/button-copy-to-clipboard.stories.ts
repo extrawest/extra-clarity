@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
+
 import { ClrInputModule } from '@clr/angular';
-import { applicationConfig, type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { type Meta, type StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';
 
 import {
   BUTTON_DEFAULTS,

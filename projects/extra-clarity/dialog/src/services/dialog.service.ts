@@ -1,11 +1,11 @@
 import {
   ApplicationRef,
   ComponentRef,
-  createComponent,
   EnvironmentInjector,
   Injectable,
   Injector,
   Type,
+  createComponent,
 } from '@angular/core';
 
 import { ConfirmationDialogComponent } from '../containers';

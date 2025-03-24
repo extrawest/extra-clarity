@@ -14,11 +14,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
 import { ClarityIcons, searchIcon, windowCloseIcon } from '@cds/core/icon';
 import { ClrIconModule, ClrInputModule } from '@clr/angular';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
-import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
+import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
 
 export const SEARCH_BAR_DEFAULTS = {
   debounceTimeMs: 0,

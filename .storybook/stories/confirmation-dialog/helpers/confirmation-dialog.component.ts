@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input, type TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, type TemplateRef, inject } from '@angular/core';
 
 import {
   type DialogButtonConfig,
