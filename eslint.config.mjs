@@ -75,8 +75,7 @@ export default tseslint.config(
       // Ordering imports:
       'import/first': ['error'],
       'import/newline-after-import': ['error', { count: 1 }],
-      // TODO: fix errors and uncomment
-      // 'import/no-extraneous-dependencies': ['error'],
+      'import/no-extraneous-dependencies': ['error'],
       'no-duplicate-imports': ['error', { includeExports: true }],
       'import/order': [
         'error',
