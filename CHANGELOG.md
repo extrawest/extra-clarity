@@ -1,6 +1,6 @@
 # Changelog
 
-## [17.13.1](https://github.com/extrawest/extra-clarity/compare/v17.13.0...v17.13.1) (2025-03-25)
+## [17.13.2](https://github.com/extrawest/extra-clarity/compare/v17.13.0...v17.13.2) (2025-03-25)
 
 ### Bug fixes
 
@@ -9,6 +9,9 @@
 
 ### Misc
 
+* **release-it:** run 'npm i' before release to grant all modules match versions from package.json ([1686f4b](https://github.com/extrawest/extra-clarity/commit/1686f4b81fc72a167573444d8d6af47d69ae88e7))
+* **release-it:** build before linting to grant resolution of imports from @extrawest/extra-clarity ([17c35c6](https://github.com/extrawest/extra-clarity/commit/17c35c6f91533c83c39ea89820426d2c38522ac8))
+* release v17.13.1 ([b9ca42d](https://github.com/extrawest/extra-clarity/commit/b9ca42d22d3ed17da573d333e566e5cd0b73fc05))
 * **search-bar:** fix component imports ([a08ea1a](https://github.com/extrawest/extra-clarity/commit/a08ea1a2f0d6eff4f99b1cce9805ff7d77343394))
 * **git:** add .nx folder entirely to .gitignore ([0f6da6c](https://github.com/extrawest/extra-clarity/commit/0f6da6cb996374d8f98bf2c2eceae73209eb351a))
 * fix broken links to original Clarity docs about datagrids ([cfd5f2b](https://github.com/extrawest/extra-clarity/commit/cfd5f2bd996fa38f78ea5222fc5d4c8cca1385a7))
@@ -22,6 +25,8 @@
 
 ### CI
 
+* use vXX-latest as npm tag for non-primary releasing branches ([3aa57cf](https://github.com/extrawest/extra-clarity/commit/3aa57cf479418895666d3b19fdb493dd9501f375))
+* refactor GitHub Actions workflow & actions, attach tag to npm package ([5cfb543](https://github.com/extrawest/extra-clarity/commit/5cfb543a8bfb281185b513885029d3670770fdea))
 * repair generation of release notes in GitHub Actions ([365870e](https://github.com/extrawest/extra-clarity/commit/365870e040fcf917d8c01ab1fe3db751036e1e6a))
 * correct formatting according to main branch ([3ebfde1](https://github.com/extrawest/extra-clarity/commit/3ebfde1436ae91bdc033b94281d7e338a1b96edb))
 * rename workflows ([0d7de86](https://github.com/extrawest/extra-clarity/commit/0d7de86b462e0c80b2aaa81006e3945022ddc1bb))
