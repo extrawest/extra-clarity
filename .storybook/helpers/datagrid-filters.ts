@@ -5,9 +5,9 @@ import {
 
 export const linksToClrDatagridDocs = `
 > You also may find useful to refer to the original documentation on
-[Clarity datagrids](https://clarity.design/documentation/datagrid/custom-filtering) in general,
-[server-driven datagrids](https://clarity.design/documentation/datagrid/server-driven),
-and [custom filtering](https://clarity.design/documentation/datagrid/custom-filtering).
+[Clarity datagrids](https://clarity.design/documentation/datagrid) in general,
+[server-driven datagrids](https://clarity.design/documentation/datagrid/code/server-driven),
+and [custom filtering](https://clarity.design/documentation/datagrid/code/custom-filtering).
 `;
 
 export const colorEnumOptions: EcEnumValueFilterOption<string>[] = [
