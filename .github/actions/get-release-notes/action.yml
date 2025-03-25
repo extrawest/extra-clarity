@@ -1,0 +1,35 @@
+name: 'Generate release notes for GitHub Releases'
+
+inputs:
+  release-notes-script:
+    type: string
+    required: true
+    description: 'Name of a script in the root package.json to generate release notes'
+
+outputs:
+  notes:
+    description: 'Multiline markdown string'
+    value: ${{ steps.get-notes.outputs.notes }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Ensure we fetch all needed branches/tags
+
+    - id: get-notes
+      env:
+        RELEASE_NOTES_SCRIPT: ${{ inputs.release-notes-script }}
+      shell: bash
+      run: |
+        git fetch --all
+        echo "notes<<EOF" >> $GITHUB_OUTPUT
+        npm run ${{ env.RELEASE_NOTES_SCRIPT }} --silent >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Log release notes
+      shell: bash
+      run: |
+        echo -e "Generated release notes:\n"
+        echo "${{ steps.get-notes.outputs.notes }}"
