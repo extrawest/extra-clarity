@@ -52,6 +52,7 @@ jobs:
       contents: read
     outputs:
       tag: ${{ steps.get-package-version.outputs.tag }}
+      major: ${{ steps.get-package-version.outputs.major }}
       prefix: ${{ steps.get-storybook-site-prefix.outputs.prefix }}
     steps:
       # uses: actions/checkout@v4 -- to make custom actions available from within the repository itself
@@ -107,7 +108,7 @@ jobs:
           if-no-files-found: error
 
   publish-package-to-npm:
-    needs: [build-extra-clarity]
+    needs: [check-version, build-extra-clarity]
     if: inputs.publish-to-npm
     runs-on: ubuntu-latest
     permissions:
@@ -121,7 +122,15 @@ jobs:
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
           path: ${{ env.LIB_DIST_PATH }}
-      - run: npm publish
+      - id: npm-tag
+        shell: bash
+        run: |
+          if [[ -n "${{ needs.check-version.outputs.prefix }}" ]]; then
+            echo "tag=v${{ needs.check-version.outputs.major }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          fi
+      - run: npm publish --tag ${{ steps.npm-tag.outputs.tag }}
         working-directory: ${{ env.LIB_DIST_PATH }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
