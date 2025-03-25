@@ -13,7 +13,7 @@ inputs:
 outputs:
   tag:
     description: 'Text tag to be attached to the package being published to npm'
-    value: ${{ steps.get-tag.outputs.npm-tag }}
+    value: ${{ steps.get-tag.outputs.tag }}
 
 runs:
   using: composite
