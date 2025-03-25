@@ -10,10 +10,15 @@ import * as Stories from './router-link-wrapper.stories';
 
 # Router Link Wrapper
 
+{/* prettier-ignore */}
 <div className="table-of-contents">
-  - [Quick Start](#quick-start) - [Example](#example) - [Stories](#stories) -
-  [Description](#description) * [Configuration](#configuration) - [API](#api) - [Source
-  Code](#source-code)
+  - [Quick Start](#quick-start)
+  - [Example](#example)
+  - [Stories](#stories)
+  - [Description](#description)
+    - [Configuration](#configuration)
+  - [API](#api)
+  - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -24,11 +29,14 @@ import * as Stories from './router-link-wrapper.stories';
 import { EcRouterLinkWrapperComponent } from '@extrawest/extra-clarity/router-link-wrapper';
 ```
 
+{/* prettier-ignore */}
 ```html
-<ec-router-link [enabled]="driverId && tenantId" [fwdRouterLink]="['/drivers', driverId, tenantId]">
+<ec-router-link
+  [enabled]="driverId && tenantId"
+  [fwdRouterLink]="['/drivers', driverId, tenantId]"
+>
   {{ driverId }}
-  <ec
-/></ec-router-link>
+</ec-router-link>
 ```
 
 ## Example
@@ -49,8 +57,17 @@ element. Otherwise, it shows the content as it is without any wrappers.
 
 Although broken links could be disabled by passing `null` or `undefined` to the original `[routerLink]`:
 
+{/* prettier-ignore */}
 ```html
-<a [routerLink]="driverId && tenantId ? ['/drivers', driverId, tenantId] : null"></a>
+<a
+  [routerLink]="
+    driverId && tenantId
+      ? ['/drivers', driverId, tenantId]
+      : null
+  "
+>
+  ...
+</a>
 ```
 
 it may look cumbersome and does not prevent the `<a [routerLink]>` element from being shown as a link on hovering and

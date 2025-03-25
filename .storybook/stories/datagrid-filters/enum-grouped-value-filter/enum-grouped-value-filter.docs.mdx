@@ -10,11 +10,19 @@ import * as FilterStories from './enum-grouped-value-filter.stories';
 
 # Enumerated Grouped-Value Filter
 
+{/* prettier-ignore */}
 <div className="table-of-contents">
-  - [Quick Start](#quick-start) - [Example](#example) - [Stories](#stories) -
-  [Description](#description) * [Configuration](#configuration) * [Option List](#option-list) *
-  [Default State](#default-state) * [Output State](#output-state) * [Read/Write the
-  State](#readwrite-the-state) - [API](#api) - [Source Code](#source-code)
+  - [Quick Start](#quick-start)
+  - [Example](#example)
+  - [Stories](#stories)
+  - [Description](#description)
+    - [Configuration](#configuration)
+    - [Option List](#option-list)
+    - [Default State](#default-state)
+    - [Output State](#output-state)
+    - [Read/Write the State](#readwrite-the-state)
+  - [API](#api)
+  - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -29,13 +37,17 @@ import { EcEnumGroupedValueFilterComponent } from '@extrawest/extra-clarity/data
 <ec-enum-grouped-value-filter />
 ```
 
+{/* prettier-ignore */}
 ```html
 <clr-datagrid>
   ...
   <clr-dg-column>
     Log Record Type
     <clr-dg-filter>
-      <ec-enum-grouped-value-filter [propertyKey]="'logType'" [options]="logTypeOptions" />
+      <ec-enum-grouped-value-filter
+        [propertyKey]="'logType'"
+        [options]="logTypeOptions"
+      />
     </clr-dg-filter>
   </clr-dg-column>
   ...

@@ -10,11 +10,19 @@ import * as FilterStories from './string-filter.stories';
 
 # String Filter
 
+{/* prettier-ignore */}
 <div className="table-of-contents">
-  - [Quick Start](#quick-start) - [Example](#example) - [Stories](#stories) -
-  [Description](#description) * [Configuration](#configuration) * [Default State](#default-state) *
-  [Output State](#output-state) * [Read/Write the State](#readwrite-the-state) * [Additional
-  Info](#additional-info) - [API](#api) - [Source Code](#source-code)
+  - [Quick Start](#quick-start)
+  - [Example](#example)
+  - [Stories](#stories)
+  - [Description](#description)
+    - [Configuration](#configuration)
+    - [Default State](#default-state)
+    - [Output State](#output-state)
+    - [Read/Write the State](#readwrite-the-state)
+    - [Additional Info](#additional-info)
+  - [API](#api)
+  - [Source Code](#source-code)
 </div>
 
 ## Quick Start
@@ -110,10 +118,10 @@ The actual state of the filter can be read by the public getter `state` as `EcFi
 
 ```html
 ...
-<ec-string-filter #filterByName>
-  ...
-  <span>{{ filterByName.state.value }}</span></ec-string-filter
->
+<ec-string-filter #filterByName />
+...
+<span>{{ filterByName.state.value }}</span>
+...
 ```
 
 To check if the state is default, you can use the `isActive()` method, which returns `false` for the default state.
