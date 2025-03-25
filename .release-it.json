@@ -5,7 +5,7 @@
   },
   "git": {
     "requireCleanWorkingDir": true,
-    "requireBranch": ["main", "*.x"],
+    "requireBranch": ["18.x"],
     "requireUpstream": true,
     "commitMessage": "chore: release v${version}",
     "tag": true,
