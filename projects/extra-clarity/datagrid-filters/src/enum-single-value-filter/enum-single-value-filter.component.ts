@@ -15,6 +15,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+
 import {
   ClarityIcons,
   filterIcon,
@@ -28,10 +29,11 @@ import {
   ClrPopoverToggleService,
   ClrRadioModule,
 } from '@clr/angular';
+import { Subject, takeUntil } from 'rxjs';
+
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcShowSelected } from '../common/enums/show-selected.enum';
@@ -56,7 +58,6 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   templateUrl: './enum-single-value-filter.component.html',
   styleUrls: ['./enum-single-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrIconModule,

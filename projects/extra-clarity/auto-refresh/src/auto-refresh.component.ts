@@ -12,9 +12,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
 import { ClrCheckboxModule } from '@clr/angular';
+import { Subject, map, takeUntil, takeWhile, tap, timer } from 'rxjs';
+
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
-import { map, Subject, takeUntil, takeWhile, tap, timer } from 'rxjs';
 
 export const DEFAULT_PERIOD_SEC = 60;
 
@@ -23,7 +25,6 @@ export const DEFAULT_PERIOD_SEC = 60;
   templateUrl: './auto-refresh.component.html',
   styleUrls: ['./auto-refresh.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClrCheckboxModule],
 })
 export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
@@ -90,9 +91,11 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (changes['period'] || changes['blocked']) {
-      this.blocked || this._period === 0
-        ? this.toggleControl.disable()
-        : this.toggleControl.enable();
+      if (this.blocked || this._period === 0) {
+        this.toggleControl.disable();
+      } else {
+        this.toggleControl.enable();
+      }
     }
 
     if (changes['enabled'] || (changes['period'] && this._period === 0)) {

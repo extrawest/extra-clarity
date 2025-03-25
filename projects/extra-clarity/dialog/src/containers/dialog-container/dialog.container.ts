@@ -8,6 +8,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+
 import { Subscription, SubscriptionLike } from 'rxjs';
 
 import { DialogConfig } from '../../dialog-config';
@@ -19,6 +20,7 @@ import { DialogSize } from '../../types/dialog-types';
   selector: 'ec-dialog, [dialog]',
   templateUrl: 'dialog.container.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class DialogContainer implements OnInit, OnDestroy {
   @Input() public size: DialogSize = 'md';

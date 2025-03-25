@@ -6,10 +6,12 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+
 import { ClrLoadingState } from '@clr/angular';
-import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
 import { isPromise } from 'rxjs/internal/util/isPromise';
+
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { ConfirmDialogConfig } from '../../dialog-config';
 import { DialogRef } from '../../dialog-ref';
@@ -19,6 +21,7 @@ import { DIALOG_CONFIG } from '../../tokens/dialog-config.token';
 @Component({
   templateUrl: './confirmation-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ConfirmationDialogComponent implements OnDestroy, OnInit {
   public acceptBtnState = ClrLoadingState.DEFAULT;
@@ -49,6 +52,10 @@ export class ConfirmationDialogComponent implements OnDestroy, OnInit {
 
   public onAccept(): void {
     this.trigger(ConfirmationType.Accept);
+  }
+
+  protected isArrayOfArrays(value: unknown): value is unknown[][] {
+    return Array.isArray(value) && value.every((item) => Array.isArray(item));
   }
 
   private async trigger(action: ConfirmationType): Promise<void> {

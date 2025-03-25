@@ -1,5 +1,5 @@
 import { Markdown, Meta } from '@storybook/blocks';
-import { version } from '../../projects/extra-clarity/package.json';
+import extraClarityPackageJson from '@extrawest/extra-clarity/package.json';
 import { docsStylePatch } from '../helpers';
 
 <style>{docsStylePatch}</style>
@@ -8,7 +8,7 @@ import { docsStylePatch } from '../helpers';
 
 # Extra Clarity Docs
 
-**Version: {`v${version}`}**
+**Version: {`v${extraClarityPackageJson.version}`}**
 
 Extra Clarity is a library that contains [Angular components](#available-components) built on the
 top of the [Clarity Design System](https://clarity.design), which we use in our internal projects in
@@ -69,6 +69,7 @@ for more details on 'Adding Clarity to an Existing Angular Application'.
   {`
 | Extra-Clarity | Angular       | Clarity |
 | :------------ | :-------------| :------ |
+| 19.x          | 19            | 17.8+   |
 | 18.x          | 18, 19        | 17.3+   |
 | 17.x          | 17.3+, 18, 19 | 17      |
 `}

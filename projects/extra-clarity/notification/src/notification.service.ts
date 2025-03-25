@@ -1,10 +1,10 @@
 import {
   ApplicationRef,
   ComponentRef,
-  createComponent,
   EnvironmentInjector,
   Injectable,
   TemplateRef,
+  createComponent,
 } from '@angular/core';
 
 import { NotificationContainerComponent } from './components';

@@ -7,6 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
 import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
 
 import { EC_NAV_ITEM_TYPE, EcNavListItem } from '../../sidebar-nav.models';
@@ -18,7 +19,6 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   templateUrl: './sidebar-nav-item.component.html',
   styleUrls: ['./sidebar-nav-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     RouterLink,

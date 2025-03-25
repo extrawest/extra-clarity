@@ -14,11 +14,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
 import { ClarityIcons, searchIcon, windowCloseIcon } from '@cds/core/icon';
 import { ClrIconModule, ClrInputModule } from '@clr/angular';
+import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
+
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
-import { debounceTime, Subject, takeUntil, tap } from 'rxjs';
 
 export const SEARCH_BAR_DEFAULTS = {
   debounceTimeMs: 0,
@@ -30,7 +32,6 @@ export const SEARCH_BAR_DEFAULTS = {
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NgClass, NgIf, ReactiveFormsModule, ClrIconModule, ClrInputModule],
 })
 export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
@@ -112,9 +113,11 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     if (changes['isDisabled']) {
-      this.isDisabled
-        ? this.formControl.disable({ emitEvent: false })
-        : this.formControl.enable({ emitEvent: false });
+      if (this.isDisabled) {
+        this.formControl.disable({ emitEvent: false });
+      } else {
+        this.formControl.enable({ emitEvent: false });
+      }
     }
 
     const valueChange = changes['value'];

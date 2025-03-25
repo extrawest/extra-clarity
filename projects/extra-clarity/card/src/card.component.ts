@@ -10,11 +10,13 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+
 import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
 import { ClrIconModule } from '@clr/angular';
+import { Subject, takeUntil } from 'rxjs';
+
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
-import { Subject, takeUntil } from 'rxjs';
 
 import {
   EcCardFooterDirective,
@@ -28,7 +30,6 @@ import { EcCardError } from './interfaces';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrIconModule,

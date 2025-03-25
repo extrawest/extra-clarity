@@ -15,9 +15,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
 import { ClrInput, ClrInputModule } from '@clr/angular';
-import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
+
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { datetimeInputValidator } from './date-time-input.validators';
 
@@ -26,7 +28,6 @@ import { datetimeInputValidator } from './date-time-input.validators';
   templateUrl: './date-time-input.component.html',
   styleUrls: ['./date-time-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClrInputModule],
 })
 export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
@@ -43,7 +44,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
   public withTime: boolean = true;
 
   @Output()
-  public valueChange: EventEmitter<number | null> = new EventEmitter();
+  public valueChange = new EventEmitter<number | null>();
 
   @ViewChild('datetimeInput', { static: true })
   protected inputRef?: ElementRef<HTMLInputElement>;
@@ -81,9 +82,11 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['disabled']) {
-      this.disabled
-        ? this.formControl.disable({ emitEvent: false })
-        : this.formControl.enable({ emitEvent: false });
+      if (this.disabled) {
+        this.formControl.disable({ emitEvent: false });
+      } else {
+        this.formControl.enable({ emitEvent: false });
+      }
     }
 
     if (changes['value'] && this.value !== undefined) {

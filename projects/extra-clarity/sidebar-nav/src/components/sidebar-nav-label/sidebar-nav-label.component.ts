@@ -6,7 +6,6 @@ import { EcSidebarNavService } from '../../sidebar-nav.service';
 
 @Component({
   selector: 'ec-sidebar-nav-label',
-  standalone: true,
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

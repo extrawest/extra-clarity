@@ -1,6 +1,0 @@
-{
-  "extends": ["plugin:storybook/recommended", "prettier"],
-  "rules": {
-    "@typescript-eslint/consistent-type-imports": ["error", { "disallowTypeAnnotations": false }]
-  }
-}

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { BehaviorSubject, map } from 'rxjs';
 
 import { NOTIFICATION_DEFAULT_CONFIG } from '../../constants';
@@ -9,6 +10,7 @@ import { NotificationData, NotificationPosition } from '../../typings';
   templateUrl: './notification-container.component.html',
   styleUrls: ['./notification-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NotificationContainerComponent {
   readonly instances$ = new BehaviorSubject<Required<NotificationData[]>>([]);

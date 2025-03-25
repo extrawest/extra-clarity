@@ -15,7 +15,6 @@ import {
     '[class.progress-spinner-overlay]': '_showSpinner',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule],
 })
 export class ProgressSpinnerComponent implements OnDestroy {

@@ -17,7 +17,6 @@ import { Params, RouterLink } from '@angular/router';
     </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, RouterLink],
 })
 export class EcRouterLinkWrapperComponent {

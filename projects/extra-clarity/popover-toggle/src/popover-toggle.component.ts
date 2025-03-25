@@ -12,7 +12,8 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { angleIcon, ClarityIcons } from '@cds/core/icon';
+
+import { ClarityIcons, angleIcon } from '@cds/core/icon';
 import { Directions } from '@cds/core/internal';
 import {
   ClrAxis,
@@ -24,8 +25,9 @@ import {
   ClrPopoverToggleService,
   ClrSide,
 } from '@clr/angular';
-import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 import { Subject, takeUntil } from 'rxjs';
+
+import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 
 import { clrAlignmentMap } from './constants';
 import { CdkTrapFocusDirective, EcPopoverToggleLabelDirective } from './directives';
@@ -43,7 +45,6 @@ import { EcPopoverAlign } from './types';
   templateUrl: './popover-toggle.component.html',
   styleUrls: ['./popover-toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     NgClass,
     NgIf,

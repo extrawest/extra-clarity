@@ -14,9 +14,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
 import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr/angular';
-import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
+
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcFilterState } from '../common/interfaces/filter-state.interface';
@@ -50,7 +52,6 @@ export const TIMERANGE_FILTER_DEFAULTS = {
   templateUrl: './time-range-filter.component.html',
   styleUrls: ['./time-range-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClrRadioModule, EcDateTimeGroupComponent],
   providers: [
     {

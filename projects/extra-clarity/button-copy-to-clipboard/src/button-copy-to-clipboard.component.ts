@@ -11,10 +11,12 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+
 import { ClarityIcons, copyIcon } from '@cds/core/icon';
 import { ClrIconModule, ClrLoadingState } from '@clr/angular';
-import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { Subject, takeUntil } from 'rxjs';
+
+import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
 import { animations } from './button-copy-to-clipboard.animations';
 
@@ -29,7 +31,6 @@ export const BUTTON_DEFAULTS = {
   templateUrl: './button-copy-to-clipboard.component.html',
   styleUrls: ['./button-copy-to-clipboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, ClrIconModule],
   animations,
 })

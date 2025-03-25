@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 
-import { DialogModule, DialogService } from '../../../../projects/extra-clarity/dialog';
+import { DialogModule, DialogService } from '@extrawest/extra-clarity/dialog';
 
 import { StorybookDialogContentComponent } from './dialog-content.component';
 
@@ -10,7 +10,6 @@ import { StorybookDialogContentComponent } from './dialog-content.component';
     <button (click)="onOpen()" class="btn btn-primary" type="button">Open dialog</button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [DialogModule],
 })
 export class StorybookDialogCallerComponent {

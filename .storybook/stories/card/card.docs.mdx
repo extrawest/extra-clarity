@@ -8,9 +8,12 @@ import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
 # Card
 
+{/* prettier-ignore */}
 <div className="table-of-contents">
-  - [Description](#description) - [Quick Start](#quick-start) - [Stories](#stories) - [Source
-  Code](#source-code)
+  - [Description](#description)
+  - [Quick Start](#quick-start)
+  - [Stories](#stories)
+  - [Source Code](#source-code)
 </div>
 
 ## Description
@@ -25,6 +28,7 @@ A card presents high-level information and can guide the user toward related act
 import { EcCardModule } from '@extrawest/extra-clarity/card';
 ```
 
+{/* prettier-ignore */}
 ```html
 <ec-card
   [title]="title"
@@ -35,7 +39,9 @@ import { EcCardModule } from '@extrawest/extra-clarity/card';
 >
   ...
 
-  <ec-card-footer> ... </ec-card-footer>
+  <ec-card-footer>
+    ...
+  </ec-card-footer>
 </ec-card>
 ```
 

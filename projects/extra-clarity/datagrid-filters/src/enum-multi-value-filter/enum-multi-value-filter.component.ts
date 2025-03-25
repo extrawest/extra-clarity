@@ -15,6 +15,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+
 import {
   ClarityIcons,
   filterIcon,
@@ -28,11 +29,12 @@ import {
   ClrIconModule,
   ClrPopoverToggleService,
 } from '@clr/angular';
+import { Subject, takeUntil } from 'rxjs';
+
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcShowSelected } from '../common/enums/show-selected.enum';
@@ -57,7 +59,6 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
   templateUrl: './enum-multi-value-filter.component.html',
   styleUrls: ['./enum-multi-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrCheckboxModule,
@@ -415,9 +416,11 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
 
     const newSelectedValues = new Set(this.selectedValues);
 
-    (event.target as HTMLInputElement).checked
-      ? newSelectedValues.add(inputValue)
-      : newSelectedValues.delete(inputValue);
+    if ((event.target as HTMLInputElement).checked) {
+      newSelectedValues.add(inputValue);
+    } else {
+      newSelectedValues.delete(inputValue);
+    }
 
     this.updateSelectedValues(newSelectedValues);
   }

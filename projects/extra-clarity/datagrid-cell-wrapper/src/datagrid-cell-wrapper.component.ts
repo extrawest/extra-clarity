@@ -9,12 +9,14 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+
+import { Subject, takeUntil } from 'rxjs';
+
 import {
   BUTTON_DEFAULTS,
   EcButtonCopyToClipboardComponent,
 } from '@extrawest/extra-clarity/button-copy-to-clipboard';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
-import { Subject, takeUntil } from 'rxjs';
 
 export const CELL_WRAPPER_DEFAULTS = {
   btnTopOffsetRem: -0.25,
@@ -25,7 +27,6 @@ export const CELL_WRAPPER_DEFAULTS = {
   templateUrl: './datagrid-cell-wrapper.component.html',
   styleUrls: ['./datagrid-cell-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, EcButtonCopyToClipboardComponent],
 })
 export class EcDatagridCellWrapperComponent implements OnDestroy, OnInit {

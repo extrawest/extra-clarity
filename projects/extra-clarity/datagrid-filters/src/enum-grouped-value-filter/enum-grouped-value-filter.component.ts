@@ -15,6 +15,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+
 import {
   ClarityIcons,
   filterIcon,
@@ -28,11 +29,12 @@ import {
   ClrPopoverToggleService,
   ClrTreeViewModule,
 } from '@clr/angular';
+import { Subject, takeUntil } from 'rxjs';
+
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
 import { EcSearchBarComponent } from '@extrawest/extra-clarity/search-bar';
 import { areSetsEqual } from '@extrawest/extra-clarity/utils';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcShowSelected } from '../common/enums/show-selected.enum';
@@ -53,7 +55,6 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   templateUrl: './enum-grouped-value-filter.component.html',
   styleUrls: ['./enum-grouped-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrIconModule,
@@ -439,9 +440,11 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
     const newSelectedValues = new Set(this.selectedValues);
 
     this.visibleOptions[groupIndex].items.forEach((item) => {
-      (event.target as HTMLInputElement).checked
-        ? newSelectedValues.add(item.value)
-        : newSelectedValues.delete(item.value);
+      if ((event.target as HTMLInputElement).checked) {
+        newSelectedValues.add(item.value);
+      } else {
+        newSelectedValues.delete(item.value);
+      }
     });
 
     this.updateSelectedValues(newSelectedValues);
@@ -457,7 +460,11 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
     const newSelectedValues = new Set(this.selectedValues);
     const isChecked = (event.target as HTMLInputElement).checked;
 
-    isChecked ? newSelectedValues.add(inputValue) : newSelectedValues.delete(inputValue);
+    if (isChecked) {
+      newSelectedValues.add(inputValue);
+    } else {
+      newSelectedValues.delete(inputValue);
+    }
 
     this.updateSelectedValues(newSelectedValues);
 

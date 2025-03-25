@@ -1,11 +1,11 @@
 import {
   ApplicationRef,
   ComponentRef,
-  createComponent,
   EnvironmentInjector,
   Injectable,
   Injector,
   Type,
+  createComponent,
 } from '@angular/core';
 
 import { ConfirmationDialogComponent } from '../containers';
@@ -23,41 +23,47 @@ export class DialogService {
     private readonly injector: EnvironmentInjector,
   ) {}
 
-  public confirm<T, C = any>(
+  public confirm<T, C = unknown>(
     config: ConfirmDialogConfig<T, C>,
     type?: ConfirmType,
   ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
-    return this.open<ConfirmationDialogComponent, C>(ConfirmationDialogComponent, {
-      ...config,
-      type,
-    } as ConfirmDialogConfig<T, C>);
+    return this.open<ConfirmationDialogComponent, C, ConfirmationType>(
+      ConfirmationDialogComponent,
+      {
+        ...config,
+        type,
+      } as ConfirmDialogConfig<T, C>,
+    );
   }
 
-  public info<T, C = any>(
+  public info<T, C = unknown>(
     config: ConfirmDialogConfig<T, C>,
   ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'info');
   }
 
-  public success<T, C = any>(
+  public success<T, C = unknown>(
     config: ConfirmDialogConfig<T, C>,
   ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'success');
   }
 
-  public danger<T, C = any>(
+  public danger<T, C = unknown>(
     config: ConfirmDialogConfig<T, C>,
   ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'danger');
   }
 
-  public warning<T, C = any>(
+  public warning<T, C = unknown>(
     config: ConfirmDialogConfig<T, C>,
   ): DialogRef<ConfirmationDialogComponent, ConfirmationType> {
     return this.confirm<T, C>(config, 'warning');
   }
 
-  public open<T, C = any, R = any>(component: Type<T>, config?: DialogConfig<C>): DialogRef<T, R> {
+  public open<T, C = unknown, R = unknown>(
+    component: Type<T>,
+    config?: DialogConfig<C>,
+  ): DialogRef<T, R> {
     const mergedConfig = { ...new DialogConfig(), ...config };
     const dialogRef = new DialogRef<T, R>(mergedConfig);
     const containerRef = createComponent(component, {

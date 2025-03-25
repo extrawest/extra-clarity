@@ -5,7 +5,7 @@
   [clrModalSize]="config.size ?? size"
   (clrModalOpenChange)="onClose()"
 >
-  <ng-content select="[dialog-title]" class="modal-title"></ng-content>
-  <ng-content select="[dialog-content]" class="modal-body"></ng-content>
-  <ng-content select="[dialog-footer]" class="modal-footer"></ng-content>
+  <ng-content select="[dialog-title]" class="modal-title" />
+  <ng-content select="[dialog-content]" class="modal-body" />
+  <ng-content select="[dialog-footer]" class="modal-footer" />
 </clr-modal>

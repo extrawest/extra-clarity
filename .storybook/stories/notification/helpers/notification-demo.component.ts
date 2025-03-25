@@ -1,16 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, Input, type TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, type TemplateRef, inject } from '@angular/core';
 
 import {
   type NotificationConfig,
   NotificationModule,
   NotificationService,
-} from '../../../../projects/extra-clarity/notification';
+} from '@extrawest/extra-clarity/notification';
 
 @Component({
   selector: 'ec-storybook-notification-demo',
   templateUrl: './notification-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NotificationModule],
 })
 export class NotificationDemoComponent {
@@ -42,7 +41,7 @@ export class NotificationDemoComponent {
     this.notificationService.create(this.type, this.message, this.config);
   }
 
-  protected onOpenTplNotification(tpl: TemplateRef<{}>): void {
+  protected onOpenTplNotification(tpl: TemplateRef<unknown>): void {
     this.notificationService.template(this.type, tpl, this.config);
   }
 

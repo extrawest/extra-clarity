@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, Input, type TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, type TemplateRef, inject } from '@angular/core';
 
 import {
   type DialogButtonConfig,
   DialogModule,
   DialogService,
-} from '../../../../projects/extra-clarity/dialog';
+} from '@extrawest/extra-clarity/dialog';
 
 @Component({
   selector: 'ec-storybook-confirmation-dialog',
@@ -14,7 +14,6 @@ import {
     </button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [DialogModule],
 })
 export class StorybookConfirmationDialogComponent {

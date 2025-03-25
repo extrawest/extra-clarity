@@ -12,8 +12,11 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { angleIcon, calendarIcon, ClarityIcons } from '@cds/core/icon';
+
+import { ClarityIcons, angleIcon, calendarIcon } from '@cds/core/icon';
 import { ClrIconModule } from '@clr/angular';
+import { Subject, takeUntil } from 'rxjs';
+
 import {
   EcFilterState,
   EcResettableFilter,
@@ -32,7 +35,6 @@ import {
   EcPopoverToggleComponent,
   EcPopoverToggleLabelDirective,
 } from '@extrawest/extra-clarity/popover-toggle';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EcTimeRangeFilterToggleState } from './interfaces';
 
@@ -45,7 +47,6 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   templateUrl: './time-range-filter-toggle.component.html',
   styleUrls: ['./time-range-filter-toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
     ClrIconModule,

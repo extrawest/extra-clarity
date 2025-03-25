@@ -3,8 +3,8 @@ import { DOCUMENT } from '@angular/common';
 import { Directive, ElementRef, Inject } from '@angular/core';
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[cdkTrapFocus]',
-  standalone: true,
 })
 export class CdkTrapFocusDirective extends CdkTrapFocus {
   // NOTE: We provide a constructor with the explicitly called super() to fix a Storybook issue

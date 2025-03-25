@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ProgressSpinnerComponent } from '../../../../projects/extra-clarity/progress-spinner';
+import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
 
 const CODE_EXAMPLES: readonly string[] = [
   `
@@ -28,7 +28,6 @@ const CODE_EXAMPLES: readonly string[] = [
   selector: 'ec-storybook-progress-spinner',
   templateUrl: './progress-spinner-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [ProgressSpinnerComponent],
 })
 export class ProgressSpinnerDemoComponent {
