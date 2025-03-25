@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -31,7 +31,7 @@ export const SEARCH_BAR_DEFAULTS = {
   styleUrls: ['./search-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgClass, NgIf, ReactiveFormsModule, ClrIconModule, ClrInputModule],
+  imports: [NgIf, ReactiveFormsModule, ClrIconModule, ClrInputModule],
 })
 export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   /**
