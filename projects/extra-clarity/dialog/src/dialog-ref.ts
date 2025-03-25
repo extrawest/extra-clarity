@@ -5,7 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { DialogConfig } from './dialog-config';
 import { DialogState } from './enums/dialog-state.enum';
 
-export class DialogRef<T = any, R = any> {
+export class DialogRef<T = unknown, R = unknown> {
   public containerRef: ComponentRef<T>;
 
   private state: DialogState = DialogState.OPEN;

@@ -16,11 +16,17 @@
       [ngTemplateOutletContext]="config.data"
     />
 
-    <ng-container
-      *ngIf="config.component"
-      [ngComponentOutlet]="config.component"
-      [ngComponentOutletContent]="config.data"
-    />
+    <ng-container *ngIf="config.component">
+      <ng-container
+        *ngIf="isArrayOfArrays(config.data); else wrongComponentOutletContentTmpl"
+        [ngComponentOutlet]="config.component"
+        [ngComponentOutletContent]="config.data"
+      />
+
+      <ng-template #wrongComponentOutletContentTmpl>
+        Error: wrong type of [ngComponentOutletContent]="config.data", should be unknown[][]
+      </ng-template>
+    </ng-container>
   </div>
 
   <div dialog-footer>

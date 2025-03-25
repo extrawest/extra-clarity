@@ -54,6 +54,10 @@ export class ConfirmationDialogComponent implements OnDestroy, OnInit {
     this.trigger(ConfirmationType.Accept);
   }
 
+  protected isArrayOfArrays(value: unknown): value is unknown[][] {
+    return Array.isArray(value) && value.every((item) => Array.isArray(item));
+  }
+
   private async trigger(action: ConfirmationType): Promise<void> {
     this.acceptBtnState = ClrLoadingState.LOADING;
 
