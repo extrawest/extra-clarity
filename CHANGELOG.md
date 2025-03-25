@@ -1,6 +1,6 @@
 # Changelog
 
-## [19.0.7](https://github.com/extrawest/extra-clarity/compare/v19.0.1...v19.0.7) (2025-03-25)
+## [19.0.8](https://github.com/extrawest/extra-clarity/compare/v19.0.1...v19.0.8) (2025-03-25)
 
 ### Bug fixes
 
@@ -8,6 +8,7 @@
 
 ### Misc
 
+* release v19.0.7 ([e04dde3](https://github.com/extrawest/extra-clarity/commit/e04dde32b59940f0b58fc2ffb37a2e6b7d15a7d5))
 * update CHANGELOG.md (remove deleted release 19.0.5) ([0b5a32d](https://github.com/extrawest/extra-clarity/commit/0b5a32d97b2a1f8169c80e632c239be6437c3ff9))
 * release v19.0.6 ([2dd82bd](https://github.com/extrawest/extra-clarity/commit/2dd82bd74e3a01479bb4741bfab63a93e53b2866))
 * release v19.0.5 ([fbe9e83](https://github.com/extrawest/extra-clarity/commit/fbe9e83a2f98159ff8f9e807f4697f3bcd0f26f3))
@@ -23,6 +24,7 @@
 
 ### CI
 
+* fix output name in composite action for getting npm tag ([f988d0e](https://github.com/extrawest/extra-clarity/commit/f988d0e250522cd925ea92df8a24194f0f546efc))
 * fix reading value from env variable in bash script for getting npm tag ([bd9669a](https://github.com/extrawest/extra-clarity/commit/bd9669aecb7d17cbf634f8fe595fdd64d334e394))
 * reorder steps in GitHub Actions workflow ([182a2aa](https://github.com/extrawest/extra-clarity/commit/182a2aad5d57cbc841224cf78b691f375aac1ad0))
 * refactor GitHub Actions workflow, extract custom shell scripts to composite actions ([735aaea](https://github.com/extrawest/extra-clarity/commit/735aaea724e6b8455081f094480398ff1496cfe1))
