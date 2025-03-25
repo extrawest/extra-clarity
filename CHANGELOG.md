@@ -1,6 +1,6 @@
 # Changelog
 
-## [19.0.3](https://github.com/extrawest/extra-clarity/compare/v19.0.1...v19.0.3) (2025-03-25)
+## [19.0.4](https://github.com/extrawest/extra-clarity/compare/v19.0.1...v19.0.4) (2025-03-25)
 
 ### Bug fixes
 
@@ -8,6 +8,7 @@
 
 ### Misc
 
+* release v19.0.3 ([37b247b](https://github.com/extrawest/extra-clarity/commit/37b247b8ee5e12d0c06ce2e1f69477a32bc85a15))
 * release v19.0.2 ([cceddd7](https://github.com/extrawest/extra-clarity/commit/cceddd7cd1e1cc575bde381274227183cc11de2d))
 
 ### Documentation
@@ -16,21 +17,8 @@
 
 ### CI
 
+* handle multiline release notes as output of GitHub Action's job ([906c7d6](https://github.com/extrawest/extra-clarity/commit/906c7d67555e4177ac0406f91f76f8cfae2d6aae))
 * add quotes to handle multi-line output as single string ([c6706ad](https://github.com/extrawest/extra-clarity/commit/c6706ad0ea98b68f3b68e1fdb6a82da2b42d2fa7))
-* try to bring job generating release notes to life ([73c3fb3](https://github.com/extrawest/extra-clarity/commit/73c3fb32f87934b9e740e74b769ae9e2a097d193))
-
-## [19.0.2](https://github.com/extrawest/extra-clarity/compare/v19.0.1...v19.0.2) (2025-03-25)
-
-### Bug fixes
-
-* **string-filter:** stretch input to full width ([7fa583e](https://github.com/extrawest/extra-clarity/commit/7fa583e4f764d18a9e54b5f99e636d623138bb31))
-
-### Documentation
-
-* add versions of Angular & Clarity used for current Storybook build ([7cfd0a4](https://github.com/extrawest/extra-clarity/commit/7cfd0a404e63332e6c5de1487af509b45b6f4cb1))
-
-### CI
-
 * try to bring job generating release notes to life ([73c3fb3](https://github.com/extrawest/extra-clarity/commit/73c3fb32f87934b9e740e74b769ae9e2a097d193))
 
 ## [19.0.1](https://github.com/extrawest/extra-clarity/compare/v19.0.0...v19.0.1) (2025-03-25)
