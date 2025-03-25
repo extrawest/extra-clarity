@@ -92,9 +92,14 @@ jobs:
         id: release-notes
         shell: bash
         run: |
-          NOTES="$(npm run ${{ env.SCRIPT_RELEASE_NOTES }} --silent)"
-          echo -e "Auto generated release notes:\n\n${NOTES}"
-          echo "notes=${NOTES}" >> $GITHUB_OUTPUT
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          npm run ${{ env.SCRIPT_RELEASE_NOTES }} --silent >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: List release notes
+        shell: bash
+        run: |
+          echo -e "Auto generated release notes:\n\n"
+          echo "${{ steps.release-notes.outputs.notes }}"
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
