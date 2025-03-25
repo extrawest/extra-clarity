@@ -29,7 +29,7 @@ runs:
         if [[ "${IS_LATEST}" == "true" ]]; then
           TAG="latest"
         else
-          TAG="v${{ MAJOR_VERSION }}"
+          TAG="v${MAJOR_VERSION}"
         fi
 
         echo "Tag for the npm-package: ${TAG}"
