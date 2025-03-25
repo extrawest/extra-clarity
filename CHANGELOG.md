@@ -1,5 +1,21 @@
 # Changelog
 
+## [19.0.0](https://github.com/extrawest/extra-clarity/compare/v18.0.0...v19.0.0) (2025-03-25)
+
+### Features
+
+* upgrade to Angular 19 & Clarity 17.8 ([#13](https://github.com/extrawest/extra-clarity/issues/13)) ([0bb2f9e](https://github.com/extrawest/extra-clarity/commit/0bb2f9e6f08bcb818d796595b384ff7690ec6064))
+
+### Misc
+
+* **git:** add .nx folder entirely to .gitignore ([b09b2ca](https://github.com/extrawest/extra-clarity/commit/b09b2caeb20aa8e3d147df7ecb1f3c78cb8376ae))
+* set branch wildcard allowing secondary branches (XX.x) to publish new releases via release-it ([a6b201b](https://github.com/extrawest/extra-clarity/commit/a6b201b56e0f2221f1a26aae5beb4267010f3b88))
+* add conventional-changelog-conventionalcommits as explicit dev dependency ([923e8c1](https://github.com/extrawest/extra-clarity/commit/923e8c1b5349d20eb1d7d75a3a64931abc0ee61b))
+
+### CI
+
+* log generated release notes for debug purposes ([875c034](https://github.com/extrawest/extra-clarity/commit/875c0349e9eabb12de167ded35431f5017e0770f))
+
 ## 18.0.0 (2025-03-23)
 
 ### Documentation
