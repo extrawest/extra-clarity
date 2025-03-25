@@ -13,7 +13,7 @@
     "serve:storybook": "ng run extra-clarity:storybook --no-open",
     "docs:extra-clarity": "npx compodoc -e json -d . -p tsconfig.doc.json --minimal --disableLifeCycleHooks --disablePrivate --disableProtected",
     "release": "release-it",
-    "release-notes": "npx conventional-changelog-cli -k ./projects/extra-clarity/package.json -r 1 --skip-unstable -t v -p conventionalcommits -n ./.release-notes.github.json",
+    "release-notes": "npx conventional-changelog-cli -k ./projects/extra-clarity/package.json -r 2 --skip-unstable -t v -p conventionalcommits -n ./.release-notes.github.json",
     "prepare": "husky || true"
   },
   "private": true,
