@@ -1,18 +1,18 @@
-name: 'Evaluate a tag to be attached to the published npm package'
+name: "Evaluate a tag to be attached to the published npm package"
 
 inputs:
   major-version:
     type: string
     required: true
-    description: 'Major version of the package, e.g. 17 for a tag v17.1.2'
+    description: "Major version of the package, e.g. 17 for a tag v17.1.2"
   is-latest:
     type: string
     required: true
-    description: 'true for the primary releasing branch (main), and false for secondary (17.x, 18.x, etc)'
+    description: "true for the primary releasing branch (main), and false for secondary (17.x, 18.x, etc)"
 
 outputs:
   tag:
-    description: 'Text tag to be attached to the package being published to npm'
+    description: "Text tag to be attached to the package being published to npm"
     value: ${{ steps.get-tag.outputs.tag }}
 
 runs:
@@ -29,7 +29,7 @@ runs:
         if [[ "${IS_LATEST}" == "true" ]]; then
           TAG="latest"
         else
-          TAG="v${MAJOR_VERSION}"
+          TAG="v${MAJOR_VERSION}-latest"
         fi
 
         echo "Tag for the npm-package: ${TAG}"
