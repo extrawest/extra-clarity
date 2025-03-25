@@ -32,7 +32,7 @@ export const SEARCH_BAR_DEFAULTS = {
   styleUrls: ['./search-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIf, ReactiveFormsModule, ClrIconModule, ClrInputModule],
+  imports: [NgIf, ReactiveFormsModule, CdsIconModule, ClrInputModule],
 })
 export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   /**
