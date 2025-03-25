@@ -92,7 +92,7 @@ jobs:
         id: release-notes
         shell: bash
         run: |
-          NOTES=$(npm run ${{ env.SCRIPT_RELEASE_NOTES }} --silent)
+          NOTES="$(npm run ${{ env.SCRIPT_RELEASE_NOTES }} --silent)"
           echo -e "Auto generated release notes:\n\n${NOTES}"
           echo "notes=${NOTES}" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
