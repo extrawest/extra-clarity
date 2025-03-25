@@ -1,6 +1,6 @@
 # Changelog
 
-## [19.0.6](https://github.com/extrawest/extra-clarity/compare/v19.0.1...v19.0.6) (2025-03-25)
+## [19.0.7](https://github.com/extrawest/extra-clarity/compare/v19.0.1...v19.0.7) (2025-03-25)
 
 ### Bug fixes
 
@@ -8,6 +8,8 @@
 
 ### Misc
 
+* update CHANGELOG.md (remove deleted release 19.0.5) ([0b5a32d](https://github.com/extrawest/extra-clarity/commit/0b5a32d97b2a1f8169c80e632c239be6437c3ff9))
+* release v19.0.6 ([2dd82bd](https://github.com/extrawest/extra-clarity/commit/2dd82bd74e3a01479bb4741bfab63a93e53b2866))
 * release v19.0.5 ([fbe9e83](https://github.com/extrawest/extra-clarity/commit/fbe9e83a2f98159ff8f9e807f4697f3bcd0f26f3))
 * reinstall node_modules ([73bf966](https://github.com/extrawest/extra-clarity/commit/73bf96685420412c097db74435dc3b3db6410b73))
 * upgrade eslint packages ([ab3578a](https://github.com/extrawest/extra-clarity/commit/ab3578a37364d3369851cd4370a372e9585be880))
@@ -21,6 +23,7 @@
 
 ### CI
 
+* fix reading value from env variable in bash script for getting npm tag ([bd9669a](https://github.com/extrawest/extra-clarity/commit/bd9669aecb7d17cbf634f8fe595fdd64d334e394))
 * reorder steps in GitHub Actions workflow ([182a2aa](https://github.com/extrawest/extra-clarity/commit/182a2aad5d57cbc841224cf78b691f375aac1ad0))
 * refactor GitHub Actions workflow, extract custom shell scripts to composite actions ([735aaea](https://github.com/extrawest/extra-clarity/commit/735aaea724e6b8455081f094480398ff1496cfe1))
 * add tag for published npm package depending on branch: latest, v18, v17 ([e9e5c35](https://github.com/extrawest/extra-clarity/commit/e9e5c352df8f265dbcc8f6ee2f087d1b81918b8d))
