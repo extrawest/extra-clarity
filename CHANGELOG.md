@@ -1,5 +1,16 @@
 # Changelog
 
+## [19.0.1](https://github.com/extrawest/extra-clarity/compare/v19.0.0...v19.0.1) (2025-03-25)
+
+### Bug fixes
+
+* **search-bar:** stretch input to full width, correct icon alignment & visibility when highlighted ([46d023f](https://github.com/extrawest/extra-clarity/commit/46d023f77b3dee66471c3e3513df8fed3dec946c))
+
+### CI
+
+* use -e flag to enable interpretation of backslash escapes (incl \n) ([83a947e](https://github.com/extrawest/extra-clarity/commit/83a947e5ae6130055da4bd79c8d7033f869dac2e))
+* **release-notes:** fix script for preparing release notes for github release (experimental) ([854a943](https://github.com/extrawest/extra-clarity/commit/854a943ff66feb49c6892e5aac13fa6a4779ca86))
+
 ## [19.0.0](https://github.com/extrawest/extra-clarity/compare/v18.0.0...v19.0.0) (2025-03-25)
 
 ### Features
