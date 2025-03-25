@@ -1,5 +1,19 @@
 # Changelog
 
+## [19.0.2](https://github.com/extrawest/extra-clarity/compare/v19.0.1...v19.0.2) (2025-03-25)
+
+### Bug fixes
+
+* **string-filter:** stretch input to full width ([7fa583e](https://github.com/extrawest/extra-clarity/commit/7fa583e4f764d18a9e54b5f99e636d623138bb31))
+
+### Documentation
+
+* add versions of Angular & Clarity used for current Storybook build ([7cfd0a4](https://github.com/extrawest/extra-clarity/commit/7cfd0a404e63332e6c5de1487af509b45b6f4cb1))
+
+### CI
+
+* try to bring job generating release notes to life ([73c3fb3](https://github.com/extrawest/extra-clarity/commit/73c3fb32f87934b9e740e74b769ae9e2a097d193))
+
 ## [19.0.1](https://github.com/extrawest/extra-clarity/compare/v19.0.0...v19.0.1) (2025-03-25)
 
 ### Bug fixes
