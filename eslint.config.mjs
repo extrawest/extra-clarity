@@ -162,12 +162,6 @@ export default tseslint.config(
           ],
         },
       ],
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-floating-promises': 'off',
-      '@typescript-eslint/unbound-method': 'off',
-      '@typescript-eslint/no-unsafe-return': 'off',
-      '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
-      '@typescript-eslint/no-explicit-any': 'off',
 
       // Ignoring some unresolvable import paths to silent errors not solvable by any other method:
       // 'import/no-unresolved': [
