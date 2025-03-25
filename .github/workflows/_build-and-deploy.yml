@@ -53,7 +53,7 @@ jobs:
     outputs:
       tag: ${{ steps.get-package-version.outputs.tag }}
       major: ${{ steps.get-package-version.outputs.major }}
-      prefix: ${{ steps.get-storybook-site-prefix.outputs.prefix }}
+      is-latest: ${{ steps.get-is-latest.outputs.is-latest }}
     steps:
       # uses: actions/checkout@v4 -- to make custom actions available from within the repository itself
       - uses: actions/checkout@v4
@@ -62,8 +62,8 @@ jobs:
         with:
           extra-clarity-package-json: ${{ env.LIB_PACKAGE_JSON }}
           tag-full: ${{ inputs.release-tag-full }}
-      - id: get-storybook-site-prefix
-        uses: ./.github/actions/get-storybook-site-prefix
+      - id: get-is-latest
+        uses: ./.github/actions/get-is-latest
         with:
           tag: ${{ steps.get-package-version.outputs.tag }}
           major-version: ${{ steps.get-package-version.outputs.major }}
@@ -77,9 +77,8 @@ jobs:
     outputs:
       notes: ${{ steps.release-notes.outputs.notes }}
     steps:
+      # uses: actions/checkout@v4 -- to make custom actions available from within the repository itself
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/cache@v4
         id: node-modules-cache
         with:
@@ -91,16 +90,9 @@ jobs:
         run: npm run ${{ env.SCRIPT_BUILD_LIB }}
       - name: Generate release notes for GitHub Releases
         id: release-notes
-        shell: bash
-        run: |
-          echo "notes<<EOF" >> $GITHUB_OUTPUT
-          npm run ${{ env.SCRIPT_RELEASE_NOTES }} --silent >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-      - name: List release notes
-        shell: bash
-        run: |
-          echo -e "Auto generated release notes:\n\n"
-          echo "${{ steps.release-notes.outputs.notes }}"
+        uses: ./.github/actions/get-release-notes
+        with:
+          release-notes-script: ${{ env.SCRIPT_RELEASE_NOTES }}
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
@@ -114,6 +106,8 @@ jobs:
     permissions:
       contents: read
     steps:
+      # uses: actions/checkout@v4 -- to make custom actions available from within the repository itself
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VER }}
@@ -122,15 +116,12 @@ jobs:
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
           path: ${{ env.LIB_DIST_PATH }}
-      - id: npm-tag
-        shell: bash
-        run: |
-          if [[ -n "${{ needs.check-version.outputs.prefix }}" ]]; then
-            echo "tag=v${{ needs.check-version.outputs.major }}" >> $GITHUB_OUTPUT
-          else
-            echo "tag=latest" >> $GITHUB_OUTPUT
-          fi
-      - run: npm publish --tag ${{ steps.npm-tag.outputs.tag }}
+      - id: get-npm-tag
+        uses: ./.github/actions/get-npm-tag
+        with:
+          major-version: ${{ needs.check-version.outputs.major }}
+          is-latest: ${{ needs.check-version.outputs.is-latest }}
+      - run: npm publish --tag ${{ steps.get-npm-tag.outputs.tag }}
         working-directory: ${{ env.LIB_DIST_PATH }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
@@ -151,8 +142,7 @@ jobs:
           tag: ${{ needs.check-version.outputs.tag }}
           name: ${{ needs.check-version.outputs.tag }}
           body: ${{ needs.build-extra-clarity.outputs.notes }}
-          makeLatest: ${{ needs.check-version.outputs.prefix == '' && 'true' || 'false' }}
-          # makeLatest == only primary releasing branch
+          makeLatest: ${{ needs.check-version.outputs.is-latest }}
 
   build-and-publish-storybook:
     needs: [check-version, build-extra-clarity]
@@ -174,13 +164,13 @@ jobs:
           path: ${{ env.LIB_DIST_PATH }}
       - name: Building storybook
         run: npm run ${{ env.SCRIPT_BUILD_STORYBOOK }}
-      - name: Correcting firebase hosting site for non-latest versions
-        if: ${{ needs.check-version.outputs.prefix != '' }}
+      - name: Override the configured firebase hosting site in .firebaserc for non-latest versions (adding a prefix vXX-)
+        if: ${{ needs.check-version.outputs.is-latest != 'true' }}
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           include: .firebaserc
           find: ${{ env.SB_FIREBASE_HOSTING_SITE_LATEST }}
-          replace: ${{ needs.check-version.outputs.prefix }}${{ env.SB_FIREBASE_HOSTING_SITE_LATEST }}
+          replace: v${{ needs.check-version.outputs.major }}-${{ env.SB_FIREBASE_HOSTING_SITE_LATEST }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.github-token }}
