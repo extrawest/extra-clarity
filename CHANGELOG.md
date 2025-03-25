@@ -1,5 +1,35 @@
 # Changelog
 
+## [17.13.1](https://github.com/extrawest/extra-clarity/compare/v17.13.0...v17.13.1) (2025-03-25)
+
+### Bug fixes
+
+* **string-filter:** stretch input to full width ([923861c](https://github.com/extrawest/extra-clarity/commit/923861c2de95067f9643c668e94b2a42da35220f))
+* **search-bar:** stretch input to full width, correct icon alignment & visibility when highlighted ([b637a5c](https://github.com/extrawest/extra-clarity/commit/b637a5c257b00ad4f965e5a88ae4626b561c3142))
+
+### Misc
+
+* **search-bar:** fix component imports ([a08ea1a](https://github.com/extrawest/extra-clarity/commit/a08ea1a2f0d6eff4f99b1cce9805ff7d77343394))
+* **git:** add .nx folder entirely to .gitignore ([0f6da6c](https://github.com/extrawest/extra-clarity/commit/0f6da6cb996374d8f98bf2c2eceae73209eb351a))
+* fix broken links to original Clarity docs about datagrids ([cfd5f2b](https://github.com/extrawest/extra-clarity/commit/cfd5f2bd996fa38f78ea5222fc5d4c8cca1385a7))
+* **release-it:** correct branch config & required dev dependencies ([67a0902](https://github.com/extrawest/extra-clarity/commit/67a0902d31d690552a7d9b5625e86a558e7463d0))
+
+### Documentation
+
+* add versions of Angular & Clarity used for current Storybook build ([7f6133f](https://github.com/extrawest/extra-clarity/commit/7f6133f88ff3dafb5a8276b2f338fb7c3c0bd424))
+* add package version to overview page ([30218f0](https://github.com/extrawest/extra-clarity/commit/30218f0f2e080296d6fa24f53aa75071c348015f))
+* **storybook:** upgrade Storybook to version 8.6 ([#11](https://github.com/extrawest/extra-clarity/issues/11)) ([79c258f](https://github.com/extrawest/extra-clarity/commit/79c258f4b0756ddaa5f67580b4adfe771a81f6e0))
+
+### CI
+
+* repair generation of release notes in GitHub Actions ([365870e](https://github.com/extrawest/extra-clarity/commit/365870e040fcf917d8c01ab1fe3db751036e1e6a))
+* correct formatting according to main branch ([3ebfde1](https://github.com/extrawest/extra-clarity/commit/3ebfde1436ae91bdc033b94281d7e338a1b96edb))
+* rename workflows ([0d7de86](https://github.com/extrawest/extra-clarity/commit/0d7de86b462e0c80b2aaa81006e3945022ddc1bb))
+* revert setting of storybook site prefix to evaluate it dynamically from package version ([0a5449d](https://github.com/extrawest/extra-clarity/commit/0a5449d4f6ff0a5a13c493fe13830a83716827c0))
+* set storybook hosting site explicitly in .firebaserc ([a5ba68d](https://github.com/extrawest/extra-clarity/commit/a5ba68d58729bd95cf328d00d3bdd72dde913cf6))
+* utilize conventional-changelog to generate release notes for GitHub Releases ([b11d4a3](https://github.com/extrawest/extra-clarity/commit/b11d4a3f20ef17a9bf5e86004cf41964394f9f0f))
+* disable emojis prepending headers within auto-generated release notes ([5b14f84](https://github.com/extrawest/extra-clarity/commit/5b14f84fa9bcada9664676004b83d2251a433ade))
+
 ## [17.13.0](https://github.com/extrawest/extra-clarity/compare/v17.12.6...v17.13.0) (2025-03-21)
 
 ### ⚠ BREAKING CHANGES
