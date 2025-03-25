@@ -1,5 +1,31 @@
 # Changelog
 
+## [18.0.1](https://github.com/extrawest/extra-clarity/compare/v18.0.0...v18.0.1) (2025-03-25)
+
+### Bug fixes
+
+* **string-filter:** stretch input to full width ([eafaf09](https://github.com/extrawest/extra-clarity/commit/eafaf09b2160bc1a9afcba1af6dd7a56608d98fe))
+* **search-bar:** stretch input to full width, correct icon alignment & visibility when highlighted ([8b59532](https://github.com/extrawest/extra-clarity/commit/8b59532d2071d1fccef1da3ac7b5ad24532a8bd3))
+
+### Misc
+
+* **git:** add .nx folder entirely to .gitignore ([7dd7d2d](https://github.com/extrawest/extra-clarity/commit/7dd7d2db696029b10b4a7836424ab4c2fd51e2df))
+* fix broken links to original Clarity docs about datagrids ([dd2739f](https://github.com/extrawest/extra-clarity/commit/dd2739f4aed3d3ea7e40e61eee2aa9c2abdd48bd))
+* fix layout of storybook docs broken by prettier ([8259469](https://github.com/extrawest/extra-clarity/commit/8259469404bd53cd46af9c85daabd0c1d3318f28))
+* **storybook:** use default import for getting version value from extra-clarity's package.json ([e054102](https://github.com/extrawest/extra-clarity/commit/e054102c9178f47dba65cdde56774fcbd067f184))
+* **release-it:** restrict required branch name to 18.x ([d1f77a0](https://github.com/extrawest/extra-clarity/commit/d1f77a0936052eb0a27ce556ebffde74f6681501))
+* set branch wildcard allowing secondary branches (XX.x) to publish new releases via release-it ([a6b201b](https://github.com/extrawest/extra-clarity/commit/a6b201b56e0f2221f1a26aae5beb4267010f3b88))
+* add conventional-changelog-conventionalcommits as explicit dev dependency ([923e8c1](https://github.com/extrawest/extra-clarity/commit/923e8c1b5349d20eb1d7d75a3a64931abc0ee61b))
+
+### Documentation
+
+* add versions of Angular & Clarity used for current Storybook build ([1e41c33](https://github.com/extrawest/extra-clarity/commit/1e41c335ec789f63b3be1f557d616412a6e940e4))
+
+### CI
+
+* repair generation of release notes in GitHub Actions ([4a6e19e](https://github.com/extrawest/extra-clarity/commit/4a6e19ed0ba8204f89be48f0ad8bd73dd6f3f475))
+* log generated release notes for debug purposes ([875c034](https://github.com/extrawest/extra-clarity/commit/875c0349e9eabb12de167ded35431f5017e0770f))
+
 ## 18.0.0 (2025-03-23)
 
 ### Documentation
