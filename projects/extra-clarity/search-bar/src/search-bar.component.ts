@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -32,13 +32,7 @@ export const SEARCH_BAR_DEFAULTS = {
   styleUrls: ['./search-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    NgClass,
-    NgIf,
-    ReactiveFormsModule,
-    CdsIconModule,
-    ClrInputModule,
-  ],
+  imports: [NgIf, ReactiveFormsModule, ClrIconModule, ClrInputModule],
 })
 export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   /**
@@ -174,12 +168,12 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
 
     this.formControl.valueChanges
       .pipe(
-        tap(value => !value && this.valueChange.emit('')),
+        tap((value) => !value && this.valueChange.emit('')),
         debounceTime(this.debounceMs),
         takeUntil(this.unobserve$),
         takeUntil(this.destroy$),
       )
-      .subscribe(value => {
+      .subscribe((value) => {
         if (value && value === this.formControl.value) {
           this.valueChange.emit(value);
         }

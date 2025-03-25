@@ -8,10 +8,9 @@
     status="info"
     [shape]="iconOnFill && formControl.value ? iconOnFill : 'search'"
   />
-  <clr-input-container>
+  <clr-input-container [class.active]="highlightActive && formControl.value">
     <input
       type="text"
-      [class.active]="highlightActive && formControl.value"
       #searchInputRef
       clrInput
       [id]="inputId"

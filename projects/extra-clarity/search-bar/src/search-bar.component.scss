@@ -8,14 +8,20 @@
 :host ::ng-deep {
   .clr-form-control {
     margin-top: 0;
+
+    &.active {
+      background-color: var(--clr-color-action-50, #e3f5fc);
+    }
   }
 
-  .clr-control-container {
-    width: 100%;
+  .clr-control-container,
+  .clr-input-wrapper,
+  .clr-input-group,
+  .clr-input {
+    width: 100% !important;
   }
 
   .clr-input {
-    width: 100%;
     padding: 0 1.25rem !important;
   }
 }
@@ -33,7 +39,7 @@
 .ec-search-bar-icon {
   position: absolute;
   left: 0.15rem;
-  top: 0.175rem;
+  top: 0.2rem;
 }
 
 .ec-search-bar-clear {
@@ -45,12 +51,4 @@
   padding: 0;
   width: 1rem;
   height: 1rem;
-
-  cds-icon {
-    margin-top: -0.15rem;
-  }
-}
-
-.active {
-  background-color: var(--clr-color-action-50, #e3f5fc);
 }
