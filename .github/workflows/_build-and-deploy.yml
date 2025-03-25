@@ -77,6 +77,8 @@ jobs:
       notes: ${{ steps.release-notes.outputs.notes }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/cache@v4
         id: node-modules-cache
         with:
@@ -88,6 +90,7 @@ jobs:
         run: npm run ${{ env.SCRIPT_BUILD_LIB }}
       - name: Generate release notes for GitHub Releases
         id: release-notes
+        shell: bash
         run: |
           NOTES=$(npm run ${{ env.SCRIPT_RELEASE_NOTES }} --silent)
           echo -e "Auto generated release notes:\n\n${NOTES}"
