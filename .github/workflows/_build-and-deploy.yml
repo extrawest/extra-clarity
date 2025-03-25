@@ -88,16 +88,16 @@ jobs:
         run: npm ci
       - name: Building extra-clarity
         run: npm run ${{ env.SCRIPT_BUILD_LIB }}
-      - name: Generate release notes for GitHub Releases
-        id: release-notes
-        uses: ./.github/actions/get-release-notes
-        with:
-          release-notes-script: ${{ env.SCRIPT_RELEASE_NOTES }}
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
           path: ${{ env.LIB_DIST_PATH }}
           if-no-files-found: error
+      - name: Generate release notes for GitHub Releases
+        id: release-notes
+        uses: ./.github/actions/get-release-notes
+        with:
+          release-notes-script: ${{ env.SCRIPT_RELEASE_NOTES }}
 
   publish-package-to-npm:
     needs: [check-version, build-extra-clarity]
@@ -108,6 +108,12 @@ jobs:
     steps:
       # uses: actions/checkout@v4 -- to make custom actions available from within the repository itself
       - uses: actions/checkout@v4
+      - name: Evaluate a tag to be attached to the published npm package
+        id: get-npm-tag
+        uses: ./.github/actions/get-npm-tag
+        with:
+          major-version: ${{ needs.check-version.outputs.major }}
+          is-latest: ${{ needs.check-version.outputs.is-latest }}
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VER }}
@@ -116,11 +122,6 @@ jobs:
         with:
           name: ${{ env.LIB_ARTIFACT_NAME }}
           path: ${{ env.LIB_DIST_PATH }}
-      - id: get-npm-tag
-        uses: ./.github/actions/get-npm-tag
-        with:
-          major-version: ${{ needs.check-version.outputs.major }}
-          is-latest: ${{ needs.check-version.outputs.is-latest }}
       - run: npm publish --tag ${{ steps.get-npm-tag.outputs.tag }}
         working-directory: ${{ env.LIB_DIST_PATH }}
         env:

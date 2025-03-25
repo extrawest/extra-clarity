@@ -1,4 +1,4 @@
-name: 'Evaluate a tag for a published npm package'
+name: 'Evaluate a tag to be attached to the published npm package'
 
 inputs:
   major-version:
