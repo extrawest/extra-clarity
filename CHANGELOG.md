@@ -1,6 +1,6 @@
 # Changelog
 
-## [18.0.1](https://github.com/extrawest/extra-clarity/compare/v18.0.0...v18.0.1) (2025-03-25)
+## [18.0.2](https://github.com/extrawest/extra-clarity/compare/v18.0.0...v18.0.2) (2025-03-25)
 
 ### Bug fixes
 
@@ -9,6 +9,8 @@
 
 ### Misc
 
+* **release-it:** build before linting to grant resolution of imports from @extrawest/extra-clarity ([cc1e835](https://github.com/extrawest/extra-clarity/commit/cc1e8354bd624675452f3a24ee2b8339c6c77459))
+* release v18.0.1 ([78b1888](https://github.com/extrawest/extra-clarity/commit/78b1888d82e78cdc0e1499b902cc75eac552ba13))
 * **git:** add .nx folder entirely to .gitignore ([7dd7d2d](https://github.com/extrawest/extra-clarity/commit/7dd7d2db696029b10b4a7836424ab4c2fd51e2df))
 * fix broken links to original Clarity docs about datagrids ([dd2739f](https://github.com/extrawest/extra-clarity/commit/dd2739f4aed3d3ea7e40e61eee2aa9c2abdd48bd))
 * fix layout of storybook docs broken by prettier ([8259469](https://github.com/extrawest/extra-clarity/commit/8259469404bd53cd46af9c85daabd0c1d3318f28))
@@ -23,6 +25,7 @@
 
 ### CI
 
+* refactor GitHub Actions workflow & actions, attach tag to npm package ([cdf33b5](https://github.com/extrawest/extra-clarity/commit/cdf33b5c9a31514748cdfe25d1ce32354a4555d4))
 * repair generation of release notes in GitHub Actions ([4a6e19e](https://github.com/extrawest/extra-clarity/commit/4a6e19ed0ba8204f89be48f0ad8bd73dd6f3f475))
 * log generated release notes for debug purposes ([875c034](https://github.com/extrawest/extra-clarity/commit/875c0349e9eabb12de167ded35431f5017e0770f))
 
