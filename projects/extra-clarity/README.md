@@ -1,6 +1,6 @@
-![Maintaner](https://img.shields.io/badge/maintainer-extrawest.com-blue)
-![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
-![GitHub release](https://img.shields.io/github/package-json/v/extrawest/extra-clarity?filename=projects%2Fextra-clarity%2Fpackage.json)
+[![Maintaner](https://img.shields.io/badge/maintainer-extrawest.com-blue)](https://extrawest.com)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](../../LICENSE)
+[![GitHub release](https://img.shields.io/github/package-json/v/extrawest/extra-clarity?filename=projects%2Fextra-clarity%2Fpackage.json)](https://www.npmjs.com/package/@extrawest/extra-clarity)
 
 # Extra Clarity
 
