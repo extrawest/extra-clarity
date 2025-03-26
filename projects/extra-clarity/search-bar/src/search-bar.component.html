@@ -1,6 +1,8 @@
-<label *ngIf="label" [for]="inputId" class="clr-control-label ec-search-bar-label">
-  {{ label }}
-</label>
+@if (label) {
+  <label [for]="inputId" class="clr-control-label ec-search-bar-label">
+    {{ label }}
+  </label>
+}
 
 <div class="ec-input-wrapper">
   <cds-icon
@@ -8,6 +10,7 @@
     status="info"
     [attr.shape]="iconOnFill && formControl.value ? iconOnFill : 'search'"
   />
+
   <clr-input-container [class.active]="highlightActive && formControl.value">
     <input
       type="text"
@@ -18,13 +21,15 @@
       [formControl]="formControl"
     />
   </clr-input-container>
-  <button
-    *ngIf="formControl.value"
-    type="button"
-    class="btn btn-sm btn-icon ec-search-bar-clear"
-    (click)="clearInput()"
-    [disabled]="isDisabled"
-  >
-    <cds-icon shape="window-close" />
-  </button>
+
+  @if (formControl.value) {
+    <button
+      type="button"
+      class="btn btn-sm btn-icon ec-search-bar-clear"
+      (click)="clearInput()"
+      [disabled]="isDisabled"
+    >
+      <cds-icon shape="window-close" />
+    </button>
+  }
 </div>

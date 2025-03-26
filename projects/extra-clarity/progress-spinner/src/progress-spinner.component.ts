@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -15,7 +14,7 @@ import {
     '[class.progress-spinner-overlay]': '_showSpinner',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [],
 })
 export class ProgressSpinnerComponent implements OnDestroy {
   @Input() size = 'sm';

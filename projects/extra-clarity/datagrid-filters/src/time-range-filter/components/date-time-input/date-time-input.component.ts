@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -28,7 +27,7 @@ import { datetimeInputValidator } from './date-time-input.validators';
   templateUrl: './date-time-input.component.html',
   styleUrls: ['./date-time-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ReactiveFormsModule, ClrInputModule],
+  imports: [ReactiveFormsModule, ClrInputModule],
 })
 export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
   @Input()

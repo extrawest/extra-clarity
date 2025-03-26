@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -56,7 +56,7 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   styleUrls: ['./enum-grouped-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
+    NgTemplateOutlet,
     ClrIconModule,
     ClrTreeViewModule,
     EcMarkMatchedStringPipe,
@@ -477,10 +477,6 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
   protected onSearchTermChange(value: string): void {
     this.searchTerm = value.toLowerCase();
     this.updateVisibleOptions();
-  }
-
-  protected trackByValue(_index: number, option: EcEnumValueFilterOption<E>): E {
-    return option.value;
   }
 
   private areAllValuesAllowed(values: E[]): boolean {

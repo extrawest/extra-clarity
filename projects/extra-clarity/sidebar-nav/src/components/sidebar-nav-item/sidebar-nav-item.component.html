@@ -1,24 +1,30 @@
-<ng-container *ngIf="navItem">
-  <ng-container *ngIf="navItem.type === NavItemTypeEnum.Divider">
-    <div class="nav-divider"></div>
-  </ng-container>
+@if (navItem) {
+  @switch (navItem.type) {
+    @case (NavItemTypeEnum.Divider) {
+      <div class="nav-divider"></div>
+    }
 
-  <ng-container *ngIf="navItem.type === NavItemTypeEnum.Href">
-    <a clrVerticalNavLink [href]="navItem.link">
-      <cds-icon *ngIf="navItem.icon" clrVerticalNavIcon [attr.shape]="navItem.icon" />
-      <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
-    </a>
-  </ng-container>
+    @case (NavItemTypeEnum.Href) {
+      <a clrVerticalNavLink [href]="navItem.link">
+        @if (navItem.icon) {
+          <cds-icon clrVerticalNavIcon [attr.shape]="navItem.icon" />
+        }
+        <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
+      </a>
+    }
 
-  <ng-container *ngIf="navItem.type === NavItemTypeEnum.RouterLink">
-    <a
-      clrVerticalNavLink
-      routerLinkActive="active"
-      [routerLink]="navItem.link"
-      [class.disabled]="navService.isPathActive(navItem.link, 'exact')"
-    >
-      <cds-icon *ngIf="navItem.icon" clrVerticalNavIcon [attr.shape]="navItem.icon" />
-      <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
-    </a>
-  </ng-container>
-</ng-container>
+    @case (NavItemTypeEnum.RouterLink) {
+      <a
+        clrVerticalNavLink
+        routerLinkActive="active"
+        [routerLink]="navItem.link"
+        [class.disabled]="navService.isPathActive(navItem.link, 'exact')"
+      >
+        @if (navItem.icon) {
+          <cds-icon clrVerticalNavIcon [attr.shape]="navItem.icon" />
+        }
+        <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
+      </a>
+    }
+  }
+}

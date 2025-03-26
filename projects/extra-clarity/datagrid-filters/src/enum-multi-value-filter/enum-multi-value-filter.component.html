@@ -70,20 +70,16 @@
                 (change)="onInputChange($event, option.value)"
               />
               <label>
-                <ng-container
-                  [ngTemplateOutlet]="customLabelTpl || defaultLabelTpl"
-                  [ngTemplateOutletContext]="{
-                    $implicit: option,
-                    marked: searchTerm,
-                  }"
-                />
-                <ng-template #defaultLabelTpl>
-                  @if (searchTerm) {
-                    <span [innerHtml]="option.label | markMatched: searchTerm"></span>
-                  } @else {
-                    {{ option.label }}
-                  }
-                </ng-template>
+                @if (customLabelTpl) {
+                  <ng-container
+                    [ngTemplateOutlet]="customLabelTpl"
+                    [ngTemplateOutletContext]="{ $implicit: option, marked: searchTerm }"
+                  />
+                } @else if (searchTerm) {
+                  <span [innerHtml]="option.label | markMatched: searchTerm"></span>
+                } @else {
+                  {{ option.label }}
+                }
               </label>
             </clr-checkbox-wrapper>
           }

@@ -1,17 +1,21 @@
 <clr-input-container class="timestamp-row" [class.active]="isInputDirty(formControl)">
-  <label *ngIf="label" class="timestamp-label">
-    <span class="label-text">
-      {{ label }}
-    </span>
-    <button
-      *ngIf="isInputDirty(formControl)"
-      type="button"
-      class="btn btn-sm btn-link btn-clear-input"
-      (click)="formControl.reset()"
-    >
-      {{ commonStrings.keys.datagridFilters.clear }}
-    </button>
-  </label>
+  @if (label) {
+    <label class="timestamp-label">
+      <span class="label-text">
+        {{ label }}
+      </span>
+
+      @if (isInputDirty(formControl)) {
+        <button
+          type="button"
+          class="btn btn-sm btn-link btn-clear-input"
+          (click)="formControl.reset()"
+        >
+          {{ commonStrings.keys.datagridFilters.clear }}
+        </button>
+      }
+    </label>
+  }
 
   <input
     [type]="inputType"

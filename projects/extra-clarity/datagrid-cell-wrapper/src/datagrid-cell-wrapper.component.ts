@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -27,7 +27,7 @@ export const CELL_WRAPPER_DEFAULTS = {
   templateUrl: './datagrid-cell-wrapper.component.html',
   styleUrls: ['./datagrid-cell-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, EcButtonCopyToClipboardComponent],
+  imports: [NgTemplateOutlet, EcButtonCopyToClipboardComponent],
 })
 export class EcDatagridCellWrapperComponent implements OnDestroy, OnInit {
   /**

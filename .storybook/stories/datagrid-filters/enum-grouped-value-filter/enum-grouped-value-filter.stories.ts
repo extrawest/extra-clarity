@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { ClrDatagridModule } from '@clr/angular';
@@ -165,7 +164,7 @@ export const WithinDatagridStory: Story = {
   name: 'Story: With datagrid',
   decorators: [
     moduleMetadata({
-      imports: [ClrDatagridModule, CommonModule, EcEnumGroupedValueFilterComponent],
+      imports: [ClrDatagridModule, EcEnumGroupedValueFilterComponent],
     }),
   ],
   render: (args) => ({

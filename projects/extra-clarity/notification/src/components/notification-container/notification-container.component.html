@@ -1,12 +1,9 @@
-<ng-container *ngIf="groupedInstances$ | async as groups">
-  <div
-    *ngFor="let group of groups; trackBy: trackGroupById"
-    class="notification-wrapper notification-wrapper-{{ group[0] }}"
-  >
-    <ec-notification
-      *ngFor="let instance of group[1]"
-      [instance]="instance"
-      (destroyed)="remove(instance)"
-    />
-  </div>
-</ng-container>
+@if (groupedInstances$ | async; as groups) {
+  @for (group of groups; track group[0]) {
+    <div class="notification-wrapper notification-wrapper-{{ group[0] }}">
+      @for (instance of group[1]; track instance) {
+        <ec-notification [instance]="instance" (destroyed)="remove(instance)" />
+      }
+    </div>
+  }
+}

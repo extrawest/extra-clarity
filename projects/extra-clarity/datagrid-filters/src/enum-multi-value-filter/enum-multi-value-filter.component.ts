@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -60,7 +60,7 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
   styleUrls: ['./enum-multi-value-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
+    NgTemplateOutlet,
     ClrCheckboxModule,
     ClrIconModule,
     EcMarkMatchedStringPipe,

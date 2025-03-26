@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -25,7 +24,7 @@ export const DEFAULT_PERIOD_SEC = 60;
   templateUrl: './auto-refresh.component.html',
   styleUrls: ['./auto-refresh.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ReactiveFormsModule, ClrCheckboxModule],
+  imports: [ReactiveFormsModule, ClrCheckboxModule],
 })
 export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   /**

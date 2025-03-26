@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -48,7 +47,6 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   styleUrls: ['./time-range-filter-toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ClrIconModule,
     EcPopoverToggleLabelDirective,
     EcPopoverToggleComponent,

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
 
 import { EcNavItemGroup, EcNavItemLink } from '../../sidebar-nav.models';
@@ -6,18 +6,19 @@ import { EcSidebarNavService } from '../../sidebar-nav.service';
 
 @Component({
   selector: 'ec-sidebar-nav-label',
-  imports: [CommonModule],
+  imports: [NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-container *ngIf="navItem">
-      <ng-container
-        [ngTemplateOutlet]="customLabelTpl ?? defaultLabelTpl"
-        [ngTemplateOutletContext]="{ $implicit: navItem }"
-      />
-      <ng-template #defaultLabelTpl>
+    @if (navItem) {
+      @if (customLabelTpl) {
+        <ng-container
+          [ngTemplateOutlet]="customLabelTpl"
+          [ngTemplateOutletContext]="{ $implicit: navItem }"
+        />
+      } @else {
         {{ navItem.label }}
-      </ng-template>
-    </ng-container>
+      }
+    }
   `,
   host: {
     '[style.font-weight]': `fontWeight`,

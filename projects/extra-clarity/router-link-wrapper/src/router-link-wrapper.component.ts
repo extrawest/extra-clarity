@@ -1,23 +1,23 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Params, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'ec-router-link',
   template: `
-    <a
-      *ngIf="enabled; else content"
-      [routerLink]="fwdRouterLink"
-      [queryParams]="queryParams ?? null"
-    >
-      <ng-container *ngTemplateOutlet="content" />
-    </a>
+    @if (enabled) {
+      <a [routerLink]="fwdRouterLink" [queryParams]="queryParams ?? null">
+        <ng-container [ngTemplateOutlet]="content" />
+      </a>
+    } @else {
+      <ng-container [ngTemplateOutlet]="content" />
+    }
     <ng-template #content>
       <ng-content />
     </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterLink],
+  imports: [NgTemplateOutlet, RouterLink],
 })
 export class EcRouterLinkWrapperComponent {
   /**

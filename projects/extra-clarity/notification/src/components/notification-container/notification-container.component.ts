@@ -39,10 +39,6 @@ export class NotificationContainerComponent {
     });
   }
 
-  trackGroupById(index: number, [group]: [string, NotificationData[]]): string {
-    return group;
-  }
-
   private groupByConfigPosition(
     instances: NotificationData[],
   ): [NotificationPosition | 'undefined', NotificationData[]][] {

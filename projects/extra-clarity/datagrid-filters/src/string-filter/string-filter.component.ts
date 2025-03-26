@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -47,7 +46,7 @@ export const STRING_FILTER_DEFAULTS = {
   templateUrl: './string-filter.component.html',
   styleUrls: ['./string-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ReactiveFormsModule, ClrIconModule, ClrInputModule],
+  imports: [ReactiveFormsModule, ClrIconModule, ClrInputModule],
   providers: [
     // make EcStringFilterComponent queryable via @ViewChild(EcDatagridFilter)
     {

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
 
 import { ClrVerticalNavModule } from '@clr/angular';
@@ -13,12 +12,7 @@ import { EcSidebarNavService } from './sidebar-nav.service';
   templateUrl: './sidebar-nav.component.html',
   styleUrl: './sidebar-nav.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    ClrVerticalNavModule,
-    EcSidebarNavGroupComponent,
-    EcSidebarNavItemComponent,
-  ],
+  imports: [ClrVerticalNavModule, EcSidebarNavGroupComponent, EcSidebarNavItemComponent],
   providers: [EcSidebarNavService],
 })
 export class EcSidebarNavComponent implements OnInit {

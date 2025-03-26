@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -26,7 +25,7 @@ import { EcDateTimeInputComponent } from '../date-time-input';
   templateUrl: './date-time-group.component.html',
   styleUrls: ['./date-time-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, EcDateTimeInputComponent],
+  imports: [EcDateTimeInputComponent],
 })
 export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {
   @Input()

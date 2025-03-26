@@ -12,15 +12,14 @@
   >
     <clr-alert-item>
       <span class="alert-text">
-        <ng-container *ngIf="!data.template">
+        @if (!data.template) {
           {{ instance.message }}
-        </ng-container>
-
-        <ng-container
-          *ngIf="data.template"
-          [ngTemplateOutlet]="instance.template!"
-          [ngTemplateOutletContext]="{ $implicit: this, data: config.data }"
-        />
+        } @else {
+          <ng-container
+            [ngTemplateOutlet]="instance.template!"
+            [ngTemplateOutletContext]="{ $implicit: this, data: config.data }"
+          />
+        }
       </span>
     </clr-alert-item>
   </clr-alert>

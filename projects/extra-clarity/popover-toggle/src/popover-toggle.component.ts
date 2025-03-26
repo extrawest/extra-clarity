@@ -1,4 +1,3 @@
-import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -45,14 +44,7 @@ import { EcPopoverAlign } from './types';
   templateUrl: './popover-toggle.component.html',
   styleUrls: ['./popover-toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    NgClass,
-    NgIf,
-    NgTemplateOutlet,
-    CdkTrapFocusDirective,
-    ClrIconModule,
-    ClrPopoverModuleNext,
-  ],
+  imports: [CdkTrapFocusDirective, ClrIconModule, ClrPopoverModuleNext],
   providers: [ClrPopoverEventsService, ClrPopoverPositionService, ClrPopoverToggleService],
 })
 export class EcPopoverToggleComponent implements OnChanges, OnDestroy {

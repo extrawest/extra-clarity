@@ -9,26 +9,21 @@
   clrPopoverOpenCloseButton
   #anchor
 >
-  <ng-container *ngIf="customLabelContent; else labelTextTmpl">
+  @if (customLabelContent) {
     <ng-content select="ec-popover-toggle-label, [ecPopoverToggleLabel]" />
-  </ng-container>
-  <ng-template #labelTextTmpl>
-    <ng-container *ngIf="withDropdownIcon; else withoutDropdownIconTmpl">
-      <ng-container
-        *ngIf="dropdownIconPosition === EcDropdownIconPosition.Right; else leftIconTmpl"
-      >
+  } @else {
+    @if (withDropdownIcon) {
+      @if (dropdownIconPosition === EcDropdownIconPosition.Right) {
         {{ labelText }}
         <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection" />
-      </ng-container>
-      <ng-template #leftIconTmpl>
+      } @else {
         <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection" />
         {{ labelText }}
-      </ng-template>
-    </ng-container>
-    <ng-template #withoutDropdownIconTmpl>
+      }
+    } @else {
       {{ labelText }}
-    </ng-template>
-  </ng-template>
+    }
+  }
 </button>
 
 <div

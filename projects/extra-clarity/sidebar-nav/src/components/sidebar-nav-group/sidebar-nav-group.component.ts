@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -21,7 +20,6 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   templateUrl: './sidebar-nav-group.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ClrIconModule,
     ClrVerticalNavModule,
     EcSidebarNavItemComponent,

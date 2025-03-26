@@ -1,4 +1,4 @@
-<ng-container *ngIf="_showSpinner">
+@if (_showSpinner) {
   <span [class]="'spinner-' + size + ' spinner'"></span>
   <span>&nbsp;<ng-content /></span>
-</ng-container>
+}

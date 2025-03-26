@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -52,7 +51,7 @@ export const TIMERANGE_FILTER_DEFAULTS = {
   templateUrl: './time-range-filter.component.html',
   styleUrls: ['./time-range-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ReactiveFormsModule, ClrRadioModule, EcDateTimeGroupComponent],
+  imports: [ReactiveFormsModule, ClrRadioModule, EcDateTimeGroupComponent],
   providers: [
     {
       provide: EcDatagridFilter,

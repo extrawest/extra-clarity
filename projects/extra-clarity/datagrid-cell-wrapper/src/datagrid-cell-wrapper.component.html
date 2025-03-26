@@ -1,16 +1,17 @@
-<ng-container *ngIf="withCopyBtn; else cellContent">
+@if (withCopyBtn) {
   <div
-    [ngClass]="[
-      'with-btn',
-      btnInline ? 'with-btn-inline' : 'with-btn-right-aligned',
-      truncate ? 'with-btn-trunc' : 'with-btn-break',
-    ]"
+    class="with-btn"
+    [class.with-btn-inline]="btnInline"
+    [class.with-btn-right-aligned]="!btnInline"
+    [class.with-btn-trunc]="truncate"
+    [class.with-btn-break]="!truncate"
   >
-    <ng-container *ngTemplateOutlet="cellContent" />
-    <div class="copy-btn-container" [ngStyle]="{ 'width.px': btnWidthPx ?? btnSizePx }">
+    <ng-container [ngTemplateOutlet]="cellContent" />
+
+    <div class="copy-btn-container" [style.width.px]="btnWidthPx ?? btnSizePx">
       <ec-button-copy-to-clipboard
         class="copy-btn"
-        [ngStyle]="{ 'top.rem': btnTopOffsetRem }"
+        [style.top.rem]="btnTopOffsetRem"
         [disabled]="btnDisabled"
         [heightPx]="btnHeightPx ?? btnSizePx"
         [iconSizePx]="btnIconSizePx"
@@ -27,10 +28,12 @@
       />
     </div>
   </div>
-</ng-container>
+} @else {
+  <ng-container [ngTemplateOutlet]="cellContent" />
+}
 
 <ng-template #cellContent>
-  <div [ngClass]="['cell-content', truncate ? 'trunc-overflow' : 'break-overflow']">
+  <div class="cell-content" [class.trunc-overflow]="truncate" [class.break-overflow]="!truncate">
     <ng-content />
   </div>
 </ng-template>

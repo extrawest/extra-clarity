@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -31,7 +31,7 @@ export const BUTTON_DEFAULTS = {
   templateUrl: './button-copy-to-clipboard.component.html',
   styleUrls: ['./button-copy-to-clipboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ClrIconModule],
+  imports: [NgStyle, ClrIconModule],
   animations,
 })
 export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, OnInit {

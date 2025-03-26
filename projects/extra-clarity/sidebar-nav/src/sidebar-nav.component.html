@@ -1,15 +1,16 @@
-<ng-container *ngFor="let navItem of navList">
-  <ec-sidebar-nav-group
-    *ngIf="navItem.type === NavItemTypeEnum.Group"
-    [navItem]="navItem"
-    [isBold]="rootLevelBold === 'all' || rootLevelBold === 'groups'"
-  />
-  <ec-sidebar-nav-item
-    *ngIf="navItem.type !== NavItemTypeEnum.Group"
-    [navItem]="navItem"
-    [isBold]="rootLevelBold === 'all' || rootLevelBold === 'items'"
-  />
-</ng-container>
+@for (navItem of navList; track navItem) {
+  @if (navItem.type === NavItemTypeEnum.Group) {
+    <ec-sidebar-nav-group
+      [navItem]="navItem"
+      [isBold]="rootLevelBold === 'all' || rootLevelBold === 'groups'"
+    />
+  } @else {
+    <ec-sidebar-nav-item
+      [navItem]="navItem"
+      [isBold]="rootLevelBold === 'all' || rootLevelBold === 'items'"
+    />
+  }
+}
 
 <!-- Fixes NG0100 ExpressionChangedAfterItHasBeenCheckedError -->
 <clr-vertical-nav-group hidden aria-hidden="true" />

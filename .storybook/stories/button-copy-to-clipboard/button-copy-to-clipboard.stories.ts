@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
@@ -93,7 +92,7 @@ export const DocsExampleStory: Story = {
   name: 'Story: Example for docs',
   decorators: [
     moduleMetadata({
-      imports: [EcButtonCopyToClipboardComponent, ClrInputModule, CommonModule, FormsModule],
+      imports: [EcButtonCopyToClipboardComponent, ClrInputModule, FormsModule],
     }),
   ],
   render: (args) => ({

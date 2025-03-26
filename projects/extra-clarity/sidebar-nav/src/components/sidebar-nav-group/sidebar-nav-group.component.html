@@ -1,13 +1,18 @@
-<clr-vertical-nav-group
-  *ngIf="navItem"
-  [ngClass]="{ active: hasActiveLink }"
-  [(clrVerticalNavGroupExpanded)]="isExpanded"
->
-  <cds-icon *ngIf="navItem.icon" clrVerticalNavIcon [attr.shape]="navItem.icon" />
+@if (navItem) {
+  <clr-vertical-nav-group
+    [class.active]="hasActiveLink"
+    [(clrVerticalNavGroupExpanded)]="isExpanded"
+  >
+    @if (navItem.icon) {
+      <cds-icon clrVerticalNavIcon [attr.shape]="navItem.icon" />
+    }
 
-  <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
+    <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
 
-  <clr-vertical-nav-group-children>
-    <ec-sidebar-nav-item *ngFor="let nestedItem of navItem.children" [navItem]="nestedItem" />
-  </clr-vertical-nav-group-children>
-</clr-vertical-nav-group>
+    <clr-vertical-nav-group-children>
+      @for (nestedItem of navItem.children; track nestedItem) {
+        <ec-sidebar-nav-item [navItem]="nestedItem" />
+      }
+    </clr-vertical-nav-group-children>
+  </clr-vertical-nav-group>
+}

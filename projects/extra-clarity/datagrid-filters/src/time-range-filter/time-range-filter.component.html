@@ -1,60 +1,66 @@
 <div [style.width.px]="widthPx">
-  <ng-container *ngIf="!configErrors.length; else wrongConfig">
-    <clr-radio-container *ngIf="presets.length" class="presets-container">
-      <clr-radio-wrapper *ngFor="let preset of presets">
-        <input
-          type="radio"
-          clrRadio
-          [formControl]="radioControl"
-          [value]="preset.id"
-          [name]="propertyKey"
-        />
-        <label [class.label-selected]="filterValue.presetId === preset.id">
-          {{ preset.label }}
-        </label>
-      </clr-radio-wrapper>
+  @if (!configErrors.length) {
+    @if (presets.length) {
+      <clr-radio-container class="presets-container">
+        @for (preset of presets; track preset) {
+          <clr-radio-wrapper>
+            <input
+              type="radio"
+              clrRadio
+              [formControl]="radioControl"
+              [value]="preset.id"
+              [name]="propertyKey"
+            />
+            <label [class.label-selected]="filterValue.presetId === preset.id">
+              {{ preset.label }}
+            </label>
+          </clr-radio-wrapper>
+        }
 
-      <clr-radio-wrapper *ngIf="withCustomRange" class="custom-range-radio">
-        <input
-          type="radio"
-          clrRadio
-          [formControl]="radioControl"
-          [value]="null"
-          [name]="propertyKey"
-        />
-        <label [class.label-selected]="filterValue.presetId === null">
-          {{ commonStrings.keys.timeRangeFilter.customPeriod }}
-        </label>
-      </clr-radio-wrapper>
-    </clr-radio-container>
+        @if (withCustomRange) {
+          <clr-radio-wrapper class="custom-range-radio">
+            <input
+              type="radio"
+              clrRadio
+              [formControl]="radioControl"
+              [value]="null"
+              [name]="propertyKey"
+            />
+            <label [class.label-selected]="filterValue.presetId === null">
+              {{ commonStrings.keys.timeRangeFilter.customPeriod }}
+            </label>
+          </clr-radio-wrapper>
+        }
+      </clr-radio-container>
+    }
 
-    <ec-date-time-group
-      *ngIf="withCustomRange"
-      class="custom-range-input"
-      [value]="visualCustomRange"
-      [disabled]="radioControl.value !== null"
-      [forceEnabledButtons]="radioControl.value !== filterValue.presetId"
-      [withTime]="withTime"
-      (apply)="onCustomRangeApply($event)"
-      (discard)="onCustomRangeDiscard()"
-    />
-
-    <button
-      *ngIf="presets.length && !hasAllTimePreset && !withCustomRange && !defaultPresetId"
-      class="btn btn-sm btn-block"
-      [disabled]="filterValue.presetId === null"
-      (click)="resetToDefault()"
-    >
-      {{ commonStrings.keys.datagridFilters.showAllTime }}
-    </button>
-  </ng-container>
-
-  <ng-template #wrongConfig>
+    @if (withCustomRange) {
+      <ec-date-time-group
+        class="custom-range-input"
+        [value]="visualCustomRange"
+        [disabled]="radioControl.value !== null"
+        [forceEnabledButtons]="radioControl.value !== filterValue.presetId"
+        [withTime]="withTime"
+        (apply)="onCustomRangeApply($event)"
+        (discard)="onCustomRangeDiscard()"
+      />
+    } @else if (presets.length && !hasAllTimePreset && !defaultPresetId) {
+      <button
+        class="btn btn-sm btn-block"
+        [disabled]="filterValue.presetId === null"
+        (click)="resetToDefault()"
+      >
+        {{ commonStrings.keys.datagridFilters.showAllTime }}
+      </button>
+    }
+  } @else {
     <div class="config-errors">
       {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
       <ul>
-        <li *ngFor="let error of configErrors">{{ error }}</li>
+        @for (error of configErrors; track error) {
+          <li>{{ error }}</li>
+        }
       </ul>
     </div>
-  </ng-template>
+  }
 </div>

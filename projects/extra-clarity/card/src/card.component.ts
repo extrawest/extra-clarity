@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -30,14 +30,7 @@ import { EcCardError } from './interfaces';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    ClrIconModule,
-    EcCardFooterDirective,
-    EcCardHeaderActionsDirective,
-    EcCardHeaderTitleDirective,
-    ProgressSpinnerComponent,
-  ],
+  imports: [JsonPipe, ClrIconModule, ProgressSpinnerComponent],
   host: {
     class: 'card',
     '[class.empty]': 'empty',
