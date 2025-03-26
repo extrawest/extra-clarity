@@ -10,7 +10,7 @@
     <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
 
     <clr-vertical-nav-group-children>
-      @for (nestedItem of navItem.children; track nestedItem) {
+      @for (nestedItem of childrenNavItems; track nestedItem) {
         <ec-sidebar-nav-item [navItem]="nestedItem" />
       }
     </clr-vertical-nav-group-children>

@@ -133,6 +133,9 @@ interface EcNavItemGroup {
 Groups support only one level of nesting, i.e. their child items can not be a group in their turn,
 but only a link item or a separator.
 
+**PLEASE NOTE**: All items should be unique by their identity (compared by `===`) within the list
+to help the underlying @for loops to track and render the list items properly.
+
 ### Helpers
 
 To simplify creating of a nav list, there are helper functions and constants:

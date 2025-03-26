@@ -4,13 +4,15 @@ import {
   Component,
   DestroyRef,
   Input,
+  OnChanges,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
 
-import { EC_NAV_ITEM_TYPE, EcNavItemGroup } from '../../sidebar-nav.models';
+import { EC_NAV_ITEM_TYPE, EcNavItemGroup, EcNavListSingleItem } from '../../sidebar-nav.models';
 import { EcSidebarNavService } from '../../sidebar-nav.service';
 import { EcSidebarNavItemComponent } from '../sidebar-nav-item';
 import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
@@ -26,18 +28,26 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
     EcSidebarNavLabelComponent,
   ],
 })
-export class EcSidebarNavGroupComponent implements OnInit {
+export class EcSidebarNavGroupComponent implements OnChanges, OnInit {
   @Input() navItem?: EcNavItemGroup;
   @Input() isBold: boolean = false;
 
   isExpanded = false;
   hasActiveLink = false;
 
+  protected childrenNavItems: readonly EcNavListSingleItem[] = [];
+
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
     private destroyRef: DestroyRef,
     protected navService: EcSidebarNavService,
   ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['navItem']) {
+      this.childrenNavItems = this.navService.getUniqueIdentityItems(this.navItem?.children);
+    }
+  }
 
   ngOnInit(): void {
     this.isExpanded = !!this.navItem?.expanded;

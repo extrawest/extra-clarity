@@ -1,4 +1,4 @@
-@for (navItem of navList; track navItem) {
+@for (navItem of childrenNavItems; track navItem) {
   @if (navItem.type === NavItemTypeEnum.Group) {
     <ec-sidebar-nav-group
       [navItem]="navItem"

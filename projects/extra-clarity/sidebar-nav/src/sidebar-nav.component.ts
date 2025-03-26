@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  TemplateRef,
+} from '@angular/core';
 
 import { ClrVerticalNavModule } from '@clr/angular';
 
@@ -15,7 +23,7 @@ import { EcSidebarNavService } from './sidebar-nav.service';
   imports: [ClrVerticalNavModule, EcSidebarNavGroupComponent, EcSidebarNavItemComponent],
   providers: [EcSidebarNavService],
 })
-export class EcSidebarNavComponent implements OnInit {
+export class EcSidebarNavComponent implements OnInit, OnChanges {
   /**
    * Array of nav items configurations
    *
@@ -47,11 +55,19 @@ export class EcSidebarNavComponent implements OnInit {
   @Input()
   public rootLevelBold: 'none' | 'all' | 'groups' | 'items' = 'groups';
 
+  protected childrenNavItems: EcNavList = [];
+
   protected readonly NavItemTypeEnum = EC_NAV_ITEM_TYPE;
 
   constructor(private navService: EcSidebarNavService) {}
 
   ngOnInit(): void {
     this.navService.customLabelTemplateRef = this.customLabelTpl;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['navList']) {
+      this.childrenNavItems = this.navService.getUniqueIdentityItems(this.navList);
+    }
   }
 }
