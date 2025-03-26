@@ -13,7 +13,7 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -64,7 +64,7 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
     EcSearchBarComponent,
   ],
   providers: [
-    // make EcEnumGroupedValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
+    // make EcEnumGroupedValueFilterComponent queryable via viewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
       useExisting: EcEnumGroupedValueFilterComponent,
@@ -245,8 +245,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override readonly changes = new Subject<void>();
 
-  @ViewChild(EcSearchBarComponent)
-  private searchBar?: EcSearchBarComponent;
+  private readonly searchBar = viewChild(EcSearchBarComponent);
 
   constructor(
     protected commonStrings: EcCommonStringsService,
@@ -295,7 +294,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen: boolean) => {
         if (isOpen) {
-          setTimeout(() => this.searchBar?.focusSearchBar());
+          setTimeout(() => this.searchBar()?.focusSearchBar());
         }
       });
 

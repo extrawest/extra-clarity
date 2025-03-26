@@ -9,7 +9,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -117,20 +117,17 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   @Output()
   public valueChanged = new EventEmitter<EcTimeRangeFilterToggleState>();
 
-  @ViewChild(EcTimeRangeFilterComponent, { static: true })
-  protected timeRangeFilter?: EcTimeRangeFilterComponent;
+  protected readonly timeRangeFilter = viewChild.required(EcTimeRangeFilterComponent);
 
   protected selectedRangeLabel = '';
 
   private initiallyChecked = false;
 
-  get state(): EcTimeRangeFilterToggleState | null {
-    if (!this.timeRangeFilter) {
-      return null;
-    }
+  get state(): EcTimeRangeFilterToggleState {
+    const timeRangeFilter = this.timeRangeFilter();
     return {
-      isActive: this.timeRangeFilter.isActive(),
-      state: this.timeRangeFilter.state,
+      isActive: timeRangeFilter.isActive(),
+      state: timeRangeFilter.state,
     };
   }
 
@@ -159,18 +156,18 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   }
 
   resetToDefault(): void {
-    this.timeRangeFilter?.resetToDefault();
+    this.timeRangeFilter().resetToDefault();
   }
 
   setValue(value: EcTimeRangeFilterValue): void {
-    this.timeRangeFilter?.setValue(value);
+    this.timeRangeFilter().setValue(value);
   }
 
   protected onTimeRangeChange(state: EcFilterState<EcTimeRangeFilterValue>): void {
     this.updateSelectedRangeLabel();
 
     this.valueChanged.emit({
-      isActive: !!this.timeRangeFilter?.isActive(),
+      isActive: this.timeRangeFilter().isActive(),
       state,
     });
   }
@@ -220,7 +217,7 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   }
 
   private updateSelectedRangeLabel(isCalledFromNgOnInit: boolean = false): void {
-    this.selectedRangeLabel = this.getTimeRangeLabel(this.timeRangeFilter?.state.value);
+    this.selectedRangeLabel = this.getTimeRangeLabel(this.timeRangeFilter()?.state.value);
 
     if (!this.initiallyChecked) {
       // TODO: maybe call detectChanges every time when this method is executed?

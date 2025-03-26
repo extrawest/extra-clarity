@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
   DestroyRef,
   ElementRef,
   EventEmitter,
@@ -9,7 +8,8 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
-  ViewChild,
+  contentChild,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -141,11 +141,9 @@ export class EcPopoverToggleComponent implements OnChanges {
   @Output()
   public openChange = new EventEmitter<boolean>();
 
-  @ViewChild('anchor', { static: true })
-  protected anchor?: ElementRef<HTMLButtonElement>;
+  protected readonly anchor = viewChild.required<ElementRef<HTMLButtonElement>>('anchor');
 
-  @ContentChild(EcPopoverToggleLabelDirective)
-  protected customLabelContent?: EcPopoverToggleLabelDirective;
+  protected readonly customLabelContent = contentChild(EcPopoverToggleLabelDirective);
 
   protected isOpen = false;
 
@@ -166,10 +164,11 @@ export class EcPopoverToggleComponent implements OnChanges {
     this.clrPopoverToggleService.openChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen) => {
-        if (this.isOpen === isOpen) return;
-
+        if (this.isOpen === isOpen) {
+          return;
+        }
         if (!isOpen) {
-          this.anchor?.nativeElement.focus();
+          this.anchor().nativeElement.focus();
         }
         this.openChange.emit(isOpen);
         this.isOpen = isOpen;

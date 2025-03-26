@@ -1,14 +1,14 @@
 <!-- Card Header (Optional) -->
 
-@if (title || headerTitleContent || headerActionsContent) {
+@if (title || headerTitleContent() || headerActionsContent()) {
   <div class="card-header">
-    @if (headerTitleContent) {
+    @if (headerTitleContent()) {
       <ng-content select="ec-card-header-title, [ecCardHeaderTitle]" />
     } @else if (title) {
       <span> {{ title }} </span>
     }
 
-    @if (headerActionsContent) {
+    @if (headerActionsContent()) {
       <ng-content select="ec-card-header-actions, [ecCardHeaderActions]" />
     }
   </div>
@@ -79,7 +79,7 @@
 
 <!-- Card Footer (Optional) -->
 
-@if (footerContent) {
+@if (footerContent()) {
   <div class="card-footer">
     <ng-content select="ec-card-footer, [ecCardFooter]" />
   </div>

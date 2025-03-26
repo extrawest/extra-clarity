@@ -3,12 +3,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ContentChild,
   DestroyRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  contentChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -58,14 +58,9 @@ export class EcCardComponent implements OnInit {
   @Output()
   public reload = new EventEmitter<void>();
 
-  @ContentChild(EcCardFooterDirective)
-  protected footerContent?: EcCardFooterDirective;
-
-  @ContentChild(EcCardHeaderActionsDirective)
-  protected headerActionsContent?: EcCardHeaderActionsDirective;
-
-  @ContentChild(EcCardHeaderTitleDirective)
-  protected headerTitleContent?: EcCardHeaderTitleDirective;
+  protected readonly footerContent = contentChild(EcCardFooterDirective);
+  protected readonly headerActionsContent = contentChild(EcCardHeaderActionsDirective);
+  protected readonly headerTitleContent = contentChild(EcCardHeaderTitleDirective);
 
   protected showErrorDetails = false;
   protected unknownError = this.commonStrings.keys.card.unknownError;

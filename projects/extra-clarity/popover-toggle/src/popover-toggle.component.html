@@ -9,7 +9,7 @@
   clrPopoverOpenCloseButton
   #anchor
 >
-  @if (customLabelContent) {
+  @if (customLabelContent()) {
     <ng-content select="ec-popover-toggle-label, [ecPopoverToggleLabel]" />
   } @else {
     @if (withDropdownIcon) {

@@ -10,7 +10,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -88,8 +88,7 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
   @Output()
   public valueChange = new EventEmitter<string>();
 
-  @ViewChild('searchInputRef', { static: true })
-  protected inputRef?: ElementRef<HTMLInputElement>;
+  protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('searchInputRef');
 
   protected readonly formControl = new FormControl<string>('', {
     nonNullable: true,
@@ -157,7 +156,7 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
    * Focus the input element (put the cursor into it).
    */
   public focusSearchBar(): void {
-    this.inputRef?.nativeElement.focus();
+    this.inputRef().nativeElement.focus();
   }
 
   private observeValueChanges(): void {

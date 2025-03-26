@@ -11,7 +11,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -45,11 +45,9 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
   @Output()
   public valueChange = new EventEmitter<number | null>();
 
-  @ViewChild('datetimeInput', { static: true })
-  protected inputRef?: ElementRef<HTMLInputElement>;
+  protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('datetimeInput');
 
-  @ViewChild(ClrInput, { static: true })
-  protected clrInputRef?: ClrInput;
+  protected readonly clrInputRef = viewChild.required(ClrInput);
 
   public inputType = this.inputDateType;
 
@@ -68,10 +66,8 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
   ) {}
 
   ngAfterViewInit(): void {
-    if (this.inputRef) {
-      this.formControl.addValidators(datetimeInputValidator(this.inputRef));
-      this.formControl.updateValueAndValidity();
-    }
+    this.formControl.addValidators(datetimeInputValidator(this.inputRef()));
+    this.formControl.updateValueAndValidity();
 
     this.formControl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -122,7 +118,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
     if (this.formControl.value) return;
 
     this.formControl.updateValueAndValidity({ emitEvent: false });
-    this.clrInputRef?.triggerValidation();
+    this.clrInputRef().triggerValidation();
     this.changeDetectorRef.markForCheck();
   }
 

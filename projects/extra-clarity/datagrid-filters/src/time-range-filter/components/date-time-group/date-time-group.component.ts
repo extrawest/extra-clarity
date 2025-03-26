@@ -9,7 +9,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -45,11 +45,13 @@ export class EcDateTimeGroupComponent implements OnChanges, OnInit {
   @Output()
   public discard = new EventEmitter<void>();
 
-  @ViewChild('inputStart', { static: true, read: EcDateTimeInputComponent })
-  protected inputStart?: EcDateTimeInputComponent;
+  protected readonly inputStart = viewChild.required('inputStart', {
+    read: EcDateTimeInputComponent,
+  });
 
-  @ViewChild('inputEnd', { static: true, read: EcDateTimeInputComponent })
-  protected inputEnd?: EcDateTimeInputComponent;
+  protected readonly inputEnd = viewChild.required('inputEnd', {
+    read: EcDateTimeInputComponent,
+  });
 
   protected storedRange: EcCustomTimeRange = ALL_TIME;
   protected visualRange: EcCustomTimeRange = ALL_TIME;
@@ -61,7 +63,7 @@ export class EcDateTimeGroupComponent implements OnChanges, OnInit {
   ) {}
 
   protected get isAnyInputInvalid(): boolean {
-    return !!this.inputEnd?.formControl.invalid || !!this.inputStart?.formControl.invalid;
+    return this.inputEnd().formControl.invalid || this.inputStart().formControl.invalid;
   }
 
   protected get isRangeModified(): boolean {
@@ -85,7 +87,7 @@ export class EcDateTimeGroupComponent implements OnChanges, OnInit {
   }
 
   protected onApply(): void {
-    if (!this.inputStart?.formControl.valid || !this.inputEnd?.formControl.valid) {
+    if (!this.inputStart().formControl.valid || !this.inputEnd().formControl.valid) {
       return;
     }
 
@@ -103,10 +105,10 @@ export class EcDateTimeGroupComponent implements OnChanges, OnInit {
     // Force restoring a valid input state when the 'value' was not actually changed,
     // but something invalid/incomplete was entered
     if (this.visualRange.start === this.storedRange.start) {
-      this.inputStart?.restoreInputValue();
+      this.inputStart().restoreInputValue();
     }
     if (this.visualRange.end === this.storedRange.end) {
-      this.inputEnd?.restoreInputValue();
+      this.inputEnd().restoreInputValue();
     }
     this.visualRange = { ...this.storedRange };
     this.discard.emit();

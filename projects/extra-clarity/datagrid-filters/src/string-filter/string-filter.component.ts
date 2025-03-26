@@ -12,7 +12,7 @@ import {
   Optional,
   Output,
   SimpleChanges,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
@@ -49,7 +49,7 @@ export const STRING_FILTER_DEFAULTS = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, ClrIconModule, ClrInputModule],
   providers: [
-    // make EcStringFilterComponent queryable via @ViewChild(EcDatagridFilter)
+    // make EcStringFilterComponent queryable via viewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
       useExisting: EcStringFilterComponent,
@@ -202,11 +202,9 @@ export class EcStringFilterComponent<T extends object = object>
   @Output()
   public filterValueChanged = new EventEmitter<EcFilterState<string>>();
 
-  @ViewChild('inputElement')
-  protected inputElementRef?: ElementRef<HTMLInputElement>;
+  protected readonly inputElementRef = viewChild<ElementRef<HTMLInputElement>>('inputElement');
 
-  @ViewChild(ClrInput)
-  protected clrInputRef?: ClrInput;
+  protected readonly clrInputRef = viewChild(ClrInput);
 
   protected configErrors: string[] = [];
   protected filterValue = '';
@@ -302,7 +300,7 @@ export class EcStringFilterComponent<T extends object = object>
         }
         if (this.formControl.value !== this.filterValue) {
           this.updateFormControlValue(this.filterValue);
-          this.clrInputRef?.triggerValidation();
+          this.clrInputRef()?.triggerValidation();
           this.changeDetectorRef.markForCheck();
         }
         setTimeout(() => this.focusInputElement());
@@ -436,7 +434,7 @@ export class EcStringFilterComponent<T extends object = object>
   }
 
   private focusInputElement(): void {
-    this.inputElementRef?.nativeElement.focus();
+    this.inputElementRef()?.nativeElement.focus();
   }
 
   private observeInputChanges(): void {
@@ -497,7 +495,7 @@ export class EcStringFilterComponent<T extends object = object>
     }
 
     this.formControl.setValue(newValue, { emitEvent: false });
-    this.clrInputRef?.triggerValidation();
+    this.clrInputRef()?.triggerValidation();
 
     if (newValue && this.formControl.invalid) {
       this.updateFormControlValue('');

@@ -13,7 +13,7 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -67,7 +67,7 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
     EcSearchBarComponent,
   ],
   providers: [
-    // make EcEnumSingleValueFilterComponent queryable via @ViewChild(EcDatagridFilter)
+    // make EcEnumSingleValueFilterComponent queryable via viewChild(EcDatagridFilter)
     {
       provide: EcDatagridFilter,
       useExisting: EcEnumSingleValueFilterComponent,
@@ -235,8 +235,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override readonly changes = new Subject<void>();
 
-  @ViewChild(EcSearchBarComponent)
-  private searchBar?: EcSearchBarComponent;
+  private readonly searchBar = viewChild(EcSearchBarComponent);
 
   constructor(
     protected commonStrings: EcCommonStringsService,
@@ -288,7 +287,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen: boolean) => {
         if (isOpen) {
-          setTimeout(() => this.searchBar?.focusSearchBar());
+          setTimeout(() => this.searchBar()?.focusSearchBar());
         }
       });
 
