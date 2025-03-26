@@ -1,15 +1,17 @@
-import { Location } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  HostListener,
+  DestroyRef,
   Inject,
   OnDestroy,
   OnInit,
+  computed,
   input,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { Subscription, SubscriptionLike } from 'rxjs';
+import { Subscription, SubscriptionLike, filter, fromEvent } from 'rxjs';
 
 import { DialogConfig } from '../../dialog-config';
 import { DialogRef } from '../../dialog-ref';
@@ -29,20 +31,25 @@ export class DialogContainer implements OnInit, OnDestroy {
 
   private locationSubscription: SubscriptionLike = Subscription.EMPTY;
 
+  private isDialogClosable = computed(() => this.config.closable ?? this.closable());
+
   constructor(
+    private readonly destroyRef: DestroyRef,
     private readonly dialogRef: DialogRef,
     private readonly location: Location,
+    @Inject(DOCUMENT) private readonly documentRef: Document,
     @Inject(DIALOG_CONFIG) public readonly config: DialogConfig,
   ) {}
 
-  @HostListener('document:keydown.escape', ['$event'])
-  handleKeyboardEvent(): void {
-    if (this.config.closable ?? this.closable()) {
-      this.dialogRef.close();
-    }
-  }
-
   public ngOnInit(): void {
+    fromEvent<KeyboardEvent>(this.documentRef, 'keydown')
+      .pipe(
+        filter((event) => event.key === 'Escape'),
+        filter(() => this.isDialogClosable()),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => this.dialogRef.close());
+
     this.locationSubscription = this.location.subscribe(() => this.onClose());
   }
 
