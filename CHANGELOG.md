@@ -1,5 +1,21 @@
 # Changelog
 
+## [19.1.0](https://github.com/extrawest/extra-clarity/compare/v19.0.9...v19.1.0) (2025-03-26)
+
+### Features
+
+* migrate to signal queries viewChild(ren) & contentChild(ren) ([af41fd9](https://github.com/extrawest/extra-clarity/commit/af41fd97e33aa5c28bf1a34e580ed29306ed1903))
+* migrate to takeUntilDestroyed() for unsubscribing from Observables ([08b6d81](https://github.com/extrawest/extra-clarity/commit/08b6d81717bd5df5966ea41a695b088195037263))
+* migrate all templates to new control-flow ([ee14afb](https://github.com/extrawest/extra-clarity/commit/ee14afb10e36f611f6bc9c53807dd387ca09c916))
+
+### Misc
+
+* add external links to badges in top of readme file ([4120d46](https://github.com/extrawest/extra-clarity/commit/4120d46de5820c47f71d6077908ea91bca89084b))
+
+### Documentation
+
+* upgrade readme files with actual data on required version of Clarity packages ([05ddb63](https://github.com/extrawest/extra-clarity/commit/05ddb63bdc4e602e2d6c9b8112f8e8e95ad7a98f))
+
 ## [19.0.9](https://github.com/extrawest/extra-clarity/compare/v19.0.8...v19.0.9) (2025-03-26)
 
 ### Misc
