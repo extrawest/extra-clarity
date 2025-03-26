@@ -5,7 +5,7 @@ export const EC_NAV_ITEM_TYPE = {
   Group: 'group',
 } as const;
 
-interface EcNavItemDivider {
+export interface EcNavItemDivider {
   type: typeof EC_NAV_ITEM_TYPE.Divider;
 }
 

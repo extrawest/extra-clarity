@@ -138,14 +138,14 @@ to help the underlying @for loops to track and render the list items properly.
 
 ### Helpers
 
-To simplify creating of a nav list, there are helper functions and constants:
+To simplify creating of a nav list, there are helper functions:
 
 ```typescript
 import {
+  createDivider,
   createGroup,
   createHrefLink,
   createRouterLink,
-  divider,
 } from '@extrawest/extra-clarity/sidebar-nav';
 ```
 
@@ -201,13 +201,14 @@ const navGroup: EcNavItemGroup = {
 };
 ```
 
-4.`divider` is a constant to substitute `{ type: 'divider' }`:
+4.`createDivider()`:
 
 ```typescript
 const navList: EcNavListItem[] = [
   createRouterLink('Router Link #1', '/router-link-1'),
-  createRouterLink('Router Link #1', '/router-link-1'),
-  divider,
+  createDivider(), // <<--- provides a divider item with a unique identity
+  createRouterLink('Router Link #2', '/router-link-2'),
+  { type: 'divider' }, // <<--- equivalent
   createHrefLink('Send Feedback', 'mailto:support@example.com'),
 ];
 ```

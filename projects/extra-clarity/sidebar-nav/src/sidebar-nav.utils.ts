@@ -1,5 +1,6 @@
 import {
   EC_NAV_ITEM_TYPE,
+  EcNavItemDivider,
   EcNavItemGroup,
   EcNavItemLink,
   EcNavListSingleItem,
@@ -8,6 +9,8 @@ import {
 export const divider = {
   type: EC_NAV_ITEM_TYPE.Divider,
 };
+
+export const createDivider = (): EcNavItemDivider => ({ type: EC_NAV_ITEM_TYPE.Divider });
 
 export const createGroup = (
   label: string,
