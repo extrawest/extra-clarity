@@ -1,5 +1,17 @@
 # Changelog
 
+## [19.0.9](https://github.com/extrawest/extra-clarity/compare/v19.0.8...v19.0.9) (2025-03-26)
+
+### Misc
+
+* set required versions of @clr/angular & @clr/ui as ^17.5.0 (with added support of Angular 19) ([1d96aa8](https://github.com/extrawest/extra-clarity/commit/1d96aa8efd076bc042e598ad962707594818a2b2))
+* **release-it:** run 'npm i' before release to grant all modules match versions from package.json ([12f570e](https://github.com/extrawest/extra-clarity/commit/12f570e9c3b24eac83decb7bdd463327df898711))
+* **release-it:** build before linting to grant resolution of imports from @extrawest/extra-clarity ([18701f4](https://github.com/extrawest/extra-clarity/commit/18701f4106633d278b72d8189f2065424963e83d))
+
+### CI
+
+* use vXX-latest as npm tag for non-primary releasing branches ([ad22cf5](https://github.com/extrawest/extra-clarity/commit/ad22cf5b2029df64be2a500857c8d8ca3f15f318))
+
 ## [19.0.8](https://github.com/extrawest/extra-clarity/compare/v19.0.1...v19.0.8) (2025-03-25)
 
 ### Bug fixes
