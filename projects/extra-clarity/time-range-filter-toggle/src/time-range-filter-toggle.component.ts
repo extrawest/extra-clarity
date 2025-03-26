@@ -2,19 +2,19 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ClarityIcons, angleIcon, calendarIcon } from '@cds/core/icon';
 import { ClrIconModule } from '@clr/angular';
-import { Subject, takeUntil } from 'rxjs';
 
 import {
   EcFilterState,
@@ -54,9 +54,7 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   ],
   providers: [EcTimestampPipe],
 })
-export class EcTimeRangeFilterToggleComponent
-  implements EcResettableFilter, OnChanges, OnDestroy, OnInit
-{
+export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnChanges, OnInit {
   @Input()
   public labelLocale?: string;
 
@@ -126,8 +124,6 @@ export class EcTimeRangeFilterToggleComponent
 
   private initiallyChecked = false;
 
-  private readonly destroy$ = new Subject<void>();
-
   get state(): EcTimeRangeFilterToggleState | null {
     if (!this.timeRangeFilter) {
       return null;
@@ -141,6 +137,7 @@ export class EcTimeRangeFilterToggleComponent
   constructor(
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
     private timestampPipe: EcTimestampPipe,
   ) {
     ClarityIcons.addIcons(angleIcon, calendarIcon);
@@ -152,13 +149,8 @@ export class EcTimeRangeFilterToggleComponent
     }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
-    this.commonStrings.stringsChanged$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.commonStrings.stringsChanged$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.changeDetectorRef.markForCheck();
       this.updateSelectedRangeLabel();
     });

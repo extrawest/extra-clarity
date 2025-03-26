@@ -2,13 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   Inject,
-  OnDestroy,
   OnInit,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ClrLoadingState } from '@clr/angular';
-import { Subject, takeUntil } from 'rxjs';
 import { isPromise } from 'rxjs/internal/util/isPromise';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
@@ -23,26 +23,20 @@ import { DIALOG_CONFIG } from '../../tokens/dialog-config.token';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
-export class ConfirmationDialogComponent implements OnDestroy, OnInit {
+export class ConfirmationDialogComponent implements OnInit {
   public acceptBtnState = ClrLoadingState.DEFAULT;
-
-  private readonly destroy$ = new Subject<void>();
 
   constructor(
     @Inject(DIALOG_CONFIG) public readonly config: ConfirmDialogConfig,
     protected readonly commonStrings: EcCommonStringsService,
+    private readonly destroyRef: DestroyRef,
     private readonly dialogRef: DialogRef,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 

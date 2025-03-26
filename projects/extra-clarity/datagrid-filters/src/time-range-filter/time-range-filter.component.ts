@@ -3,19 +3,20 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Optional,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr/angular';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
@@ -61,7 +62,7 @@ export const TIMERANGE_FILTER_DEFAULTS = {
 })
 export class EcTimeRangeFilterComponent<T extends object = object>
   extends EcDatagridFilter<FilterValue, T>
-  implements AfterViewInit, OnChanges, OnDestroy, OnInit
+  implements AfterViewInit, OnChanges, OnInit
 {
   /**
    * When `true`, the filter will be closed via ClrPopoverToggleService
@@ -164,11 +165,10 @@ export class EcTimeRangeFilterComponent<T extends object = object>
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override readonly changes = new Subject<void>();
 
-  private readonly destroy$ = new Subject<void>();
-
   constructor(
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
   ) {
@@ -205,11 +205,6 @@ export class EcTimeRangeFilterComponent<T extends object = object>
     }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
     this.configErrors = this.checkInputsValidity();
 
@@ -218,21 +213,23 @@ export class EcTimeRangeFilterComponent<T extends object = object>
     this.radioControl.markAsTouched();
 
     this.radioControl.valueChanges
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onPresetSelected(value));
 
-    this.clrPopoverToggleService?.openChange.pipe(takeUntil(this.destroy$)).subscribe((open) => {
-      if (open) {
-        this.updateVisualCustomRange();
-        return;
-      }
-      if (this.radioControl.value === null) {
-        this.onCustomRangeDiscard();
-      }
-    });
+    this.clrPopoverToggleService?.openChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((open) => {
+        if (open) {
+          this.updateVisualCustomRange();
+          return;
+        }
+        if (this.radioControl.value === null) {
+          this.onCustomRangeDiscard();
+        }
+      });
 
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 

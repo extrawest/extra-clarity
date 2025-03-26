@@ -3,20 +3,20 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ClrInput, ClrInputModule } from '@clr/angular';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
@@ -29,7 +29,7 @@ import { datetimeInputValidator } from './date-time-input.validators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, ClrInputModule],
 })
-export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnInit {
   @Input()
   public disabled: boolean = false;
 
@@ -57,8 +57,6 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
     nonNullable: true,
   });
 
-  private readonly destroy$ = new Subject<void>();
-
   get inputDateType(): string {
     return this.withTime ? 'datetime-local' : 'date';
   }
@@ -66,6 +64,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
   constructor(
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngAfterViewInit(): void {
@@ -74,9 +73,11 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
       this.formControl.updateValueAndValidity();
     }
 
-    this.formControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((formValue) => {
-      this.valueChange.emit(this.convertFromFormValue(formValue));
-    });
+    this.formControl.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((formValue) => {
+        this.valueChange.emit(this.convertFromFormValue(formValue));
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -97,14 +98,9 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnDes
     }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 

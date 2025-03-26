@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, Input, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { DialogModule, DialogService } from '@extrawest/extra-clarity/dialog';
 
@@ -23,6 +24,7 @@ export class StorybookDialogCallerComponent {
   public closableBackdrop?: boolean;
 
   private readonly dialogService = inject(DialogService);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected onOpen(): void {
     this.dialogService
@@ -32,6 +34,7 @@ export class StorybookDialogCallerComponent {
         closableBackdrop: this.closableBackdrop,
       })
       .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result) => alert(`The value returned from the dialog is '${result}'`));
   }
 }

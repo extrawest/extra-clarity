@@ -3,17 +3,18 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Optional,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 
 import { ClarityIcons, filterOffIcon } from '@cds/core/icon';
@@ -24,7 +25,7 @@ import {
   ClrInputModule,
   ClrPopoverToggleService,
 } from '@clr/angular';
-import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
+import { Subject, debounceTime, tap } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
@@ -57,7 +58,7 @@ export const STRING_FILTER_DEFAULTS = {
 })
 export class EcStringFilterComponent<T extends object = object>
   extends EcDatagridFilter<string, T>
-  implements AfterViewInit, OnChanges, OnDestroy, OnInit
+  implements AfterViewInit, OnChanges, OnInit
 {
   /**
    * Comparison type for the filtering algorithm:
@@ -218,11 +219,10 @@ export class EcStringFilterComponent<T extends object = object>
 
   private minLengthValidatorFn?: ValidatorFn;
 
-  private readonly destroy$ = new Subject<void>();
-
   constructor(
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
   ) {
@@ -295,7 +295,7 @@ export class EcStringFilterComponent<T extends object = object>
 
   ngAfterViewInit(): void {
     this.clrPopoverToggleService?.openChange
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen: boolean) => {
         if (!isOpen) {
           return;
@@ -317,11 +317,6 @@ export class EcStringFilterComponent<T extends object = object>
     }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
     this.configErrors = this.checkInputsValidity();
 
@@ -336,7 +331,7 @@ export class EcStringFilterComponent<T extends object = object>
     this.formControl.markAsTouched();
 
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
@@ -449,7 +444,7 @@ export class EcStringFilterComponent<T extends object = object>
       .pipe(
         tap((value) => !value && this.updateFilterValue('')),
         debounceTime(this.debounceTimeMs),
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((value: string) => {
         if (

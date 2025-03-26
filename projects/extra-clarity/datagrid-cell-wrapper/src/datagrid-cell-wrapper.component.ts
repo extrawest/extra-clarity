@@ -3,14 +3,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
-
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   BUTTON_DEFAULTS,
@@ -29,7 +28,7 @@ export const CELL_WRAPPER_DEFAULTS = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet, EcButtonCopyToClipboardComponent],
 })
-export class EcDatagridCellWrapperComponent implements OnDestroy, OnInit {
+export class EcDatagridCellWrapperComponent implements OnInit {
   /**
    * Where to place the copy-to-clipboard button
    * when the content length is less than the cell width:
@@ -146,21 +145,15 @@ export class EcDatagridCellWrapperComponent implements OnDestroy, OnInit {
   @Output()
   public failed = new EventEmitter<unknown>();
 
-  private readonly destroy$ = new Subject<void>();
-
   constructor(
     protected readonly commonStrings: EcCommonStringsService,
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly destroyRef: DestroyRef,
   ) {}
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 
   ngOnInit(): void {
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 }

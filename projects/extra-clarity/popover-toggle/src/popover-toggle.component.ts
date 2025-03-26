@@ -2,15 +2,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChild,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ClarityIcons, angleIcon } from '@cds/core/icon';
 import { Directions } from '@cds/core/internal';
@@ -24,7 +25,6 @@ import {
   ClrPopoverToggleService,
   ClrSide,
 } from '@clr/angular';
-import { Subject, takeUntil } from 'rxjs';
 
 import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 
@@ -47,7 +47,7 @@ import { EcPopoverAlign } from './types';
   imports: [CdkTrapFocusDirective, ClrIconModule, ClrPopoverModuleNext],
   providers: [ClrPopoverEventsService, ClrPopoverPositionService, ClrPopoverToggleService],
 })
-export class EcPopoverToggleComponent implements OnChanges, OnDestroy {
+export class EcPopoverToggleComponent implements OnChanges {
   /**
    * Configure the linking point of the toggle-button and content-body.
    * The first half defines the point on the anchor (button), and second one is for the content body.
@@ -156,21 +156,24 @@ export class EcPopoverToggleComponent implements OnChanges, OnDestroy {
 
   protected readonly EcDropdownIconPosition = EcDropdownIconPosition;
 
-  private readonly destroy$ = new Subject<void>();
-
-  constructor(private clrPopoverToggleService: ClrPopoverToggleService) {
+  constructor(
+    private clrPopoverToggleService: ClrPopoverToggleService,
+    private destroyRef: DestroyRef,
+  ) {
     this.popoverPosition = this.getPopoverPosition();
     this.buttonClasses = this.getButtonClasses();
 
-    this.clrPopoverToggleService.openChange.pipe(takeUntil(this.destroy$)).subscribe((isOpen) => {
-      if (this.isOpen === isOpen) return;
+    this.clrPopoverToggleService.openChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((isOpen) => {
+        if (this.isOpen === isOpen) return;
 
-      if (!isOpen) {
-        this.anchor?.nativeElement.focus();
-      }
-      this.openChange.emit(isOpen);
-      this.isOpen = isOpen;
-    });
+        if (!isOpen) {
+          this.anchor?.nativeElement.focus();
+        }
+        this.openChange.emit(isOpen);
+        this.isOpen = isOpen;
+      });
 
     ClarityIcons.addIcons(angleIcon);
   }
@@ -187,10 +190,6 @@ export class EcPopoverToggleComponent implements OnChanges, OnDestroy {
     if (changes['open']) {
       this.toggleOpen(changes['open'].currentValue as boolean | undefined);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
   }
 
   /**

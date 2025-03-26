@@ -2,9 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   Input,
   OnInit,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
@@ -35,10 +37,11 @@ export class EcSidebarNavItemComponent implements OnInit {
   constructor(
     readonly changeDetectionRef: ChangeDetectorRef,
     readonly navService: EcSidebarNavService,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
-    this.navService.navigationEnd.subscribe(() => {
+    this.navService.navigationEnd.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       // update the view for dynamic classes 'active' & 'disabled' on router-link-items
       this.changeDetectionRef.markForCheck();
     });

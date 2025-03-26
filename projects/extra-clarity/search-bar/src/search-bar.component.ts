@@ -2,16 +2,17 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ClarityIcons, searchIcon, windowCloseIcon } from '@cds/core/icon';
@@ -33,7 +34,7 @@ export const SEARCH_BAR_DEFAULTS = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, ClrIconModule, ClrInputModule],
 })
-export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
+export class EcSearchBarComponent implements OnChanges, OnInit {
   /**
    * Debounce delay for the input field in milliseconds, i.e. a delay between entering the last
    * character and emitting the entered value to the `valueChange` output.
@@ -96,11 +97,11 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
   protected readonly inputId = uniqueIdFactory();
 
   private readonly unobserve$ = new Subject<void>();
-  private readonly destroy$ = new Subject<void>();
 
   constructor(
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
   ) {
     ClarityIcons.addIcons(searchIcon, windowCloseIcon);
   }
@@ -131,16 +132,11 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
     this.observeValueChanges();
 
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
 
     // TODO: check if this is really needed (why not use the initial ngOnChanges for that?)
@@ -172,7 +168,7 @@ export class EcSearchBarComponent implements OnChanges, OnDestroy, OnInit {
         tap((value) => !value && this.valueChange.emit('')),
         debounceTime(this.debounceMs),
         takeUntil(this.unobserve$),
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((value) => {
         if (value && value === this.formControl.value) {

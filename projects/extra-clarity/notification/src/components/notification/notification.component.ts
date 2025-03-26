@@ -3,12 +3,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   BehaviorSubject,
@@ -19,7 +20,6 @@ import {
   map,
   scan,
   take,
-  takeUntil,
   takeWhile,
   withLatestFrom,
 } from 'rxjs';
@@ -38,7 +38,7 @@ const NOTIFICATION_INTERVAL_STEP = 200;
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
-export class NotificationComponent implements OnInit, OnDestroy {
+export class NotificationComponent implements OnInit {
   @Input() instance: NotificationData;
 
   @Output() readonly destroyed = new EventEmitter<void>();
@@ -49,9 +49,10 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   private paused$ = new BehaviorSubject<boolean>(false);
 
-  private readonly destroy$ = new Subject<void>();
-
-  constructor(private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
+  ) {}
 
   get config(): Required<NotificationConfig> {
     return this.instance.config as Required<NotificationConfig>;
@@ -75,7 +76,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
         map(() => NOTIFICATION_INTERVAL_STEP),
         scan((acc: number, curr: number) => acc + curr, 0),
         takeWhile((value) => value < this.config.duration),
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => this.onClose()),
       )
       .subscribe();
@@ -84,16 +85,11 @@ export class NotificationComponent implements OnInit, OnDestroy {
       .pipe(
         filter((event) => event.phaseName === 'done' && event.toState === 'leave'),
         take(1),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => {
         this.destroyed.emit();
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.animationStateChanged$.complete();
   }
 
   onClose(): void {

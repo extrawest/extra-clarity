@@ -2,14 +2,15 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ClrCheckboxModule } from '@clr/angular';
@@ -26,7 +27,7 @@ export const DEFAULT_PERIOD_SEC = 60;
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, ClrCheckboxModule],
 })
-export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
+export class EcAutoRefreshComponent implements OnChanges, OnInit {
   /**
    * Indicate that refreshing is occurring at the moment.
    * The countdown is stopped and will be re-launched after this input is switched to `false`.
@@ -71,7 +72,6 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   protected _period = 0;
 
   private readonly abortTimer$ = new Subject<void>();
-  private readonly destroy$ = new Subject<void>();
 
   protected get timeMessage(): string {
     return this.commonStrings.parse(this.commonStrings.keys.autoRefresh.message, {
@@ -82,6 +82,7 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
   constructor(
     protected readonly commonStrings: EcCommonStringsService,
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly destroyRef: DestroyRef,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -108,15 +109,9 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.abortTimer$.complete();
-  }
-
   ngOnInit(): void {
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
@@ -136,7 +131,7 @@ export class EcAutoRefreshComponent implements OnChanges, OnDestroy, OnInit {
         }),
         takeWhile((timeRemain) => timeRemain > 0, true),
         takeUntil(this.abortTimer$),
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((timeRemain) => {
         if (timeRemain <= 0) {

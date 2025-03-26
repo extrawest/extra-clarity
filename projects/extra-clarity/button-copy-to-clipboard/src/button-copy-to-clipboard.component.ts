@@ -3,18 +3,18 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ClarityIcons, copyIcon } from '@cds/core/icon';
 import { ClrIconModule, ClrLoadingState } from '@clr/angular';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
@@ -34,7 +34,7 @@ export const BUTTON_DEFAULTS = {
   imports: [NgStyle, ClrIconModule],
   animations,
 })
-export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, OnInit {
+export class EcButtonCopyToClipboardComponent implements OnChanges, OnInit {
   /** Whether the button is disabled (blocked) */
   @Input()
   public disabled = false;
@@ -119,11 +119,10 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, O
 
   protected readonly clrLoadingState = ClrLoadingState;
 
-  private readonly destroy$ = new Subject<void>();
-
   constructor(
     protected readonly commonStrings: EcCommonStringsService,
     private readonly changeDetectionRef: ChangeDetectorRef,
+    private readonly destroyRef: DestroyRef,
   ) {
     ClarityIcons.addIcons(copyIcon);
   }
@@ -178,14 +177,9 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnDestroy, O
     }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectionRef.markForCheck());
   }
 

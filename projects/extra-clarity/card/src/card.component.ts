@@ -4,16 +4,16 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChild,
+  DestroyRef,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
 import { ClrIconModule } from '@clr/angular';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
@@ -38,7 +38,7 @@ import { EcCardError } from './interfaces';
     '[class.has-error]': 'error',
   },
 })
-export class EcCardComponent implements OnDestroy, OnInit {
+export class EcCardComponent implements OnInit {
   @Input()
   public title: string;
 
@@ -70,8 +70,6 @@ export class EcCardComponent implements OnDestroy, OnInit {
   protected showErrorDetails = false;
   protected unknownError = this.commonStrings.keys.card.unknownError;
 
-  private readonly destroy$ = new Subject<void>();
-
   protected get errorMessage(): string {
     if (!this.error) {
       return this.unknownError;
@@ -95,6 +93,7 @@ export class EcCardComponent implements OnDestroy, OnInit {
   constructor(
     protected readonly commonStrings: EcCommonStringsService,
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly destroyRef: DestroyRef,
   ) {
     ClarityIcons.addIcons(errorStandardIcon);
   }
@@ -108,14 +107,9 @@ export class EcCardComponent implements OnDestroy, OnInit {
     this.showErrorDetails = !this.showErrorDetails;
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 }

@@ -4,10 +4,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Optional,
   Output,
@@ -15,6 +15,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   ClarityIcons,
@@ -29,7 +30,7 @@ import {
   ClrIconModule,
   ClrPopoverToggleService,
 } from '@clr/angular';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { EcMarkMatchedStringPipe } from '@extrawest/extra-clarity/pipes';
@@ -76,7 +77,7 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
 })
 export class EcEnumMultiValueFilterComponent<E, T extends object = object>
   extends EcDatagridFilter<E[], T>
-  implements AfterViewInit, OnChanges, OnDestroy, OnInit
+  implements AfterViewInit, OnChanges, OnInit
 {
   /**
    * Optional config for splitting visible options into groups or categories within the filter body.
@@ -239,14 +240,13 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override readonly changes = new Subject<void>();
 
-  private readonly destroy$ = new Subject<void>();
-
   @ViewChild(EcSearchBarComponent)
   private searchBar?: EcSearchBarComponent;
 
   constructor(
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
   ) {
@@ -288,7 +288,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
 
   ngAfterViewInit(): void {
     this.clrPopoverToggleService?.openChange
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen: boolean) => {
         if (isOpen) {
           setTimeout(() => this.searchBar?.focusSearchBar());
@@ -315,16 +315,11 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
     this.configErrors = this.checkInputsValidity();
 
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 

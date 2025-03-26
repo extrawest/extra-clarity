@@ -2,17 +2,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
@@ -27,7 +26,7 @@ import { EcDateTimeInputComponent } from '../date-time-input';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [EcDateTimeInputComponent],
 })
-export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {
+export class EcDateTimeGroupComponent implements OnChanges, OnInit {
   @Input()
   public disabled: boolean = false;
 
@@ -55,11 +54,10 @@ export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {
   protected storedRange: EcCustomTimeRange = ALL_TIME;
   protected visualRange: EcCustomTimeRange = ALL_TIME;
 
-  private readonly destroy$ = new Subject<void>();
-
   constructor(
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
   ) {}
 
   protected get isAnyInputInvalid(): boolean {
@@ -80,14 +78,9 @@ export class EcDateTimeGroupComponent implements OnChanges, OnDestroy, OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {
     this.commonStrings.stringsChanged$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 

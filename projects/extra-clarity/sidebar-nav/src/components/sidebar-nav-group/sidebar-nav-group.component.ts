@@ -2,13 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   Input,
-  OnDestroy,
   OnInit,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
-import { Subject, takeUntil } from 'rxjs';
 
 import { EC_NAV_ITEM_TYPE, EcNavItemGroup } from '../../sidebar-nav.models';
 import { EcSidebarNavService } from '../../sidebar-nav.service';
@@ -26,30 +26,24 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
     EcSidebarNavLabelComponent,
   ],
 })
-export class EcSidebarNavGroupComponent implements OnDestroy, OnInit {
+export class EcSidebarNavGroupComponent implements OnInit {
   @Input() navItem?: EcNavItemGroup;
   @Input() isBold: boolean = false;
 
   isExpanded = false;
   hasActiveLink = false;
 
-  private readonly destroy$ = new Subject<void>();
-
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
+    private destroyRef: DestroyRef,
     protected navService: EcSidebarNavService,
   ) {}
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 
   ngOnInit(): void {
     this.isExpanded = !!this.navItem?.expanded;
     this.checkForActiveLinks();
 
-    this.navService.navigationEnd.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.navService.navigationEnd.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.checkForActiveLinks();
       this.changeDetectionRef.markForCheck();
     });
