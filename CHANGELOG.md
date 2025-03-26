@@ -1,5 +1,19 @@
 # Changelog
 
+## [19.1.1](https://github.com/extrawest/extra-clarity/compare/v19.1.0...v19.1.1) (2025-03-26)
+
+### Features
+
+* **sidebar-nav:** add helper method to create dividers with unique identity within nav list ([81b252e](https://github.com/extrawest/extra-clarity/commit/81b252e391484dd079c1ce74efc7cb398e5842c4))
+
+### Bug fixes
+
+* **sidebar-nav:** grant all nav items have a unique identity for proper tracking by [@for](https://github.com/for) loops ([eb5901a](https://github.com/extrawest/extra-clarity/commit/eb5901a3a93b5b505ceb2caa87e5ecce34881b6e))
+
+### Misc
+
+* **storybook:** add missing import for card story helper ([e8450d5](https://github.com/extrawest/extra-clarity/commit/e8450d5ae241885b37e37f527b0de4bf42f76216))
+
 ## [19.1.0](https://github.com/extrawest/extra-clarity/compare/v19.0.9...v19.1.0) (2025-03-26)
 
 ### Features
