@@ -1,39 +1,43 @@
-@if (withCopyBtn) {
+@if (withCopyBtn()) {
   <div
     class="with-btn"
-    [class.with-btn-inline]="btnInline"
-    [class.with-btn-right-aligned]="!btnInline"
-    [class.with-btn-trunc]="truncate"
-    [class.with-btn-break]="!truncate"
+    [class.with-btn-inline]="btnInline()"
+    [class.with-btn-right-aligned]="!btnInline()"
+    [class.with-btn-trunc]="truncate()"
+    [class.with-btn-break]="!truncate()"
   >
-    <ng-container [ngTemplateOutlet]="cellContent" />
+    <ng-container [ngTemplateOutlet]="cellContentTmpl" />
 
-    <div class="copy-btn-container" [style.width.px]="btnWidthPx ?? btnSizePx">
+    <div class="copy-btn-container" [style.width.px]="btnWidthPx() ?? btnSizePx()">
       <ec-button-copy-to-clipboard
         class="copy-btn"
-        [style.top.rem]="btnTopOffsetRem"
-        [disabled]="btnDisabled"
-        [heightPx]="btnHeightPx ?? btnSizePx"
-        [iconSizePx]="btnIconSizePx"
-        [label]="btnLabel"
-        [labelFontSizePx]="btnLabelFontSizePx"
-        [sizePx]="btnSizePx"
-        [textToCopy]="textToCopy"
-        [title]="btnTitle || commonStrings.keys.buttonCopyToClipboard.title"
-        [widthPx]="btnWidthPx ?? btnSizePx"
-        [withAnimation]="btnWithAnimation"
-        [withBorder]="btnWithBorder"
+        [style.top.rem]="btnTopOffsetRem()"
+        [disabled]="btnDisabled()"
+        [heightPx]="btnHeightPx() ?? btnSizePx()"
+        [iconSizePx]="btnIconSizePx()"
+        [label]="btnLabel()"
+        [labelFontSizePx]="btnLabelFontSizePx()"
+        [sizePx]="btnSizePx()"
+        [textToCopy]="textToCopy()"
+        [title]="btnTitle() || commonStrings.keys.buttonCopyToClipboard.title"
+        [widthPx]="btnWidthPx() ?? btnSizePx()"
+        [withAnimation]="btnWithAnimation()"
+        [withBorder]="btnWithBorder()"
         (copied)="copied.emit($event)"
         (failed)="failed.emit($event)"
       />
     </div>
   </div>
 } @else {
-  <ng-container [ngTemplateOutlet]="cellContent" />
+  <ng-container [ngTemplateOutlet]="cellContentTmpl" />
 }
 
-<ng-template #cellContent>
-  <div class="cell-content" [class.trunc-overflow]="truncate" [class.break-overflow]="!truncate">
+<ng-template #cellContentTmpl>
+  <div
+    class="cell-content"
+    [class.trunc-overflow]="truncate()"
+    [class.break-overflow]="!truncate()"
+  >
     <ng-content />
   </div>
 </ng-template>

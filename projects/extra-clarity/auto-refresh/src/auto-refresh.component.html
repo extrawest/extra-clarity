@@ -9,7 +9,7 @@
   <label>
     @if (!toggleControl.value || _period <= 0) {
       {{ commonStrings.keys.autoRefresh.disabled }}
-    } @else if (refreshing) {
+    } @else if (refreshing()) {
       {{ commonStrings.keys.autoRefresh.refreshing }}
     } @else {
       {{ timeMessage }}

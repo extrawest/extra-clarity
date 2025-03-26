@@ -3,8 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnInit,
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -27,8 +27,8 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   ],
 })
 export class EcSidebarNavGroupComponent implements OnInit {
-  @Input() navItem?: EcNavItemGroup;
-  @Input() isBold: boolean = false;
+  public readonly navItem = input<EcNavItemGroup>();
+  public readonly isBold = input<boolean>(false);
 
   isExpanded = false;
   hasActiveLink = false;
@@ -40,7 +40,7 @@ export class EcSidebarNavGroupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isExpanded = !!this.navItem?.expanded;
+    this.isExpanded = !!this.navItem()?.expanded;
     this.checkForActiveLinks();
 
     this.navService.navigationEnd.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
@@ -50,7 +50,7 @@ export class EcSidebarNavGroupComponent implements OnInit {
   }
 
   private checkForActiveLinks(): void {
-    this.hasActiveLink = !!this.navItem?.children.some(
+    this.hasActiveLink = !!this.navItem()?.children.some(
       (nestedItem) =>
         nestedItem.type === EC_NAV_ITEM_TYPE.RouterLink &&
         this.navService.isPathActive(nestedItem.link, 'subset'),

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { DialogModule, DialogService } from '@extrawest/extra-clarity/dialog';
@@ -14,14 +14,9 @@ import { StorybookDialogContentComponent } from './dialog-content.component';
   imports: [DialogModule],
 })
 export class StorybookDialogCallerComponent {
-  @Input()
-  public size?: 'sm' | 'md' | 'lg' | 'xl' = 'md';
-
-  @Input()
-  public closable?: boolean;
-
-  @Input()
-  public closableBackdrop?: boolean;
+  public readonly size = input<'sm' | 'md' | 'lg' | 'xl'>('md');
+  public readonly closable = input<boolean>();
+  public readonly closableBackdrop = input<boolean>();
 
   private readonly dialogService = inject(DialogService);
   private readonly destroyRef = inject(DestroyRef);
@@ -29,9 +24,9 @@ export class StorybookDialogCallerComponent {
   protected onOpen(): void {
     this.dialogService
       .open(StorybookDialogContentComponent, {
-        size: this.size,
-        closable: this.closable,
-        closableBackdrop: this.closableBackdrop,
+        size: this.size(),
+        closable: this.closable(),
+        closableBackdrop: this.closableBackdrop(),
       })
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))

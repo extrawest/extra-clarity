@@ -5,10 +5,10 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
+  input,
   output,
   viewChild,
 } from '@angular/core';
@@ -29,22 +29,14 @@ import { datetimeInputValidator } from './date-time-input.validators';
   imports: [ReactiveFormsModule, ClrInputModule],
 })
 export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnInit {
-  @Input()
-  public disabled: boolean = false;
-
-  @Input()
-  public label?: string;
-
-  @Input()
-  public value: number | null = null;
-
-  @Input()
-  public withTime: boolean = true;
+  public readonly disabled = input<boolean>(false);
+  public readonly label = input<string>();
+  public readonly value = input<number | null>(null);
+  public readonly withTime = input<boolean>(true);
 
   public readonly valueChange = output<number | null>();
 
   protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('datetimeInput');
-
   protected readonly clrInputRef = viewChild.required(ClrInput);
 
   public inputType = this.inputDateType;
@@ -54,7 +46,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
   });
 
   get inputDateType(): string {
-    return this.withTime ? 'datetime-local' : 'date';
+    return this.withTime() ? 'datetime-local' : 'date';
   }
 
   constructor(
@@ -76,19 +68,20 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['disabled']) {
-      if (this.disabled) {
+      if (this.disabled()) {
         this.formControl.disable({ emitEvent: false });
       } else {
         this.formControl.enable({ emitEvent: false });
       }
     }
 
-    if (changes['value'] && this.value !== undefined) {
-      this.updateFormValue(this.value);
+    const value = this.value();
+    if (changes['value'] && value !== undefined) {
+      this.updateFormValue(value);
     }
 
     if (changes['withTime']) {
-      this.inputType = this.withTime ? 'datetime-local' : 'date';
+      this.inputType = this.withTime() ? 'datetime-local' : 'date';
     }
   }
 
@@ -105,7 +98,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
   }
 
   protected isInputDirty(formControl: FormControl): boolean {
-    return !this.disabled && (formControl.value || formControl.invalid);
+    return !this.disabled() && (formControl.value || formControl.invalid);
   }
 
   protected validateOnBlur(): void {
@@ -138,7 +131,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
     const hh = date.getHours().toString().padStart(2, '0');
     const mm = date.getMinutes().toString().padStart(2, '0');
 
-    return this.withTime ? `${YYYY}-${MM}-${DD}T${hh}:${mm}` : `${YYYY}-${MM}-${DD}`;
+    return this.withTime() ? `${YYYY}-${MM}-${DD}T${hh}:${mm}` : `${YYYY}-${MM}-${DD}`;
   }
 
   private convertFromFormValue(timestampAsString: string): number | null {

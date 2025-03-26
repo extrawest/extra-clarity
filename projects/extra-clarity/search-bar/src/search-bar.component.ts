@@ -4,10 +4,10 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
+  input,
   output,
   viewChild,
 } from '@angular/core';
@@ -39,14 +39,12 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
    * character and emitting the entered value to the `valueChange` output.
    * Ignored on clearing the input field.
    */
-  @Input()
-  public debounceMs: number = SEARCH_BAR_DEFAULTS.debounceTimeMs;
+  public readonly debounceMs = input<number>(SEARCH_BAR_DEFAULTS.debounceTimeMs);
 
   /**
    * Whether to set background-color to light-blue when any value is entered
    */
-  @Input()
-  public highlightActive: boolean = false;
+  public readonly highlightActive = input<boolean>(false);
 
   /**
    * Shape of an alternative `cds-icon` to show in place of the default search-icon
@@ -54,30 +52,25 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
    *
    * This icon must be registered within the project using `ClarityIcons.addIcon()`.
    */
-  @Input()
-  public iconOnFill?: string;
+  public readonly iconOnFill = input<string>();
 
   /** Whether the input field is disabled (blocked) */
-  @Input()
-  public isDisabled = false;
+  public readonly isDisabled = input(false);
 
   /**
    * An optional text label to show before the search bar
    */
-  @Input()
-  public label?: string;
+  public readonly label = input<string>();
 
   /**
    * Placeholder for the empty input field
    */
-  @Input()
-  public placeholder: string;
+  public readonly placeholder = input<string>();
 
   /**
    * A value to be set as the entered value on this input change. `undefined` will be ignored.
    */
-  @Input()
-  public value?: string;
+  public readonly value = input<string>();
 
   /**
    * Emits the entered value on every change after the `debounceMs` delay if configured.
@@ -88,9 +81,7 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
 
   protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('searchInputRef');
 
-  protected readonly formControl = new FormControl<string>('', {
-    nonNullable: true,
-  });
+  protected readonly formControl = new FormControl<string>('', { nonNullable: true });
   protected readonly inputId = uniqueIdFactory();
 
   private readonly unobserve$ = new Subject<void>();
@@ -110,7 +101,7 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
     }
 
     if (changes['isDisabled']) {
-      if (this.isDisabled) {
+      if (this.isDisabled()) {
         this.formControl.disable({ emitEvent: false });
       } else {
         this.formControl.enable({ emitEvent: false });
@@ -118,12 +109,13 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
     }
 
     const valueChange = changes['value'];
-    if (!valueChange || this.value === undefined) {
+    const value = this.value();
+    if (!valueChange || value === undefined) {
       return;
     }
 
     // manual emitting - to bypass debouncing in formControl.valueChanges.pipe()
-    this.formControl.setValue(this.value ?? '', { emitEvent: false });
+    this.formControl.setValue(value ?? '', { emitEvent: false });
     if (!valueChange.isFirstChange()) {
       this.valueChange.emit(this.formControl.value);
     }
@@ -137,8 +129,9 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
       .subscribe(() => this.changeDetectorRef.markForCheck());
 
     // TODO: check if this is really needed (why not use the initial ngOnChanges for that?)
-    if (this.value) {
-      this.valueChange.emit(this.value);
+    const value = this.value();
+    if (value) {
+      this.valueChange.emit(value);
     }
   }
 
@@ -163,7 +156,7 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
     this.formControl.valueChanges
       .pipe(
         tap((value) => !value && this.valueChange.emit('')),
-        debounceTime(this.debounceMs),
+        debounceTime(this.debounceMs()),
         takeUntil(this.unobserve$),
         takeUntilDestroyed(this.destroyRef),
       )

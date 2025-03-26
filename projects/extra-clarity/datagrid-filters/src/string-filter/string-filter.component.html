@@ -1,4 +1,4 @@
-<div [style.width.px]="widthPx">
+<div [style.width.px]="widthPx()">
   @if (configErrors.length) {
     {{ commonStrings.keys.datagridFilters.inputIssuesMessage }}
     <ul>
@@ -12,7 +12,7 @@
         #inputElement
         clrInput
         [formControl]="formControl"
-        [placeholder]="placeholder || commonStrings.keys.shared.typeToSearch"
+        [placeholder]="placeholder() || commonStrings.keys.shared.typeToSearch"
         type="text"
         autocomplete="off"
       />
@@ -23,13 +23,13 @@
 
       <clr-control-helper>
         @if (!validationErrorMessage) {
-          @if (formControl.value.length >= minLength) {
+          @if (formControl.value.length >= minLength()) {
             {{
-              usePlaceholderAsHelperText
-                ? placeholder || commonStrings.keys.shared.typeToSearch
-                : helperMessage
+              usePlaceholderAsHelperText()
+                ? placeholder() || commonStrings.keys.shared.typeToSearch
+                : helperMessage()
             }}
-          } @else if (minLength > 1) {
+          } @else if (minLength() > 1) {
             {{ minLengthMessage }}
           }
         }

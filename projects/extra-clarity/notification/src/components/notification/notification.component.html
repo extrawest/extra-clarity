@@ -13,10 +13,10 @@
     <clr-alert-item>
       <span class="alert-text">
         @if (!data.template) {
-          {{ instance.message }}
+          {{ instance().message }}
         } @else {
           <ng-container
-            [ngTemplateOutlet]="instance.template!"
+            [ngTemplateOutlet]="instance().template!"
             [ngTemplateOutletContext]="{ $implicit: this, data: config.data }"
           />
         }

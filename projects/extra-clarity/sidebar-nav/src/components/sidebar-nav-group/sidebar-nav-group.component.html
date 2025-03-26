@@ -1,16 +1,17 @@
-@if (navItem) {
+@let _navItem = navItem();
+@if (_navItem) {
   <clr-vertical-nav-group
     [class.active]="hasActiveLink"
     [(clrVerticalNavGroupExpanded)]="isExpanded"
   >
-    @if (navItem.icon) {
-      <cds-icon clrVerticalNavIcon [attr.shape]="navItem.icon" />
+    @if (_navItem.icon) {
+      <cds-icon clrVerticalNavIcon [attr.shape]="_navItem.icon" />
     }
 
-    <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
+    <ec-sidebar-nav-label [navItem]="_navItem" [isBold]="isBold()" />
 
     <clr-vertical-nav-group-children>
-      @for (nestedItem of navItem.children; track nestedItem) {
+      @for (nestedItem of _navItem.children; track nestedItem) {
         <ec-sidebar-nav-item [navItem]="nestedItem" />
       }
     </clr-vertical-nav-group-children>

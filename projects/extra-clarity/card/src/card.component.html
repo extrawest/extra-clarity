@@ -1,11 +1,11 @@
 <!-- Card Header (Optional) -->
 
-@if (title || headerTitleContent() || headerActionsContent()) {
+@if (title() || headerTitleContent() || headerActionsContent()) {
   <div class="card-header">
     @if (headerTitleContent()) {
       <ng-content select="ec-card-header-title, [ecCardHeaderTitle]" />
-    } @else if (title) {
-      <span> {{ title }} </span>
+    } @else if (title()) {
+      <span> {{ title() }} </span>
     }
 
     @if (headerActionsContent()) {
@@ -17,17 +17,17 @@
 <!-- Card Block (Body) -->
 
 <div class="card-block">
-  <ec-progress-spinner [showSpinner]="loading" [size]="spinnerSize">
-    @if (error || empty) {
+  <ec-progress-spinner [showSpinner]="!!loading()" [size]="spinnerSize()">
+    @if (error() || empty()) {
       <span>{{ commonStrings.keys.card.loading }}</span>
     }
   </ec-progress-spinner>
 
-  @if (!empty && !error) {
+  @if (!empty() && !error()) {
     <ng-content />
-  } @else if (!loading) {
+  } @else if (!loading()) {
     <div class="card-placeholder text-center">
-      @if (!error) {
+      @if (!error()) {
         <div>
           {{ commonStrings.keys.card.noDataFound }}
         </div>
@@ -42,7 +42,7 @@
           {{ errorMessage }}
         </div>
 
-        @if (error.httpError && !error.noDetails) {
+        @if (error()?.httpError && !error()?.noDetails) {
           <div class="error-details">
             <button
               class="btn btn-sm btn-link error-details-toggle"
@@ -57,17 +57,17 @@
 
             @if (showErrorDetails) {
               <div class="error-details-json">
-                {{ error.httpError | json }}
+                {{ error()?.httpError | json }}
               </div>
             }
           </div>
         }
 
         <div class="error-hint">
-          {{ error.hint || commonStrings.keys.card.reloadDataMessage }}
+          {{ error()?.hint || commonStrings.keys.card.reloadDataMessage }}
         </div>
 
-        @if (!error.noRetryBtn) {
+        @if (!error()?.noRetryBtn) {
           <button (click)="onReload()" class="btn btn-sm error-reload-button">
             {{ commonStrings.keys.card.reload }}
           </button>

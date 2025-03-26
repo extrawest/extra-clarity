@@ -1,16 +1,16 @@
 <ec-date-time-input
   #inputStart
   [label]="commonStrings.keys.timeRangeFilter.from"
-  [disabled]="disabled"
-  [withTime]="withTime"
+  [disabled]="disabled()"
+  [withTime]="withTime()"
   [(value)]="visualRange.start"
 />
 
 <ec-date-time-input
   #inputEnd
   [label]="commonStrings.keys.timeRangeFilter.to"
-  [disabled]="disabled"
-  [withTime]="withTime"
+  [disabled]="disabled()"
+  [withTime]="withTime()"
   [(value)]="visualRange.end"
 />
 
@@ -18,7 +18,7 @@
   <button
     type="button"
     class="btn btn-sm btn-primary"
-    [disabled]="!forceEnabledButtons && (disabled || !isRangeModified || isAnyInputInvalid)"
+    [disabled]="!forceEnabledButtons() && (disabled() || !isRangeModified || isAnyInputInvalid)"
     (click)="onApply()"
   >
     <!-- <cds-icon shape="check" /> -->
@@ -27,7 +27,7 @@
   <button
     type="button"
     class="btn btn-sm btn-outline"
-    [disabled]="!forceEnabledButtons && (disabled || (!isRangeModified && !isAnyInputInvalid))"
+    [disabled]="!forceEnabledButtons() && (disabled() || (!isRangeModified && !isAnyInputInvalid))"
     (click)="onDiscard()"
   >
     <!-- <cds-icon shape="undo" /> -->

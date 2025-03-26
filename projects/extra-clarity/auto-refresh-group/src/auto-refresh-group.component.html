@@ -1,10 +1,10 @@
-<div class="ec-container" [class.ec-with-auto-refresh]="useAutoRefresh">
-  @if (useAutoRefresh) {
+<div class="ec-container" [class.ec-with-auto-refresh]="useAutoRefresh()">
+  @if (useAutoRefresh()) {
     <ec-auto-refresh
-      [blocked]="autoRefreshBlocked"
-      [enabled]="autoRefreshEnabled"
-      [period]="period"
-      [refreshing]="refreshing"
+      [blocked]="autoRefreshBlocked()"
+      [enabled]="autoRefreshEnabled()"
+      [period]="period()"
+      [refreshing]="refreshing()"
       (refresh)="onRefresh()"
       (toggleState)="onAutoRefreshChanged($event)"
       class="ec-auto-refresh"
@@ -14,25 +14,25 @@
   <button
     type="button"
     class="btn btn-sm btn-link ec-refresh-btn"
-    [class.ec-margin-left-auto]="useAutoRefresh"
-    [disabled]="refreshing"
+    [class.ec-margin-left-auto]="useAutoRefresh()"
+    [disabled]="refreshing()"
     (click)="onRefresh()"
   >
     <cds-icon
       shape="error-standard"
       status="danger"
       size="18"
-      [class.ec-invisible]="!failed || refreshing"
+      [class.ec-invisible]="!failed() || refreshing()"
     />
 
-    <span [class.ec-text-failed]="failed && !refreshing">
+    <span [class.ec-text-failed]="failed() && !refreshing()">
       {{ lastFetchTimestamp() }}
     </span>
 
-    @if (refreshing) {
+    @if (refreshing()) {
       <span class="spinner spinner-inline"></span>
     } @else {
-      <cds-icon shape="refresh" [attr.status]="failed ? 'danger' : 'info'" />
+      <cds-icon shape="refresh" [attr.status]="failed() ? 'danger' : 'info'" />
     }
   </button>
 </div>

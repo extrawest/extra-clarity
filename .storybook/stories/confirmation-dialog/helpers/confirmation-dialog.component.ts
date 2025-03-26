@@ -1,10 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, type TemplateRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, inject, input } from '@angular/core';
 
-import {
-  type DialogButtonConfig,
-  DialogModule,
-  DialogService,
-} from '@extrawest/extra-clarity/dialog';
+import { DialogButtonConfig, DialogModule, DialogService } from '@extrawest/extra-clarity/dialog';
 
 @Component({
   selector: 'ec-storybook-confirmation-dialog',
@@ -17,42 +13,19 @@ import {
   imports: [DialogModule],
 })
 export class StorybookConfirmationDialogComponent {
-  @Input()
-  public type?: 'confirm' | 'info' | 'success' | 'warning' | 'danger';
-
-  @Input()
-  public size?: 'sm' | 'md' | 'lg' | 'xl';
-
-  @Input()
-  public title: string;
-
-  @Input()
-  public message?: string;
-
-  @Input()
-  public closable?: boolean;
-
-  @Input()
-  public closableBackdrop?: boolean;
-
-  @Input()
-  public rejectBtnHidden?: boolean;
-
-  @Input()
-  public rejectBtnLabel?: string;
-
-  @Input()
-  public acceptBtnLabel?: string;
-
-  @Input()
-  public acceptBtn?: DialogButtonConfig;
-
-  @Input()
-  public rejectBtn?: DialogButtonConfig;
-
+  public readonly type = input<'confirm' | 'info' | 'success' | 'warning' | 'danger'>();
+  public readonly size = input<'sm' | 'md' | 'lg' | 'xl'>();
+  public readonly title = input<string>();
+  public readonly message = input<string>();
+  public readonly closable = input<boolean>();
+  public readonly closableBackdrop = input<boolean>();
+  public readonly rejectBtnHidden = input<boolean>();
+  public readonly rejectBtnLabel = input<string>();
+  public readonly acceptBtnLabel = input<string>();
+  public readonly acceptBtn = input<DialogButtonConfig>();
+  public readonly rejectBtn = input<DialogButtonConfig>();
   /** `TemplateRef<unknown>` */
-  @Input()
-  public template?: TemplateRef<unknown>;
+  public readonly template = input<TemplateRef<unknown>>();
 
   private readonly dialogService = inject(DialogService);
 
@@ -61,19 +34,19 @@ export class StorybookConfirmationDialogComponent {
       {
         onAccept: () => alert('accepted'),
         onReject: () => alert('rejected'),
-        size: this.size,
-        title: this.title,
-        message: this.message,
-        closable: this.closable,
-        closableBackdrop: this.closableBackdrop,
-        acceptBtnLabel: this.acceptBtnLabel,
-        rejectBtnLabel: this.rejectBtnLabel,
-        rejectBtnHidden: this.rejectBtnHidden,
-        acceptBtn: this.acceptBtn,
-        rejectBtn: this.rejectBtn,
-        template: this.template,
+        size: this.size(),
+        title: this.title() ?? '',
+        message: this.message(),
+        closable: this.closable(),
+        closableBackdrop: this.closableBackdrop(),
+        acceptBtnLabel: this.acceptBtnLabel(),
+        rejectBtnLabel: this.rejectBtnLabel(),
+        rejectBtnHidden: this.rejectBtnHidden(),
+        acceptBtn: this.acceptBtn(),
+        rejectBtn: this.rejectBtn(),
+        template: this.template(),
       },
-      this.type,
+      this.type(),
     );
   }
 }

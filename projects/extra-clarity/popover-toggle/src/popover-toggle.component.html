@@ -1,7 +1,7 @@
 <button
   type="button"
   [class]="buttonClasses"
-  [disabled]="btnDisabled"
+  [disabled]="btnDisabled()"
   [attr.aria-expanded]="isOpen"
   [attr.aria-controls]="popoverId"
   [attr.aria-owns]="popoverId"
@@ -12,16 +12,16 @@
   @if (customLabelContent()) {
     <ng-content select="ec-popover-toggle-label, [ecPopoverToggleLabel]" />
   } @else {
-    @if (withDropdownIcon) {
-      @if (dropdownIconPosition === EcDropdownIconPosition.Right) {
-        {{ labelText }}
-        <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection" />
+    @if (withDropdownIcon()) {
+      @if (dropdownIconPosition() === EcDropdownIconPosition.Right) {
+        {{ labelText() }}
+        <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection()" />
       } @else {
-        <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection" />
-        {{ labelText }}
+        <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection()" />
+        {{ labelText() }}
       }
     } @else {
-      {{ labelText }}
+      {{ labelText() }}
     }
   }
 </button>
@@ -32,8 +32,8 @@
   *clrPopoverContent="
     isOpen;
     at: popoverPosition;
-    outsideClickToClose: closeOnClickOutside;
-    scrollToClose: closeOnScroll
+    outsideClickToClose: closeOnClickOutside();
+    scrollToClose: closeOnScroll()
   "
   class="ec-popover-content"
 >

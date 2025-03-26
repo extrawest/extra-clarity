@@ -1,4 +1,4 @@
-<div [style.width.px]="widthPx">
+<div [style.width.px]="widthPx()">
   @if (configErrors.length) {
     <!-- Config Errors -->
 
@@ -12,7 +12,7 @@
     </div>
 
     <!-- -->
-  } @else if (loading) {
+  } @else if (loading()) {
     <!-- Options loading -->
 
     <div class="await-loading">
@@ -25,13 +25,13 @@
   } @else {
     <!-- Normal mode -->
 
-    @if (title) {
-      <div class="filter-title">{{ title }}</div>
+    @if (title()) {
+      <div class="filter-title">{{ title() }}</div>
     }
 
     @if (
-      showSelectedAmount === EcShowSelected.Always ||
-      (showSelectedAmount === EcShowSelected.WithSearchbar && showSearchBar)
+      showSelectedAmount() === EcShowSelected.Always ||
+      (showSelectedAmount() === EcShowSelected.WithSearchbar && showSearchBar)
     ) {
       <div class="filter-selected-amount">{{ selectedAmountLabel }}</div>
     }
@@ -46,11 +46,11 @@
       />
     }
 
-    <div class="filter-options" [style.max-height.px]="maxHeightPx">
+    <div class="filter-options" [style.max-height.px]="maxHeightPx()">
       @for (optionCategory of visibleOptionCategories; track $index) {
         <clr-checkbox-container
           class="checkbox-container"
-          [class.stretch-labels]="stretchLabels"
+          [class.stretch-labels]="stretchLabels()"
           [class.with-margin-top]="optionCategory.withMarginTop"
           [class.with-divider-top]="optionCategory.withDividerTop"
           [class.with-margin-bottom]="optionCategory.withMarginBottom"
@@ -65,14 +65,14 @@
               <input
                 type="checkbox"
                 clrCheckbox
-                [name]="propertyKey"
+                [name]="propertyKey()"
                 [checked]="selectedValues.has(option.value)"
                 (change)="onInputChange($event, option.value)"
               />
               <label>
-                @if (customLabelTpl) {
+                @if (customLabelTpl(); as _customLabelTpl) {
                   <ng-container
-                    [ngTemplateOutlet]="customLabelTpl"
+                    [ngTemplateOutlet]="_customLabelTpl"
                     [ngTemplateOutletContext]="{ $implicit: option, marked: searchTerm }"
                   />
                 } @else if (searchTerm) {
@@ -88,7 +88,7 @@
         <!-- -->
       } @empty {
         <div class="no-options">
-          @if (options.length) {
+          @if (options().length) {
             <cds-icon shape="warning-standard" status="warning" solid />
             {{ commonStrings.keys.datagridFilters.noOptionsFound }}
           } @else {

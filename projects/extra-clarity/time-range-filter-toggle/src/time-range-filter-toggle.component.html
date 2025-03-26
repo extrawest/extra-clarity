@@ -1,13 +1,13 @@
 <ec-popover-toggle
-  [anchorToContentAlign]="anchorToContentAlign"
-  [contentPosition]="contentPosition"
-  [btnDisabled]="btnDisabled"
-  [btnSmall]="btnSmall"
-  [btnStatus]="btnStatus"
-  [btnStyle]="btnStyle"
-  [closeOnClickOutside]="closeOnClickOutside"
-  [closeOnScroll]="closeOnScroll"
-  [open]="open"
+  [anchorToContentAlign]="anchorToContentAlign()"
+  [contentPosition]="contentPosition()"
+  [btnDisabled]="btnDisabled()"
+  [btnSmall]="btnSmall()"
+  [btnStatus]="btnStatus()"
+  [btnStyle]="btnStyle()"
+  [closeOnClickOutside]="closeOnClickOutside()"
+  [closeOnScroll]="closeOnScroll()"
+  [open]="open()"
   (openChange)="openChange.emit($event)"
 >
   <ec-popover-toggle-label>
@@ -19,13 +19,13 @@
   </ec-popover-toggle-label>
 
   <ec-time-range-filter
-    [propertyKey]="propertyKey"
-    [presets]="presets"
-    [withCustomRange]="withCustomRange"
-    [closeOnChange]="closeOnChange"
-    [widthPx]="widthPx"
-    [value]="value"
-    [withTime]="withTime"
+    [propertyKey]="propertyKey()"
+    [presets]="presets()"
+    [withCustomRange]="withCustomRange()"
+    [closeOnChange]="closeOnChange()"
+    [widthPx]="widthPx()"
+    [value]="value()"
+    [withTime]="withTime()"
     (filterValueChanged)="onTimeRangeChange($event)"
   />
 </ec-popover-toggle>

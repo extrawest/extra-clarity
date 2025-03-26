@@ -3,10 +3,10 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  Input,
   OnChanges,
   SimpleChanges,
   contentChild,
+  input,
   output,
   viewChild,
 } from '@angular/core';
@@ -61,52 +61,46 @@ export class EcPopoverToggleComponent implements OnChanges {
    * * `center` = the middle point
    * * `end` = the right corner
    */
-  @Input()
-  public anchorToContentAlign: EcAnchorToContentAlign = EcAnchorToContentAlign.StartToStart;
+  public readonly anchorToContentAlign = input<EcAnchorToContentAlign>(
+    EcAnchorToContentAlign.StartToStart,
+  );
 
   /**
    * The content body position relative to the anchor (toggle button).
    */
-  @Input()
-  public contentPosition: EcContentPosition = EcContentPosition.Bottom;
+  public readonly contentPosition = input<EcContentPosition>(EcContentPosition.Bottom);
 
   /** Whether the toggle button is disabled */
-  @Input()
-  public btnDisabled: boolean = false;
+  public readonly btnDisabled = input<boolean>(false);
 
   /** Whether the toggle button is smaller (with the Clarity 'btn-sm' class) */
-  @Input()
-  public btnSmall: boolean = true;
+  public readonly btnSmall = input<boolean>(true);
 
   /** Status-color of the toggle button according to the Clarity button statuses */
-  @Input()
-  public btnStatus: EcPopoverToggleButtonStatus = EcPopoverToggleButtonStatus.Primary;
+  public readonly btnStatus = input<EcPopoverToggleButtonStatus>(
+    EcPopoverToggleButtonStatus.Primary,
+  );
 
   /** Style of the toggle button according to Clarity button styles (flat, solid, outline) */
-  @Input()
-  public btnStyle: EcPopoverToggleButtonStyle = EcPopoverToggleButtonStyle.Outline;
+  public readonly btnStyle = input<EcPopoverToggleButtonStyle>(EcPopoverToggleButtonStyle.Outline);
 
   /** Whether to hide the content body on clicking outside of the component */
-  @Input()
-  public closeOnClickOutside: boolean = true;
+  public readonly closeOnClickOutside = input<boolean>(true);
 
   /** Whether to hide the content body on scrolling outside of the component */
-  @Input()
-  public closeOnScroll: boolean = true;
+  public readonly closeOnScroll = input<boolean>(true);
 
   /**
    * Text label to show inside of the toggle button. Ignored when a custom label is projected
    * into the component using the `EcPopoverToggleLabelDirective` directive.
    */
-  @Input()
-  public labelText: string = '';
+  public readonly labelText = input<string>('');
 
   /**
    * Show the 'angle' cds-icon next to the text label. Ignored when a custom label is projected
    * into the component using the `EcPopoverToggleLabelDirective` directive.
    */
-  @Input()
-  public withDropdownIcon: boolean = false;
+  public readonly withDropdownIcon = input<boolean>(false);
 
   /**
    * Direction of the 'angle' cds-icon (when `withDropdownIcon` is set to `true`). Ignored when
@@ -114,22 +108,21 @@ export class EcPopoverToggleComponent implements OnChanges {
    *
    * `down | up | left | right`
    */
-  @Input()
-  public dropdownIconDirection: Directions = 'down';
+  public readonly dropdownIconDirection = input<Directions>('down');
 
   /**
    * Position of the 'angle' cds-icon (when `withDropdownIcon` is set to `true`) relatively to the text label.
    * Ignored when a custom label is projected into the component using the `EcPopoverToggleLabelDirective` directive.
    */
-  @Input()
-  public dropdownIconPosition: EcDropdownIconPosition = EcDropdownIconPosition.Right;
+  public readonly dropdownIconPosition = input<EcDropdownIconPosition>(
+    EcDropdownIconPosition.Right,
+  );
 
   /** Show/hide the content body on change of this input:
    * * `true` = show
    * * `false` = hide
    */
-  @Input()
-  public open?: boolean = false;
+  public readonly open = input<boolean | undefined>(false);
 
   /** Emit a boolean on showing/hiding the content body with a new state:
    * * `true` = open
@@ -185,7 +178,7 @@ export class EcPopoverToggleComponent implements OnChanges {
     }
 
     if (changes['open']) {
-      this.toggleOpen(changes['open'].currentValue as boolean | undefined);
+      this.toggleOpen(this.open());
     }
   }
 
@@ -211,7 +204,7 @@ export class EcPopoverToggleComponent implements OnChanges {
   private getButtonClasses(): string[] {
     const classes = ['btn', 'ec-button-trigger', this.getButtonStyleClass()];
 
-    if (this.btnSmall) {
+    if (this.btnSmall()) {
       classes.push('btn-sm');
     }
 
@@ -219,14 +212,16 @@ export class EcPopoverToggleComponent implements OnChanges {
   }
 
   private getButtonStyleClass(): string {
-    if (this.btnStyle === EcPopoverToggleButtonStyle.Flat) {
+    const btnStyle = this.btnStyle();
+    const btnStatus = this.btnStatus();
+    if (btnStyle === EcPopoverToggleButtonStyle.Flat) {
       return 'btn-link';
     }
-    if (this.btnStyle === EcPopoverToggleButtonStyle.Solid) {
-      return this.btnStatus;
+    if (btnStyle === EcPopoverToggleButtonStyle.Solid) {
+      return btnStatus;
     }
-    if (this.btnStatus !== EcPopoverToggleButtonStatus.Primary) {
-      return this.btnStatus + '-outline';
+    if (btnStatus !== EcPopoverToggleButtonStatus.Primary) {
+      return btnStatus + '-outline';
     }
     return 'btn-outline';
   }
@@ -260,8 +255,8 @@ export class EcPopoverToggleComponent implements OnChanges {
 
   private getPopoverPosition(): ClrPopoverPosition {
     return {
-      ...this.getClrPopoverAxisAndSide(this.contentPosition),
-      ...this.getClrPopoverAnchorAndContent(this.anchorToContentAlign),
+      ...this.getClrPopoverAxisAndSide(this.contentPosition()),
+      ...this.getClrPopoverAnchorAndContent(this.anchorToContentAlign()),
     };
   }
 }

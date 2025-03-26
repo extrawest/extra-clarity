@@ -1,15 +1,16 @@
-@if (navItem) {
-  @switch (navItem.type) {
+@let _navItem = navItem();
+@if (_navItem) {
+  @switch (_navItem.type) {
     @case (NavItemTypeEnum.Divider) {
       <div class="nav-divider"></div>
     }
 
     @case (NavItemTypeEnum.Href) {
-      <a clrVerticalNavLink [href]="navItem.link">
-        @if (navItem.icon) {
-          <cds-icon clrVerticalNavIcon [attr.shape]="navItem.icon" />
+      <a clrVerticalNavLink [href]="_navItem.link">
+        @if (_navItem.icon) {
+          <cds-icon clrVerticalNavIcon [attr.shape]="_navItem.icon" />
         }
-        <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
+        <ec-sidebar-nav-label [navItem]="_navItem" [isBold]="isBold()" />
       </a>
     }
 
@@ -17,13 +18,13 @@
       <a
         clrVerticalNavLink
         routerLinkActive="active"
-        [routerLink]="navItem.link"
-        [class.disabled]="navService.isPathActive(navItem.link, 'exact')"
+        [routerLink]="_navItem.link"
+        [class.disabled]="navService.isPathActive(_navItem.link, 'exact')"
       >
-        @if (navItem.icon) {
-          <cds-icon clrVerticalNavIcon [attr.shape]="navItem.icon" />
+        @if (_navItem.icon) {
+          <cds-icon clrVerticalNavIcon [attr.shape]="_navItem.icon" />
         }
-        <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
+        <ec-sidebar-nav-label [navItem]="_navItem" [isBold]="isBold()" />
       </a>
     }
   }

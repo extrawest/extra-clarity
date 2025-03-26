@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
+  OnChanges,
   OnDestroy,
+  SimpleChanges,
+  input,
 } from '@angular/core';
 
 @Component({
@@ -16,8 +18,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
 })
-export class ProgressSpinnerComponent implements OnDestroy {
-  @Input() size = 'sm';
+export class ProgressSpinnerComponent implements OnChanges, OnDestroy {
+  public readonly size = input<'sm' | 'md' | 'lg'>('sm');
+  public readonly showSpinner = input<boolean>();
 
   _showSpinner: boolean;
 
@@ -25,16 +28,19 @@ export class ProgressSpinnerComponent implements OnDestroy {
   private startTimestamp?: number;
   private hideTimeout?: number;
 
-  @Input()
-  set showSpinner(value: boolean) {
-    if (value) {
+  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['showSpinner']) {
+      return;
+    }
+
+    if (this.showSpinner()) {
       this.show();
     } else {
       this.hide();
     }
   }
-
-  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnDestroy(): void {
     clearTimeout(this.hideTimeout);

@@ -1,12 +1,12 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Params, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'ec-router-link',
   template: `
-    @if (enabled) {
-      <a [routerLink]="fwdRouterLink" [queryParams]="queryParams ?? null">
+    @if (enabled()) {
+      <a [routerLink]="fwdRouterLink()" [queryParams]="queryParams() ?? null">
         <ng-container [ngTemplateOutlet]="content" />
       </a>
     } @else {
@@ -25,14 +25,11 @@ export class EcRouterLinkWrapperComponent {
    *
    * When `false`-ish, disables the link, and shows the content directly without any wrappers.
    * */
-  @Input()
-  public enabled: unknown = false;
+  public readonly enabled = input<unknown>(false);
 
   /** Router link to be forwarded to the internal `<a [routerLink]>` */
-  @Input()
-  public fwdRouterLink: unknown[] | string | null | undefined;
+  public readonly fwdRouterLink = input<unknown[] | string | null>();
 
   /** Query params to be forwarded to the internal `<a [routerLink] [queryParams]>` */
-  @Input()
-  public queryParams?: Params | null;
+  public readonly queryParams = input<Params | null>();
 }

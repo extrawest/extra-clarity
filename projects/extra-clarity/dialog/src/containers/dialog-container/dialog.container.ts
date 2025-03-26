@@ -4,9 +4,9 @@ import {
   Component,
   HostListener,
   Inject,
-  Input,
   OnDestroy,
   OnInit,
+  input,
 } from '@angular/core';
 
 import { Subscription, SubscriptionLike } from 'rxjs';
@@ -18,14 +18,14 @@ import { DialogSize } from '../../types/dialog-types';
 
 @Component({
   selector: 'ec-dialog, [dialog]',
-  templateUrl: 'dialog.container.html',
+  templateUrl: './dialog.container.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
 export class DialogContainer implements OnInit, OnDestroy {
-  @Input() public size: DialogSize = 'md';
-  @Input() public closable = true;
-  @Input() public closableBackdrop = true;
+  public readonly size = input<DialogSize>('md');
+  public readonly closable = input<boolean>(true);
+  public readonly closableBackdrop = input<boolean>(true);
 
   private locationSubscription: SubscriptionLike = Subscription.EMPTY;
 
@@ -37,7 +37,7 @@ export class DialogContainer implements OnInit, OnDestroy {
 
   @HostListener('document:keydown.escape', ['$event'])
   handleKeyboardEvent(): void {
-    if (this.config.closable ?? this.closable) {
+    if (this.config.closable ?? this.closable()) {
       this.dialogRef.close();
     }
   }

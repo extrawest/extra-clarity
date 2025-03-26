@@ -1,13 +1,13 @@
-@for (navItem of navList; track navItem) {
+@for (navItem of navList(); track navItem) {
   @if (navItem.type === NavItemTypeEnum.Group) {
     <ec-sidebar-nav-group
       [navItem]="navItem"
-      [isBold]="rootLevelBold === 'all' || rootLevelBold === 'groups'"
+      [isBold]="rootLevelBold() === 'all' || rootLevelBold() === 'groups'"
     />
   } @else {
     <ec-sidebar-nav-item
       [navItem]="navItem"
-      [isBold]="rootLevelBold === 'all' || rootLevelBold === 'items'"
+      [isBold]="rootLevelBold() === 'all' || rootLevelBold() === 'items'"
     />
   }
 }

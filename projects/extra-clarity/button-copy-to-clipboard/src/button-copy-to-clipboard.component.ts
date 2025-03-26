@@ -4,10 +4,10 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
+  input,
   output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -35,67 +35,57 @@ export const BUTTON_DEFAULTS = {
 })
 export class EcButtonCopyToClipboardComponent implements OnChanges, OnInit {
   /** Whether the button is disabled (blocked) */
-  @Input()
-  public disabled = false;
+  public readonly disabled = input<boolean>(false);
 
   /**
    * Height in pixels for the button. Includes the border size if `[withBorder]="true"`.
    *
    * If not provided, then a value from the `sizePx` input is used instead.
    * */
-  @Input()
-  public heightPx?: number;
+  public readonly heightPx = input<number>();
 
   /** Size (width & height) in pixels for icons and spinners inside of the button */
-  @Input()
-  public iconSizePx: number = BUTTON_DEFAULTS.iconSizePx;
+  public readonly iconSizePx = input<number>(BUTTON_DEFAULTS.iconSizePx);
 
   /** An optional text label for the default state */
-  @Input()
-  public label?: string;
+
+  public readonly label = input<string>();
 
   /** Font size for the label set by the `label` input.
    *
    * If not provided, then a value from the global Clarity styles is used.
    * */
-  @Input()
-  public labelFontSizePx?: number;
+  public readonly labelFontSizePx = input<number>();
 
   /**
    * Size (width & height) in pixels.
    *
    * NOTE: The inputs `widthPx` and `heightPx` have higher priority and override the according dimension.
    * */
-  @Input()
-  public sizePx: number = BUTTON_DEFAULTS.buttonSizePx;
+  public readonly sizePx = input<number>(BUTTON_DEFAULTS.buttonSizePx);
 
   /**
    * A string or a number to be copied to the clipboard when the button is pressed.
    *
    * If not provided (or provided either as `null` or `undefined`), the button will be disabled.
    */
-  @Input()
-  public textToCopy?: string | number | null;
+  public readonly textToCopy = input<string | number | null>();
 
   /** A string to be shown as a tooltip on hovering the button */
-  @Input()
-  public title?: string;
+  public readonly title = input<string>();
 
   /**
    * Width in pixels for the button. Includes the border size if `[withBorder]="true"`.
    *
    * If not provided, then a value from the `sizePx` input is used instead.
    * */
-  @Input()
-  public widthPx?: number;
+  public readonly widthPx = input<number>();
 
   /** Whether to use animation inside the button */
-  @Input()
-  public withAnimation = true;
+  public readonly withAnimation = input<boolean>(true);
 
   /** Whether to show a border around the button */
-  @Input()
-  public withBorder = false;
+  public readonly withBorder = input<boolean>(false);
 
   /**
    * Emits a string successfully copied to the clipboard by pressing the button
@@ -125,15 +115,16 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnInit {
   }
 
   protected get iconSizeAsString(): string {
-    return this.iconSizePx.toString();
+    return this.iconSizePx().toString();
   }
 
   protected get spinnerStylePatch(): Record<string, unknown> {
+    const iconSizePx = this.iconSizePx();
     return {
-      'height.px': this.iconSizePx,
-      'width.px': this.iconSizePx,
-      'min-height.px': this.iconSizePx,
-      'min-width.px': this.iconSizePx,
+      'height.px': iconSizePx,
+      'width.px': iconSizePx,
+      'min-height.px': iconSizePx,
+      'min-width.px': iconSizePx,
       'vertical-align': 'middle',
     };
   }
@@ -170,7 +161,7 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['textToCopy']) {
-      this.textToCopyAsString = this.getTextToCopyAsString(this.textToCopy);
+      this.textToCopyAsString = this.getTextToCopyAsString(this.textToCopy());
     }
   }
 

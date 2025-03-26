@@ -14,11 +14,11 @@
       Reserved for errors, malfunctions, as well as critical issues like license expiration.
       <br />
       <br />
-      <button class="btn btn-{{ type }}" (click)="onOpenNotification()">Show Notification</button>
+      <button class="btn btn-{{ type() }}" (click)="onOpenNotification()">Show Notification</button>
 
       OR &nbsp;&nbsp;
 
-      <button class="btn btn-{{ type }}" (click)="onOpenTplNotification(exampleDanger)">
+      <button class="btn btn-{{ type() }}" (click)="onOpenTplNotification(exampleDanger)">
         With Custom Template
       </button>
       <ng-template #exampleDanger>

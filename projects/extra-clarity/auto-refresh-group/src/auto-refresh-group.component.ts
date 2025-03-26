@@ -2,11 +2,11 @@ import { formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   LOCALE_ID,
   OnChanges,
   SimpleChanges,
   inject,
+  input,
   output,
   signal,
 } from '@angular/core';
@@ -39,27 +39,20 @@ export class EcAutoRefreshGroupComponent implements OnChanges {
    * The American English locale 'en-US' is used as the fallback locale for error cases.
    * It does not require the locale data registration as it's shipped with Angular out of the box.
    * */
-  @Input()
-  public locale?: string;
+  public readonly locale = input<string>();
 
-  @Input()
-  public failed = false;
+  public readonly failed = input<boolean>(false);
 
-  @Input()
-  public refreshing = false;
+  public readonly refreshing = input<boolean>(false);
 
-  @Input()
-  public autoRefreshBlocked = false;
+  public readonly autoRefreshBlocked = input<boolean>(false);
 
-  @Input()
-  public autoRefreshEnabled = true;
+  public readonly autoRefreshEnabled = input<boolean>(true);
 
   /** Refreshing period in seconds */
-  @Input()
-  public period = DEFAULT_PERIOD_SEC;
+  public readonly period = input<number>(DEFAULT_PERIOD_SEC);
 
-  @Input()
-  public useAutoRefresh = true;
+  public readonly useAutoRefresh = input<boolean>(true);
 
   /** `EventEmitter<void>` */
   public readonly refresh = output<void>();
@@ -92,7 +85,7 @@ export class EcAutoRefreshGroupComponent implements OnChanges {
   private formatTimestamp(timestamp: number): string {
     const format = 'mediumTime';
     const fallbackLocale = 'en-US';
-    const preferredLocale = (this.locale ?? this.localeId) || fallbackLocale;
+    const preferredLocale = (this.locale() ?? this.localeId) || fallbackLocale;
 
     try {
       return formatDate(timestamp, format, preferredLocale);
