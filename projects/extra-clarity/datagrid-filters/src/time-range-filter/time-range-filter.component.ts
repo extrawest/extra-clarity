@@ -4,13 +4,12 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Optional,
-  Output,
   SimpleChanges,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -145,8 +144,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    *
    * `EventEmitter<EcFilterState<EcTimeRangeFilterValue>>`
    */
-  @Output()
-  public filterValueChanged = new EventEmitter<EcFilterState<FilterValue>>();
+  public readonly filterValueChanged = output<EcFilterState<FilterValue>>();
 
   protected readonly radioControl = new FormControl<string | null>(null);
 

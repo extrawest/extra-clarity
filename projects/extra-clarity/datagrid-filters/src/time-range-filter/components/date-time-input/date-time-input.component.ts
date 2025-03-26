@@ -5,12 +5,11 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -42,8 +41,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
   @Input()
   public withTime: boolean = true;
 
-  @Output()
-  public valueChange = new EventEmitter<number | null>();
+  public readonly valueChange = output<number | null>();
 
   protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('datetimeInput');
 

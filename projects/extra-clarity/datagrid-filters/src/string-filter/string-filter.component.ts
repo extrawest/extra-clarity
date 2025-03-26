@@ -5,13 +5,12 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Optional,
-  Output,
   SimpleChanges,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -199,8 +198,7 @@ export class EcStringFilterComponent<T extends object = object>
    *
    * `EventEmitter<EcFilterState<string>>`
    */
-  @Output()
-  public filterValueChanged = new EventEmitter<EcFilterState<string>>();
+  public readonly filterValueChanged = output<EcFilterState<string>>();
 
   protected readonly inputElementRef = viewChild<ElementRef<HTMLInputElement>>('inputElement');
 

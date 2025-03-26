@@ -5,14 +5,13 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Optional,
-  Output,
   SimpleChanges,
   TemplateRef,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -217,8 +216,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    *
    * `EventEmitter<EcFilterState<E | null>>`
    */
-  @Output()
-  public filterValueChanged = new EventEmitter<EcFilterState<E | null>>();
+  public readonly filterValueChanged = output<EcFilterState<E | null>>();
 
   protected configErrors: string[] = [];
   protected defaultValue: E | null = null;

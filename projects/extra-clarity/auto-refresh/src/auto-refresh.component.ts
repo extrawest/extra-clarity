@@ -3,12 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -55,16 +54,14 @@ export class EcAutoRefreshComponent implements OnChanges, OnInit {
    *
    * `EventEmitter<void>`
    * */
-  @Output()
-  public readonly refresh = new EventEmitter<void>();
+  public readonly refresh = output<void>();
 
   /**
    * Emits a new toggle state as a `boolean` every time it is changed
    *
    * `EventEmitter<boolean>`
    * */
-  @Output()
-  public readonly toggleState = new EventEmitter<boolean>();
+  public readonly toggleState = output<boolean>();
 
   protected readonly toggleControl = new FormControl<boolean>(false, { nonNullable: true });
 

@@ -4,10 +4,9 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -132,8 +131,7 @@ export class EcDatagridCellWrapperComponent implements OnInit {
    *
    * `EventEmitter<string>`
    */
-  @Output()
-  public copied = new EventEmitter<string>();
+  public readonly copied = output<string>();
 
   /**
    * Emits an `unknown` value if copying to the clipboard failed.
@@ -142,8 +140,7 @@ export class EcDatagridCellWrapperComponent implements OnInit {
    *
    * `EventEmitter<unknown>`
    */
-  @Output()
-  public failed = new EventEmitter<unknown>();
+  public readonly failed = output<unknown>();
 
   constructor(
     protected readonly commonStrings: EcCommonStringsService,

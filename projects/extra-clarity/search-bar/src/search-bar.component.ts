@@ -4,12 +4,11 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -85,8 +84,7 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
    *
    * `EventEmitter<string>`
    */
-  @Output()
-  public valueChange = new EventEmitter<string>();
+  public readonly valueChange = output<string>();
 
   protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('searchInputRef');
 

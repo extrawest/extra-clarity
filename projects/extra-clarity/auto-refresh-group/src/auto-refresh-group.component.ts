@@ -2,13 +2,12 @@ import { formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
   LOCALE_ID,
   OnChanges,
-  Output,
   SimpleChanges,
   inject,
+  output,
   signal,
 } from '@angular/core';
 
@@ -63,12 +62,10 @@ export class EcAutoRefreshGroupComponent implements OnChanges {
   public useAutoRefresh = true;
 
   /** `EventEmitter<void>` */
-  @Output()
-  public readonly refresh = new EventEmitter<void>();
+  public readonly refresh = output<void>();
 
   /** `EventEmitter<boolean>` */
-  @Output()
-  public readonly autoRefreshToggled = new EventEmitter<boolean>();
+  public readonly autoRefreshToggled = output<boolean>();
 
   protected lastFetchTimestamp = signal(this.formatTimestamp(Date.now()));
 
