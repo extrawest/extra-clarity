@@ -190,8 +190,9 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
       return commonStrings.timeRangeToggle.allTime;
     }
 
-    const timeFrom = this.timestampPipe.transform(start, 'min', this.labelLocale) ?? '';
-    const timeTo = this.timestampPipe.transform(end, 'min', this.labelLocale) ?? '';
+    const precision = this.withTime ? 'min' : 'day';
+    const timeFrom = this.timestampPipe.transform(start, precision, this.labelLocale) ?? '';
+    const timeTo = this.timestampPipe.transform(end, precision, this.labelLocale) ?? '';
 
     if (!start && end) {
       return timeTo
