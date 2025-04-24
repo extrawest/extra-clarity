@@ -8,7 +8,7 @@ export class EcTimestampPipe implements PipeTransform {
 
   transform(
     value: Date | string | number | null | undefined,
-    precision: 'min' | 'sec' | 'ms' = 'sec',
+    precision: 'day' | 'min' | 'sec' | 'ms' = 'sec',
     locale?: string,
   ): string | null {
     if (!value) {
@@ -17,15 +17,22 @@ export class EcTimestampPipe implements PipeTransform {
 
     const date = new Date(value);
 
-    const options: Intl.DateTimeFormatOptions = {
-      year: '2-digit',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-      second: precision === 'min' ? undefined : '2-digit',
-      fractionalSecondDigits: precision === 'ms' ? 3 : undefined,
-    };
+    const options: Intl.DateTimeFormatOptions =
+      precision === 'day'
+        ? {
+            year: '2-digit',
+            month: 'numeric',
+            day: 'numeric',
+          }
+        : {
+            year: '2-digit',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            second: precision === 'min' ? undefined : '2-digit',
+            fractionalSecondDigits: precision === 'ms' ? 3 : undefined,
+          };
 
     try {
       return date.toLocaleDateString(locale ?? this.appLocale, options);
