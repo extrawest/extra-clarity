@@ -19,6 +19,12 @@ import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr
 import { Subject } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
+import {
+  convertToLocalDateTime,
+  isBefore,
+  isSame,
+  isSameOrAfter,
+} from '@extrawest/extra-clarity/utils';
 
 import { EcDatagridFilter } from '../common/directives/datagrid-filter.directive';
 import { EcFilterState } from '../common/interfaces/filter-state.interface';
@@ -30,7 +36,7 @@ import {
   EcTimeRangePreset,
   EcTimeRangeFilterValue as FilterValue,
 } from './interfaces';
-import { containsAllTimePreset, getDefaultPreset, getFilterTimestamps } from './utils';
+import { containsAllTimePreset, getDefaultPreset, getFilterRangeValues } from './utils';
 
 export const TIMERANGE_FILTER_DEFAULTS = {
   widthPx: 225,
@@ -79,10 +85,10 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    * * `id`: a required non-empty string; must be unique within the filter to identify the preset among others;
    * * `label`: a required non-empty string to be shown in the filter's body next to the radio button
    *   for this option;
-   * * `timeRangeFn`: a required function which must return a time range object containing
-   *   the timestamps for `start` and `end` of the period related to the preset;
-   *   this function should be used outside of the component to get the actual `start` and `end`
-   *   timestamps for a selected preset;
+   * * `timeRangeFn`: a required function which must return a time range object containing the local
+   *   date (YYYY-MM-DD) or date-time (YYYY-MM-DDTHH:mm) strings for `start` and `end` of the period
+   *   specified by the preset; this function can be also re-used outside of the component to get
+   *   the actual `start` and `end` values for a selected preset;
    * * `default`: an optional boolean to mark the preset selected by default,
    *   i.e. to define a custom default state of the filter;
    *   when provided for multiple options or not provided at all, then the default state is 'custom range'.
@@ -131,9 +137,23 @@ export class EcTimeRangeFilterComponent<T extends object = object>
   @Input()
   public withCustomRange: boolean = false;
 
-  /** Whether the input field should allow selecting a date-time range. */
+  /**
+   * Whether the input fields of the custom range section should allow setting time along to date.
+   *
+   * It also defines the output format of the 'start' and 'end' strings: date-only or date-time.
+   * */
   @Input()
   public withTime: boolean = true;
+
+  /**
+   * Custom timezone to be used within presets, e.g. for getting local date-times of today,
+   * yesterday, etc. As well as for a client-driven filtering to be able to compare numeric
+   * UNIX-timestamps and string local dates.
+   *
+   * If not set, the client-side (browser's) timezone will be used instead.
+   */
+  @Input()
+  public timeZone?: string;
 
   /**
    * Emits the filter's state object on every change of the internal filter value.
@@ -239,14 +259,19 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       return false;
     }
 
-    const { start, end } = getFilterTimestamps(this.filterValue, this.presets);
+    const { start, end } = getFilterRangeValues(
+      this.filterValue,
+      this.presets,
+      this.withTime,
+      this.timeZone,
+    );
 
     if (!start && !end) {
       return true;
     }
 
-    // It's assumed that the item contains a timestamp
-    // as a number of ms since 1970.01.01 or as a standard Date string
+    // It's assumed that the filtered item contains a timestamp as a number of ms since 1970.01.01
+    // or as a standard JS Date string to be passed to the Date() constructor
 
     const valueInItem = (item as Record<string | number, unknown>)[this.propertyKey];
 
@@ -254,14 +279,15 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       return false;
     }
 
-    const itemTimestamp =
-      typeof valueInItem === 'string' ? new Date(valueInItem).getTime() : valueInItem;
-
-    if (isNaN(itemTimestamp)) {
+    const localDateTime = convertToLocalDateTime(valueInItem, this.withTime, this.timeZone);
+    if (!localDateTime) {
       return false;
     }
 
-    return (!start || itemTimestamp >= start) && (!end || itemTimestamp <= end);
+    return (
+      (!start || isSameOrAfter(localDateTime, start)) &&
+      (!end || isBefore(localDateTime, end) || (!this.withTime && isSame(localDateTime, end)))
+    );
   }
 
   /** Reset the filter to the default state */
@@ -412,7 +438,13 @@ export class EcTimeRangeFilterComponent<T extends object = object>
   }
 
   private updateVisualCustomRange(): void {
-    this.visualCustomRange = getFilterTimestamps(this.filterValue, this.presets);
+    this.visualCustomRange = getFilterRangeValues(
+      this.filterValue,
+      this.presets,
+      this.withTime,
+      this.timeZone,
+    );
+
     this.changeDetectorRef.markForCheck();
   }
 }

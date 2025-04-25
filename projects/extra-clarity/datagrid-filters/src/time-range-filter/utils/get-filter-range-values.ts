@@ -7,9 +7,11 @@ import {
 
 import { getDefaultPreset } from './get-default-preset';
 
-export function getFilterTimestamps(
+export function getFilterRangeValues(
   filterValue: FilterValue | undefined,
   presets: EcTimeRangePreset[],
+  withTime: boolean,
+  timeZone?: string,
 ): EcCustomTimeRange {
   if (filterValue && !filterValue.presetId) {
     return { ...filterValue.custom };
@@ -23,5 +25,5 @@ export function getFilterTimestamps(
 
   const timeRangeFn = presets.find((preset) => preset.id === selectedPresetId)?.timeRangeFn;
 
-  return typeof timeRangeFn === 'function' ? timeRangeFn() : ALL_TIME;
+  return typeof timeRangeFn === 'function' ? timeRangeFn(withTime, timeZone) : ALL_TIME;
 }

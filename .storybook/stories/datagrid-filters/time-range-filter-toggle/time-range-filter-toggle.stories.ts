@@ -71,6 +71,9 @@ const meta: Meta<EcTimeRangeFilterToggleComponent> = {
     withTime: {
       table: { subcategory: SUBCATEGORY_FILTER },
     },
+    timeZone: {
+      table: { subcategory: SUBCATEGORY_FILTER },
+    },
     // Inputs passed to EcPopoverToggleComponent
     anchorToContentAlign: {
       table: { subcategory: SUBCATEGORY_TOGGLE },

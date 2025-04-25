@@ -17,8 +17,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ClrInput, ClrInputModule } from '@clr/angular';
+import { distinctUntilChanged } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
+import { localDateRegEx, localDateTimeRegEx } from '@extrawest/extra-clarity/utils';
 
 import { datetimeInputValidator } from './date-time-input.validators';
 
@@ -37,27 +39,19 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
   public label?: string;
 
   @Input()
-  public value: number | null = null;
+  public value: string | null = null;
 
   @Input()
   public withTime: boolean = true;
 
   @Output()
-  public valueChange = new EventEmitter<number | null>();
+  public valueChange = new EventEmitter<string>();
 
   protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('datetimeInput');
 
   protected readonly clrInputRef = viewChild.required(ClrInput);
 
-  public inputType = this.inputDateType;
-
-  public readonly formControl = new FormControl<string>('', {
-    nonNullable: true,
-  });
-
-  get inputDateType(): string {
-    return this.withTime ? 'datetime-local' : 'date';
-  }
+  public readonly formControl = new FormControl<string>('', { nonNullable: true });
 
   constructor(
     protected commonStrings: EcCommonStringsService,
@@ -70,10 +64,8 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
     this.formControl.updateValueAndValidity();
 
     this.formControl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((formValue) => {
-        this.valueChange.emit(this.convertFromFormValue(formValue));
-      });
+      .pipe(distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
+      .subscribe((formValue) => this.valueChange.emit(formValue));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -85,12 +77,8 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
       }
     }
 
-    if (changes['value'] && this.value !== undefined) {
-      this.updateFormValue(this.value);
-    }
-
-    if (changes['withTime']) {
-      this.inputType = this.withTime ? 'datetime-local' : 'date';
+    if (changes['value']) {
+      this.updateValue(this.value ?? '');
     }
   }
 
@@ -122,39 +110,21 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
     this.changeDetectorRef.markForCheck();
   }
 
-  private convertIntoFormValue(timestampAsNumber: number | null): string {
-    if (timestampAsNumber === null) {
-      return '';
+  private updateValue(value: string): void {
+    if (this.formControl.value === value) {
+      return;
     }
 
-    const date = new Date(timestampAsNumber);
-    const isDateInvalid = isNaN(date.getTime());
-
-    if (isDateInvalid) return '';
-
-    // Compose a string compatible with 'datetime-local' input element's value: 'YYYY-MM-DDThh:mm'
-
-    const YYYY = date.getFullYear().toString().padStart(4, '0');
-    const MM = (date.getMonth() + 1).toString().padStart(2, '0');
-    const DD = date.getDate().toString().padStart(2, '0');
-    const hh = date.getHours().toString().padStart(2, '0');
-    const mm = date.getMinutes().toString().padStart(2, '0');
-
-    return this.withTime ? `${YYYY}-${MM}-${DD}T${hh}:${mm}` : `${YYYY}-${MM}-${DD}`;
-  }
-
-  private convertFromFormValue(timestampAsString: string): number | null {
-    if (!timestampAsString) {
-      return null;
+    if (!value) {
+      this.formControl.setValue('');
+      return;
     }
-    const date = new Date(timestampAsString).getTime();
-    return isNaN(date) ? null : date;
-  }
 
-  private updateFormValue(value: number | null): void {
-    const formValue = this.convertIntoFormValue(value);
-    if (this.formControl.value !== formValue) {
-      this.formControl.setValue(formValue);
+    const regEx = this.withTime ? localDateTimeRegEx : localDateRegEx;
+    if (!regEx.test(value)) {
+      return;
     }
+
+    this.formControl.setValue(value);
   }
 }

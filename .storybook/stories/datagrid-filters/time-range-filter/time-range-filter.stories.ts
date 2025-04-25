@@ -40,6 +40,7 @@ const meta: Meta<EcTimeRangeFilterComponent> = {
       },
     },
     serverDriven: {},
+    timeZone: {},
     value: {
       control: { type: 'object' },
     },
@@ -49,6 +50,7 @@ const meta: Meta<EcTimeRangeFilterComponent> = {
       },
     },
     withCustomRange: {},
+    withTime: {},
     // OUTPUTS
     filterValueChanged: {
       control: false,
@@ -86,6 +88,7 @@ const meta: Meta<EcTimeRangeFilterComponent> = {
     serverDriven: true,
     value: undefined,
     widthPx: TIMERANGE_FILTER_DEFAULTS.widthPx,
+    withTime: true,
   },
 };
 

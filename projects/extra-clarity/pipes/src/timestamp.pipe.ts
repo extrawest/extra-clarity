@@ -20,7 +20,7 @@ export class EcTimestampPipe implements PipeTransform {
     const options: Intl.DateTimeFormatOptions =
       precision === 'day'
         ? {
-            year: '2-digit',
+            year: 'numeric',
             month: 'numeric',
             day: 'numeric',
           }

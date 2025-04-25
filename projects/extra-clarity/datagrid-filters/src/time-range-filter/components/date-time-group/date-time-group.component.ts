@@ -91,11 +91,9 @@ export class EcDateTimeGroupComponent implements OnChanges, OnInit {
       return;
     }
 
-    // Floor timestamps to minutes as we don't have seconds in visual time pickers
-
     this.storedRange = {
-      start: this.floorToMinutes(this.visualRange.start),
-      end: this.floorToMinutes(this.visualRange.end),
+      start: this.visualRange.start || null,
+      end: this.visualRange.end || null,
     };
 
     this.apply.emit(this.storedRange);
@@ -112,9 +110,5 @@ export class EcDateTimeGroupComponent implements OnChanges, OnInit {
     }
     this.visualRange = { ...this.storedRange };
     this.discard.emit();
-  }
-
-  private floorToMinutes(timestamp: number | null): number | null {
-    return timestamp === null ? null : new Date(timestamp).setSeconds(0, 0);
   }
 }

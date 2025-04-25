@@ -67,10 +67,15 @@ for your specific use-cases.
 
 ### Output state
 
-To evaluate the actual `start` and `end` timestamps from the selected filter value, you can use the
-`getFilterTimestamps()` function (see the **utils** sub-folder in the source code on
-[GitHub](#source-code)). This function requires a couple of arguments: the current filter value
-(as `EcTimeRangeFilterValue`) and the list of presets used by the filter (as `EcTimeRangePreset[]`).
+To evaluate the actual `start` and `end` local date (or date-time) strings for the selected filter
+value, you can use the `getFilterRangeValues()` function (see the **utils** sub-folder in the source
+folder on [GitHub](#source-code)). This function requires a couple of arguments:
+
+- the current filter value as `EcTimeRangeFilterValue`
+- the list of presets used by the filter as `EcTimeRangePreset[]`
+- the boolean flag to set the local date format: date only or date with time
+- the optional IANA timezone name to be used by presets (e.g. to evaluate today, yesterday, etc.)
+  and for client-driven filtering.
 
 ## API
 

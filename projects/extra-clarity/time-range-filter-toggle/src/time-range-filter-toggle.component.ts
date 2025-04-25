@@ -25,7 +25,6 @@ import {
   TIMERANGE_FILTER_DEFAULTS,
 } from '@extrawest/extra-clarity/datagrid-filters';
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
-import { EcTimestampPipe } from '@extrawest/extra-clarity/pipes';
 import {
   EcAnchorToContentAlign,
   EcContentPosition,
@@ -34,6 +33,7 @@ import {
   EcPopoverToggleComponent,
   EcPopoverToggleLabelDirective,
 } from '@extrawest/extra-clarity/popover-toggle';
+import { formatLocalDateTime, formatLocalTime } from '@extrawest/extra-clarity/utils';
 
 import { EcTimeRangeFilterToggleState } from './interfaces';
 
@@ -52,7 +52,6 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
     EcPopoverToggleComponent,
     EcTimeRangeFilterComponent,
   ],
-  providers: [EcTimestampPipe],
 })
 export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnChanges, OnInit {
   @Input()
@@ -73,6 +72,9 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
 
   @Input()
   public withTime: boolean = true;
+
+  @Input()
+  public timeZone?: string;
 
   @Input()
   public closeOnChange: boolean = false;
@@ -135,7 +137,6 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     private destroyRef: DestroyRef,
-    private timestampPipe: EcTimestampPipe,
   ) {
     ClarityIcons.addIcons(angleIcon, calendarIcon);
   }
@@ -190,31 +191,45 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
       return commonStrings.timeRangeToggle.allTime;
     }
 
-    const precision = this.withTime ? 'min' : 'day';
-    const timeFrom = this.timestampPipe.transform(start, precision, this.labelLocale) ?? '';
-    const timeTo = this.timestampPipe.transform(end, precision, this.labelLocale) ?? '';
+    const dateTimeFrom = formatLocalDateTime(start, this.withTime, this.labelLocale);
+    const dateTimeTo = formatLocalDateTime(end, this.withTime, this.labelLocale);
 
     if (!start && end) {
-      return timeTo
+      return dateTimeTo
         ? this.commonStrings.parse(commonStrings.timeRangeToggle.beforeDateTime, {
-            DATETIME: timeTo,
+            DATETIME: dateTimeTo,
           })
         : commonStrings.timeRangeFilter.customPeriod;
     }
 
     if (start && !end) {
-      return timeFrom
+      return dateTimeFrom
         ? this.commonStrings.parse(commonStrings.timeRangeToggle.afterDateTime, {
-            DATETIME: timeFrom,
+            DATETIME: dateTimeFrom,
           })
         : commonStrings.timeRangeFilter.customPeriod;
     }
 
-    if (timeFrom && timeTo) {
-      return `${timeFrom} - ${timeTo}`;
+    if (!dateTimeFrom || !dateTimeTo) {
+      return commonStrings.timeRangeFilter.customPeriod;
     }
 
-    return commonStrings.timeRangeFilter.customPeriod;
+    const startDate = start?.slice(0, 10);
+    const endDate = end?.slice(0, 10);
+
+    if (startDate !== endDate) {
+      return `${dateTimeFrom} - ${dateTimeTo}`;
+    }
+
+    if (!this.withTime) {
+      return dateTimeFrom;
+    }
+
+    const dateFrom = formatLocalDateTime(start, false, this.labelLocale);
+    const timeFrom = formatLocalTime(start, this.labelLocale);
+    const timeTo = formatLocalTime(end, this.labelLocale);
+
+    return `${dateFrom}, ${timeFrom} - ${timeTo}`;
   }
 
   private updateSelectedRangeLabel(isCalledFromNgOnInit: boolean = false): void {

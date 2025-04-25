@@ -3,7 +3,7 @@ import { EcTimeRangePreset } from '../interfaces';
 
 export function containsAllTimePreset(presets: EcTimeRangePreset[]): boolean {
   return presets.some((preset) => {
-    const { start, end } = preset.timeRangeFn();
+    const { start, end } = preset.timeRangeFn(false);
     return start === ALL_TIME.start && end === ALL_TIME.end;
   });
 }
