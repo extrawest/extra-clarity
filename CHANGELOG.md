@@ -1,5 +1,20 @@
 # Changelog
 
+## [19.2.0](https://github.com/extrawest/extra-clarity/compare/v19.1.1...v19.2.0) (2025-04-25)
+
+### ⚠ BREAKING CHANGES
+
+* **time-range-filter:** The format of the EcTimeRangeFilterComponent's output values 'start' and 'end' was changed from numeric unix timestamps to local date (or date-time) strings according to the IANA timezone passed as a component's input (or the client's timezone if nothing passed). The time range preset functions were also affected, as well as the external time-range filter component EcTimeRangeFilterToggleComponent.
+
+### Features
+
+* **time-range-filter:** changed format of output values, added timezone input ([b4c0e23](https://github.com/extrawest/extra-clarity/commit/b4c0e232a4f35679be9be4799b12c996ac1f5cba))
+* **timestamp-pipe:** add 'day' precision to format dates without time ([697d25b](https://github.com/extrawest/extra-clarity/commit/697d25b10f5c8cd5be911149d53260efa0988aa4))
+
+### Bug fixes
+
+* **time-range-filter-toggle:** show only dates as toggle's label while working with day-precision ([a9185c7](https://github.com/extrawest/extra-clarity/commit/a9185c7e7bfcee2f44296aaeb7947f2fe4f5916a))
+
 ## [19.1.1](https://github.com/extrawest/extra-clarity/compare/v19.1.0...v19.1.1) (2025-03-26)
 
 ### Features
