@@ -1,5 +1,11 @@
 # Changelog
 
+## [19.2.1](https://github.com/extrawest/extra-clarity/compare/v19.2.0...v19.2.1) (2025-10-05)
+
+### Bug fixes
+
+* **dialog:** add missing "modal-body" class for injected dialog content ([e3f0144](https://github.com/extrawest/extra-clarity/commit/e3f014438e4a767de98764b03b262f30e9e0fdce))
+
 ## [19.2.0](https://github.com/extrawest/extra-clarity/compare/v19.1.1...v19.2.0) (2025-04-25)
 
 ### ⚠ BREAKING CHANGES
