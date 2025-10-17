@@ -1,5 +1,11 @@
 # Changelog
 
+## [19.2.2](https://github.com/extrawest/extra-clarity/compare/v19.2.1...v19.2.2) (2025-10-17)
+
+### Bug fixes
+
+* **search-bar:** adjust spacing for placeholder text, truncate it with ellipsis on overflow ([803c8b2](https://github.com/extrawest/extra-clarity/commit/803c8b2d7f052e009d954e81f2b5f6cb62fb1a64))
+
 ## [19.2.1](https://github.com/extrawest/extra-clarity/compare/v19.2.0...v19.2.1) (2025-10-05)
 
 ### Bug fixes
