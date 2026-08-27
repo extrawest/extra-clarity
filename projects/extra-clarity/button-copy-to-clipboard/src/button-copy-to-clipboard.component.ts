@@ -13,8 +13,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { ClarityIcons, copyIcon } from '@cds/core/icon';
-import { ClrIconModule, ClrLoadingState } from '@clr/angular';
+import { ClarityIcons, ClrIcon, ClrLoadingState, copyIcon } from '@clr/angular';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 
@@ -31,7 +30,7 @@ export const BUTTON_DEFAULTS = {
   templateUrl: './button-copy-to-clipboard.component.html',
   styleUrls: ['./button-copy-to-clipboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgStyle, ClrIconModule],
+  imports: [NgStyle, ClrIcon],
   animations,
 })
 export class EcButtonCopyToClipboardComponent implements OnChanges, OnInit {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular-vite';
 
 import { DEFAULT_PERIOD_SEC, EcAutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 

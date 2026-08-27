@@ -7,7 +7,7 @@ import {
   applicationConfig,
   componentWrapperDecorator,
   moduleMetadata,
-} from '@storybook/angular';
+} from '@storybook/angular-vite';
 
 import {
   ENUM_SINGLE_VALUE_FILTER_DEFAULTS,

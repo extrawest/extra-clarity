@@ -1,6 +1,11 @@
 import { RouterLink, provideRouter } from '@angular/router';
 
-import { type Meta, type StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';
+import {
+  type Meta,
+  type StoryObj,
+  applicationConfig,
+  moduleMetadata,
+} from '@storybook/angular-vite';
 
 import { EcRouterLinkWrapperComponent } from '@extrawest/extra-clarity/router-link-wrapper';
 

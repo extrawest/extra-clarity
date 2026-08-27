@@ -14,7 +14,7 @@ import { DialogRef } from '../dialog-ref';
 export class DialogCloseDirective {
   constructor(private readonly dialogRef: DialogRef) {}
 
-  private onClick(): void {
+  protected onClick(): void {
     this.dialogRef.close();
   }
 }

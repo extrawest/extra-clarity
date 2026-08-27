@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
+import { ClrIcon, ClrVerticalNavModule } from '@clr/angular';
 
 import { EC_NAV_ITEM_TYPE, EcNavItemGroup, EcNavListSingleItem } from '../../sidebar-nav.models';
 import { EcSidebarNavService } from '../../sidebar-nav.service';
@@ -21,12 +21,7 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   selector: 'ec-sidebar-nav-group',
   templateUrl: './sidebar-nav-group.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ClrIconModule,
-    ClrVerticalNavModule,
-    EcSidebarNavItemComponent,
-    EcSidebarNavLabelComponent,
-  ],
+  imports: [ClrIcon, ClrVerticalNavModule, EcSidebarNavItemComponent, EcSidebarNavLabelComponent],
 })
 export class EcSidebarNavGroupComponent implements OnChanges, OnInit {
   @Input() navItem?: EcNavItemGroup;

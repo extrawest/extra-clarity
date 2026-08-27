@@ -1,6 +1,5 @@
 import { CdkTrapFocus, FocusTrapFactory } from '@angular/cdk/a11y';
-import { DOCUMENT } from '@angular/common';
-import { Directive, ElementRef, Inject } from '@angular/core';
+import { DOCUMENT, Directive, ElementRef, Inject } from '@angular/core';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector

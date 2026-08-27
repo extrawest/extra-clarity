@@ -12,8 +12,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { ClarityIcons, errorStandardIcon } from '@cds/core/icon';
-import { ClrIconModule } from '@clr/angular';
+import { ClarityIcons, ClrIcon, errorStandardIcon } from '@clr/angular';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
 import { ProgressSpinnerComponent } from '@extrawest/extra-clarity/progress-spinner';
@@ -30,7 +29,7 @@ import { EcCardError } from './interfaces';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [JsonPipe, ClrIconModule, ProgressSpinnerComponent],
+  imports: [JsonPipe, ClrIcon, ProgressSpinnerComponent],
   host: {
     class: 'card',
     '[class.empty]': 'empty',

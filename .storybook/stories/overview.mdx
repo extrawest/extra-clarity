@@ -1,5 +1,5 @@
-import { Markdown, Meta } from '@storybook/blocks';
-import extraClarityPackageJson from '@extrawest/extra-clarity/package.json';
+import { Markdown, Meta } from '@storybook/addon-docs/blocks';
+import extraClarityPackageJson from '../../projects/extra-clarity/package.json';
 import rootPackageJson from '../../package.json';
 import { docsStylePatch } from '../helpers';
 
@@ -43,15 +43,13 @@ npm i @extrawest/extra-clarity
 To work with the library, you also need to add the Clarity packages:
 
 ```shell
-npm i @cds/core @clr/angular @clr/ui
+npm i @clr/angular @clr/ui
 ```
 
 And then add the global Clarity styles to your `angular.json` config:
 
 ```json
 "styles": [
-  "node_modules/@cds/core/global.min.css",
-  "node_modules/@cds/core/styles/theme.dark.min.css",
   "node_modules/@clr/ui/clr-ui.min.css"
   ... any other styles
 ]
@@ -72,6 +70,7 @@ for more details on 'Adding Clarity to an Existing Angular Application'.
   {`
 | Extra-Clarity | Angular       | Clarity |
 | :------------ | :-------------| :------ |
+| 21.x          | 21            | 18      |
 | 19.x          | 19            | 17.5+   |
 | 18.x          | 18, 19        | 17.3+   |
 | 17.x          | 17.3+, 18, 19 | 17      |

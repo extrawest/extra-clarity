@@ -5,7 +5,7 @@ import {
   type StoryObj,
   applicationConfig,
   componentWrapperDecorator,
-} from '@storybook/angular';
+} from '@storybook/angular-vite';
 
 import { EcSearchBarComponent, SEARCH_BAR_DEFAULTS } from '@extrawest/extra-clarity/search-bar';
 

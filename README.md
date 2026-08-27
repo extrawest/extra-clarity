@@ -20,15 +20,13 @@ npm install @extrawest/extra-clarity
 To work with the library, you also need to add the Clarity packages:
 
 ```shell
-npm i @cds/core @clr/angular @clr/ui
+npm i @clr/angular @clr/ui
 ```
 
 And then add the global Clarity styles to your `angular.json` config:
 
 ```json
 "styles": [
-  "node_modules/@cds/core/global.min.css",
-  "node_modules/@cds/core/styles/theme.dark.min.css",
   "node_modules/@clr/ui/clr-ui.min.css"
   ... any other styles
 ]
@@ -47,6 +45,7 @@ for more details on 'Adding Clarity to an Existing Angular Application'.
 
 | Extra-Clarity | Angular               | Clarity |
 | :------------ | :-------------------- | :------ |
+| 21.x          | 21                    | ^18.0.0 |
 | 19.x          | 19                    | ^17.5.0 |
 | 18.x          | 18 \|\| 19            | ^17.3.0 |
 | 17.x          | ^17.3 \|\| 18 \|\| 19 | ^17.0.0 |

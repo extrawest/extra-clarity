@@ -2,7 +2,12 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 
 import { ClrVerticalNavModule } from '@clr/angular';
-import { type Meta, type StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';
+import {
+  type Meta,
+  type StoryObj,
+  applicationConfig,
+  moduleMetadata,
+} from '@storybook/angular-vite';
 
 import { EcSidebarNavComponent } from '@extrawest/extra-clarity/sidebar-nav';
 

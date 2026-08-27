@@ -13,8 +13,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { ClarityIcons, angleIcon, calendarIcon } from '@cds/core/icon';
-import { ClrIconModule } from '@clr/angular';
+import { ClarityIcons, ClrIcon, angleIcon, calendarIcon } from '@clr/angular';
 
 import {
   EcFilterState,
@@ -47,7 +46,7 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   styleUrls: ['./time-range-filter-toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    ClrIconModule,
+    ClrIcon,
     EcPopoverToggleLabelDirective,
     EcPopoverToggleComponent,
     EcTimeRangeFilterComponent,

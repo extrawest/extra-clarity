@@ -15,8 +15,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
-import { ClarityIcons, searchIcon, windowCloseIcon } from '@cds/core/icon';
-import { ClrIconModule, ClrInputModule } from '@clr/angular';
+import { ClarityIcons, ClrIcon, ClrInputModule, searchIcon, windowCloseIcon } from '@clr/angular';
 import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
@@ -32,7 +31,7 @@ export const SEARCH_BAR_DEFAULTS = {
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, ClrIconModule, ClrInputModule],
+  imports: [ReactiveFormsModule, ClrIcon, ClrInputModule],
 })
 export class EcSearchBarComponent implements OnChanges, OnInit {
   /**

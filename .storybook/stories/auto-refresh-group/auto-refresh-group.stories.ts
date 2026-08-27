@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj, componentWrapperDecorator } from '@storybook/angular';
+import { type Meta, type StoryObj, componentWrapperDecorator } from '@storybook/angular-vite';
 
 import {
   DEFAULT_PERIOD_SEC,

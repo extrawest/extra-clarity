@@ -19,16 +19,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   ClarityIcons,
+  ClrDatagridFilter,
+  ClrIcon,
+  ClrPopoverService,
+  ClrTreeViewModule,
   filterIcon,
   filterOffIcon,
   infoStandardIcon,
   warningStandardIcon,
-} from '@cds/core/icon';
-import {
-  ClrDatagridFilter,
-  ClrIconModule,
-  ClrPopoverToggleService,
-  ClrTreeViewModule,
 } from '@clr/angular';
 import { Subject } from 'rxjs';
 
@@ -58,7 +56,7 @@ export const ENUM_GROUPED_VALUE_FILTER_DEFAULTS = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgTemplateOutlet,
-    ClrIconModule,
+    ClrIcon,
     ClrTreeViewModule,
     EcMarkMatchedStringPipe,
     EcSearchBarComponent,
@@ -252,7 +250,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
     private changeDetectorRef: ChangeDetectorRef,
     private destroyRef: DestroyRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
-    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
+    @Optional() private clrPopoverService?: ClrPopoverService,
   ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
@@ -290,7 +288,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
   }
 
   ngAfterViewInit(): void {
-    this.clrPopoverToggleService?.openChange
+    this.clrPopoverService?.openChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen: boolean) => {
         if (isOpen) {

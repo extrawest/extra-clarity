@@ -1,0 +1,7 @@
+// Clarity 18 opens popovers with CDK `withFlexibleDimensions(true)` and no backdrop.
+// The overlay pane then fills leftover viewport, so clicks below/beside the painted
+// popover still count as "inside" and do not close it. Shrink-wrap the pane to content.
+::ng-deep .cdk-overlay-pane.clr-popover-content {
+  width: max-content;
+  height: max-content;
+}

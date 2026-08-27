@@ -12,6 +12,9 @@ export class DialogConfig<T = unknown> {
   data?: T;
 }
 
+/**
+ * When `component` is set, `data` is passed to `ngComponentOutletContent` and must be `Node[][]`.
+ */
 export class ConfirmDialogConfig<T = unknown, C = unknown> extends DialogConfig<C> {
   title: string;
   type?: ConfirmType;

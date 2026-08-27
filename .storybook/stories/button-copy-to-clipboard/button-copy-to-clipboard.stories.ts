@@ -2,7 +2,12 @@ import { FormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { ClrInputModule } from '@clr/angular';
-import { type Meta, type StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';
+import {
+  type Meta,
+  type StoryObj,
+  applicationConfig,
+  moduleMetadata,
+} from '@storybook/angular-vite';
 
 import {
   BUTTON_DEFAULTS,

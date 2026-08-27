@@ -1,4 +1,7 @@
 // @ts-check
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import eslint from '@eslint/js';
 import angular from 'angular-eslint';
 import { globalIgnores } from 'eslint/config';
@@ -6,6 +9,8 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import * as importPlugin from 'eslint-plugin-import';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+
+const rootDir = dirname(fileURLToPath(import.meta.url));
 
 export default tseslint.config(
   globalIgnores(['dist/']),
@@ -117,6 +122,8 @@ export default tseslint.config(
       '@angular-eslint/prefer-on-push-component-change-detection': ['warn'],
       // this rule is disabled since it supports autofix and just removes 'standalone: false' where it's really needed
       '@angular-eslint/prefer-standalone': ['off'],
+      // constructor DI remains valid; converting the library to inject() is a separate change
+      '@angular-eslint/prefer-inject': ['off'],
 
       '@typescript-eslint/consistent-type-definitions': 'error',
       '@typescript-eslint/explicit-member-accessibility': [
@@ -175,6 +182,15 @@ export default tseslint.config(
       //     https://esbuild.github.io/faq/#top-level-var
       //     https://github.com/evanw/esbuild/issues/3808
       // "import/no-cycle": ["warn"]
+    },
+  },
+  {
+    files: ['**/*.spec.ts'],
+    rules: {
+      'import/no-extraneous-dependencies': [
+        'error',
+        { devDependencies: true, packageDir: rootDir },
+      ],
     },
   },
   {

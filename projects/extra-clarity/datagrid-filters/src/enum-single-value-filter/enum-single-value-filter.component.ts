@@ -19,16 +19,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   ClarityIcons,
+  ClrDatagridFilter,
+  ClrIcon,
+  ClrPopoverService,
+  ClrRadioModule,
   filterIcon,
   filterOffIcon,
   infoStandardIcon,
   warningStandardIcon,
-} from '@cds/core/icon';
-import {
-  ClrDatagridFilter,
-  ClrIconModule,
-  ClrPopoverToggleService,
-  ClrRadioModule,
 } from '@clr/angular';
 import { Subject } from 'rxjs';
 
@@ -61,7 +59,7 @@ export const ENUM_SINGLE_VALUE_FILTER_DEFAULTS = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgTemplateOutlet,
-    ClrIconModule,
+    ClrIcon,
     ClrRadioModule,
     EcMarkMatchedStringPipe,
     EcSearchBarComponent,
@@ -242,7 +240,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
     private changeDetectorRef: ChangeDetectorRef,
     private destroyRef: DestroyRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
-    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
+    @Optional() private clrPopoverService?: ClrPopoverService,
   ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
@@ -283,7 +281,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   }
 
   ngAfterViewInit(): void {
-    this.clrPopoverToggleService?.openChange
+    this.clrPopoverService?.openChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen: boolean) => {
         if (isOpen) {
@@ -405,8 +403,8 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   }
 
   private hideFilter(): void {
-    if (this.clrPopoverToggleService?.open) {
-      this.clrPopoverToggleService.open = false;
+    if (this.clrPopoverService?.open) {
+      this.clrPopoverService.open = false;
     }
   }
 

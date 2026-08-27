@@ -5,7 +5,7 @@
   [attr.aria-expanded]="isOpen"
   [attr.aria-controls]="popoverId"
   [attr.aria-owns]="popoverId"
-  clrPopoverAnchor
+  clrPopoverOrigin
   clrPopoverOpenCloseButton
   #anchor
 >
@@ -15,9 +15,9 @@
     @if (withDropdownIcon) {
       @if (dropdownIconPosition === EcDropdownIconPosition.Right) {
         {{ labelText }}
-        <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection" />
+        <cds-icon shape="angle" size="10" [direction]="dropdownIconDirection" />
       } @else {
-        <cds-icon shape="angle" size="10" [attr.direction]="dropdownIconDirection" />
+        <cds-icon shape="angle" size="10" [direction]="dropdownIconDirection" />
         {{ labelText }}
       }
     } @else {

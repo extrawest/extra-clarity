@@ -1,6 +1,11 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
 
-import { type Meta, type StoryObj, applicationConfig, moduleMetadata } from '@storybook/angular';
+import {
+  type Meta,
+  type StoryObj,
+  applicationConfig,
+  moduleMetadata,
+} from '@storybook/angular-vite';
 
 import { EcCardComponent, EcCardModule } from '@extrawest/extra-clarity/card';
 

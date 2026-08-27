@@ -35,7 +35,7 @@ export class DialogContainer implements OnInit, OnDestroy {
     @Inject(DIALOG_CONFIG) public readonly config: DialogConfig,
   ) {}
 
-  @HostListener('document:keydown.escape', ['$event'])
+  @HostListener('document:keydown.escape')
   handleKeyboardEvent(): void {
     if (this.config.closable ?? this.closable) {
       this.dialogRef.close();

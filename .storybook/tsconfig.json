@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "resolveJsonModule": true,
   "compilerOptions": {
+    "rootDir": "..",
     "types": ["node", "mdx"],
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
@@ -15,7 +16,10 @@
   // prettier-ignore
   "include": [
     "./stories/**/*",
-    "./helpers/**/*.ts"
+    "./helpers/**/*.ts",
+    "./main.ts",
+    "./preview.ts",
+    "./manager.ts"
   ],
   // prettier-ignore
   "files": [

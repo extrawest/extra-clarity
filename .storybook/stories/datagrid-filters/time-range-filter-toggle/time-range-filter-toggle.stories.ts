@@ -5,7 +5,7 @@ import {
   type StoryObj,
   applicationConfig,
   componentWrapperDecorator,
-} from '@storybook/angular';
+} from '@storybook/angular-vite';
 
 import {
   EcAnchorToContentAlign,

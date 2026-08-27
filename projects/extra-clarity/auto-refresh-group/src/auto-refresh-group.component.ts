@@ -12,8 +12,7 @@ import {
   signal,
 } from '@angular/core';
 
-import { ClarityIcons, errorStandardIcon, refreshIcon } from '@cds/core/icon';
-import { ClrIconModule } from '@clr/angular';
+import { ClarityIcons, ClrIcon, errorStandardIcon, refreshIcon } from '@clr/angular';
 
 import { EcAutoRefreshComponent } from '@extrawest/extra-clarity/auto-refresh';
 
@@ -21,7 +20,7 @@ export const DEFAULT_PERIOD_SEC = 60;
 
 @Component({
   selector: 'ec-auto-refresh-group',
-  imports: [ClrIconModule, EcAutoRefreshComponent],
+  imports: [ClrIcon, EcAutoRefreshComponent],
   templateUrl: './auto-refresh-group.component.html',
   styleUrls: ['./auto-refresh-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

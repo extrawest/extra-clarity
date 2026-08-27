@@ -9,7 +9,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { ClrIconModule, ClrVerticalNavModule } from '@clr/angular';
+import { ClrIcon, ClrVerticalNavModule } from '@clr/angular';
 
 import { EC_NAV_ITEM_TYPE, EcNavListItem } from '../../sidebar-nav.models';
 import { EcSidebarNavService } from '../../sidebar-nav.service';
@@ -23,7 +23,7 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   imports: [
     RouterLink,
     RouterLinkActive,
-    ClrIconModule,
+    ClrIcon,
     ClrVerticalNavModule,
     EcSidebarNavLabelComponent,
   ],

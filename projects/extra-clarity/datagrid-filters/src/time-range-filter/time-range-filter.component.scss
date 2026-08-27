@@ -1,3 +1,5 @@
+@use '../../../styles/overlay-pane';
+
 .config-errors {
   font-size: 0.65rem;
   line-height: 1.5;
@@ -13,6 +15,6 @@
 
   .label-selected {
     font-weight: 600;
-    color: var(--clr-color-action-800, #00567a);
+    color: var(--cds-alias-status-info, #00567a);
   }
 }

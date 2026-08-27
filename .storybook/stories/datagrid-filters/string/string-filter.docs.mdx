@@ -1,4 +1,4 @@
-import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/addon-docs/blocks';
 
 import { docsStylePatch, extraClarityGithubSrc, linksToClrDatagridDocs } from '../../../helpers';
 
@@ -145,7 +145,7 @@ Therefore you can query the filter's instance via `viewChild(EcDatagridFilter)` 
 
 ### Additional Info
 
-The component uses `ClrPopoverToggleService` internally (as an optional injector provided by the `<clr-dg-column>` parent
+The component uses `ClrPopoverService` internally (as an optional injector provided by the `<clr-dg-column>` parent
 component) to react to opening the filter: to focus the input field and reset an invalid entered value to the last
 valid value. That's why we recommend to use the filter as nested in the `<clr-dg-column>` component (see code examples
 on this page).

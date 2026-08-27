@@ -18,11 +18,11 @@ $input-width: 8.5rem;
     }
 
     &.active .clr-input {
-      background-color: var(--clr-color-action-50, #e3f5fc);
+      background-color: var(--cds-alias-status-info-tint, #e3f5fc);
     }
 
     .clr-input.ng-invalid {
-      background-color: var(--clr-color-danger-50, #fff2f0);
+      background-color: var(--cds-alias-status-danger-tint, #fff2f0);
     }
   }
 }

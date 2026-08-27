@@ -1,6 +1,6 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
 
-import { type Meta, type StoryObj, applicationConfig } from '@storybook/angular';
+import { type Meta, type StoryObj, applicationConfig } from '@storybook/angular-vite';
 
 import { ProgressSpinnerDemoComponent } from './helpers/progress-spinner-demo.component';
 

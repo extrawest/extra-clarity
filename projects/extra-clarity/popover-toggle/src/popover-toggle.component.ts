@@ -1,3 +1,4 @@
+import { ConnectedPosition } from '@angular/cdk/overlay';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,22 +14,19 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { ClarityIcons, angleIcon } from '@cds/core/icon';
-import { Directions } from '@cds/core/internal';
 import {
-  ClrAxis,
-  ClrIconModule,
-  ClrPopoverEventsService,
-  ÇlrClrPopoverModuleNext as ClrPopoverModuleNext,
-  ClrPopoverPosition,
-  ClrPopoverPositionService,
-  ClrPopoverToggleService,
-  ClrSide,
+  ClarityIcons,
+  ClrIcon,
+  ClrPopoverHostDirective,
+  ClrPopoverModuleNext,
+  ClrPopoverService,
+  Directions,
+  angleIcon,
 } from '@clr/angular';
 
 import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 
-import { clrAlignmentMap } from './constants';
+import { getConnectedPosition } from './constants';
 import { CdkTrapFocusDirective, EcPopoverToggleLabelDirective } from './directives';
 import {
   EcAnchorToContentAlign,
@@ -37,15 +35,14 @@ import {
   EcPopoverToggleButtonStyle,
 } from './enums';
 import { EcDropdownIconPosition } from './enums/dropdown-icon-position.enum';
-import { EcPopoverAlign } from './types';
 
 @Component({
   selector: 'ec-popover-toggle',
   templateUrl: './popover-toggle.component.html',
   styleUrls: ['./popover-toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CdkTrapFocusDirective, ClrIconModule, ClrPopoverModuleNext],
-  providers: [ClrPopoverEventsService, ClrPopoverPositionService, ClrPopoverToggleService],
+  imports: [CdkTrapFocusDirective, ClrIcon, ClrPopoverModuleNext],
+  hostDirectives: [ClrPopoverHostDirective],
 })
 export class EcPopoverToggleComponent implements OnChanges {
   /**
@@ -148,20 +145,20 @@ export class EcPopoverToggleComponent implements OnChanges {
   protected isOpen = false;
 
   protected buttonClasses: string[];
-  protected popoverPosition: ClrPopoverPosition;
+  protected popoverPosition: ConnectedPosition;
 
   protected readonly popoverId = uniqueIdFactory();
 
   protected readonly EcDropdownIconPosition = EcDropdownIconPosition;
 
   constructor(
-    private clrPopoverToggleService: ClrPopoverToggleService,
+    private clrPopoverService: ClrPopoverService,
     private destroyRef: DestroyRef,
   ) {
     this.popoverPosition = this.getPopoverPosition();
     this.buttonClasses = this.getButtonClasses();
 
-    this.clrPopoverToggleService.openChange
+    this.clrPopoverService.openChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen) => {
         if (this.isOpen === isOpen) {
@@ -198,15 +195,15 @@ export class EcPopoverToggleComponent implements OnChanges {
    */
   public toggleOpen(open?: boolean): void {
     if (typeof open !== 'boolean') {
-      this.clrPopoverToggleService.open = !this.clrPopoverToggleService.open;
+      this.clrPopoverService.open = !this.clrPopoverService.open;
       return;
     }
-    if (open && !this.clrPopoverToggleService.open) {
-      this.clrPopoverToggleService.open = true;
+    if (open && !this.clrPopoverService.open) {
+      this.clrPopoverService.open = true;
       return;
     }
-    if (!open && this.clrPopoverToggleService.open) {
-      this.clrPopoverToggleService.open = false;
+    if (!open && this.clrPopoverService.open) {
+      this.clrPopoverService.open = false;
     }
   }
 
@@ -233,37 +230,7 @@ export class EcPopoverToggleComponent implements OnChanges {
     return 'btn-outline';
   }
 
-  private getClrPopoverAnchorAndContent(
-    align: EcAnchorToContentAlign,
-  ): Pick<ClrPopoverPosition, 'anchor' | 'content'> {
-    const [anchor, content] = align.split('-');
-
-    return {
-      anchor: clrAlignmentMap[anchor as EcPopoverAlign],
-      content: clrAlignmentMap[content as EcPopoverAlign],
-    };
-  }
-
-  private getClrPopoverAxisAndSide(
-    position: EcContentPosition,
-  ): Pick<ClrPopoverPosition, 'axis' | 'side'> {
-    const axis =
-      position === EcContentPosition.Bottom || position === EcContentPosition.Top
-        ? ClrAxis.VERTICAL
-        : ClrAxis.HORIZONTAL;
-
-    const side =
-      position === EcContentPosition.Bottom || position === EcContentPosition.Right
-        ? ClrSide.AFTER
-        : ClrSide.BEFORE;
-
-    return { axis, side };
-  }
-
-  private getPopoverPosition(): ClrPopoverPosition {
-    return {
-      ...this.getClrPopoverAxisAndSide(this.contentPosition),
-      ...this.getClrPopoverAnchorAndContent(this.anchorToContentAlign),
-    };
+  private getPopoverPosition(): ConnectedPosition {
+    return getConnectedPosition(this.contentPosition, this.anchorToContentAlign);
   }
 }

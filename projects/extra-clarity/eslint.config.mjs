@@ -19,6 +19,16 @@ export default tseslint.config(
     rules: {},
   },
   {
+    files: ['**/*.spec.ts'],
+    settings: {
+      'import/resolver': {
+        typescript: {
+          project: '../../tsconfig.json',
+        },
+      },
+    },
+  },
+  {
     files: ['**/*.html'],
     rules: {},
   },

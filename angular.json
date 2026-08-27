@@ -36,7 +36,7 @@
           }
         },
         "storybook": {
-          "builder": "@storybook/angular:start-storybook",
+          "builder": "@storybook/angular-vite:start-storybook",
           "options": {
             "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
@@ -54,15 +54,12 @@
               "--disablePrivate",
               "--disableProtected"
             ],
-            "styles": [
-              "node_modules/@cds/core/global.min.css",
-              "node_modules/@cds/core/styles/theme.dark.min.css",
-              "node_modules/@clr/ui/clr-ui.min.css"
-            ]
+            "styles": ["@clr/ui/clr-ui.min.css"],
+            "zoneless": false
           }
         },
         "build-storybook": {
-          "builder": "@storybook/angular:build-storybook",
+          "builder": "@storybook/angular-vite:build-storybook",
           "options": {
             "configDir": ".storybook",
             "browserTarget": "extra-clarity:build",
@@ -80,11 +77,8 @@
               "--disablePrivate",
               "--disableProtected"
             ],
-            "styles": [
-              "node_modules/@cds/core/global.min.css",
-              "node_modules/@cds/core/styles/theme.dark.min.css",
-              "node_modules/@clr/ui/clr-ui.min.css"
-            ]
+            "styles": ["@clr/ui/clr-ui.min.css"],
+            "zoneless": false
           }
         }
       }
@@ -99,15 +93,33 @@
       "standalone": true,
       "skipTests": true,
       "style": "scss",
-      "changeDetection": "OnPush"
+      "changeDetection": "OnPush",
+      "type": "component"
     },
     "@schematics/angular:pipe": {
       "standalone": true,
-      "skipTests": true
+      "skipTests": true,
+      "typeSeparator": "."
     },
     "@schematics/angular:directive": {
       "standalone": true,
-      "skipTests": true
+      "skipTests": true,
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
     }
   }
 }

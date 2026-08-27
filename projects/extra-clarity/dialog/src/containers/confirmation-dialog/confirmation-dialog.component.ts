@@ -48,8 +48,11 @@ export class ConfirmationDialogComponent implements OnInit {
     this.trigger(ConfirmationType.Accept);
   }
 
-  protected isArrayOfArrays(value: unknown): value is unknown[][] {
-    return Array.isArray(value) && value.every((item) => Array.isArray(item));
+  protected isArrayOfArrays(value: unknown): value is Node[][] {
+    return (
+      Array.isArray(value) &&
+      value.every((item) => Array.isArray(item) && item.every((node) => node instanceof Node))
+    );
   }
 
   private async trigger(action: ConfirmationType): Promise<void> {

@@ -17,13 +17,14 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 
-import { ClarityIcons, filterOffIcon } from '@cds/core/icon';
 import {
+  ClarityIcons,
   ClrDatagridFilter,
-  ClrIconModule,
+  ClrIcon,
   ClrInput,
   ClrInputModule,
-  ClrPopoverToggleService,
+  ClrPopoverService,
+  filterOffIcon,
 } from '@clr/angular';
 import { Subject, debounceTime, tap } from 'rxjs';
 
@@ -47,7 +48,7 @@ export const STRING_FILTER_DEFAULTS = {
   templateUrl: './string-filter.component.html',
   styleUrls: ['./string-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, ClrIconModule, ClrInputModule],
+  imports: [ReactiveFormsModule, ClrIcon, ClrInputModule],
   providers: [
     // make EcStringFilterComponent queryable via viewChild(EcDatagridFilter)
     {
@@ -222,7 +223,7 @@ export class EcStringFilterComponent<T extends object = object>
     private changeDetectorRef: ChangeDetectorRef,
     private destroyRef: DestroyRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
-    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
+    @Optional() private clrPopoverService?: ClrPopoverService,
   ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
@@ -292,7 +293,7 @@ export class EcStringFilterComponent<T extends object = object>
   }
 
   ngAfterViewInit(): void {
-    this.clrPopoverToggleService?.openChange
+    this.clrPopoverService?.openChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen: boolean) => {
         if (!isOpen) {

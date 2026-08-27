@@ -1,4 +1,4 @@
-import { type ArgTypes } from '@storybook/angular';
+import { type ArgTypes } from '@storybook/angular-vite';
 import { InputType } from 'storybook/internal/types';
 
 type InputTypeControl = Required<Pick<InputType, 'control'>>;

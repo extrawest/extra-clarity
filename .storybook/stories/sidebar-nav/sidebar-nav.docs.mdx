@@ -1,4 +1,4 @@
-import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/addon-docs/blocks';
 
 import { docsStylePatch, extraClarityGithubSrc } from '../../helpers';
 
@@ -216,7 +216,7 @@ const navList: EcNavListItem[] = [
 ### Icons in Labels
 
 You can provide an svg icon to a nav item label using
-[icons from the Clarity Core pack](https://core.clarity.design/foundation/icons/shapes/)
+[icons from the Clarity icon set](https://clarity.design/icons)
 
 To do this, you should put the `shape` property of the selected icon
 into the `icon` property of the nav item's configuration object:
@@ -234,10 +234,10 @@ const navHrefLink: EcNavItemLink = {
 ```
 
 Please make sure that you have registered all the used shapes in your app
-as it's described in the [Clarity icons docs](https://core.clarity.design/foundation/icons/):
+as it's described in the [Clarity icons docs](https://clarity.design/icons):
 
 ```typescript
-import { ClarityIcons, envelopeIcon } from '@cds/core/icon';
+import { ClarityIcons, envelopeIcon } from '@clr/angular';
 
 ClarityIcons.addIcons(envelopeIcon);
 ```

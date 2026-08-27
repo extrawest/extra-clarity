@@ -19,16 +19,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   ClarityIcons,
+  ClrCheckboxModule,
+  ClrDatagridFilter,
+  ClrIcon,
+  ClrPopoverService,
   filterIcon,
   filterOffIcon,
   infoStandardIcon,
   warningStandardIcon,
-} from '@cds/core/icon';
-import {
-  ClrCheckboxModule,
-  ClrDatagridFilter,
-  ClrIconModule,
-  ClrPopoverToggleService,
 } from '@clr/angular';
 import { Subject } from 'rxjs';
 
@@ -63,7 +61,7 @@ export const ENUM_MULTI_VALUE_FILTER_DEFAULTS = {
   imports: [
     NgTemplateOutlet,
     ClrCheckboxModule,
-    ClrIconModule,
+    ClrIcon,
     EcMarkMatchedStringPipe,
     EcSearchBarComponent,
   ],
@@ -247,7 +245,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     private changeDetectorRef: ChangeDetectorRef,
     private destroyRef: DestroyRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
-    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
+    @Optional() private clrPopoverService?: ClrPopoverService,
   ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
@@ -286,7 +284,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
   }
 
   ngAfterViewInit(): void {
-    this.clrPopoverToggleService?.openChange
+    this.clrPopoverService?.openChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen: boolean) => {
         if (isOpen) {

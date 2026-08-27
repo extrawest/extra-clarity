@@ -15,7 +15,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
-import { ClrDatagridFilter, ClrPopoverToggleService, ClrRadioModule } from '@clr/angular';
+import { ClrDatagridFilter, ClrPopoverService, ClrRadioModule } from '@clr/angular';
 import { Subject } from 'rxjs';
 
 import { EcCommonStringsService } from '@extrawest/extra-clarity/i18n';
@@ -71,11 +71,11 @@ export class EcTimeRangeFilterComponent<T extends object = object>
   implements AfterViewInit, OnChanges, OnInit
 {
   /**
-   * When `true`, the filter will be closed via ClrPopoverToggleService
+   * When `true`, the filter will be closed via ClrPopoverService
    * on selecting any new value or on resetting/clearing.
    *
    * To work as described, the filter component should be placed inside of a parent component that
-   * provides ClrPopoverToggleService, i.e. in a datagrid column or a <ec-popover-toggle> component.
+   * provides ClrPopoverService, i.e. in a datagrid column or a <ec-popover-toggle> component.
    */
   @Input()
   public closeOnChange: boolean = false;
@@ -190,7 +190,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
     private changeDetectorRef: ChangeDetectorRef,
     private destroyRef: DestroyRef,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
-    @Optional() private clrPopoverToggleService?: ClrPopoverToggleService,
+    @Optional() private clrPopoverService?: ClrPopoverService,
   ) {
     super();
     this.clrDatagridFilterContainer?.setFilter(this);
@@ -236,7 +236,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onPresetSelected(value));
 
-    this.clrPopoverToggleService?.openChange
+    this.clrPopoverService?.openChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((open) => {
         if (open) {
@@ -371,8 +371,8 @@ export class EcTimeRangeFilterComponent<T extends object = object>
   }
 
   private hideFilter(): void {
-    if (this.clrPopoverToggleService?.open) {
-      this.clrPopoverToggleService.open = false;
+    if (this.clrPopoverService?.open) {
+      this.clrPopoverService.open = false;
     }
   }
 
