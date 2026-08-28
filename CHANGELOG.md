@@ -1,5 +1,19 @@
 # Changelog
 
+## [22.0.0](https://github.com/extrawest/extra-clarity/compare/v21.0.0...v22.0.0) (2026-08-28)
+
+### ⚠ BREAKING CHANGES
+
+* requires Angular ^22.0.0 and Node ^22.22.3 || ^24.15.0 || >=26.0.0
+
+### Features
+
+* upgrade to Angular 22 ([a85f2e6](https://github.com/extrawest/extra-clarity/commit/a85f2e65dfe2fd9dadaf4ab7fcd6b8daf48f93d1))
+
+### Refactored
+
+* replace the deprecated cds-icon selector with clr-icon ([4f3f51e](https://github.com/extrawest/extra-clarity/commit/4f3f51e22dc35217a2ee26fc1ee14e5d1665942b))
+
 ## [21.0.0](https://github.com/extrawest/extra-clarity/compare/v19.2.2...v21.0.0) (2026-08-28)
 
 ### ⚠ BREAKING CHANGES
