@@ -55,7 +55,7 @@
               "--disableProtected"
             ],
             "styles": ["@clr/ui/clr-ui.min.css"],
-            "zoneless": false
+            "zoneless": true
           }
         },
         "build-storybook": {
@@ -78,7 +78,7 @@
               "--disableProtected"
             ],
             "styles": ["@clr/ui/clr-ui.min.css"],
-            "zoneless": false
+            "zoneless": true
           }
         }
       }

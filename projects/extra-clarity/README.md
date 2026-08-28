@@ -51,6 +51,9 @@ for more details on 'Adding Clarity to an Existing Angular Application'.
 | 18.x          | 18 \|\| 19            | ^17.3.0 |
 | 17.x          | ^17.3 \|\| 18 \|\| 19 | ^17.0.0 |
 
+Starting from `22.x`, the library does not require `zone.js`. It supports Angular's zoneless
+change detection (the default since Angular 22) and remains compatible with zone-based apps.
+
 ## Documentation
 
 For the details about the available components and live examples,

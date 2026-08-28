@@ -180,9 +180,10 @@ export class EcPopoverToggleComponent implements OnChanges {
         this.openChange.emit(isOpen);
         this.isOpen = isOpen;
         // Clarity closes its popover from Escape, outside-click, scroll and an
-        // IntersectionObserver. Those all run back inside NgZone, but a tick does not check
-        // a clean OnPush view, and assigning `isOpen` from a subscription never marks this
-        // one dirty, so `aria-expanded` on the toggle would keep the stale value.
+        // IntersectionObserver, and assigning `isOpen` from a subscription schedules no
+        // change detection for this OnPush component either way: zoneless has nothing to
+        // mark it dirty, and a zone tick does not check a clean view. Without this,
+        // `aria-expanded` on the toggle keeps the stale value.
         this.changeDetectorRef.markForCheck();
       });
 
