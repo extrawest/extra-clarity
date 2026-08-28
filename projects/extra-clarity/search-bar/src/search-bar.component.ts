@@ -49,10 +49,10 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
   public highlightActive: boolean = false;
 
   /**
-   * Shape of an alternative `cds-icon` to show in place of the default search-icon
+   * Shape of an alternative `clr-icon` to show in place of the default search-icon
    * when any value is entered.
    *
-   * This icon must be registered within the project using `ClarityIcons.addIcon()`.
+   * This icon must be registered within the project using `ClarityIcons.addIcons()`.
    */
   @Input()
   public iconOnFill?: string;

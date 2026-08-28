@@ -7,7 +7,7 @@
     @case (NavItemTypeEnum.Href) {
       <a clrVerticalNavLink [href]="navItem.link">
         @if (navItem.icon) {
-          <cds-icon clrVerticalNavIcon [shape]="navItem.icon" />
+          <clr-icon clrVerticalNavIcon [shape]="navItem.icon" />
         }
         <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
       </a>
@@ -21,7 +21,7 @@
         [class.disabled]="navService.isPathActive(navItem.link, 'exact')"
       >
         @if (navItem.icon) {
-          <cds-icon clrVerticalNavIcon [shape]="navItem.icon" />
+          <clr-icon clrVerticalNavIcon [shape]="navItem.icon" />
         }
         <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
       </a>

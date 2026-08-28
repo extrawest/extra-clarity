@@ -21,7 +21,7 @@
     [disabled]="!forceEnabledButtons && (disabled || !isRangeModified || isAnyInputInvalid)"
     (click)="onApply()"
   >
-    <!-- <cds-icon shape="check" /> -->
+    <!-- <clr-icon shape="check" /> -->
     {{ commonStrings.keys.timeRangeFilter.apply }}
   </button>
   <button
@@ -30,7 +30,7 @@
     [disabled]="!forceEnabledButtons && (disabled || (!isRangeModified && !isAnyInputInvalid))"
     (click)="onDiscard()"
   >
-    <!-- <cds-icon shape="undo" /> -->
+    <!-- <clr-icon shape="undo" /> -->
     {{ commonStrings.keys.timeRangeFilter.discard }}
   </button>
 </div>

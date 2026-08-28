@@ -89,10 +89,10 @@
       } @empty {
         <div class="no-options">
           @if (options.length) {
-            <cds-icon shape="warning-standard" status="warning" solid />
+            <clr-icon shape="warning-standard" status="warning" [solid]="true" />
             {{ commonStrings.keys.datagridFilters.noOptionsFound }}
           } @else {
-            <cds-icon shape="info-standard" status="info" solid />
+            <clr-icon shape="info-standard" status="info" [solid]="true" />
             {{ commonStrings.keys.datagridFilters.noOptionsAvailable }}
           }
         </div>
@@ -106,7 +106,7 @@
         (click)="clearSelection()"
         [disabled]="filterValue === null"
       >
-        <cds-icon shape="filter-off" />
+        <clr-icon shape="filter-off" />
         {{ commonStrings.keys.datagridFilters.clear }}
       </button>
 
@@ -117,7 +117,7 @@
           (click)="resetToDefault()"
           [disabled]="isStateDefault"
         >
-          <cds-icon shape="filter" />
+          <clr-icon shape="filter" />
           {{ commonStrings.keys.datagridFilters.resetToDefault }}
         </button>
       }
