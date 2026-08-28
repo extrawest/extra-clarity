@@ -34,7 +34,7 @@ export class EcAutoRefreshComponent implements OnChanges, OnInit {
   public readonly refreshing = input<boolean>();
 
   /** Refreshing period in seconds */
-  public readonly period = input(DEFAULT_PERIOD_SEC);
+  public readonly period = input<number>(DEFAULT_PERIOD_SEC);
 
   /**
    * Whether auto-refreshing is active,

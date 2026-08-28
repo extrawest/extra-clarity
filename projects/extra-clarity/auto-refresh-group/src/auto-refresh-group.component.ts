@@ -49,7 +49,7 @@ export class EcAutoRefreshGroupComponent implements OnChanges {
   public readonly autoRefreshEnabled = input(true);
 
   /** Refreshing period in seconds */
-  public readonly period = input(DEFAULT_PERIOD_SEC);
+  public readonly period = input<number>(DEFAULT_PERIOD_SEC);
 
   public readonly useAutoRefresh = input(true);
 
