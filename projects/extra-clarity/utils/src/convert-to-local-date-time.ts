@@ -5,7 +5,8 @@ export function convertToLocalDateTime(
   timeZone?: string,
 ): string {
   const timestamp = getTimestamp(date);
-  if (!timestamp) {
+  // getTimestamp() returns null for an unparsable date, while 0 is a valid timestamp
+  if (timestamp === null) {
     // TODO: maybe throw an error
     return '';
   }
@@ -56,17 +57,21 @@ export function convertToLocalDateTime(
 
 function getTimestamp(date: unknown): number | null {
   if (date instanceof Date) {
-    return date.getTime();
+    return toFiniteOrNull(date.getTime());
   }
 
   if (typeof date === 'number') {
-    return date;
+    return toFiniteOrNull(date);
   }
 
   if (typeof date === 'string') {
-    const timestamp = new Date(date).getTime();
-    return isNaN(timestamp) ? null : timestamp;
+    return toFiniteOrNull(new Date(date).getTime());
   }
 
   return null;
+}
+
+/** an invalid Date, and NaN or Infinity as a number, are not timestamps Intl can format */
+function toFiniteOrNull(timestamp: number): number | null {
+  return Number.isFinite(timestamp) ? timestamp : null;
 }
