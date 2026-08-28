@@ -102,14 +102,14 @@ export class EcPopoverToggleComponent implements OnChanges {
   public labelText: string = '';
 
   /**
-   * Show the 'angle' cds-icon next to the text label. Ignored when a custom label is projected
+   * Show the 'angle' clr-icon next to the text label. Ignored when a custom label is projected
    * into the component using the `EcPopoverToggleLabelDirective` directive.
    */
   @Input()
   public withDropdownIcon: boolean = false;
 
   /**
-   * Direction of the 'angle' cds-icon (when `withDropdownIcon` is set to `true`). Ignored when
+   * Direction of the 'angle' clr-icon (when `withDropdownIcon` is set to `true`). Ignored when
    * a custom label is projected into the component using the `EcPopoverToggleLabelDirective` directive.
    *
    * `down | up | left | right`
@@ -118,7 +118,7 @@ export class EcPopoverToggleComponent implements OnChanges {
   public dropdownIconDirection: Directions = 'down';
 
   /**
-   * Position of the 'angle' cds-icon (when `withDropdownIcon` is set to `true`) relatively to the text label.
+   * Position of the 'angle' clr-icon (when `withDropdownIcon` is set to `true`) relatively to the text label.
    * Ignored when a custom label is projected into the component using the `EcPopoverToggleLabelDirective` directive.
    */
   @Input()

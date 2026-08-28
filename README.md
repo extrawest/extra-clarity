@@ -45,6 +45,7 @@ for more details on 'Adding Clarity to an Existing Angular Application'.
 
 | Extra-Clarity | Angular               | Clarity |
 | :------------ | :-------------------- | :------ |
+| 22.x          | 22                    | ^18.0.0 |
 | 21.x          | 21                    | ^18.0.0 |
 | 19.x          | 19                    | ^17.5.0 |
 | 18.x          | 18 \|\| 19            | ^17.3.0 |

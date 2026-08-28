@@ -1,5 +1,5 @@
-import { CdkTrapFocus, FocusTrapFactory } from '@angular/cdk/a11y';
-import { DOCUMENT, Directive, ElementRef, Inject } from '@angular/core';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { Directive } from '@angular/core';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
@@ -14,11 +14,7 @@ export class CdkTrapFocusDirective extends CdkTrapFocus {
 
   // More details: https://github.com/storybookjs/storybook/issues/23534
 
-  constructor(
-    _elementRef: ElementRef<HTMLElement>,
-    _focusTrapFactory: FocusTrapFactory,
-    @Inject(DOCUMENT) document: Document,
-  ) {
-    super(_elementRef, _focusTrapFactory, document);
+  constructor() {
+    super();
   }
 }

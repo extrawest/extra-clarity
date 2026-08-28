@@ -10,7 +10,6 @@
   },
   // prettier-ignore
   "exclude": [
-    "./stories/test.ts",
     "./stories/**/*.spec.ts"
   ],
   // prettier-ignore

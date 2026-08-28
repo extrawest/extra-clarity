@@ -18,7 +18,7 @@
     [disabled]="refreshing"
     (click)="onRefresh()"
   >
-    <cds-icon
+    <clr-icon
       shape="error-standard"
       status="danger"
       size="18"
@@ -32,7 +32,7 @@
     @if (refreshing) {
       <span class="spinner spinner-inline"></span>
     } @else {
-      <cds-icon shape="refresh" [status]="failed ? 'danger' : 'info'" />
+      <clr-icon shape="refresh" [status]="failed ? 'danger' : 'info'" />
     }
   </button>
 </div>
