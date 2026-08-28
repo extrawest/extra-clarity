@@ -30,7 +30,6 @@ env:
   ROOT_PACKAGE_LOCK_JSON: package-lock.json
   NODE_MODULES_PATH: node_modules
   # settings for publishing the package
-  NODE_VER: 22
   NPM_REGISTRY: https://registry.npmjs.org/
   # firebase settings from '.firebaserc' & 'firebase.json'
   SB_FIREBASE_PROJECT_ID: storybook-deploy
@@ -79,11 +78,17 @@ jobs:
     steps:
       # uses: actions/checkout@v4 -- to make custom actions available from within the repository itself
       - uses: actions/checkout@v4
+      # 'npm ci' rejects a lock file resolved by a different npm, so the job that installs
+      # must pin the same Node as the one that publishes -- and the cache must be keyed on
+      # it too, since node_modules holds natively built modules.
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
       - uses: actions/cache@v4
         id: node-modules-cache
         with:
           path: ${{ env.NODE_MODULES_PATH }}
-          key: node-modules-${{ runner.os }}-${{ hashFiles(env.ROOT_PACKAGE_LOCK_JSON) }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('.nvmrc', env.ROOT_PACKAGE_LOCK_JSON) }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
       - name: Building extra-clarity
@@ -116,7 +121,7 @@ jobs:
           is-latest: ${{ needs.check-version.outputs.is-latest }}
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VER }}
+          node-version-file: .nvmrc
           registry-url: ${{ env.NPM_REGISTRY }}
       - uses: actions/download-artifact@v4
         with:
@@ -152,11 +157,17 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      # 'npm ci' rejects a lock file resolved by a different npm, so the job that installs
+      # must pin the same Node as the one that publishes -- and the cache must be keyed on
+      # it too, since node_modules holds natively built modules.
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
       - uses: actions/cache@v4
         id: node-modules-cache
         with:
           path: ${{ env.NODE_MODULES_PATH }}
-          key: node-modules-${{ runner.os }}-${{ hashFiles(env.ROOT_PACKAGE_LOCK_JSON) }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('.nvmrc', env.ROOT_PACKAGE_LOCK_JSON) }}
       - if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
         run: npm ci
       - uses: actions/download-artifact@v4
