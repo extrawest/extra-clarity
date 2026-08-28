@@ -5,12 +5,11 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   contentChild,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -135,10 +134,9 @@ export class EcPopoverToggleComponent implements OnChanges {
    * * `true` = open
    * * `false` = closed
    *
-   * `EventEmitter<boolean>`
+   * `OutputEmitterRef<boolean>`
    */
-  @Output()
-  public openChange = new EventEmitter<boolean>();
+  public readonly openChange = output<boolean>();
 
   protected readonly anchor = viewChild.required<ElementRef<HTMLButtonElement>>('anchor');
 

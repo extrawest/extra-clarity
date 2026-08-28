@@ -5,13 +5,12 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Optional,
-  Output,
   SimpleChanges,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -198,10 +197,9 @@ export class EcStringFilterComponent<T extends object = object>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<EcFilterState<string>>`
+   * `OutputEmitterRef<EcFilterState<string>>`
    */
-  @Output()
-  public filterValueChanged = new EventEmitter<EcFilterState<string>>();
+  public readonly filterValueChanged = output<EcFilterState<string>>();
 
   protected readonly inputElementRef = viewChild<ElementRef<HTMLInputElement>>('inputElement');
 

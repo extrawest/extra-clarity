@@ -4,10 +4,9 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -41,7 +40,7 @@ const NOTIFICATION_INTERVAL_STEP = 200;
 export class NotificationComponent implements OnInit {
   @Input() instance: NotificationData;
 
-  @Output() readonly destroyed = new EventEmitter<void>();
+  readonly destroyed = output<void>();
 
   readonly animationStateChanged$ = new Subject<AnimationEvent>();
 

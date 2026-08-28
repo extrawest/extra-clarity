@@ -3,12 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -39,11 +38,9 @@ export class EcDateTimeGroupComponent implements OnChanges, OnInit {
   @Input()
   public withTime: boolean = true;
 
-  @Output()
-  public apply = new EventEmitter<EcCustomTimeRange>();
+  public readonly apply = output<EcCustomTimeRange>();
 
-  @Output()
-  public discard = new EventEmitter<void>();
+  public readonly discard = output<void>();
 
   protected readonly inputStart = viewChild.required('inputStart', {
     read: EcDateTimeInputComponent,

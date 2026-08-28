@@ -4,12 +4,11 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -100,18 +99,16 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnInit {
   /**
    * Emits a string successfully copied to the clipboard by pressing the button
    *
-   * `EventEmitter<string>`
+   * `OutputEmitterRef<string>`
    * */
-  @Output()
-  public copied = new EventEmitter<string>();
+  public readonly copied = output<string>();
 
   /**
    * Emits an unknown value on failed copying, caught from `navigator.clipboard.writeText()`
    *
-   * `EventEmitter<unknown>`
+   * `OutputEmitterRef<unknown>`
    */
-  @Output()
-  public failed = new EventEmitter<unknown>();
+  public readonly failed = output<unknown>();
 
   protected btnLoadingState: ClrLoadingState = ClrLoadingState.DEFAULT;
   protected textToCopyAsString: string = '';

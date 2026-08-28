@@ -5,14 +5,13 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Optional,
-  Output,
   SimpleChanges,
   TemplateRef,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -218,10 +217,9 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<EcFilterState<E[]>>`
+   * `OutputEmitterRef<EcFilterState<E[]>>`
    */
-  @Output()
-  public filterValueChanged = new EventEmitter<EcFilterState<E[]>>();
+  public readonly filterValueChanged = output<EcFilterState<E[]>>();
 
   protected configErrors: string[] = [];
   protected hasCustomDefaultState = false;

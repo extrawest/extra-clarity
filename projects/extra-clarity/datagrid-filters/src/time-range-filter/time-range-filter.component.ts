@@ -4,13 +4,12 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Optional,
-  Output,
   SimpleChanges,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -163,10 +162,9 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<EcFilterState<EcTimeRangeFilterValue>>`
+   * `OutputEmitterRef<EcFilterState<EcTimeRangeFilterValue>>`
    */
-  @Output()
-  public filterValueChanged = new EventEmitter<EcFilterState<FilterValue>>();
+  public readonly filterValueChanged = output<EcFilterState<FilterValue>>();
 
   protected readonly radioControl = new FormControl<string | null>(null);
 

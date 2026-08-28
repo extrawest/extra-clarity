@@ -4,11 +4,10 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
   contentChild,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -53,9 +52,8 @@ export class EcCardComponent implements OnInit {
   @Input()
   public spinnerSize: 'sm' | 'md' | 'lg' = 'sm';
 
-  /** `EventEmitter<void>` */
-  @Output()
-  public reload = new EventEmitter<void>();
+  /** `OutputEmitterRef<void>` */
+  public readonly reload = output<void>();
 
   protected readonly footerContent = contentChild(EcCardFooterDirective);
   protected readonly headerActionsContent = contentChild(EcCardHeaderActionsDirective);

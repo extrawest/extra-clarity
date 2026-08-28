@@ -3,12 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -110,13 +109,11 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
   @Input()
   public open: boolean = false;
 
-  /** `EventEmitter<boolean>` */
-  @Output()
-  public openChange = new EventEmitter<boolean>();
+  /** `OutputEmitterRef<boolean>` */
+  public readonly openChange = output<boolean>();
 
-  /** `EventEmitter<EcTimeRangeFilterToggleState>` */
-  @Output()
-  public valueChanged = new EventEmitter<EcTimeRangeFilterToggleState>();
+  /** `OutputEmitterRef<EcTimeRangeFilterToggleState>` */
+  public readonly valueChanged = output<EcTimeRangeFilterToggleState>();
 
   protected readonly timeRangeFilter = viewChild.required(EcTimeRangeFilterComponent);
 
