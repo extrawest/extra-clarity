@@ -5,14 +5,13 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
   Optional,
-  Output,
   SimpleChanges,
   TemplateRef,
+  input,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -80,13 +79,12 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    * Optional config for splitting visible options into groups or categories within the filter body.
    * The categories can have a text title and optional bounds as a divider or just a margin.
    */
-  @Input() categories?: EcEnumValueFilterOptionCategoryConfig[];
+  readonly categories = input<EcEnumValueFilterOptionCategoryConfig[]>();
 
   /**
    * When `true`, the filter will be closed on selecting any new value or on resetting/clearing
    * */
-  @Input()
-  public closeOnChange = false;
+  public readonly closeOnChange = input(false);
 
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.
@@ -99,22 +97,19 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    *
    * `TemplateRef<unknown>`
    */
-  @Input()
-  public customLabelTpl?: TemplateRef<unknown>;
+  public readonly customLabelTpl = input<TemplateRef<unknown>>();
 
   /**
    * Show a placeholder 'Loading, please wait...' to inform users
    * that the list of options is loading
    */
-  @Input()
-  public loading = false;
+  public readonly loading = input(false);
 
   /**
    * Max height in pixels of the option list container.
    * If the container's content exceeds the limit, a vertical scrollbar is shown.
    * */
-  @Input()
-  public maxHeightPx: number = ENUM_SINGLE_VALUE_FILTER_DEFAULTS.maxHeightPx;
+  public readonly maxHeightPx = input<number>(ENUM_SINGLE_VALUE_FILTER_DEFAULTS.maxHeightPx);
 
   /**
    * List of options to select from. Each option contains:
@@ -134,8 +129,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    *
    * @required
    */
-  @Input()
-  public options: EcEnumValueFilterOption<E>[] = [];
+  public readonly options = input<EcEnumValueFilterOption<E>[]>([]);
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -146,14 +140,14 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    *
    * @required
    */
-  @Input({ required: true })
-  public propertyKey = '';
+  public readonly propertyKey = input.required<string>();
 
   /**
    * Minimal amount of options to show a search bar above the option list to filter the list
    * */
-  @Input()
-  public searchBarForAmount: number = ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount;
+  public readonly searchBarForAmount = input<number>(
+    ENUM_SINGLE_VALUE_FILTER_DEFAULTS.searchBarForAmount,
+  );
 
   /**
    * Whether the filter and the datagrid are server-driven:
@@ -162,8 +156,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    *
    * @required
    */
-  @Input()
-  public serverDriven = true;
+  public readonly serverDriven = input(true);
 
   /**
    * Whether to show a label with selected value above the option list.
@@ -173,20 +166,17 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    * * `EcShowSelected.Always` = show always
    * * `EcShowSelected.Never` = don't show (default)
    */
-  @Input()
-  public showSelectedValue: EcShowSelected = EcShowSelected.WithSearchbar;
+  public readonly showSelectedValue = input<EcShowSelected>(EcShowSelected.WithSearchbar);
 
   /**
    * Whether to stretch all label containers to the full width of the filter container
    */
-  @Input()
-  public stretchLabels = false;
+  public readonly stretchLabels = input(false);
 
   /**
    * Optional label to show above the option list
    */
-  @Input()
-  public title?: string;
+  public readonly title = input<string>();
 
   /**
    * A value `E | null` to be set as the actual filter's value on this input change.
@@ -196,14 +186,12 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    *
    * Providing `null` will clear the current selection, and `undefined` will be ignored.
    * */
-  @Input()
-  public value?: E | null;
+  public readonly value = input<E | null>();
 
   /**
    * Width in pixels of the filter's container
    * */
-  @Input()
-  public widthPx: number = ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx;
+  public readonly widthPx = input<number>(ENUM_SINGLE_VALUE_FILTER_DEFAULTS.widthPx);
 
   /**
    * Emits the filter's state object on every change of the internal filter value.
@@ -213,10 +201,9 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<EcFilterState<E | null>>`
+   * `OutputEmitterRef<EcFilterState<E | null>>`
    */
-  @Output()
-  public filterValueChanged = new EventEmitter<EcFilterState<E | null>>();
+  public readonly filterValueChanged = output<EcFilterState<E | null>>();
 
   protected configErrors: string[] = [];
   protected defaultValue: E | null = null;
@@ -257,7 +244,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    * */
   override get state(): EcFilterState<E | null> {
     return {
-      property: this.propertyKey,
+      property: this.propertyKey(),
       value: this.filterValue,
     };
   }
@@ -270,14 +257,14 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
     if (this.filterValue === null) {
       return this.commonStrings.keys.datagridFilters.selectedNone;
     }
-    const selectedOption = this.options.find((option) => option.value === this.filterValue);
+    const selectedOption = this.options().find((option) => option.value === this.filterValue);
     return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.selected, {
       VALUE: selectedOption?.label || String(this.filterValue),
     });
   }
 
   protected get showSearchBar(): boolean {
-    return this.options.length >= this.searchBarForAmount;
+    return this.options().length >= this.searchBarForAmount();
   }
 
   ngAfterViewInit(): void {
@@ -296,12 +283,13 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
     const isValueChanged = !!changes['value'];
 
     if (changes['options']) {
-      this.onOptionsChange(isValueChanged ? this.value : undefined);
+      this.onOptionsChange(isValueChanged ? this.value() : undefined);
       return;
     }
 
-    if (isValueChanged && this.value !== undefined) {
-      this.setValue(this.value);
+    const value = this.value();
+    if (isValueChanged && value !== undefined) {
+      this.setValue(value);
     }
 
     if (changes['categories']) {
@@ -319,7 +307,8 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override accepts(item: T): boolean {
-    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
+    const propertyKey = this.propertyKey();
+    if (this.serverDriven() || !item || typeof item !== 'object' || !propertyKey) {
       return false;
     }
 
@@ -327,7 +316,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
       return true;
     }
 
-    const propertyValue = (item as Record<string | number, unknown>)[this.propertyKey];
+    const propertyValue = (item as Record<string | number, unknown>)[propertyKey];
 
     return propertyValue === this.filterValue;
   }
@@ -338,7 +327,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   override clearSelection(): void {
     this.setValue(null);
 
-    if (this.closeOnChange) {
+    if (this.closeOnChange()) {
       this.hideFilter();
     }
   }
@@ -349,7 +338,12 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
   override isActive(): boolean {
-    return !!this.propertyKey && !this.isStateDefault;
+    // Clarity calls this from FiltersProvider.add(), which this component triggers from its
+    // own constructor via setFilter(this) - before Angular has set any input. Reading a
+    // required input signal there throws NG0950, so the state check has to come first. It
+    // is false at construction time, and it can only become true once a value has been set
+    // through an input or user interaction, by which point `propertyKey` is always readable.
+    return !this.isStateDefault && !!this.propertyKey();
   }
 
   /**
@@ -361,7 +355,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
     }
     this.setValue(this.defaultValue);
 
-    if (this.closeOnChange) {
+    if (this.closeOnChange()) {
       this.hideFilter();
     }
   }
@@ -385,7 +379,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   protected onInputChange(inputValue: E): void {
     this.setValue(inputValue);
 
-    if (this.closeOnChange) {
+    if (this.closeOnChange()) {
       this.hideFilter();
     }
   }
@@ -396,7 +390,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   }
 
   private checkInputsValidity(): string[] {
-    if (this.propertyKey) {
+    if (this.propertyKey()) {
       return [];
     }
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
@@ -416,13 +410,13 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   }
 
   private isValueAllowed(value: E | null): boolean {
-    return this.options.some((option) => option.value === value);
+    return this.options().some((option) => option.value === value);
   }
 
   private onOptionsChange(newFilterValue: E | null | undefined): void {
     this.updateVisibleOptions();
 
-    const optionsSelectedByDefault = this.options.filter((option) => option.selectedByDefault);
+    const optionsSelectedByDefault = this.options().filter((option) => option.selectedByDefault);
 
     this.defaultValue =
       optionsSelectedByDefault.length === 1 ? optionsSelectedByDefault[0].value : null;
@@ -454,22 +448,23 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
 
   private updateVisibleOptions(): void {
     const visibleOptions = this.searchTerm
-      ? this.options.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
-      : [...this.options];
+      ? this.options().filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
+      : [...this.options()];
 
     if (!visibleOptions.length) {
       this.visibleOptionCategories = [];
       return;
     }
 
-    if (!this.categories?.length) {
+    const categories = this.categories();
+    if (!categories?.length) {
       this.visibleOptionCategories = [{ options: visibleOptions }];
       return;
     }
 
     const visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
 
-    this.categories.forEach(({ id, label, top, bottom }) => {
+    categories.forEach(({ id, label, top, bottom }) => {
       const thisCategoryOptions = visibleOptions.filter((option) => id && option.categoryId === id);
 
       if (thisCategoryOptions.length) {
@@ -489,7 +484,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
       return;
     }
 
-    const categoryIds = new Set(this.categories.map((category) => category.id));
+    const categoryIds = new Set(categories.map((category) => category.id));
 
     const optionsWithoutCategory = visibleOptions.filter(
       (option) => !option.categoryId || !categoryIds.has(option.categoryId),

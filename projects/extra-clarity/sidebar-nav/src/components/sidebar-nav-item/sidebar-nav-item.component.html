@@ -1,4 +1,4 @@
-@if (navItem) {
+@if (navItem(); as navItem) {
   @switch (navItem.type) {
     @case (NavItemTypeEnum.Divider) {
       <div class="nav-divider"></div>
@@ -9,7 +9,7 @@
         @if (navItem.icon) {
           <clr-icon clrVerticalNavIcon [shape]="navItem.icon" />
         }
-        <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
+        <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold()" />
       </a>
     }
 
@@ -23,7 +23,7 @@
         @if (navItem.icon) {
           <clr-icon clrVerticalNavIcon [shape]="navItem.icon" />
         }
-        <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
+        <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold()" />
       </a>
     }
   }

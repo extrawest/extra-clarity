@@ -5,12 +5,11 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  input,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -32,20 +31,15 @@ import { datetimeInputValidator } from './date-time-input.validators';
   imports: [ReactiveFormsModule, ClrInputModule],
 })
 export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnInit {
-  @Input()
-  public disabled: boolean = false;
+  public readonly disabled = input<boolean>(false);
 
-  @Input()
-  public label?: string;
+  public readonly label = input<string>();
 
-  @Input()
-  public value: string | null = null;
+  public readonly value = input<string | null>(null);
 
-  @Input()
-  public withTime: boolean = true;
+  public readonly withTime = input<boolean>(true);
 
-  @Output()
-  public valueChange = new EventEmitter<string>();
+  public readonly valueChange = output<string>();
 
   protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('datetimeInput');
 
@@ -70,7 +64,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['disabled']) {
-      if (this.disabled) {
+      if (this.disabled()) {
         this.formControl.disable({ emitEvent: false });
       } else {
         this.formControl.enable({ emitEvent: false });
@@ -78,7 +72,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
     }
 
     if (changes['value']) {
-      this.updateValue(this.value ?? '');
+      this.updateValue(this.value() ?? '');
     }
   }
 
@@ -95,7 +89,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
   }
 
   protected isInputDirty(formControl: FormControl): boolean {
-    return !this.disabled && (formControl.value || formControl.invalid);
+    return !this.disabled() && (formControl.value || formControl.invalid);
   }
 
   protected validateOnBlur(): void {
@@ -120,7 +114,7 @@ export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnIni
       return;
     }
 
-    const regEx = this.withTime ? localDateTimeRegEx : localDateRegEx;
+    const regEx = this.withTime() ? localDateTimeRegEx : localDateRegEx;
     if (!regEx.test(value)) {
       return;
     }

@@ -5,14 +5,13 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
   Optional,
-  Output,
   SimpleChanges,
   TemplateRef,
+  input,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -84,21 +83,18 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    *
    * `TemplateRef<unknown>`
    */
-  @Input()
-  public customLabelTpl?: TemplateRef<unknown>;
+  public readonly customLabelTpl = input<TemplateRef<unknown>>();
 
   /**
    * Whether to expand all groups automatically on [options] change
    */
-  @Input()
-  public expandedAll = false;
+  public readonly expandedAll = input(false);
 
   /**
    * Show a placeholder 'Loading, please wait...' to inform users
    * that the list of options is loading
    */
-  @Input()
-  public loading = false;
+  public readonly loading = input(false);
 
   /**
    * Configure client-driven filtering for cells containing an array of values:
@@ -108,15 +104,13 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    *
    * NOTE: Affects only client-driven filters, i.e. requires another input `[serverDriven]="false"`.
    */
-  @Input()
-  public matchSelected: 'all' | 'exact' | 'any' = 'any';
+  public readonly matchSelected = input<'all' | 'exact' | 'any'>('any');
 
   /**
    * Max height (in pixels) of the option list container.
    * If the container's content exceeds the limit, a vertical scrollbar is shown.
    * */
-  @Input()
-  public maxHeightPx: number = ENUM_GROUPED_VALUE_FILTER_DEFAULTS.maxHeightPx;
+  public readonly maxHeightPx = input<number>(ENUM_GROUPED_VALUE_FILTER_DEFAULTS.maxHeightPx);
 
   /**
    * List of grouped options to select from. Each group contains:
@@ -142,8 +136,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    *
    * @required
    */
-  @Input()
-  public options: EcEnumValueFilterOptionGroup<E>[] = [];
+  public readonly options = input<EcEnumValueFilterOptionGroup<E>[]>([]);
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -154,14 +147,14 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    *
    * @required
    */
-  @Input({ required: true })
-  public propertyKey = '';
+  public readonly propertyKey = input.required<string>();
 
   /**
    * Minimal amount of options to show a search bar above the option list to filter the list
    * */
-  @Input()
-  public searchBarForAmount: number = ENUM_GROUPED_VALUE_FILTER_DEFAULTS.searchBarForAmount;
+  public readonly searchBarForAmount = input<number>(
+    ENUM_GROUPED_VALUE_FILTER_DEFAULTS.searchBarForAmount,
+  );
 
   /**
    * Whether the filter and the datagrid are server-driven:
@@ -170,8 +163,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    *
    * @required
    */
-  @Input()
-  public serverDriven = true;
+  public readonly serverDriven = input(true);
 
   /**
    * Whether to show a label with amount of selected items above the option list.
@@ -181,20 +173,17 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    * * `EcShowSelected.Always` = show always
    * * `EcShowSelected.Never` = don't show
    */
-  @Input()
-  public showSelectedAmount: EcShowSelected = EcShowSelected.WithSearchbar;
+  public readonly showSelectedAmount = input<EcShowSelected>(EcShowSelected.WithSearchbar);
 
   /**
    * Whether to stretch all label containers to the full width of the filter container
    */
-  @Input()
-  public stretchLabels = false;
+  public readonly stretchLabels = input(false);
 
   /**
    * Optional label to show above the option list
    */
-  @Input()
-  public title?: string;
+  public readonly title = input<string>();
 
   /**
    * An array of values `E[]` to be set as the actual filter's state on this input change.
@@ -204,14 +193,12 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    *
    * Providing an empty array `[]` will clear the current selection, and `undefined` will be ignored.
    * */
-  @Input()
-  public value?: E[];
+  public readonly value = input<E[]>();
 
   /**
    * Width (in pixels) of the filter's container
    * */
-  @Input()
-  public widthPx: number = ENUM_GROUPED_VALUE_FILTER_DEFAULTS.widthPx;
+  public readonly widthPx = input<number>(ENUM_GROUPED_VALUE_FILTER_DEFAULTS.widthPx);
 
   /**
    * Emits the filter's state object on every change of the internal filter value.
@@ -221,10 +208,9 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    * The same object is emitted by the `(clrDgRefresh)` output of the `<clr-datagrid>` parent component
    * for all non-default filter values.
    *
-   * `EventEmitter<EcFilterState<E[]>>`
+   * `OutputEmitterRef<EcFilterState<E[]>>`
    */
-  @Output()
-  public filterValueChanged = new EventEmitter<EcFilterState<E[]>>();
+  public readonly filterValueChanged = output<EcFilterState<E[]>>();
 
   protected configErrors: string[] = [];
   protected hasCustomDefaultState = false;
@@ -267,7 +253,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    * */
   override get state(): EcFilterState<E[]> {
     return {
-      property: this.propertyKey,
+      property: this.propertyKey(),
       value: Array.from(this.selectedValues),
     };
   }
@@ -284,7 +270,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
   }
 
   protected get showSearchBar(): boolean {
-    return this.totalOptionItems >= this.searchBarForAmount;
+    return this.totalOptionItems >= this.searchBarForAmount();
   }
 
   ngAfterViewInit(): void {
@@ -303,12 +289,13 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
     const isValueChanged = !!changes['value'];
 
     if (changes['options']) {
-      this.onOptionsChange(isValueChanged ? this.value : undefined);
+      this.onOptionsChange(isValueChanged ? this.value() : undefined);
       return;
     }
 
-    if (isValueChanged && this.value !== undefined) {
-      this.setValue(this.value);
+    const value = this.value();
+    if (isValueChanged && value !== undefined) {
+      this.setValue(value);
     }
   }
 
@@ -322,7 +309,8 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override accepts(item: T): boolean {
-    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
+    const propertyKey = this.propertyKey();
+    if (this.serverDriven() || !item || typeof item !== 'object' || !propertyKey) {
       return false;
     }
 
@@ -330,7 +318,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
       return true;
     }
 
-    const propertyValue = (item as Record<string | number, unknown>)[this.propertyKey];
+    const propertyValue = (item as Record<string | number, unknown>)[propertyKey];
 
     if (propertyValue == null) {
       return false;
@@ -346,13 +334,14 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
       return this.selectedValues.has(propertyValue as E);
     }
 
-    if (this.matchSelected === 'exact') {
+    const matchSelected = this.matchSelected();
+    if (matchSelected === 'exact') {
       return areSetsEqual(new Set(propertyValue), this.selectedValues, { ignoreOrder: true });
     }
 
     const selectedValues = Array.from(this.selectedValues);
 
-    if (this.matchSelected === 'all') {
+    if (matchSelected === 'all') {
       return selectedValues.every((selectedValue) => propertyValue.includes(selectedValue));
     }
     return selectedValues.some((selectedValue) => propertyValue.includes(selectedValue));
@@ -371,7 +360,12 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
   override isActive(): boolean {
-    return !!this.propertyKey && !this.isStateDefault;
+    // Clarity calls this from FiltersProvider.add(), which this component triggers from its
+    // own constructor via setFilter(this) - before Angular has set any input. Reading a
+    // required input signal there throws NG0950, so the state check has to come first. It
+    // is false at construction time, and it can only become true once a value has been set
+    // through an input or user interaction, by which point `propertyKey` is always readable.
+    return !this.isStateDefault && !!this.propertyKey();
   }
 
   /**
@@ -379,7 +373,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
    * */
   override resetToDefault(): void {
     const defaultValues = new Set<E>();
-    this.options.forEach((group) => {
+    this.options().forEach((group) => {
       group.items
         .filter((option) => option.selectedByDefault)
         .forEach((option) => defaultValues.add(option.value));
@@ -410,7 +404,8 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
   }
 
   protected onGroupExpandedChange(index: number, isExpanded: boolean): void {
-    if (this.visibleOptions.length === this.options.length) {
+    const options = this.options();
+    if (this.visibleOptions.length === options.length) {
       this.isGroupExpanded[index] = isExpanded;
       return;
     }
@@ -418,7 +413,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
     const groupLabel = this.visibleOptions[index].label;
     if (!groupLabel) return;
 
-    const optionIndex = this.options.findIndex((option) => option.label === groupLabel);
+    const optionIndex = options.findIndex((option) => option.label === groupLabel);
     if (optionIndex >= 0) {
       this.isGroupExpanded[optionIndex] = isExpanded;
     }
@@ -461,7 +456,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
     this.updateSelectedValues(newSelectedValues);
 
     // keep the group expanded if item was selected while the internal filter is active
-    if (isChecked && this.visibleOptions.length !== this.options.length) {
+    if (isChecked && this.visibleOptions.length !== this.options().length) {
       this.onGroupExpandedChange(groupIndex, true);
     }
   }
@@ -476,12 +471,12 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
       return true;
     }
     return values.every((value) => {
-      return this.options.some((group) => group.items.some((option) => option.value === value));
+      return this.options().some((group) => group.items.some((option) => option.value === value));
     });
   }
 
   private checkIfStateIsDefault(): boolean {
-    return this.options.every((group) => {
+    return this.options().every((group) => {
       return group.items.every((option) => {
         return !!option.selectedByDefault === this.selectedValues.has(option.value);
       });
@@ -489,7 +484,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
   }
 
   private checkInputsValidity(): string[] {
-    if (this.propertyKey) {
+    if (this.propertyKey()) {
       return [];
     }
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
@@ -505,15 +500,15 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
   private onOptionsChange(newFilterValue: E[] | undefined): void {
     this.updateVisibleOptions();
 
-    this.totalOptionItems = this.options.reduce((total, group) => total + group.items.length, 0);
+    this.totalOptionItems = this.options().reduce((total, group) => total + group.items.length, 0);
 
     this.isStateDefault = this.checkIfStateIsDefault();
-    this.hasCustomDefaultState = this.options.some((group) => {
+    this.hasCustomDefaultState = this.options().some((group) => {
       return group.items.some((option) => option.selectedByDefault);
     });
 
-    this.isGroupExpanded = this.options.map(
-      (group) => this.expandedAll ?? group.expandedByDefault ?? false,
+    this.isGroupExpanded = this.options().map(
+      (group) => this.expandedAll() ?? group.expandedByDefault ?? false,
     );
 
     if (newFilterValue !== undefined) {
@@ -550,10 +545,10 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
 
   private updateVisibleOptions(): void {
     if (!this.searchTerm) {
-      this.visibleOptions = [...this.options];
+      this.visibleOptions = [...this.options()];
     }
 
-    this.visibleOptions = this.options
+    this.visibleOptions = this.options()
       .map((group) => ({
         ...group,
         items: group.items.filter((item) => this.isOptionBeingSearched(item, this.searchTerm)),

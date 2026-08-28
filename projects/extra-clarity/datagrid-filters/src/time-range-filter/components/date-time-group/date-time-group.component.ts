@@ -3,12 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  input,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -27,23 +26,17 @@ import { EcDateTimeInputComponent } from '../date-time-input';
   imports: [EcDateTimeInputComponent],
 })
 export class EcDateTimeGroupComponent implements OnChanges, OnInit {
-  @Input()
-  public disabled: boolean = false;
+  public readonly disabled = input<boolean>(false);
 
-  @Input()
-  public forceEnabledButtons: boolean = false;
+  public readonly forceEnabledButtons = input<boolean>(false);
 
-  @Input()
-  public value?: EcCustomTimeRange;
+  public readonly value = input<EcCustomTimeRange>();
 
-  @Input()
-  public withTime: boolean = true;
+  public readonly withTime = input<boolean>(true);
 
-  @Output()
-  public apply = new EventEmitter<EcCustomTimeRange>();
+  public readonly apply = output<EcCustomTimeRange>();
 
-  @Output()
-  public discard = new EventEmitter<void>();
+  public readonly discard = output<void>();
 
   protected readonly inputStart = viewChild.required('inputStart', {
     read: EcDateTimeInputComponent,
@@ -74,9 +67,10 @@ export class EcDateTimeGroupComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['value'] && this.value) {
-      this.visualRange = { ...this.value };
-      this.storedRange = { ...this.value };
+    const value = this.value();
+    if (changes['value'] && value) {
+      this.visualRange = { ...value };
+      this.storedRange = { ...value };
     }
   }
 

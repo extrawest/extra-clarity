@@ -1,6 +1,6 @@
-@if (label) {
+@if (label()) {
   <label [for]="inputId" class="clr-control-label ec-search-bar-label">
-    {{ label }}
+    {{ label() }}
   </label>
 }
 
@@ -8,16 +8,16 @@
   <clr-icon
     class="ec-search-bar-icon"
     status="info"
-    [shape]="iconOnFill && formControl.value ? iconOnFill : 'search'"
+    [shape]="(formControl.value && iconOnFill()) || 'search'"
   />
 
-  <clr-input-container [class.active]="highlightActive && formControl.value">
+  <clr-input-container [class.active]="highlightActive() && formControl.value">
     <input
       type="text"
       #searchInputRef
       clrInput
       [id]="inputId"
-      [placeholder]="placeholder || commonStrings.keys.shared.typeToSearch"
+      [placeholder]="placeholder() || commonStrings.keys.shared.typeToSearch"
       [formControl]="formControl"
     />
   </clr-input-container>
@@ -27,7 +27,7 @@
       type="button"
       class="btn btn-sm btn-icon ec-search-bar-clear"
       (click)="clearInput()"
-      [disabled]="isDisabled"
+      [disabled]="isDisabled()"
     >
       <clr-icon shape="window-close" />
     </button>

@@ -3,12 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  input,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -32,39 +31,33 @@ export class EcAutoRefreshComponent implements OnChanges, OnInit {
    * Indicate that refreshing is occurring at the moment.
    * The countdown is stopped and will be re-launched after this input is switched to `false`.
    * */
-  @Input()
-  public refreshing?: boolean;
+  public readonly refreshing = input<boolean>();
 
   /** Refreshing period in seconds */
-  @Input()
-  public period = DEFAULT_PERIOD_SEC;
+  public readonly period = input<number>(DEFAULT_PERIOD_SEC);
 
   /**
    * Whether auto-refreshing is active,
    * i.e. the timer is counting and the `refresh` output emits periodically
    * */
-  @Input()
-  public enabled?: boolean;
+  public readonly enabled = input<boolean>();
 
   /** Whether the toggle is blocked, i.e. the form control is disabled */
-  @Input()
-  public blocked?: boolean;
+  public readonly blocked = input<boolean>();
 
   /**
    * Emits when the countdown timer reaches 0
    *
-   * `EventEmitter<void>`
+   * `OutputEmitterRef<void>`
    * */
-  @Output()
-  public readonly refresh = new EventEmitter<void>();
+  public readonly refresh = output<void>();
 
   /**
    * Emits a new toggle state as a `boolean` every time it is changed
    *
-   * `EventEmitter<boolean>`
+   * `OutputEmitterRef<boolean>`
    * */
-  @Output()
-  public readonly toggleState = new EventEmitter<boolean>();
+  public readonly toggleState = output<boolean>();
 
   protected readonly toggleControl = new FormControl<boolean>(false, { nonNullable: true });
 
@@ -87,11 +80,11 @@ export class EcAutoRefreshComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['period']) {
-      this._period = this.period < 0 ? 0 : this.period;
+      this._period = this.period() < 0 ? 0 : this.period();
     }
 
     if (changes['period'] || changes['blocked']) {
-      if (this.blocked || this._period === 0) {
+      if (this.blocked() || this._period === 0) {
         this.toggleControl.disable();
       } else {
         this.toggleControl.enable();
@@ -99,13 +92,13 @@ export class EcAutoRefreshComponent implements OnChanges, OnInit {
     }
 
     if (changes['enabled'] || (changes['period'] && this._period === 0)) {
-      const isEnabled = this.enabled ?? false;
+      const isEnabled = this.enabled() ?? false;
       this.toggleControl.patchValue(isEnabled && this._period > 0);
     }
 
     if (changes['enabled'] || changes['refreshing']) {
-      const isEnabled = this.enabled ?? false;
-      this.resetTimerState(isEnabled && !this.refreshing);
+      const isEnabled = this.enabled() ?? false;
+      this.resetTimerState(isEnabled && !this.refreshing());
     }
   }
 
@@ -145,7 +138,7 @@ export class EcAutoRefreshComponent implements OnChanges, OnInit {
   private resetTimerState(launch: boolean): void {
     this.abortTimer$.next();
 
-    if (launch && this.toggleControl.value && this._period > 0 && !this.refreshing) {
+    if (launch && this.toggleControl.value && this._period > 0 && !this.refreshing()) {
       this.launchTimer();
     }
   }

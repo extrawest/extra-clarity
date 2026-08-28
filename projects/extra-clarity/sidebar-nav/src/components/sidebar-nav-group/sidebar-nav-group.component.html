@@ -1,4 +1,4 @@
-@if (navItem) {
+@if (navItem(); as navItem) {
   <clr-vertical-nav-group
     [class.active]="hasActiveLink"
     [(clrVerticalNavGroupExpanded)]="isExpanded"
@@ -7,7 +7,7 @@
       <clr-icon clrVerticalNavIcon [shape]="navItem.icon" />
     }
 
-    <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold" />
+    <ec-sidebar-nav-label [navItem]="navItem" [isBold]="isBold()" />
 
     <clr-vertical-nav-group-children>
       @for (nestedItem of childrenNavItems; track nestedItem) {

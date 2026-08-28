@@ -4,6 +4,7 @@ import {
   Component,
   Input,
   OnDestroy,
+  input,
 } from '@angular/core';
 
 @Component({
@@ -17,7 +18,7 @@ import {
   imports: [],
 })
 export class ProgressSpinnerComponent implements OnDestroy {
-  @Input() size = 'sm';
+  readonly size = input('sm');
 
   _showSpinner: boolean;
 

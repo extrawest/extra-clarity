@@ -3,12 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  input,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -53,70 +52,54 @@ export const TIMERANGE_FILTER_TOGGLE_DEFAULTS = {
   ],
 })
 export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnChanges, OnInit {
-  @Input()
-  public labelLocale?: string;
+  public readonly labelLocale = input<string>();
 
   // Inputs passed to EcTimeRangeFilterComponent
-  @Input({ required: true })
-  public propertyKey!: string;
+  public readonly propertyKey = input.required<string>();
 
-  @Input()
-  public presets: EcTimeRangePreset[] = [];
+  public readonly presets = input<EcTimeRangePreset[]>([]);
 
-  @Input()
-  public value?: EcTimeRangeFilterValue;
+  public readonly value = input<EcTimeRangeFilterValue>();
 
-  @Input()
-  public withCustomRange: boolean = false;
+  public readonly withCustomRange = input<boolean>(false);
 
-  @Input()
-  public withTime: boolean = true;
+  public readonly withTime = input<boolean>(true);
 
-  @Input()
-  public timeZone?: string;
+  public readonly timeZone = input<string>();
 
-  @Input()
-  public closeOnChange: boolean = false;
+  public readonly closeOnChange = input<boolean>(false);
 
-  @Input()
-  public widthPx: number = TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx;
+  public readonly widthPx = input<number>(TIMERANGE_FILTER_TOGGLE_DEFAULTS.widthPx);
 
   // Inputs passed to EcPopoverToggleComponent
 
-  @Input()
-  public anchorToContentAlign: EcAnchorToContentAlign = EcAnchorToContentAlign.StartToStart;
+  public readonly anchorToContentAlign = input<EcAnchorToContentAlign>(
+    EcAnchorToContentAlign.StartToStart,
+  );
 
-  @Input()
-  public contentPosition: EcContentPosition = EcContentPosition.Bottom;
+  public readonly contentPosition = input<EcContentPosition>(EcContentPosition.Bottom);
 
-  @Input()
-  public btnDisabled: boolean = false;
+  public readonly btnDisabled = input<boolean>(false);
 
-  @Input()
-  public btnSmall: boolean = true;
+  public readonly btnSmall = input<boolean>(true);
 
-  @Input()
-  public btnStatus: EcPopoverToggleButtonStatus = EcPopoverToggleButtonStatus.Primary;
+  public readonly btnStatus = input<EcPopoverToggleButtonStatus>(
+    EcPopoverToggleButtonStatus.Primary,
+  );
 
-  @Input()
-  public btnStyle: EcPopoverToggleButtonStyle = EcPopoverToggleButtonStyle.Outline;
+  public readonly btnStyle = input<EcPopoverToggleButtonStyle>(EcPopoverToggleButtonStyle.Outline);
 
-  @Input()
-  public closeOnClickOutside: boolean = true;
+  public readonly closeOnClickOutside = input<boolean>(true);
 
-  @Input()
-  public closeOnScroll: boolean = true;
+  public readonly closeOnScroll = input<boolean>(true);
 
-  @Input()
-  public open: boolean = false;
+  public readonly open = input<boolean>(false);
 
-  /** `EventEmitter<boolean>` */
-  @Output()
-  public openChange = new EventEmitter<boolean>();
+  /** `OutputEmitterRef<boolean>` */
+  public readonly openChange = output<boolean>();
 
-  /** `EventEmitter<EcTimeRangeFilterToggleState>` */
-  @Output()
-  public valueChanged = new EventEmitter<EcTimeRangeFilterToggleState>();
+  /** `OutputEmitterRef<EcTimeRangeFilterToggleState>` */
+  public readonly valueChanged = output<EcTimeRangeFilterToggleState>();
 
   protected readonly timeRangeFilter = viewChild.required(EcTimeRangeFilterComponent);
 
@@ -179,7 +162,7 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
       return commonStrings.timeRangeFilter.customPeriod;
     }
 
-    const selectedPreset = this.presets.find((preset) => preset.id === filterValue.presetId);
+    const selectedPreset = this.presets().find((preset) => preset.id === filterValue.presetId);
     if (selectedPreset) {
       return selectedPreset.label || commonStrings.timeRangeToggle.unnamedPeriod;
     }
@@ -190,8 +173,8 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
       return commonStrings.timeRangeToggle.allTime;
     }
 
-    const dateTimeFrom = formatLocalDateTime(start, this.withTime, this.labelLocale);
-    const dateTimeTo = formatLocalDateTime(end, this.withTime, this.labelLocale);
+    const dateTimeFrom = formatLocalDateTime(start, this.withTime(), this.labelLocale());
+    const dateTimeTo = formatLocalDateTime(end, this.withTime(), this.labelLocale());
 
     if (!start && end) {
       return dateTimeTo
@@ -220,13 +203,13 @@ export class EcTimeRangeFilterToggleComponent implements EcResettableFilter, OnC
       return `${dateTimeFrom} - ${dateTimeTo}`;
     }
 
-    if (!this.withTime) {
+    if (!this.withTime()) {
       return dateTimeFrom;
     }
 
-    const dateFrom = formatLocalDateTime(start, false, this.labelLocale);
-    const timeFrom = formatLocalTime(start, this.labelLocale);
-    const timeTo = formatLocalTime(end, this.labelLocale);
+    const dateFrom = formatLocalDateTime(start, false, this.labelLocale());
+    const timeFrom = formatLocalTime(start, this.labelLocale());
+    const timeTo = formatLocalTime(end, this.labelLocale());
 
     return `${dateFrom}, ${timeFrom} - ${timeTo}`;
   }

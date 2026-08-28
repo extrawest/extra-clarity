@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, input } from '@angular/core';
 
 import { EcNavItemGroup, EcNavItemLink } from '../../sidebar-nav.models';
 import { EcSidebarNavService } from '../../sidebar-nav.service';
@@ -9,8 +9,8 @@ import { EcSidebarNavService } from '../../sidebar-nav.service';
   imports: [NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (navItem) {
-      @if (customLabelTpl) {
+    @if (navItem(); as navItem) {
+      @if (customLabelTpl; as customLabelTpl) {
         <ng-container
           [ngTemplateOutlet]="customLabelTpl"
           [ngTemplateOutletContext]="{ $implicit: navItem }"
@@ -25,13 +25,13 @@ import { EcSidebarNavService } from '../../sidebar-nav.service';
   },
 })
 export class EcSidebarNavLabelComponent implements OnInit {
-  @Input() navItem?: EcNavItemLink | EcNavItemGroup;
-  @Input() isBold: boolean = false;
+  readonly navItem = input<EcNavItemLink | EcNavItemGroup>();
+  readonly isBold = input<boolean>(false);
 
   customLabelTpl?: TemplateRef<unknown>;
 
   get fontWeight(): string {
-    return this.isBold
+    return this.isBold()
       ? 'var(--cds-global-typography-font-weight-semibold, 600)'
       : 'var(--cds-global-typography-font-weight-regular, 400)';
   }
