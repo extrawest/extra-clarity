@@ -1,5 +1,29 @@
 # Changelog
 
+## [21.0.0](https://github.com/extrawest/extra-clarity/compare/v19.2.2...v21.0.0) (2026-08-28)
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to Angular 21 and Clarity 18
+
+### Features
+
+* upgrade to Angular 21 and Clarity 18 ([c4352df](https://github.com/extrawest/extra-clarity/commit/c4352df07b61a014ce6f565317296891645d8f0c))
+
+### Bug fixes
+
+* **popover-toggle:** keep aria-expanded in sync when Clarity closes the popover ([c4492b0](https://github.com/extrawest/extra-clarity/commit/c4492b05bbc9a5659380351100d68124339f0c93))
+* **popover-toggle:** flip the popover to the opposite side when it does not fit ([efa06d1](https://github.com/extrawest/extra-clarity/commit/efa06d19176e7ccc8c266b63324e4da27de8130a))
+* **styles:** scope the overlay-pane shrink-wrap to extra-clarity popovers ([2f30855](https://github.com/extrawest/extra-clarity/commit/2f3085555ed1ad7156cfa7ac82a38618be5b9dcb))
+
+### Misc
+
+* **release-it:** install with 'npm ci' so a release never rewrites the lock file ([1f1927b](https://github.com/extrawest/extra-clarity/commit/1f1927bfef497c74a34486e9a4055a60c4eaabdd))
+
+### CI
+
+* pin Node for the jobs that run 'npm ci' ([d2e9107](https://github.com/extrawest/extra-clarity/commit/d2e91078030107e636017937fd51d3a563e9f692))
+
 ## [19.2.2](https://github.com/extrawest/extra-clarity/compare/v19.2.1...v19.2.2) (2025-10-17)
 
 ### Bug fixes
