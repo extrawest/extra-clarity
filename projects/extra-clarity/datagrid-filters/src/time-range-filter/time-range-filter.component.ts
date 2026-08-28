@@ -94,6 +94,11 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    * NOTE: The parent `<clr-datagrid>` component treats the default filter's state as inactive
    * and ignores the selected filter's value in that case. So, if you set a custom default value,
    * you have to provide additional logic for the datagrid's `(clrDgRefresh)` handler to perform proper filtering.
+   *
+   * IMPORTANT: With `[serverDriven]="false"` the datagrid filters the data on its own, so there is
+   * no handler to add such logic to. That makes a custom default value confusing: it is selected
+   * in the filter's body, yet the filter is marked as inactive and has no effect on the shown rows,
+   * because the datagrid ignores it.
    */
   public readonly presets = input<EcTimeRangePreset[]>([]);
 
@@ -266,7 +271,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
 
     const valueInItem = (item as Record<string | number, unknown>)[propertyKey];
 
-    if (!valueInItem || typeof valueInItem !== 'string' || typeof valueInItem !== 'number') {
+    if (typeof valueInItem !== 'string' && typeof valueInItem !== 'number') {
       return false;
     }
 

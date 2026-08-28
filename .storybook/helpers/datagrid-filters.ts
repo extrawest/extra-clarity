@@ -41,16 +41,20 @@ export const colorGroupedEnumOptions: EcEnumValueFilterOptionGroup<string>[] = [
   },
 ];
 
+const MS_IN_ONE_HOUR = 1000 * 60 * 60;
+const MS_IN_ONE_DAY = MS_IN_ONE_HOUR * 24;
+
+// spread over time so that the time-range filter's presets tell the rows apart
 export const USERS_DATA = [
   { id: 1, name: 'John', createdAt: Date.now(), color: 'black' },
-  { id: 2, name: 'Sarah', createdAt: Date.now(), color: 'white' },
-  { id: 3, name: 'James', createdAt: Date.now(), color: 'red' },
-  { id: 4, name: 'Anna', createdAt: Date.now(), color: 'blue' },
+  { id: 2, name: 'Sarah', createdAt: Date.now() - 3 * MS_IN_ONE_HOUR, color: 'white' },
+  { id: 3, name: 'James', createdAt: Date.now() - 30 * MS_IN_ONE_HOUR, color: 'red' },
+  { id: 4, name: 'Anna', createdAt: Date.now() - 10 * MS_IN_ONE_DAY, color: 'blue' },
 ];
 
 export const wrapFilterWithinDatagrid = (
   filterTemplate: string,
-  filterProperty: 'color' | 'name',
+  filterProperty: 'color' | 'createdAt' | 'name',
 ): string => {
   const getColumnTemplate = (property: string, label: string): string => {
     return filterProperty !== property

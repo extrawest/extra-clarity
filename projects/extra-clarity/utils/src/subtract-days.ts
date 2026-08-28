@@ -8,7 +8,8 @@ export function subtractDays(localDate: string, daysToSubtract: number): string 
 
   const [year, month, day] = localDate.split('-');
 
-  const startOfSourceDayUtc = Date.UTC(Number(year), Number(month), Number(day));
+  // Date.UTC() takes a 0-based month index, while the incoming string is 1-based
+  const startOfSourceDayUtc = Date.UTC(Number(year), Number(month) - 1, Number(day));
 
   const startOfResultDayUtc = startOfSourceDayUtc - daysToSubtract * MS_IN_ONE_DAY;
 
