@@ -1,5 +1,17 @@
 # Changelog
 
+## [22.1.1](https://github.com/extrawest/extra-clarity/compare/v22.1.0...v22.1.1) (2026-08-28)
+
+### Bug fixes
+
+* **utils:** treat the epoch as a valid timestamp in convertToLocalDateTime() ([e9353fa](https://github.com/extrawest/extra-clarity/commit/e9353fa79b4e0cd98e6b0e9c5afba1739b3e5b53))
+* **utils:** correct the month in subtractDays() ([79e9266](https://github.com/extrawest/extra-clarity/commit/79e92662148701409d17b3b2847aaf5cc28fb1b8))
+* **time-range-filter:** accept rows again in client-driven filtering ([1538484](https://github.com/extrawest/extra-clarity/commit/15384845288a0fb849f605b840acfae10991ec77))
+
+### Documentation
+
+* **datagrid-filters:** note that a custom default does not filter client-driven grids ([b5473fe](https://github.com/extrawest/extra-clarity/commit/b5473fe43db9cfef55239e857befe267a9a1064d))
+
 ## [22.1.0](https://github.com/extrawest/extra-clarity/compare/v22.0.0...v22.1.0) (2026-08-28)
 
 ### ⚠ BREAKING CHANGES
