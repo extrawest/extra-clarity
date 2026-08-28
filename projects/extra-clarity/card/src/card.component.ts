@@ -7,6 +7,7 @@ import {
   Input,
   OnInit,
   contentChild,
+  input,
   output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -31,8 +32,8 @@ import { EcCardError } from './interfaces';
   imports: [JsonPipe, ClrIcon, ProgressSpinnerComponent],
   host: {
     class: 'card',
-    '[class.empty]': 'empty',
-    '[class.loading]': 'loading',
+    '[class.empty]': 'empty()',
+    '[class.loading]': 'loading()',
     '[class.has-error]': 'error',
   },
 })
@@ -40,17 +41,14 @@ export class EcCardComponent implements OnInit {
   @Input()
   public title: string;
 
-  @Input()
-  public empty: boolean;
+  public readonly empty = input<boolean>(false);
 
-  @Input()
-  public loading: boolean;
+  public readonly loading = input<boolean>(false);
 
   @Input()
   public error: EcCardError | null;
 
-  @Input()
-  public spinnerSize: 'sm' | 'md' | 'lg' = 'sm';
+  public readonly spinnerSize = input<'sm' | 'md' | 'lg'>('sm');
 
   /** `OutputEmitterRef<void>` */
   public readonly reload = output<void>();

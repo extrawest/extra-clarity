@@ -11,6 +11,7 @@ import {
   Optional,
   SimpleChanges,
   TemplateRef,
+  input,
   output,
   viewChild,
 } from '@angular/core';
@@ -80,7 +81,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    * Optional config for splitting visible options into groups or categories within the filter body.
    * The categories can have a text title and optional bounds as a divider or just a margin.
    */
-  @Input() categories?: EcEnumValueFilterOptionCategoryConfig[];
+  readonly categories = input<EcEnumValueFilterOptionCategoryConfig[]>();
 
   /**
    * Optional `TemplateRef` for a template to use as a custom option label.
@@ -100,8 +101,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    * Show a placeholder 'Loading, please wait...' to inform users
    * that the list of options is loading
    */
-  @Input()
-  public loading = false;
+  public readonly loading = input(false);
 
   /**
    * Configure client-driven filtering for cells containing an array of values:
@@ -111,15 +111,13 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    *
    * NOTE: Affects only client-driven filters, i.e. requires another input `[serverDriven]="false"`.
    */
-  @Input()
-  public matchSelected: 'all' | 'exact' | 'any' = 'any';
+  public readonly matchSelected = input<'all' | 'exact' | 'any'>('any');
 
   /**
    * Max height (in pixels) of the option list container.
    * If the container's content exceeds the limit, a vertical scrollbar is shown.
    * */
-  @Input()
-  public maxHeightPx: number = ENUM_MULTI_VALUE_FILTER_DEFAULTS.maxHeightPx;
+  public readonly maxHeightPx = input<number>(ENUM_MULTI_VALUE_FILTER_DEFAULTS.maxHeightPx);
 
   /**
    * List of options to select from. Each option contains:
@@ -138,8 +136,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    *
    * @required
    */
-  @Input()
-  public options: EcEnumValueFilterOption<E>[] = [];
+  public readonly options = input<EcEnumValueFilterOption<E>[]>([]);
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -150,14 +147,14 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    *
    * @required
    */
-  @Input({ required: true })
-  public propertyKey = '';
+  public readonly propertyKey = input.required<string>();
 
   /**
    * Minimal amount of options to show a search bar above the option list to filter the list
    * */
-  @Input()
-  public searchBarForAmount: number = ENUM_MULTI_VALUE_FILTER_DEFAULTS.searchBarForAmount;
+  public readonly searchBarForAmount = input<number>(
+    ENUM_MULTI_VALUE_FILTER_DEFAULTS.searchBarForAmount,
+  );
 
   /**
    * Whether the filter and the datagrid are server-driven:
@@ -166,8 +163,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    *
    * @required
    */
-  @Input()
-  public serverDriven = true;
+  public readonly serverDriven = input(true);
 
   /**
    * Whether to show a label with amount of selected items above the option list.
@@ -177,14 +173,12 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    * * `EcShowSelected.Always` = show always
    * * `EcShowSelected.Never` = don't show
    */
-  @Input()
-  public showSelectedAmount: EcShowSelected = EcShowSelected.WithSearchbar;
+  public readonly showSelectedAmount = input<EcShowSelected>(EcShowSelected.WithSearchbar);
 
   /**
    * Whether to stretch all label containers to the full width of the filter container
    */
-  @Input()
-  public stretchLabels = false;
+  public readonly stretchLabels = input(false);
 
   /**
    * Optional label to show above the option list
@@ -200,14 +194,12 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    *
    * Providing an empty array `[]` will clear the current selection, and `undefined` will be ignored.
    * */
-  @Input()
-  public value?: E[];
+  public readonly value = input<E[]>();
 
   /**
    * Width (in pixels) of the filter's container
    * */
-  @Input()
-  public widthPx: number = ENUM_MULTI_VALUE_FILTER_DEFAULTS.widthPx;
+  public readonly widthPx = input<number>(ENUM_MULTI_VALUE_FILTER_DEFAULTS.widthPx);
 
   /**
    * Emits the filter's state object on every change of the internal filter value.
@@ -260,7 +252,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    * */
   override get state(): EcFilterState<E[]> {
     return {
-      property: this.propertyKey,
+      property: this.propertyKey(),
       value: Array.from(this.selectedValues),
     };
   }
@@ -270,7 +262,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     if (selected === 0) {
       return this.commonStrings.keys.datagridFilters.selectedNone;
     }
-    const total = this.options.length;
+    const total = this.options().length;
     return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.selectedItems, {
       SELECTED: selected.toString(),
       TOTAL: total.toString(),
@@ -278,7 +270,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
   }
 
   protected get showSearchBar(): boolean {
-    return this.options.length >= this.searchBarForAmount;
+    return this.options().length >= this.searchBarForAmount();
   }
 
   ngAfterViewInit(): void {
@@ -297,12 +289,13 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     const isValueChanged = !!changes['value'];
 
     if (changes['options']) {
-      this.onOptionsChange(isValueChanged ? this.value : undefined);
+      this.onOptionsChange(isValueChanged ? this.value() : undefined);
       return;
     }
 
-    if (isValueChanged && this.value !== undefined) {
-      this.setValue(this.value);
+    const value = this.value();
+    if (isValueChanged && value !== undefined) {
+      this.setValue(value);
     }
 
     if (changes['categories']) {
@@ -320,7 +313,8 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override accepts(item: T): boolean {
-    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
+    const propertyKey = this.propertyKey();
+    if (this.serverDriven() || !item || typeof item !== 'object' || !propertyKey) {
       return false;
     }
 
@@ -328,7 +322,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
       return true;
     }
 
-    const propertyValue = (item as Record<string | number, unknown>)[this.propertyKey];
+    const propertyValue = (item as Record<string | number, unknown>)[propertyKey];
 
     if (propertyValue == null) {
       return false;
@@ -344,13 +338,14 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
       return this.selectedValues.has(propertyValue as E);
     }
 
-    if (this.matchSelected === 'exact') {
+    const matchSelected = this.matchSelected();
+    if (matchSelected === 'exact') {
       return areSetsEqual(new Set(propertyValue), this.selectedValues, { ignoreOrder: true });
     }
 
     const selectedValues = Array.from(this.selectedValues);
 
-    if (this.matchSelected === 'all') {
+    if (matchSelected === 'all') {
       return selectedValues.every((selectedValue) => propertyValue.includes(selectedValue));
     }
     return selectedValues.some((selectedValue) => propertyValue.includes(selectedValue));
@@ -369,7 +364,12 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
   override isActive(): boolean {
-    return !!this.propertyKey && !this.isStateDefault;
+    // Clarity calls this from FiltersProvider.add(), which this component triggers from its
+    // own constructor via setFilter(this) - before Angular has set any input. Reading a
+    // required input signal there throws NG0950, so the state check has to come first. It
+    // is false at construction time, and it can only become true once a value has been set
+    // through an input or user interaction, by which point `propertyKey` is always readable.
+    return !this.isStateDefault && !!this.propertyKey();
   }
 
   /**
@@ -378,7 +378,9 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
   override resetToDefault(): void {
     this.updateSelectedValues(
       new Set(
-        this.options.filter((option) => option.selectedByDefault).map((option) => option.value),
+        this.options()
+          .filter((option) => option.selectedByDefault)
+          .map((option) => option.value),
       ),
     );
   }
@@ -425,18 +427,18 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
       return true;
     }
     return values.every((value) => {
-      return this.options.some((option) => option.value === value);
+      return this.options().some((option) => option.value === value);
     });
   }
 
   private checkIfStateIsDefault(): boolean {
-    return this.options.every((option) => {
+    return this.options().every((option) => {
       return !!option.selectedByDefault === this.selectedValues.has(option.value);
     });
   }
 
   private checkInputsValidity(): string[] {
-    if (this.propertyKey) {
+    if (this.propertyKey()) {
       return [];
     }
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
@@ -453,7 +455,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
     this.updateVisibleOptions();
 
     this.isStateDefault = this.checkIfStateIsDefault();
-    this.hasCustomDefaultState = this.options.some((option) => option.selectedByDefault);
+    this.hasCustomDefaultState = this.options().some((option) => option.selectedByDefault);
 
     if (newFilterValue !== undefined) {
       this.setValue(newFilterValue);
@@ -489,22 +491,23 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
 
   private updateVisibleOptions(): void {
     const visibleOptions = this.searchTerm
-      ? this.options.filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
-      : [...this.options];
+      ? this.options().filter((option) => this.isOptionBeingSearched(option, this.searchTerm))
+      : [...this.options()];
 
     if (!visibleOptions.length) {
       this.visibleOptionCategories = [];
       return;
     }
 
-    if (!this.categories?.length) {
+    const categories = this.categories();
+    if (!categories?.length) {
       this.visibleOptionCategories = [{ options: visibleOptions }];
       return;
     }
 
     const visibleOptionCategories: EcEnumValueFilterOptionCategory<E>[] = [];
 
-    this.categories.forEach(({ id, label, top, bottom }) => {
+    categories.forEach(({ id, label, top, bottom }) => {
       const thisCategoryOptions = visibleOptions.filter((option) => id && option.categoryId === id);
 
       if (thisCategoryOptions.length) {
@@ -524,7 +527,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
       return;
     }
 
-    const categoryIds = new Set(this.categories.map((category) => category.id));
+    const categoryIds = new Set(categories.map((category) => category.id));
 
     const optionsWithoutCategory = visibleOptions.filter(
       (option) => !option.categoryId || !categoryIds.has(option.categoryId),

@@ -1,6 +1,6 @@
-<div class="ec-overlay-content" [style.width.px]="widthPx">
+<div class="ec-overlay-content" [style.width.px]="widthPx()">
   @if (!configErrors.length) {
-    @if (!loading) {
+    @if (!loading()) {
       @if (title) {
         <div class="filter-title">
           {{ title }}
@@ -8,8 +8,8 @@
       }
 
       @if (
-        showSelectedAmount === EcShowSelected.Always ||
-        (showSelectedAmount === EcShowSelected.WithSearchbar && showSearchBar)
+        showSelectedAmount() === EcShowSelected.Always ||
+        (showSelectedAmount() === EcShowSelected.WithSearchbar && showSearchBar)
       ) {
         <div class="filter-selected-amount">
           {{ totalSelectedAmountLabel }}
@@ -26,7 +26,7 @@
         />
       }
 
-      <div class="filter-options" [style.max-height.px]="maxHeightPx">
+      <div class="filter-options" [style.max-height.px]="maxHeightPx()">
         @if (visibleOptions.length) {
           <clr-tree>
             @for (group of visibleOptions; track group; let i = $index) {
@@ -38,7 +38,7 @@
                 <span class="filter-group-label">
                   {{ group.label }}
 
-                  @if (showSelectedAmount) {
+                  @if (showSelectedAmount()) {
                     ({{ getGroupSelectedAmountLabel(group) }})
                   }
                 </span>
@@ -47,7 +47,7 @@
                   <clr-tree-node
                     [clrSelected]="selectedValues.has(option.value)"
                     (change)="onItemSelectedChange($event, option.value, i)"
-                    [class.stretch-labels]="stretchLabels"
+                    [class.stretch-labels]="stretchLabels()"
                   >
                     @if (customLabelTpl) {
                       <ng-container
@@ -64,7 +64,7 @@
               </clr-tree-node>
             }
           </clr-tree>
-        } @else if (options.length) {
+        } @else if (options().length) {
           <div class="no-options">
             <clr-icon shape="warning-standard" status="warning" [solid]="true" />
             {{ commonStrings.keys.datagridFilters.noOptionsFound }}

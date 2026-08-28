@@ -18,7 +18,7 @@
   }
 
   <input
-    [type]="withTime ? 'datetime-local' : 'date'"
+    [type]="withTime() ? 'datetime-local' : 'date'"
     clrInput
     #datetimeInput
     class="timestamp-input"

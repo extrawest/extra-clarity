@@ -5,11 +5,11 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  Input,
   OnChanges,
   OnInit,
   Optional,
   SimpleChanges,
+  input,
   output,
   viewChild,
 } from '@angular/core';
@@ -69,15 +69,13 @@ export class EcStringFilterComponent<T extends object = object>
    *
    * NOTE: Affects only client-driven filters, i.e. requires another input `[serverDriven]="false"`.
    */
-  @Input()
-  public caseSensitive = false;
+  public readonly caseSensitive = input(false);
 
   /**
    * Debounce delay for the input field in milliseconds, i.e. a delay between entering the last character and assigning
    * the entered value to the filterValue. Ignored on clearing the input field.
    */
-  @Input()
-  public debounceTimeMs: number = STRING_FILTER_DEFAULTS.debounceTimeMs;
+  public readonly debounceTimeMs = input<number>(STRING_FILTER_DEFAULTS.debounceTimeMs);
 
   /**
    * Comparison type for the filtering algorithm of client-driven filters:
@@ -86,14 +84,12 @@ export class EcStringFilterComponent<T extends object = object>
    *
    * NOTE: Affects only client-driven filters, i.e. requires another input `[serverDriven]="false"`.
    * */
-  @Input()
-  public fullMatch = false;
+  public readonly fullMatch = input(false);
 
   /**
    * String to be shown as the helper text under the input field when an entered value is valid
    * */
-  @Input()
-  public helperMessage?: string;
+  public readonly helperMessage = input<string>();
 
   /**
    * Max length validation for the filter's value.
@@ -102,14 +98,12 @@ export class EcStringFilterComponent<T extends object = object>
    *
    * This input is read only on component initialization.
    * */
-  @Input()
-  public maxLength: number = STRING_FILTER_DEFAULTS.maxLength;
+  public readonly maxLength = input<number>(STRING_FILTER_DEFAULTS.maxLength);
 
   /**
    * Min length validation for the filter's value.
    * */
-  @Input()
-  public minLength: number = STRING_FILTER_DEFAULTS.minLength;
+  public readonly minLength = input<number>(STRING_FILTER_DEFAULTS.minLength);
 
   /**
    * Pattern for a validator that requires the entered value to match a regex pattern.
@@ -120,20 +114,17 @@ export class EcStringFilterComponent<T extends object = object>
    *
    * This input is read only on component initialization.
    */
-  @Input()
-  public pattern?: string | RegExp;
+  public readonly pattern = input<string | RegExp>();
 
   /**
    * Error message shown under the input field if the entered value is invalid due to the `pattern` validator
    * */
-  @Input()
-  public patternErrMsg?: string;
+  public readonly patternErrMsg = input<string>();
 
   /**
    * Placeholder for the empty input field
    * */
-  @Input()
-  public placeholder?: string;
+  public readonly placeholder = input<string>();
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -144,8 +135,7 @@ export class EcStringFilterComponent<T extends object = object>
    *
    * @required
    */
-  @Input({ required: true })
-  public propertyKey = '';
+  public readonly propertyKey = input.required<string>();
 
   /**
    * Whether the filter and the datagrid are server-driven:
@@ -154,8 +144,7 @@ export class EcStringFilterComponent<T extends object = object>
    *
    * @required
    */
-  @Input()
-  public serverDriven = true;
+  public readonly serverDriven = input(true);
 
   /**
    * Apply an additional validator for the entered value. Options:
@@ -166,28 +155,24 @@ export class EcStringFilterComponent<T extends object = object>
    *
    * This input is read only on component initialization.
    */
-  @Input()
-  public validator?: EcStringValidatorEnum;
+  public readonly validator = input<EcStringValidatorEnum>();
 
   /**
    * A value to be set as the actual filter's value on this input change. `undefined` will be ignored.
    *
    * If the provided string is invalid, the actual filter's value will be reset to the default state (an empty string).
    * */
-  @Input()
-  public value?: string;
+  public readonly value = input<string>();
 
   /**
    * Whether to use a string from the [placeholder] input as the text for the helper slot under the input field
    */
-  @Input()
-  public usePlaceholderAsHelperText: boolean = false;
+  public readonly usePlaceholderAsHelperText = input<boolean>(false);
 
   /**
    * Width in pixels of the filter's container
    * */
-  @Input()
-  public widthPx: number = STRING_FILTER_DEFAULTS.widthPx;
+  public readonly widthPx = input<number>(STRING_FILTER_DEFAULTS.widthPx);
 
   /**
    * Emits the filter's state object on every change of the internal filter value.
@@ -238,7 +223,7 @@ export class EcStringFilterComponent<T extends object = object>
    * */
   override get state(): EcFilterState<string> {
     return {
-      property: this.propertyKey,
+      property: this.propertyKey(),
       value: this.filterValue,
     };
   }
@@ -249,7 +234,7 @@ export class EcStringFilterComponent<T extends object = object>
 
   protected get minLengthMessage(): string {
     return this.commonStrings.parse(this.commonStrings.keys.datagridFilters.minLengthMessage, {
-      MIN_LENGTH: this.minLength.toString(),
+      MIN_LENGTH: this.minLength().toString(),
     });
   }
 
@@ -284,7 +269,7 @@ export class EcStringFilterComponent<T extends object = object>
     }
 
     if (this.formControl.hasError(EcValidationErrorEnum.PATTERN)) {
-      return this.patternErrMsg || this.commonStrings.keys.datagridFilters.enteredValueInvalid;
+      return this.patternErrMsg() || this.commonStrings.keys.datagridFilters.enteredValueInvalid;
     }
 
     return this.commonStrings.keys.datagridFilters.enteredValueInvalid;
@@ -309,8 +294,9 @@ export class EcStringFilterComponent<T extends object = object>
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['value'] && typeof this.value === 'string' && this.propertyKey) {
-      this.updateFormControlValue(this.value);
+    const value = this.value();
+    if (changes['value'] && typeof value === 'string' && this.propertyKey()) {
+      this.updateFormControlValue(value);
     }
   }
 
@@ -334,23 +320,26 @@ export class EcStringFilterComponent<T extends object = object>
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override accepts(item: T): boolean {
-    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
+    const propertyKey = this.propertyKey();
+    if (this.serverDriven() || !item || typeof item !== 'object' || !propertyKey) {
       return false;
     }
 
-    const propertyValue = (item as Record<string | number, unknown>)[this.propertyKey];
+    const propertyValue = (item as Record<string | number, unknown>)[propertyKey];
 
     if (typeof propertyValue !== 'string') {
       return false;
     }
 
-    const propertyValueToCompare = this.caseSensitive ? propertyValue : propertyValue.toLowerCase();
+    const propertyValueToCompare = this.caseSensitive()
+      ? propertyValue
+      : propertyValue.toLowerCase();
 
-    const filterValueToCompare = this.caseSensitive
+    const filterValueToCompare = this.caseSensitive()
       ? this.filterValue
       : this.filterValue.toLowerCase();
 
-    return this.fullMatch
+    return this.fullMatch()
       ? propertyValueToCompare === filterValueToCompare
       : propertyValueToCompare.includes(filterValueToCompare);
   }
@@ -368,7 +357,12 @@ export class EcStringFilterComponent<T extends object = object>
    * Implements the `ClrDatagridFilterInterface` interface.
    * */
   override isActive(): boolean {
-    return !!this.propertyKey && !this.isStateDefault;
+    // Clarity calls this from FiltersProvider.add(), which this component triggers from its
+    // own constructor via setFilter(this) - before Angular has set any input. Reading a
+    // required input signal there throws NG0950, so the state check has to come first. It
+    // is false at construction time, and it can only become true once a value has been set
+    // through an input or user interaction, by which point `propertyKey` is always readable.
+    return !this.isStateDefault && !!this.propertyKey();
   }
 
   /**
@@ -384,7 +378,7 @@ export class EcStringFilterComponent<T extends object = object>
    * If the provided value is invalid, the filter value will be reset to default (an empty string).
    * */
   override setValue(value: string): void {
-    if (this.propertyKey) {
+    if (this.propertyKey()) {
       this.updateFormControlValue(value);
     }
   }
@@ -397,35 +391,39 @@ export class EcStringFilterComponent<T extends object = object>
   private checkInputsValidity(): string[] {
     const inputsErrors: string[] = [];
 
-    if (!this.propertyKey) {
+    if (!this.propertyKey()) {
       inputsErrors.push(this.commonStrings.keys.datagridFilters.propertyKeyRequired);
     }
-    if (this.minLength < 1) {
+    const minLength = this.minLength();
+    if (minLength < 1) {
       inputsErrors.push(
         this.commonStrings.parse(this.commonStrings.keys.datagridFilters.minLengthError, {
-          MIN_LENGTH: this.minLength.toString(),
+          MIN_LENGTH: minLength.toString(),
         }),
       );
     }
-    if (this.maxLength < 1) {
+    const maxLength = this.maxLength();
+    if (maxLength < 1) {
       inputsErrors.push(
         this.commonStrings.parse(this.commonStrings.keys.datagridFilters.maxLengthError, {
-          MAX_LENGTH: this.maxLength.toString(),
+          MAX_LENGTH: maxLength.toString(),
         }),
       );
     }
-    if (this.maxLength < this.minLength) {
+    if (maxLength < minLength) {
       inputsErrors.push(
         this.commonStrings.parse(this.commonStrings.keys.datagridFilters.rangeLengthError, {
-          MAX_LENGTH: this.maxLength.toString(),
-          MIN_LENGTH: this.minLength.toString(),
+          MAX_LENGTH: maxLength.toString(),
+          MIN_LENGTH: minLength.toString(),
         }),
       );
     }
-    if (!this.pattern && this.validator === EcStringValidatorEnum.PATTERN) {
+    const pattern = this.pattern();
+    const validator = this.validator();
+    if (!pattern && validator === EcStringValidatorEnum.PATTERN) {
       inputsErrors.push(this.commonStrings.keys.datagridFilters.patternError);
     }
-    if (this.pattern && this.validator !== EcStringValidatorEnum.PATTERN) {
+    if (pattern && validator !== EcStringValidatorEnum.PATTERN) {
       inputsErrors.push(this.commonStrings.keys.datagridFilters.validationError);
     }
 
@@ -440,14 +438,14 @@ export class EcStringFilterComponent<T extends object = object>
     this.formControl.valueChanges
       .pipe(
         tap((value) => !value && this.updateFilterValue('')),
-        debounceTime(this.debounceTimeMs),
+        debounceTime(this.debounceTimeMs()),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((value: string) => {
         if (
           this.formControl.value === value &&
           this.formControl.valid &&
-          value.length >= this.minLength
+          value.length >= this.minLength()
         ) {
           this.updateFilterValue(value);
         }
@@ -455,21 +453,23 @@ export class EcStringFilterComponent<T extends object = object>
   }
 
   private setupValidators(): void {
-    this.formControl.addValidators(Validators.maxLength(this.maxLength));
+    this.formControl.addValidators(Validators.maxLength(this.maxLength()));
 
-    if (this.validator === EcStringValidatorEnum.EMAIL) {
+    const validator = this.validator();
+    if (validator === EcStringValidatorEnum.EMAIL) {
       this.formControl.addValidators(Validators.email);
     }
-    if (this.validator === EcStringValidatorEnum.UUID) {
+    if (validator === EcStringValidatorEnum.UUID) {
       this.formControl.addValidators(uuidValidator());
     }
-    if (this.validator === EcStringValidatorEnum.PATTERN && this.pattern) {
-      this.formControl.addValidators(Validators.pattern(this.pattern));
+    const pattern = this.pattern();
+    if (validator === EcStringValidatorEnum.PATTERN && pattern) {
+      this.formControl.addValidators(Validators.pattern(pattern));
     }
 
     this.formControl.updateValueAndValidity({ emitEvent: false });
 
-    this.minLengthValidatorFn = Validators.minLength(this.minLength);
+    this.minLengthValidatorFn = Validators.minLength(this.minLength());
   }
 
   private updateFilterValue(value: string, params: { emit: boolean } = { emit: true }): void {
@@ -489,7 +489,7 @@ export class EcStringFilterComponent<T extends object = object>
   }
 
   private updateFormControlValue(newValue: string): void {
-    if (newValue.length > 0 && newValue.length < this.minLength) {
+    if (newValue.length > 0 && newValue.length < this.minLength()) {
       return;
     }
 

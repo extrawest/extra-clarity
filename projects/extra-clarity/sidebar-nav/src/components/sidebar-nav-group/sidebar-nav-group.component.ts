@@ -7,6 +7,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -25,7 +26,7 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
 })
 export class EcSidebarNavGroupComponent implements OnChanges, OnInit {
   @Input() navItem?: EcNavItemGroup;
-  @Input() isBold: boolean = false;
+  readonly isBold = input<boolean>(false);
 
   isExpanded = false;
   hasActiveLink = false;

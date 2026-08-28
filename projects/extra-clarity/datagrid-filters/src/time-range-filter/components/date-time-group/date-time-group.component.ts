@@ -3,10 +3,10 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
+  input,
   output,
   viewChild,
 } from '@angular/core';
@@ -26,17 +26,13 @@ import { EcDateTimeInputComponent } from '../date-time-input';
   imports: [EcDateTimeInputComponent],
 })
 export class EcDateTimeGroupComponent implements OnChanges, OnInit {
-  @Input()
-  public disabled: boolean = false;
+  public readonly disabled = input<boolean>(false);
 
-  @Input()
-  public forceEnabledButtons: boolean = false;
+  public readonly forceEnabledButtons = input<boolean>(false);
 
-  @Input()
-  public value?: EcCustomTimeRange;
+  public readonly value = input<EcCustomTimeRange>();
 
-  @Input()
-  public withTime: boolean = true;
+  public readonly withTime = input<boolean>(true);
 
   public readonly apply = output<EcCustomTimeRange>();
 
@@ -71,9 +67,10 @@ export class EcDateTimeGroupComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['value'] && this.value) {
-      this.visualRange = { ...this.value };
-      this.storedRange = { ...this.value };
+    const value = this.value();
+    if (changes['value'] && value) {
+      this.visualRange = { ...value };
+      this.storedRange = { ...value };
     }
   }
 

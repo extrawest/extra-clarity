@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
   TemplateRef,
+  input,
 } from '@angular/core';
 
 import { ClrVerticalNavModule } from '@clr/angular';
@@ -31,8 +31,7 @@ export class EcSidebarNavComponent implements OnInit, OnChanges {
    *
    * @required
    */
-  @Input()
-  public navList: EcNavList = [];
+  public readonly navList = input<EcNavList>([]);
 
   /**
    * Optional `TemplateRef` for a template to use as a custom label for all nav items.
@@ -42,8 +41,7 @@ export class EcSidebarNavComponent implements OnInit, OnChanges {
    *
    * `TemplateRef<unknown>`
    */
-  @Input()
-  public customLabelTpl?: TemplateRef<unknown>;
+  public readonly customLabelTpl = input<TemplateRef<unknown>>();
 
   /**
    * Sets font-weight styling for root-level nav items and groups:
@@ -52,8 +50,7 @@ export class EcSidebarNavComponent implements OnInit, OnChanges {
    * * groups - only group-elements have bolder font-weight (600) -- it's the default Clarity-v17 behavior
    * * items - only non-group elements (standalone items) have bolder font-weight (600)
    */
-  @Input()
-  public rootLevelBold: 'none' | 'all' | 'groups' | 'items' = 'groups';
+  public readonly rootLevelBold = input<'none' | 'all' | 'groups' | 'items'>('groups');
 
   protected childrenNavItems: EcNavList = [];
 
@@ -62,12 +59,12 @@ export class EcSidebarNavComponent implements OnInit, OnChanges {
   constructor(private navService: EcSidebarNavService) {}
 
   ngOnInit(): void {
-    this.navService.customLabelTemplateRef = this.customLabelTpl;
+    this.navService.customLabelTemplateRef = this.customLabelTpl();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['navList']) {
-      this.childrenNavItems = this.navService.getUniqueIdentityItems(this.navList);
+      this.childrenNavItems = this.navService.getUniqueIdentityItems(this.navList());
     }
   }
 }

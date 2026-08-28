@@ -4,8 +4,8 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnInit,
+  input,
   output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -38,7 +38,7 @@ const NOTIFICATION_INTERVAL_STEP = 200;
   standalone: false,
 })
 export class NotificationComponent implements OnInit {
-  @Input() instance: NotificationData;
+  readonly instance = input.required<NotificationData>();
 
   readonly destroyed = output<void>();
 
@@ -54,11 +54,11 @@ export class NotificationComponent implements OnInit {
   ) {}
 
   get config(): Required<NotificationConfig> {
-    return this.instance.config as Required<NotificationConfig>;
+    return this.instance().config as Required<NotificationConfig>;
   }
 
   get data(): Required<NotificationData> {
-    return this.instance as Required<NotificationData>;
+    return this.instance() as Required<NotificationData>;
   }
 
   get state(): string {

@@ -9,6 +9,7 @@ import {
   OnInit,
   Optional,
   SimpleChanges,
+  input,
   output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -76,8 +77,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    * To work as described, the filter component should be placed inside of a parent component that
    * provides ClrPopoverService, i.e. in a datagrid column or a <ec-popover-toggle> component.
    */
-  @Input()
-  public closeOnChange: boolean = false;
+  public readonly closeOnChange = input<boolean>(false);
 
   /**
    * List of time-range presets to select from. Each option contains:
@@ -108,8 +108,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    *
    * @required
    */
-  @Input({ required: true })
-  public propertyKey!: string;
+  public readonly propertyKey = input.required<string>();
 
   /**
    * Whether the filter and the datagrid are server-driven:
@@ -118,31 +117,26 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    *
    * @required
    */
-  @Input()
-  public serverDriven = true;
+  public readonly serverDriven = input(true);
 
   /**
    * A value to be set as the actual filter's value on this input change or on `[presets]` change.
    * `undefined` will be ignored.
    */
-  @Input()
-  public value?: FilterValue;
+  public readonly value = input<FilterValue>();
 
   /** Width in pixels of the filter's container */
-  @Input()
-  public widthPx: number = TIMERANGE_FILTER_DEFAULTS.widthPx;
+  public readonly widthPx = input<number>(TIMERANGE_FILTER_DEFAULTS.widthPx);
 
   /** Whether to show input controls for picking a custom date-time range */
-  @Input()
-  public withCustomRange: boolean = false;
+  public readonly withCustomRange = input<boolean>(false);
 
   /**
    * Whether the input fields of the custom range section should allow setting time along to date.
    *
    * It also defines the output format of the 'start' and 'end' strings: date-only or date-time.
    * */
-  @Input()
-  public withTime: boolean = true;
+  public readonly withTime = input<boolean>(true);
 
   /**
    * Custom timezone to be used within presets, e.g. for getting local date-times of today,
@@ -151,8 +145,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    *
    * If not set, the client-side (browser's) timezone will be used instead.
    */
-  @Input()
-  public timeZone?: string;
+  public readonly timeZone = input<string>();
 
   /**
    * Emits the filter's state object on every change of the internal filter value.
@@ -203,7 +196,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    */
   override get state(): EcFilterState<FilterValue> {
     return {
-      property: this.propertyKey,
+      property: this.propertyKey(),
       value: this.filterValue,
     };
   }
@@ -218,8 +211,9 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       return;
     }
 
-    if (changes['value'] && this.value) {
-      this.setValue(this.value);
+    const value = this.value();
+    if (changes['value'] && value) {
+      this.setValue(value);
     }
   }
 
@@ -253,15 +247,16 @@ export class EcTimeRangeFilterComponent<T extends object = object>
 
   /** @ignore  Implements the `ClrDatagridFilterInterface` interface */
   override accepts(item: T): boolean {
-    if (this.serverDriven || !item || typeof item !== 'object' || !this.propertyKey) {
+    const propertyKey = this.propertyKey();
+    if (this.serverDriven() || !item || typeof item !== 'object' || !propertyKey) {
       return false;
     }
 
     const { start, end } = getFilterRangeValues(
       this.filterValue,
       this.presets,
-      this.withTime,
-      this.timeZone,
+      this.withTime(),
+      this.timeZone(),
     );
 
     if (!start && !end) {
@@ -271,20 +266,20 @@ export class EcTimeRangeFilterComponent<T extends object = object>
     // It's assumed that the filtered item contains a timestamp as a number of ms since 1970.01.01
     // or as a standard JS Date string to be passed to the Date() constructor
 
-    const valueInItem = (item as Record<string | number, unknown>)[this.propertyKey];
+    const valueInItem = (item as Record<string | number, unknown>)[propertyKey];
 
     if (!valueInItem || typeof valueInItem !== 'string' || typeof valueInItem !== 'number') {
       return false;
     }
 
-    const localDateTime = convertToLocalDateTime(valueInItem, this.withTime, this.timeZone);
+    const localDateTime = convertToLocalDateTime(valueInItem, this.withTime(), this.timeZone());
     if (!localDateTime) {
       return false;
     }
 
     return (
       (!start || isSameOrAfter(localDateTime, start)) &&
-      (!end || isBefore(localDateTime, end) || (!this.withTime && isSame(localDateTime, end)))
+      (!end || isBefore(localDateTime, end) || (!this.withTime() && isSame(localDateTime, end)))
     );
   }
 
@@ -321,7 +316,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       custom: ALL_TIME,
     });
 
-    if (this.closeOnChange) {
+    if (this.closeOnChange()) {
       this.hideFilter();
     }
   }
@@ -344,7 +339,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       custom: range,
     });
 
-    if (this.closeOnChange) {
+    if (this.closeOnChange()) {
       this.hideFilter();
     }
   }
@@ -356,13 +351,13 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       this.radioControl.setValue(this.filterValue.presetId);
     }
 
-    if (this.closeOnChange) {
+    if (this.closeOnChange()) {
       this.hideFilter();
     }
   }
 
   private checkInputsValidity(): string[] {
-    if (this.propertyKey) {
+    if (this.propertyKey()) {
       return [];
     }
     return [this.commonStrings.keys.datagridFilters.propertyKeyRequired];
@@ -386,8 +381,9 @@ export class EcTimeRangeFilterComponent<T extends object = object>
     this.defaultPresetId = getDefaultPreset(this.presets)?.id ?? null;
     this.hasAllTimePreset = containsAllTimePreset(this.presets);
 
-    if (this.value) {
-      this.setValue(this.value);
+    const value = this.value();
+    if (value) {
+      this.setValue(value);
       return;
     }
 
@@ -415,7 +411,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
 
     this.setValue({ presetId, custom: ALL_TIME });
 
-    if (this.closeOnChange) {
+    if (this.closeOnChange()) {
       this.hideFilter();
     }
   }
@@ -439,8 +435,8 @@ export class EcTimeRangeFilterComponent<T extends object = object>
     this.visualCustomRange = getFilterRangeValues(
       this.filterValue,
       this.presets,
-      this.withTime,
-      this.timeZone,
+      this.withTime(),
+      this.timeZone(),
     );
 
     this.changeDetectorRef.markForCheck();

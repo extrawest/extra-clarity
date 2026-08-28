@@ -1,4 +1,4 @@
-<div class="ec-overlay-content" [style.width.px]="widthPx">
+<div class="ec-overlay-content" [style.width.px]="widthPx()">
   @if (configErrors.length) {
     <!-- Config Errors -->
 
@@ -12,7 +12,7 @@
     </div>
 
     <!-- -->
-  } @else if (loading) {
+  } @else if (loading()) {
     <!-- Options loading -->
 
     <div class="await-loading">
@@ -30,8 +30,8 @@
     }
 
     @if (
-      showSelectedAmount === EcShowSelected.Always ||
-      (showSelectedAmount === EcShowSelected.WithSearchbar && showSearchBar)
+      showSelectedAmount() === EcShowSelected.Always ||
+      (showSelectedAmount() === EcShowSelected.WithSearchbar && showSearchBar)
     ) {
       <div class="filter-selected-amount">{{ selectedAmountLabel }}</div>
     }
@@ -46,11 +46,11 @@
       />
     }
 
-    <div class="filter-options" [style.max-height.px]="maxHeightPx">
+    <div class="filter-options" [style.max-height.px]="maxHeightPx()">
       @for (optionCategory of visibleOptionCategories; track $index) {
         <clr-checkbox-container
           class="checkbox-container"
-          [class.stretch-labels]="stretchLabels"
+          [class.stretch-labels]="stretchLabels()"
           [class.with-margin-top]="optionCategory.withMarginTop"
           [class.with-divider-top]="optionCategory.withDividerTop"
           [class.with-margin-bottom]="optionCategory.withMarginBottom"
@@ -65,7 +65,7 @@
               <input
                 type="checkbox"
                 clrCheckbox
-                [name]="propertyKey"
+                [name]="propertyKey()"
                 [checked]="selectedValues.has(option.value)"
                 (change)="onInputChange($event, option.value)"
               />
@@ -88,7 +88,7 @@
         <!-- -->
       } @empty {
         <div class="no-options">
-          @if (options.length) {
+          @if (options().length) {
             <clr-icon shape="warning-standard" status="warning" [solid]="true" />
             {{ commonStrings.keys.datagridFilters.noOptionsFound }}
           } @else {

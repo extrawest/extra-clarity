@@ -4,9 +4,9 @@ import {
   Component,
   HostListener,
   Inject,
-  Input,
   OnDestroy,
   OnInit,
+  input,
 } from '@angular/core';
 
 import { Subscription, SubscriptionLike } from 'rxjs';
@@ -23,9 +23,9 @@ import { DialogSize } from '../../types/dialog-types';
   standalone: false,
 })
 export class DialogContainer implements OnInit, OnDestroy {
-  @Input() public size: DialogSize = 'md';
-  @Input() public closable = true;
-  @Input() public closableBackdrop = true;
+  public readonly size = input<DialogSize>('md');
+  public readonly closable = input(true);
+  public readonly closableBackdrop = input(true);
 
   private locationSubscription: SubscriptionLike = Subscription.EMPTY;
 
@@ -37,7 +37,7 @@ export class DialogContainer implements OnInit, OnDestroy {
 
   @HostListener('document:keydown.escape')
   handleKeyboardEvent(): void {
-    if (this.config.closable ?? this.closable) {
+    if (this.config.closable ?? this.closable()) {
       this.dialogRef.close();
     }
   }

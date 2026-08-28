@@ -17,15 +17,15 @@
 <!-- Card Block (Body) -->
 
 <div class="card-block">
-  <ec-progress-spinner [showSpinner]="loading" [size]="spinnerSize">
-    @if (error || empty) {
+  <ec-progress-spinner [showSpinner]="loading()" [size]="spinnerSize()">
+    @if (error || empty()) {
       <span>{{ commonStrings.keys.card.loading }}</span>
     }
   </ec-progress-spinner>
 
-  @if (!empty && !error) {
+  @if (!empty() && !error) {
     <ng-content />
-  } @else if (!loading) {
+  } @else if (!loading()) {
     <div class="card-placeholder text-center">
       @if (!error) {
         <div>
