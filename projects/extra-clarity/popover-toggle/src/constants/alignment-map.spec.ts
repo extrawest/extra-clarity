@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { EcAnchorToContentAlign, EcContentPosition } from '../enums';
 
-import { POPOVER_OFFSET_PX, getConnectedPosition } from './alignment-map';
+import { POPOVER_OFFSET_PX, getConnectedPosition, getConnectedPositions } from './alignment-map';
 
 const HORIZONTAL_ALIGNS = [
   [EcAnchorToContentAlign.StartToStart, 'start', 'start'],
@@ -78,6 +78,52 @@ describe('getConnectedPosition', () => {
         offsetX: POPOVER_OFFSET_PX,
         offsetY: 0,
       });
+    }
+  });
+});
+
+describe('getConnectedPositions', () => {
+  const align = EcAnchorToContentAlign.StartToStart;
+
+  const sideOf = (position: ReturnType<typeof getConnectedPosition>): string => {
+    if (position.offsetY === POPOVER_OFFSET_PX) return 'bottom';
+    if (position.offsetY === -POPOVER_OFFSET_PX) return 'top';
+    if (position.offsetX === POPOVER_OFFSET_PX) return 'right';
+    return 'left';
+  };
+
+  it.each([
+    [EcContentPosition.Bottom, ['bottom', 'top', 'right', 'left']],
+    [EcContentPosition.Top, ['top', 'bottom', 'right', 'left']],
+    [EcContentPosition.Left, ['left', 'right', 'bottom', 'top']],
+    [EcContentPosition.Right, ['right', 'left', 'bottom', 'top']],
+  ])(
+    'tries the configured side, then its mirror, then the perpendicular sides',
+    (contentPosition, expected) => {
+      expect(
+        getConnectedPositions(contentPosition as EcContentPosition, align).map(sideOf),
+      ).toEqual(expected);
+    },
+  );
+
+  it('leads with the same position getConnectedPosition returns', () => {
+    for (const contentPosition of [
+      EcContentPosition.Bottom,
+      EcContentPosition.Top,
+      EcContentPosition.Left,
+      EcContentPosition.Right,
+    ]) {
+      expect(getConnectedPositions(contentPosition, align)[0]).toEqual(
+        getConnectedPosition(contentPosition, align),
+      );
+    }
+  });
+
+  it('keeps every fallback on the same offset magnitude', () => {
+    for (const position of getConnectedPositions(EcContentPosition.Left, align)) {
+      expect(Math.abs(position.offsetX ?? 0) + Math.abs(position.offsetY ?? 0)).toBe(
+        POPOVER_OFFSET_PX,
+      );
     }
   });
 });

@@ -20,13 +20,14 @@ import {
   ClrPopoverHostDirective,
   ClrPopoverModuleNext,
   ClrPopoverService,
+  ClrPopoverType,
   Directions,
   angleIcon,
 } from '@clr/angular';
 
 import { uniqueIdFactory } from '@extrawest/extra-clarity/utils';
 
-import { getConnectedPosition } from './constants';
+import { getConnectedPosition, getConnectedPositions } from './constants';
 import { CdkTrapFocusDirective, EcPopoverToggleLabelDirective } from './directives';
 import {
   EcAnchorToContentAlign,
@@ -147,7 +148,22 @@ export class EcPopoverToggleComponent implements OnChanges {
   protected buttonClasses: string[];
   protected popoverPosition: ConnectedPosition;
 
+  /**
+   * Fallback positions for CDK, ordered so the mirror of `contentPosition` is tried first.
+   * Set explicitly because Clarity's own DROPDOWN list is bottom-first for every placement,
+   * which would drop a Left/Right popover below the anchor instead of flipping it.
+   */
+  protected popoverPositions: ConnectedPosition[];
+
   protected readonly popoverId = uniqueIdFactory();
+
+  /**
+   * Clarity only fills in the fallback positions handed to CDK's
+   * `.withPositions([preferred, ...available])` when a content type is set, so without this
+   * the single position from `popoverPosition` is all CDK has and the popover cannot flip
+   * away from a viewport edge. DROPDOWN also matches the 2px offset in `getConnectedPosition`.
+   */
+  protected readonly popoverType = ClrPopoverType.DROPDOWN;
 
   protected readonly EcDropdownIconPosition = EcDropdownIconPosition;
 
@@ -156,6 +172,7 @@ export class EcPopoverToggleComponent implements OnChanges {
     private destroyRef: DestroyRef,
   ) {
     this.popoverPosition = this.getPopoverPosition();
+    this.popoverPositions = this.getPopoverPositions();
     this.buttonClasses = this.getButtonClasses();
 
     this.clrPopoverService.openChange
@@ -177,6 +194,7 @@ export class EcPopoverToggleComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contentPosition'] || changes['anchorToContentAlign']) {
       this.popoverPosition = this.getPopoverPosition();
+      this.popoverPositions = this.getPopoverPositions();
     }
 
     if (changes['btnStatus'] || changes['btnStyle'] || changes['btnSmall']) {
@@ -232,5 +250,9 @@ export class EcPopoverToggleComponent implements OnChanges {
 
   private getPopoverPosition(): ConnectedPosition {
     return getConnectedPosition(this.contentPosition, this.anchorToContentAlign);
+  }
+
+  private getPopoverPositions(): ConnectedPosition[] {
+    return getConnectedPositions(this.contentPosition, this.anchorToContentAlign);
   }
 }

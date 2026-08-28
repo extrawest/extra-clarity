@@ -89,3 +89,50 @@ export function getConnectedPosition(
       );
   }
 }
+
+/**
+ * Fallback order for a given content position: the configured side first, then its mirror,
+ * then the two perpendicular sides.
+ *
+ * Clarity's own `DROPDOWN_POSITIONS` list is ordered bottom-first for every placement, so a
+ * Left- or Right-positioned popover that does not fit would drop below the anchor before it
+ * tried flipping to the opposite side. Deriving the order from `contentPosition` keeps the
+ * mirror as the first fallback, and keeps every position on the same `POPOVER_OFFSET_PX` gap.
+ */
+const FALLBACK_ORDER: Record<EcContentPosition, readonly EcContentPosition[]> = {
+  [EcContentPosition.Bottom]: [
+    EcContentPosition.Bottom,
+    EcContentPosition.Top,
+    EcContentPosition.Right,
+    EcContentPosition.Left,
+  ],
+  [EcContentPosition.Top]: [
+    EcContentPosition.Top,
+    EcContentPosition.Bottom,
+    EcContentPosition.Right,
+    EcContentPosition.Left,
+  ],
+  [EcContentPosition.Left]: [
+    EcContentPosition.Left,
+    EcContentPosition.Right,
+    EcContentPosition.Bottom,
+    EcContentPosition.Top,
+  ],
+  [EcContentPosition.Right]: [
+    EcContentPosition.Right,
+    EcContentPosition.Left,
+    EcContentPosition.Bottom,
+    EcContentPosition.Top,
+  ],
+};
+
+/**
+ * Positions handed to CDK as `[preferred, ...fallbacks]`, in the order they should be tried
+ * when the preferred one does not fit in the viewport.
+ */
+export function getConnectedPositions(
+  contentPosition: EcContentPosition,
+  align: EcAnchorToContentAlign,
+): ConnectedPosition[] {
+  return FALLBACK_ORDER[contentPosition].map((position) => getConnectedPosition(position, align));
+}
