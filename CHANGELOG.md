@@ -1,5 +1,15 @@
 # Changelog
 
+## [22.2.0](https://github.com/extrawest/extra-clarity/compare/v22.1.1...v22.2.0) (2026-08-28)
+
+### Features
+
+* support zoneless change detection ([48df048](https://github.com/extrawest/extra-clarity/commit/48df048dd163d7000c8265ca026c7293df34aac4))
+
+### Documentation
+
+* **time-range-filter:** link the client-driven datagrid story from the overview ([ba44a31](https://github.com/extrawest/extra-clarity/commit/ba44a313514eb34db070ae17e0e942c94fd41955))
+
 ## [22.1.1](https://github.com/extrawest/extra-clarity/compare/v22.1.0...v22.1.1) (2026-08-28)
 
 ### Bug fixes
