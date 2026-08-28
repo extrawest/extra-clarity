@@ -5,11 +5,13 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
+  Injector,
   OnChanges,
   OnInit,
   Optional,
   SimpleChanges,
   TemplateRef,
+  afterNextRender,
   input,
   output,
   viewChild,
@@ -240,6 +242,7 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     private destroyRef: DestroyRef,
+    private injector: Injector,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverService?: ClrPopoverService,
   ) {
@@ -283,7 +286,10 @@ export class EcEnumGroupedValueFilterComponent<E, T extends object = object>
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((isOpen: boolean) => {
         if (isOpen) {
-          setTimeout(() => this.searchBar()?.focusSearchBar());
+          afterNextRender(
+            { write: () => this.searchBar()?.focusSearchBar() },
+            { injector: this.injector },
+          );
         }
       });
 

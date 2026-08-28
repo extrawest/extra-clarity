@@ -5,10 +5,12 @@ import {
   Component,
   DestroyRef,
   ElementRef,
+  Injector,
   OnChanges,
   OnInit,
   Optional,
   SimpleChanges,
+  afterNextRender,
   input,
   output,
   viewChild,
@@ -205,6 +207,7 @@ export class EcStringFilterComponent<T extends object = object>
     protected commonStrings: EcCommonStringsService,
     private changeDetectorRef: ChangeDetectorRef,
     private destroyRef: DestroyRef,
+    private injector: Injector,
     @Optional() private clrDatagridFilterContainer?: ClrDatagridFilter,
     @Optional() private clrPopoverService?: ClrPopoverService,
   ) {
@@ -287,7 +290,7 @@ export class EcStringFilterComponent<T extends object = object>
           this.clrInputRef()?.triggerValidation();
           this.changeDetectorRef.markForCheck();
         }
-        setTimeout(() => this.focusInputElement());
+        afterNextRender({ write: () => this.focusInputElement() }, { injector: this.injector });
       });
 
     this.isInitiated = true;
