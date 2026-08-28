@@ -4,7 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnChanges,
   OnInit,
   Optional,
@@ -96,8 +95,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
    * and ignores the selected filter's value in that case. So, if you set a custom default value,
    * you have to provide additional logic for the datagrid's `(clrDgRefresh)` handler to perform proper filtering.
    */
-  @Input()
-  public presets: EcTimeRangePreset[] = [];
+  public readonly presets = input<EcTimeRangePreset[]>([]);
 
   /**
    * When `[serverDriven]="true"`, it's a free-form identifier defined by a developer, that will be shown as `property`
@@ -254,7 +252,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
 
     const { start, end } = getFilterRangeValues(
       this.filterValue,
-      this.presets,
+      this.presets(),
       this.withTime(),
       this.timeZone(),
     );
@@ -378,8 +376,8 @@ export class EcTimeRangeFilterComponent<T extends object = object>
   }
 
   private onPresetsChange(): void {
-    this.defaultPresetId = getDefaultPreset(this.presets)?.id ?? null;
-    this.hasAllTimePreset = containsAllTimePreset(this.presets);
+    this.defaultPresetId = getDefaultPreset(this.presets())?.id ?? null;
+    this.hasAllTimePreset = containsAllTimePreset(this.presets());
 
     const value = this.value();
     if (value) {
@@ -396,7 +394,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
       return;
     }
 
-    if (this.presets.some((preset) => preset.id === this.filterValue.presetId)) {
+    if (this.presets().some((preset) => preset.id === this.filterValue.presetId)) {
       this.onPresetSelected(this.filterValue.presetId);
       return;
     }
@@ -434,7 +432,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
   private updateVisualCustomRange(): void {
     this.visualCustomRange = getFilterRangeValues(
       this.filterValue,
-      this.presets,
+      this.presets(),
       this.withTime(),
       this.timeZone(),
     );

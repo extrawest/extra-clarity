@@ -1,4 +1,4 @@
-@if (navItem) {
+@if (navItem(); as navItem) {
   @switch (navItem.type) {
     @case (NavItemTypeEnum.Divider) {
       <div class="nav-divider"></div>

@@ -5,7 +5,6 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
@@ -34,8 +33,7 @@ import { datetimeInputValidator } from './date-time-input.validators';
 export class EcDateTimeInputComponent implements AfterViewInit, OnChanges, OnInit {
   public readonly disabled = input<boolean>(false);
 
-  @Input()
-  public label?: string;
+  public readonly label = input<string>();
 
   public readonly value = input<string | null>(null);
 

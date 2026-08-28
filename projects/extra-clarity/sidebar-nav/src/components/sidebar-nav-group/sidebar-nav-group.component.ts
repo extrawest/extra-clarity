@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
@@ -25,7 +24,7 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   imports: [ClrIcon, ClrVerticalNavModule, EcSidebarNavItemComponent, EcSidebarNavLabelComponent],
 })
 export class EcSidebarNavGroupComponent implements OnChanges, OnInit {
-  @Input() navItem?: EcNavItemGroup;
+  readonly navItem = input<EcNavItemGroup>();
   readonly isBold = input<boolean>(false);
 
   isExpanded = false;
@@ -41,12 +40,12 @@ export class EcSidebarNavGroupComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['navItem']) {
-      this.childrenNavItems = this.navService.getUniqueIdentityItems(this.navItem?.children);
+      this.childrenNavItems = this.navService.getUniqueIdentityItems(this.navItem()?.children);
     }
   }
 
   ngOnInit(): void {
-    this.isExpanded = !!this.navItem?.expanded;
+    this.isExpanded = !!this.navItem()?.expanded;
     this.checkForActiveLinks();
 
     this.navService.navigationEnd.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
@@ -56,7 +55,7 @@ export class EcSidebarNavGroupComponent implements OnChanges, OnInit {
   }
 
   private checkForActiveLinks(): void {
-    this.hasActiveLink = !!this.navItem?.children.some(
+    this.hasActiveLink = !!this.navItem()?.children.some(
       (nestedItem) =>
         nestedItem.type === EC_NAV_ITEM_TYPE.RouterLink &&
         this.navService.isPathActive(nestedItem.link, 'subset'),

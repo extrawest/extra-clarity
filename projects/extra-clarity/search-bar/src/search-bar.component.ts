@@ -4,7 +4,6 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
@@ -60,8 +59,7 @@ export class EcSearchBarComponent implements OnChanges, OnInit {
   /**
    * An optional text label to show before the search bar
    */
-  @Input()
-  public label?: string;
+  public readonly label = input<string>();
 
   /**
    * Placeholder for the empty input field

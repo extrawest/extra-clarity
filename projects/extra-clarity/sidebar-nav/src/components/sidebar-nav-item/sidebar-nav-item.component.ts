@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnInit,
   input,
 } from '@angular/core';
@@ -30,7 +29,7 @@ import { EcSidebarNavLabelComponent } from '../sidebar-nav-label';
   ],
 })
 export class EcSidebarNavItemComponent implements OnInit {
-  @Input() navItem?: EcNavListItem;
+  readonly navItem = input<EcNavListItem>();
   readonly isBold = input<boolean>(false);
 
   readonly NavItemTypeEnum = EC_NAV_ITEM_TYPE;

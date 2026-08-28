@@ -1,9 +1,9 @@
 <div class="ec-overlay-content" [style.width.px]="widthPx()">
   @if (!configErrors.length) {
     @if (!loading()) {
-      @if (title) {
+      @if (title()) {
         <div class="filter-title">
-          {{ title }}
+          {{ title() }}
         </div>
       }
 
@@ -49,7 +49,7 @@
                     (change)="onItemSelectedChange($event, option.value, i)"
                     [class.stretch-labels]="stretchLabels()"
                   >
-                    @if (customLabelTpl) {
+                    @if (customLabelTpl(); as customLabelTpl) {
                       <ng-container
                         [ngTemplateOutlet]="customLabelTpl"
                         [ngTemplateOutletContext]="{ $implicit: option, marked: searchTerm }"

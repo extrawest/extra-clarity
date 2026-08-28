@@ -1,12 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-  TemplateRef,
-  input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, input } from '@angular/core';
 
 import { EcNavItemGroup, EcNavItemLink } from '../../sidebar-nav.models';
 import { EcSidebarNavService } from '../../sidebar-nav.service';
@@ -16,8 +9,8 @@ import { EcSidebarNavService } from '../../sidebar-nav.service';
   imports: [NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (navItem) {
-      @if (customLabelTpl) {
+    @if (navItem(); as navItem) {
+      @if (customLabelTpl; as customLabelTpl) {
         <ng-container
           [ngTemplateOutlet]="customLabelTpl"
           [ngTemplateOutletContext]="{ $implicit: navItem }"
@@ -32,7 +25,7 @@ import { EcSidebarNavService } from '../../sidebar-nav.service';
   },
 })
 export class EcSidebarNavLabelComponent implements OnInit {
-  @Input() navItem?: EcNavItemLink | EcNavItemGroup;
+  readonly navItem = input<EcNavItemLink | EcNavItemGroup>();
   readonly isBold = input<boolean>(false);
 
   customLabelTpl?: TemplateRef<unknown>;

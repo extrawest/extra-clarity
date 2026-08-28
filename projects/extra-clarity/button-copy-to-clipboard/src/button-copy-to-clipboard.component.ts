@@ -4,7 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
@@ -48,8 +47,7 @@ export class EcButtonCopyToClipboardComponent implements OnChanges, OnInit {
   public readonly iconSizePx = input<number>(BUTTON_DEFAULTS.iconSizePx);
 
   /** An optional text label for the default state */
-  @Input()
-  public label?: string;
+  public readonly label = input<string>();
 
   /** Font size for the label set by the `label` input.
    *

@@ -1,11 +1,11 @@
 <!-- Card Header (Optional) -->
 
-@if (title || headerTitleContent() || headerActionsContent()) {
+@if (title() || headerTitleContent() || headerActionsContent()) {
   <div class="card-header">
     @if (headerTitleContent()) {
       <ng-content select="ec-card-header-title, [ecCardHeaderTitle]" />
-    } @else if (title) {
-      <span> {{ title }} </span>
+    } @else if (title()) {
+      <span> {{ title() }} </span>
     }
 
     @if (headerActionsContent()) {
@@ -18,20 +18,16 @@
 
 <div class="card-block">
   <ec-progress-spinner [showSpinner]="loading()" [size]="spinnerSize()">
-    @if (error || empty()) {
+    @if (error() || empty()) {
       <span>{{ commonStrings.keys.card.loading }}</span>
     }
   </ec-progress-spinner>
 
-  @if (!empty() && !error) {
+  @if (!empty() && !error()) {
     <ng-content />
   } @else if (!loading()) {
     <div class="card-placeholder text-center">
-      @if (!error) {
-        <div>
-          {{ commonStrings.keys.card.noDataFound }}
-        </div>
-      } @else {
+      @if (error(); as error) {
         <clr-icon shape="error-standard" status="danger" class="error-icon" />
 
         <div>
@@ -72,6 +68,10 @@
             {{ commonStrings.keys.card.reload }}
           </button>
         }
+      } @else {
+        <div>
+          {{ commonStrings.keys.card.noDataFound }}
+        </div>
       }
     </div>
   }

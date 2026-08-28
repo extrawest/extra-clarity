@@ -5,7 +5,6 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnChanges,
   OnInit,
   Optional,
@@ -98,8 +97,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
    *
    * `TemplateRef<unknown>`
    */
-  @Input()
-  public customLabelTpl?: TemplateRef<unknown>;
+  public readonly customLabelTpl = input<TemplateRef<unknown>>();
 
   /**
    * Show a placeholder 'Loading, please wait...' to inform users
@@ -178,8 +176,7 @@ export class EcEnumSingleValueFilterComponent<E, T extends object = object>
   /**
    * Optional label to show above the option list
    */
-  @Input()
-  public title?: string;
+  public readonly title = input<string>();
 
   /**
    * A value `E | null` to be set as the actual filter's value on this input change.

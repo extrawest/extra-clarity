@@ -4,7 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnInit,
   contentChild,
   input,
@@ -34,19 +33,17 @@ import { EcCardError } from './interfaces';
     class: 'card',
     '[class.empty]': 'empty()',
     '[class.loading]': 'loading()',
-    '[class.has-error]': 'error',
+    '[class.has-error]': 'error()',
   },
 })
 export class EcCardComponent implements OnInit {
-  @Input()
-  public title: string;
+  public readonly title = input<string>();
 
   public readonly empty = input<boolean>(false);
 
   public readonly loading = input<boolean>(false);
 
-  @Input()
-  public error: EcCardError | null;
+  public readonly error = input<EcCardError | null>(null);
 
   public readonly spinnerSize = input<'sm' | 'md' | 'lg'>('sm');
 
@@ -61,23 +58,24 @@ export class EcCardComponent implements OnInit {
   protected unknownError = this.commonStrings.keys.card.unknownError;
 
   protected get errorMessage(): string {
-    if (!this.error) {
+    const error = this.error();
+    if (!error) {
       return this.unknownError;
     }
-    if (this.error.message) {
-      return this.error.message;
+    if (error.message) {
+      return error.message;
     }
-    if (!this.error.httpError) {
+    if (!error.httpError) {
       return this.unknownError;
     }
-    if (!this.error.httpError.error) {
-      const { status, statusText } = this.error.httpError;
+    if (!error.httpError.error) {
+      const { status, statusText } = error.httpError;
       return `[${status}] ${statusText}`;
     }
-    if (typeof this.error.httpError.error === 'object') {
-      return JSON.stringify(this.error.httpError.error, undefined, ' ');
+    if (typeof error.httpError.error === 'object') {
+      return JSON.stringify(error.httpError.error, undefined, ' ');
     }
-    return this.error.httpError.error;
+    return error.httpError.error;
   }
 
   constructor(

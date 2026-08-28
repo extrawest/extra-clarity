@@ -32,9 +32,9 @@
     @case (clrLoadingState.DEFAULT) {
       <div @defaultButton class="button-inner-box">
         <clr-icon shape="copy" [size]="iconSizeAsString" />
-        @if (label) {
+        @if (label()) {
           <span [style.font-size.px]="labelFontSizePx()">
-            {{ label }}
+            {{ label() }}
           </span>
         }
       </div>

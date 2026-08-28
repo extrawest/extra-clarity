@@ -5,7 +5,6 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnChanges,
   OnInit,
   Optional,
@@ -94,8 +93,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
    *
    * `TemplateRef<unknown>`
    */
-  @Input()
-  public customLabelTpl?: TemplateRef<unknown>;
+  public readonly customLabelTpl = input<TemplateRef<unknown>>();
 
   /**
    * Show a placeholder 'Loading, please wait...' to inform users
@@ -183,8 +181,7 @@ export class EcEnumMultiValueFilterComponent<E, T extends object = object>
   /**
    * Optional label to show above the option list
    */
-  @Input()
-  public title?: string;
+  public readonly title = input<string>();
 
   /**
    * An array of values `E[]` to be set as the actual filter's state on this input change.

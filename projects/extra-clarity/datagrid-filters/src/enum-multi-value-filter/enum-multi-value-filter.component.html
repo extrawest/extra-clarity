@@ -25,8 +25,8 @@
   } @else {
     <!-- Normal mode -->
 
-    @if (title) {
-      <div class="filter-title">{{ title }}</div>
+    @if (title()) {
+      <div class="filter-title">{{ title() }}</div>
     }
 
     @if (
@@ -70,7 +70,7 @@
                 (change)="onInputChange($event, option.value)"
               />
               <label>
-                @if (customLabelTpl) {
+                @if (customLabelTpl(); as customLabelTpl) {
                   <ng-container
                     [ngTemplateOutlet]="customLabelTpl"
                     [ngTemplateOutletContext]="{ $implicit: option, marked: searchTerm }"

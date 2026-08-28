@@ -1,4 +1,4 @@
-@if (navItem) {
+@if (navItem(); as navItem) {
   <clr-vertical-nav-group
     [class.active]="hasActiveLink"
     [(clrVerticalNavGroupExpanded)]="isExpanded"
