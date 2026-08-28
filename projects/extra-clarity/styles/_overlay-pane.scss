@@ -1,7 +1,12 @@
 // Clarity 18 opens popovers with CDK `withFlexibleDimensions(true)` and no backdrop.
 // The overlay pane then fills leftover viewport, so clicks below/beside the painted
 // popover still count as "inside" and do not close it. Shrink-wrap the pane to content.
-::ng-deep .cdk-overlay-pane.clr-popover-content {
+//
+// Scoped via `:has()` to panes holding extra-clarity content: `.clr-popover-content` is
+// pushed onto `panelClass` by Clarity's shared `ClrPopoverContent` directive, so matching
+// it alone would also shrink-wrap the host app's own dropdowns, comboboxes and signposts,
+// which rely on flexible dimensions to shrink and scroll instead of overflowing.
+::ng-deep .cdk-overlay-pane.clr-popover-content:has(.ec-overlay-content) {
   width: max-content;
   height: max-content;
 }
