@@ -1,5 +1,33 @@
 # Changelog
 
+## [22.1.0](https://github.com/extrawest/extra-clarity/compare/v22.0.0...v22.1.0) (2026-08-28)
+
+### ⚠ BREAKING CHANGES
+
+* inputs are now InputSignal, so reading them off a
+component instance needs a call - 'searchBar.label()' rather than
+'searchBar.label' - and they can no longer be assigned to. Template
+bindings are unaffected.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+* outputs are now OutputEmitterRef instead of EventEmitter.
+Template bindings are unaffected, but code that grabs a component instance and
+calls .subscribe() on an output must use .subscribe() on the OutputEmitterRef
+(same signature, returns an OutputRefSubscription) and can no longer use the
+Observable operators that EventEmitter inherited from Subject.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+### Refactored
+
+* convert the inputs the signal-input schematic skipped ([257a346](https://github.com/extrawest/extra-clarity/commit/257a34662841e59bf3e823753439eee82a4aa1a2))
+* replace decorator inputs with signal inputs ([fc34342](https://github.com/extrawest/extra-clarity/commit/fc34342b7827ee2d28dd8438882f0c55e77f1acc))
+* replace @Output/EventEmitter with the output() function ([19d6cdb](https://github.com/extrawest/extra-clarity/commit/19d6cdb6fac8f7360c6cc20785cede68958f2529))
+
+### Build
+
+* **deps:** upgrade compodoc to 2.0.0 for signal input/output docs ([e03f031](https://github.com/extrawest/extra-clarity/commit/e03f03104b89967c714d8a4c521d85a6dd1b5621))
+
 ## [22.0.0](https://github.com/extrawest/extra-clarity/compare/v21.0.0...v22.0.0) (2026-08-28)
 
 ### ⚠ BREAKING CHANGES
