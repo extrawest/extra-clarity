@@ -266,7 +266,7 @@ export class EcTimeRangeFilterComponent<T extends object = object>
 
     const valueInItem = (item as Record<string | number, unknown>)[propertyKey];
 
-    if (!valueInItem || typeof valueInItem !== 'string' || typeof valueInItem !== 'number') {
+    if (typeof valueInItem !== 'string' && typeof valueInItem !== 'number') {
       return false;
     }
 
